@@ -511,11 +511,14 @@ public class StringUtils
    *                  must not be null.
    * @param letterCase The desired letter case of the list elements, must not be
    *                   null, choose Case.NONE to leave the list elements as-is.
+   * @param hasAnd     Whether or not to insert the word 'and ' between the last
+   *                   two elements in the list, one space after the last comma.
    * @return A string list of listElements, separated by separator, in case
-   *         letterCase.
+   *         letterCase, with an optional 'and ' occurring between the last two
+   *         elements of the list.
    */
   public static <T> String toStringList (Collection <T> listElements,
-          String separator, Case letterCase)
+          String separator, Case letterCase, boolean hasAnd)
   {
     Arguments.checkIsNotNull         (listElements, "listElements");
     Arguments.checkHasNoNullElements (listElements, "listElements");
@@ -536,7 +539,15 @@ public class StringUtils
 
     try
     {
+      // Delete the extra comma at the end of the last element in the list.
       s.delete (s.length() - separator.length(), s.length());
+
+      if (hasAnd && s.lastIndexOf (", ") >= 0)
+      {
+        // Insert the word 'and' between the last two elements in the list,
+        // after the last comma.
+        s.insert (s.lastIndexOf (", ") + 2, "and ");
+      }
     }
     catch (StringIndexOutOfBoundsException ignoredException)
     {

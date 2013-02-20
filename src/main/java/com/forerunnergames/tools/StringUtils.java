@@ -1,10 +1,12 @@
 // Copyright © 2011 - 2012 Forerunner Games
 package com.forerunnergames.tools;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 
 import java.awt.event.KeyEvent;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -525,6 +527,29 @@ public class StringUtils
     Arguments.checkIsNotNull         (separator,    "separator");
     Arguments.checkIsNotNull         (letterCase,   "letterCase");
 
+    // Handle the first three special cases
+    if (listElements.isEmpty())
+    {
+      return "";
+    }
+    else if (listElements.size() == 1)
+    {
+      return StringUtils.toCase (
+              Iterables.getOnlyElement(listElements).toString(), letterCase);
+    }
+    else if (listElements.size() == 2)
+    {
+      Iterator <T> iterator = listElements.iterator();
+
+      // Here, if the separator is a comma, for example, it's either:
+      // "item1 and item2" or "item1,item2" (if no "and" is desired)
+      // because "item1, and item2" doesn't make sense grammatically, which is
+      // what would happen if we didn't treat this as a special case
+      return StringUtils.toCase (
+              iterator.next().toString() + (hasAnd? " and " : separator) +
+              iterator.next().toString(), letterCase);
+    }
+
     StringBuilder s = new StringBuilder();
 
     for (T element : listElements)
@@ -539,11 +564,11 @@ public class StringUtils
       // Delete the extra comma at the end of the last element in the list.
       s.delete (s.length() - separator.length(), s.length());
 
-      if (hasAnd && s.lastIndexOf (", ") >= 0)
+      if (hasAnd && s.lastIndexOf (separator) >= 0)
       {
         // Insert the word 'and' between the last two elements in the list,
         // after the last comma.
-        s.insert (s.lastIndexOf (", ") + 2, "and ");
+        s.insert (s.lastIndexOf (separator) + 1, "and ");
       }
     }
     catch (StringIndexOutOfBoundsException ignoredException)

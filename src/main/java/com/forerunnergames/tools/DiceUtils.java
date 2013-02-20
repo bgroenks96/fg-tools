@@ -59,19 +59,19 @@ public class DiceUtils
   }
 
   /**
-   * Roll diceCount 6-sided dice and get the resulting roll amounts.
+   * Roll dieCount 6-sided dice and get the resulting roll amounts.
    * 
-   * @param diceCount The number of dice to roll.
+   * @param dieCount The number of dice to roll.
    * 
    * @return A collection of the roll amounts as integers.
    */
-  public static Collection <Integer> rollDice (int diceCount)
+  public static Collection <Integer> rollDice (int dieCount)
   {
-    Arguments.checkLowerExclusiveBound (diceCount, 0, "diceCount");
+    Arguments.checkLowerExclusiveBound (dieCount, 0, "dieCount");
 
-    Collection <Integer> rolls = new ArrayList <Integer> (diceCount);
+    Collection <Integer> rolls = new ArrayList <Integer> (dieCount);
 
-    for (int i = 0; i < diceCount; ++i)
+    for (int i = 0; i < dieCount; ++i)
     {
       int rollAmount = 
               RandomUtils.getRandomIntegerBetween (1, DiceUtils.FACES_PER_DIE);
@@ -82,13 +82,20 @@ public class DiceUtils
     return rolls;
   }
 
-  public static int rollSum (int diceCount)
+  /**
+   * Roll dieCount 6-sided dice and get the resulting roll sum.
+   * 
+   * @param dieCount The number of dice to roll.
+   * 
+   * @return The sum of the values of the individual dice.
+   */
+  public static int rollSum (int dieCount)
   {
-    Arguments.checkLowerExclusiveBound (diceCount, 0, "diceCount");
+    Arguments.checkLowerExclusiveBound (dieCount, 0, "dieCount");
 
     int sum = 0;
 
-    for (Integer rollAmount : rollDice (diceCount))
+    for (Integer rollAmount : rollDice (dieCount))
     {
       sum += rollAmount;
     }

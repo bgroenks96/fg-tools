@@ -529,12 +529,9 @@ public class StringUtils
 
     for (T element : listElements)
     {
-      if (element != null)
-      {
-        String elementString = StringUtils.toCase (element.toString(),
-                                                   letterCase);
-        s.append(elementString).append (separator);
-      }
+      String elementString = StringUtils.toCase (element.toString(),
+                                                 letterCase);
+      s.append(elementString).append (separator);
     }
 
     try

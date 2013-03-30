@@ -1102,7 +1102,7 @@ public class StreamParser
       if (! actualTokenContent.equals (expectedTokenContent))
       {
         throw new StreamParserException ("Token[" + expectedTokenContent +
-                "] expected, but found Token[" + actualTokenContent + "\n\n" +
+                "] expected, but found Token[" + actualTokenContent + "]\n\n" +
                 "Last token successfully parsed: " + getCurrentTokenInfo());
       }
     }

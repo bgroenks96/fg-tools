@@ -1,4 +1,4 @@
-package ch.fourmilab.randomX;
+package com.forerunnergames.randomX;
 
 import java.net.URL;
 import java.io.InputStream;

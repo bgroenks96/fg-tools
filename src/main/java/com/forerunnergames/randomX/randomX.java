@@ -1,4 +1,4 @@
-package ch.fourmilab.randomX;
+package com.forerunnergames.randomX;
 
 /**
     Abstract superclass for emulations of java.util.Random with

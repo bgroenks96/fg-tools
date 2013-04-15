@@ -58,6 +58,13 @@ public class Point
     return hash;
   }
 
+  @Override
+  public String toString()
+  {
+    return String.format (getClass().getSimpleName() + ": (%1$6s, %2$6s)",
+                          getX(), getY());
+  }
+
   // End public interface
 
   // --------------------

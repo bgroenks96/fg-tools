@@ -9,6 +9,9 @@ public class Size2D
 {
   public Size2D (final int width, final int height)
   {
+    Arguments.checkLowerInclusiveBound (width,  0, "width");
+    Arguments.checkLowerInclusiveBound (height, 0, "height");
+
     width_  = width;
     height_ = height;
   }

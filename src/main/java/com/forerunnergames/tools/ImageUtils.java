@@ -93,13 +93,15 @@ public class ImageUtils
    * spriteWidth > sprite sheet width, if spriteHeight > sprite sheet height.
    */
   public static ImageDataRGBA loadSpriteRGBA (int spriteIndex,
-          int spriteWidth, int spriteHeight, ImageDataRGBA spriteSheetImageData)
+          Size2D spriteSize, ImageDataRGBA spriteSheetImageData)
           throws ImageLoadingException
   {
-    Arguments.checkLowerInclusiveBound (spriteIndex,  0, "spriteIndex");
-    Arguments.checkLowerExclusiveBound (spriteWidth,  0, "spriteWidth");
-    Arguments.checkLowerExclusiveBound (spriteHeight, 0, "spriteHeight");
+    Arguments.checkLowerInclusiveBound (spriteIndex, 0, "spriteIndex");
+    Arguments.checkIsNotNull (spriteSize, "spriteSize");
     Arguments.checkIsNotNull (spriteSheetImageData, "spriteSheetImageData");
+
+    int spriteWidth  = spriteSize.getWidth();
+    int spriteHeight = spriteSize.getHeight();
 
     ByteBuffer spriteSheetBuffer = spriteSheetImageData.asByteBuffer();
 

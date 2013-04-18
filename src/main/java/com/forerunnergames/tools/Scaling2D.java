@@ -1,4 +1,4 @@
-// Copyright © 2011 - 2012 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games
 package com.forerunnergames.tools;
 
 /**
@@ -7,9 +7,7 @@ package com.forerunnergames.tools;
  */
 public class Scaling2D
 {
-  // Begin public interface
-
-  public Scaling2D (float scalingX, float scalingY)
+  public Scaling2D (final float scalingX, final float scalingY)
   {
     x_ = scalingX;
     y_ = scalingY;
@@ -28,17 +26,10 @@ public class Scaling2D
   @Override
   public String toString()
   {
-    return String.format ("scaleX: %1$s, scaleY: %2$s", getX(), getY());
+    return String.format (getClass().getSimpleName() + ": (x: %1$6s, y: %2$6s)",
+                          getX(), getY());
   }
-
-  // End public interface
-
-  // --------------------
-
-  // Begin private interface
 
   private float x_;
   private float y_;
-
-  // End private interface
 }

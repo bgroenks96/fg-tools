@@ -64,8 +64,8 @@ public class Size2D
   @Override
   public String toString()
   {
-    return String.format (getClass().getSimpleName() + ": (%1$6s x %2$6s)",
-                          getWidth(), getHeight());
+    return String.format (getClass().getSimpleName() +
+            ": (w: %1$6s x h: %2$6s)", getWidth(), getHeight());
   }
 
   private final int height_;

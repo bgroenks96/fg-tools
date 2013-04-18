@@ -37,7 +37,7 @@ public class ImageDataRGBA
     return ImageUtils.getAlphaComponent (this, x, y);
   }
 
-  public int getAlphaAt (Point point)
+  public int getAlphaAt (Point2D point)
   {
     Arguments.checkIsNotNull (point, "point");
 
@@ -49,7 +49,7 @@ public class ImageDataRGBA
     return ImageUtils.getBlueComponent (this, x, y);
   }
 
-  public int getBlueAt (Point point)
+  public int getBlueAt (Point2D point)
   {
     Arguments.checkIsNotNull (point, "point");
 
@@ -68,7 +68,7 @@ public class ImageDataRGBA
     return ImageUtils.getGreenComponent (this, x, y);
   }
 
-  public int getGreenAt (Point point)
+  public int getGreenAt (Point2D point)
   {
     Arguments.checkIsNotNull (point, "point");
 
@@ -87,7 +87,7 @@ public class ImageDataRGBA
     return ImageUtils.getRedComponent (this, x, y);
   }
 
-  public int getRedAt (Point point)
+  public int getRedAt (Point2D point)
   {
     Arguments.checkIsNotNull (point, "point");
 

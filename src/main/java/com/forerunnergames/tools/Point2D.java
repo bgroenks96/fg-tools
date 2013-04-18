@@ -1,15 +1,13 @@
-// Copyright © 2011 - 2012 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games
 package com.forerunnergames.tools;
 
 /**
  *
  * @author Aaron Mahan
  */
-public class Point
+public class Point2D
 {
-  // Begin public interface
-
-  public Point (final int x, final int y)
+  public Point2D (final int x, final int y)
   {
     x_ = x;
     y_ = y;
@@ -18,17 +16,18 @@ public class Point
   @Override
   public boolean equals (Object object)
   {
-    boolean equals = false;
-
     if (this == object)
     {
-      equals = true;
+      return true;
     }
-    else if (object != null && object.getClass() == getClass())
-    {
-      Point point = (Point) object;
 
-      if (x_ == point.getX() && y_ == point.getY())
+    boolean equals = false;
+
+    if (object != null && object.getClass() == getClass())
+    {
+      Point2D point2D = (Point2D) object;
+
+      if (x_ == point2D.getX() && y_ == point2D.getY())
       {
         equals = true;
       }
@@ -61,18 +60,10 @@ public class Point
   @Override
   public String toString()
   {
-    return String.format (getClass().getSimpleName() + ": (%1$6s, %2$6s)",
+    return String.format (getClass().getSimpleName() + ": (x: %1$6s, y: %2$6s)",
                           getX(), getY());
   }
 
-  // End public interface
-
-  // --------------------
-
-  // Begin private interface
-
   private final int x_;
   private final int y_;
-
-  // End private interface
 }

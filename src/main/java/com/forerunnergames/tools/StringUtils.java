@@ -197,6 +197,23 @@ public class StringUtils
   }
 
   /**
+   * Removes any whitespace characters ( \t\n\x0B\f\r) from the
+   * specified string.
+   * 
+   * @param s The string to remove any whitespace from.
+   * 
+   * @return The whitespace-stripped string.
+   * 
+   * @see java.util.regex.Pattern
+   */
+  public static String stripWhitespace (String s)
+  {
+    Arguments.checkIsNotNull (s, "s");
+
+    return s.replaceAll ("\\s","");
+  }
+
+  /**
    * Converts a single word to the specified case.
    * 
    * @param word The word to convert, must not be null;

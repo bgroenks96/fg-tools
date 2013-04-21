@@ -7,45 +7,27 @@ package com.forerunnergames.tools;
  */
 public class Translation2D
 {
-  public Translation2D (Point2D point2d)
-  {
-    Arguments.checkIsNotNull (point2d, "point2d");
-
-    point2d_ = point2d;
-  }
-
   public Translation2D (int translationX, int translationY)
   {
-    point2d_ = new Point2D (translationX, translationY);
-  }
-
-  public Point2D getPoint2D()
-  {
-    assert point2d_ != null;
-
-    return point2d_;
+    translationX_ = translationX;
+    translationY_ = translationY;
   }
 
   public int getX()
   {
-    assert point2d_ != null;
-
-    return point2d_.getX();
+    return translationX_;
   }
 
   public int getY()
   {
-    assert point2d_ != null;
-
-    return point2d_.getY();
+    return translationY_;
   }
 
   @Override
   public String toString()
   {
-    assert point2d_ != null;
-
-    return getClass().getSimpleName() + ": " + point2d_;
+    return String.format (getClass().getSimpleName() + ": (%1$6s, %2$62)",
+                          translationX_, translationY_);
   }
 
   private Translation2D()
@@ -53,5 +35,6 @@ public class Translation2D
     ClassUtils.defaultConstructorNotSupported();
   }
 
-  Point2D point2d_;
+  int translationX_;
+  int translationY_;
 }

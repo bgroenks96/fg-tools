@@ -5,6 +5,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 
 import java.awt.event.KeyEvent;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
@@ -425,6 +427,26 @@ public class StringUtils
     }
 
     return stringBuilder.toString();
+  }
+
+  /**
+   * Converts a throwable's stack trace to a string.
+   * 
+   * @param throwable The throwable who's stack trace will be converted to a
+   *                  string.
+   * 
+   * @return A string representation of the throwable's stack trace.
+   */
+  public static String toString (Throwable throwable)
+  {
+    Arguments.checkIsNotNull (throwable, "throwable");
+
+    StringWriter stringWriter = new StringWriter();
+    PrintWriter  printWriter  = new PrintWriter (stringWriter);
+
+    throwable.printStackTrace (printWriter);
+
+    return stringWriter.toString();
   }
 
   /**

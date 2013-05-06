@@ -299,7 +299,6 @@ public class LWJGLUtil {
 		return PLATFORM;
 	}
 
-
 	/**
 	 * @see #PLATFORM_WINDOWS_NAME
 	 * @see #PLATFORM_LINUX_NAME

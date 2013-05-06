@@ -229,7 +229,6 @@ public class Arguments
     }
   }
 
-
   /**
    * Checks if the specified integer is greater than or equal to 0.
    *
@@ -362,7 +361,6 @@ public class Arguments
       Arguments.illegalArgument (arrayName, argumentStatus);
     }
   }
-
 
   /**
    * Checks if the specified String is null, empty, or blank (whitespace only).

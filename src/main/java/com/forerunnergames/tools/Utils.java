@@ -64,7 +64,6 @@ public class Utils
     return ! Double.isInfinite (n) && ! Double.isNaN (n) && Math.floor (n) == n;
   }
 
-
   /**
    * Prints the specified text to the system console.
    * 

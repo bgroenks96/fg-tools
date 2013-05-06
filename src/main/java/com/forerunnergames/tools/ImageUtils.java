@@ -204,7 +204,6 @@ public class ImageUtils
       bufferedImage.getRGB (startX, startY, imageWidth, imageHeight, pixels,
                             offset, scanSize);
 
-
       for (int y = 0; y < imageHeight; ++y)
       {
         for (int x = 0; x < imageWidth; ++x)
@@ -240,7 +239,6 @@ public class ImageUtils
 
     return new ImageDataRGBA (byteBuffer, imageWidth, imageHeight);
   }
-
 
   /**
    * Loads ByteBuffer-backed RGBA image data from stream.

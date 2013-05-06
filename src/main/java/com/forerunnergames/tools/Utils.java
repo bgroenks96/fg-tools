@@ -89,7 +89,7 @@ public class Utils
    * @throws IOException If the external IP address of the local machine could
    *                     now be found.
    */
-  public String resolveExternalIpAddress() throws IOException
+  public static String resolveExternalIpAddress() throws IOException
   {
     URL externalIpURL = new URL (Utils.EXTERNAL_IP_API_URL);
 

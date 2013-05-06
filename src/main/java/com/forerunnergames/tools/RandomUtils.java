@@ -9,8 +9,6 @@ import java.util.List;
 
 //import ch.fourmilab.randomX.randomHotBits;
 
-// @TODO Uncomment static randomHotBits production code.
-
 /**
  * Static Utility Class for Random Number-related Functionality
  *

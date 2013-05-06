@@ -17,19 +17,6 @@ import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.Collection;
 
-// @TODO Read binary data.
-// @TODO Write tokens/lines/data to stream.
-// @TODO Refactor to use generics and getNextElement, discardNextElement, etc.
-// @TODO What is the difference between getting a single character from stream
-//       and getting a quoted string, and getting an unquoted string?
-// @TODO What if I want numbers treated as single characters or quoted/unquoted
-//       strings instead of numbers?
-// @TODO Can I change the delimiting character from space to something else?
-//       Will this cause other problems?
-// @TODO What if I want to read quoted/unquoted strings as individual
-//       characters?
-// @TODO Write unit tests.
-
 /**
  * 
  * @author Aaron Mahan

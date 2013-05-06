@@ -7,8 +7,6 @@ package com.forerunnergames.tools;
  */
 public class Delta
 {
-  // Begin public interface
-
   public Delta (final int dx, final int dy)
   {
     dx_ = dx;
@@ -58,14 +56,6 @@ public class Delta
     return hash;
   }
 
-  // End public interface
-
-  // --------------------
-
-  // Begin private interface
-
   private final int dx_;
   private final int dy_;
-
-  // End private interface
 }

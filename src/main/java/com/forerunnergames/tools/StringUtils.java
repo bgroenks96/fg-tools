@@ -19,8 +19,6 @@ import java.util.Map;
  */
 public class StringUtils
 {
-  // Being public interface
-
   /*
    * Gets the correct English article ("a" or "an") for the word proceeding it.
    * 
@@ -750,14 +748,8 @@ public class StringUtils
     return words.toString();
   }
   
-  // End public interface
-
-  // Begin private interface
-
   private StringUtils()
   {
     ClassUtils.instantiationNotAllowed();
   }
-
-  // End private interface
 }

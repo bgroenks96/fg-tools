@@ -11,8 +11,6 @@ import java.util.List;
  */
 public class DiceUtils 
 {
-  // Begin public interface
-
   /**
    * Get a preset (fake) dice roll. Useful for testing purposes.
    * It will get a preset (fake) dice roll until the presets are all used up,
@@ -103,12 +101,6 @@ public class DiceUtils
     return sum;
   }
 
-  // End public interface
-
-  // --------------------
-
-  // Begin private interface
-
   private static int currentTestRoll = 0;
 
   private static List <Integer> testRolls;
@@ -119,6 +111,4 @@ public class DiceUtils
   {
     ClassUtils.instantiationNotAllowed();
   }
-
-  // End private interface
 }

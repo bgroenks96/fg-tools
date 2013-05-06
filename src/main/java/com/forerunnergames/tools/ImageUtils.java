@@ -20,8 +20,6 @@ import lwjgl.BufferUtils;
  */
 public class ImageUtils 
 {
-  // Begin public interface
-
   /**
    * Gets the alpha component of the specified pixel from the specified
    * ByteBuffer.
@@ -284,12 +282,6 @@ public class ImageUtils
     return loadImageRGBA (bufferedImage);
   }
 
-  // End public interface
-
-  // --------------------
-
-  // Begin private interface
-
   private static final int ALPHA_COMPONENT_OFFSET = 3;
   private static final int BLUE_COMPONENT_OFFSET  = 2;
   private static final int GREEN_COMPONENT_OFFSET = 1;
@@ -326,6 +318,4 @@ public class ImageUtils
   {
     ClassUtils.instantiationNotAllowed();
   }
-
-  // End private interface
 }

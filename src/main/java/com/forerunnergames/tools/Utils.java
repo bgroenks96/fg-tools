@@ -13,8 +13,6 @@ import java.net.URL;
  */
 public class Utils
 {
-  // Begin public interface
-
   /**
    * Finds the key from its associated value in a multiMap.
    * 
@@ -128,10 +126,6 @@ public class Utils
     }
   }
 
-  // End public interface
-
-  // Begin private interface
-
   private Utils()
   {
     ClassUtils.instantiationNotAllowed();
@@ -139,5 +133,4 @@ public class Utils
 
   private static final String EXTERNAL_IP_API_URL =
           "http://api.externalip.net/ip/";
-  // End private interface
 }

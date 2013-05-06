@@ -11,8 +11,6 @@ import java.util.Collection;
  */
 public class Arguments
 {
-  // Begin public interface
-
   /**
    * Checks if the specified collection has any null elements.
    * <br/><br/>
@@ -804,10 +802,6 @@ public class Arguments
     }
   }
 
-  // End public interface
-
-  // Begin private interface
-
   private static void illegalArgument (String argumentName,
                                        Arguments.ArgumentStatus argumentStatus)
           throws IllegalArgumentException
@@ -841,6 +835,4 @@ public class Arguments
       this.toString = toString;
     }
   }
-
-  // End private interface
 }

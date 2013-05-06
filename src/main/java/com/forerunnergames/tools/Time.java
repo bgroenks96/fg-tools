@@ -8,8 +8,6 @@ package com.forerunnergames.tools;
  */
 public class Time
 {
-  // Begin public interface
-
   /**
    * Calculate the number of milliseconds based on the specified number of
    * seconds.
@@ -44,14 +42,8 @@ public class Time
     return (long) (seconds * 1000.0);
   }
 
-  // End public interface
-
-  // Begin private interface
-
   private Time()
   {
     ClassUtils.instantiationNotAllowed();
   }
-
-  // End private interface
 }

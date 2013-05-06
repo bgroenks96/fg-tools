@@ -20,8 +20,6 @@ import static org.mockito.Mockito.*;
  */
 public class DiceUtilsTest
 {
-  // Begin public interface
-
   @BeforeClass
   public static void setUpClass()
   {
@@ -70,13 +68,4 @@ public class DiceUtilsTest
   public static void tearDownClass()
   {
   }
-
-  // End public interface
-
-  // --------------------
-
-  // Begin private interface
-
-  // End private interface
 }
-

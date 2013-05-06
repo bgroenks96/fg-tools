@@ -36,8 +36,6 @@ import java.util.Collection;
  */
 public class StreamParser
 {
-  // Begin public interface.
-
   /*
    * Constructs a new StreamParser with the specified file.
    *
@@ -1070,12 +1068,6 @@ public class StreamParser
     checkTokenTypeEquals (TokenType.END_OF_FILE);
   }
 
-  // End public interface.
-
-  // --------------------------------------------------------------------------
-
-  // Begin protected interface.
-  
   /**
    * Default constructor not supported.
    * 
@@ -1085,10 +1077,6 @@ public class StreamParser
   {
     ClassUtils.defaultConstructorNotSupported();
   }
-
-  // End protected interface.
-
-  // Begin private interface.
 
   private void checkTokenContentEquals (String expectedTokenContent)
           throws StreamParserException
@@ -1377,6 +1365,4 @@ public class StreamParser
   private StreamTokenizer s;
 
   private static final int QUOTE_CHARACTER_ASCII_CODE = (int) '\"';
-
-  // End private interface.
 }

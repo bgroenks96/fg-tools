@@ -10,8 +10,6 @@ import com.forerunnergames.tools.ClassUtils;
 @SuppressWarnings("serial")
 public class StreamParserException extends Exception
 {
-  // Begin public interface
-
   public StreamParserException (String errorMessage)
   {
     super (errorMessage);
@@ -22,14 +20,8 @@ public class StreamParserException extends Exception
     super (error_message, cause);
   }
 
-  // End public interface
-
-  // Begin private interface
-
   private StreamParserException()
   {
     ClassUtils.defaultConstructorNotSupported();
   }
-
-  // End private interface
 }

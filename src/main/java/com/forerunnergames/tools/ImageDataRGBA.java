@@ -9,8 +9,6 @@ import java.nio.ByteBuffer;
  */
 public class ImageDataRGBA
 {
-  // Begin public interface
-
   public ImageDataRGBA (ByteBuffer imageBufferRGBA, int imageWidth,
                                                     int imageHeight)
   {
@@ -140,12 +138,6 @@ public class ImageDataRGBA
     return stringBuilder.toString();
   }
 
-  // End public interface
-
-  // --------------------
-
-  // Begin private interface
-
   private ImageDataRGBA()
   {
     ClassUtils.defaultConstructorNotSupported();
@@ -156,6 +148,4 @@ public class ImageDataRGBA
   private int        width_;
 
   private final int BYTES_PER_PIXEL_RGBA_ = 4;
-
-  // End private interface
 }

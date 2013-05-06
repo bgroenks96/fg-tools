@@ -10,8 +10,6 @@ import com.forerunnergames.tools.ClassUtils;
 @SuppressWarnings("serial")
 public class ImageLoadingException extends Exception
 {
-  // Begin public interface
-
   public ImageLoadingException (String errorMessage)
   {
     super (errorMessage);
@@ -22,14 +20,8 @@ public class ImageLoadingException extends Exception
     super (error_message, cause);
   }
 
-  // End public interface
-
-  // Begin private interface
-
   private ImageLoadingException()
   {
     ClassUtils.defaultConstructorNotSupported();
   }
-
-  // End private interface
 }

@@ -45,11 +45,12 @@ public class DiceUtilsTest
                                                           rollSum <= 12);
     }
 
-    System.out.println ("RollSum frequencies:\n\n");
+    Utils.printToConsole ("RollSum frequencies:\n\n");
 
     for (int i = 2; i <= 12; ++i)
     {
-      System.out.println (i + ": " + Collections.frequency (rollSums, i));
+      Utils.printToConsole (i + ": " + Collections.frequency (rollSums, i) +
+                            "\n\n");
 
       assertTrue ("Warning, rollSum of " + i + " is never rolled out of " +
                   rollTotal + " rolls!",

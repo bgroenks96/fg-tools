@@ -2,6 +2,10 @@
 package com.forerunnergames.tools;
 
 import com.google.common.collect.Multimap;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 /**
  * 
@@ -77,6 +81,27 @@ public class Utils
   }
 
   /**
+   * Resolves the external IP address of the local machine as a string
+   * representation in the format "###.###.###.###" (quotes not included). Each
+   * octet may be anywhere from 1 to 3 numerical digits in length.
+   * 
+   * @return A string representation of the external IP address of the local
+   *         machine.
+   * 
+   * @throws IOException If the external IP address of the local machine could
+   *                     now be found.
+   */
+  public String resolveExternalIpAddress() throws IOException
+  {
+    URL externalIpURL = new URL (Utils.EXTERNAL_IP_API_URL);
+
+    BufferedReader bufferedReader = new BufferedReader (
+                    new InputStreamReader (externalIpURL.openStream()));
+
+    return bufferedReader.readLine();
+  }
+
+  /**
    * Cause the current thread to sleep for the specified number of milliseconds.
    * <br/><br/>
    * Note: This function is interrupt-friendly (i.e. allows interruption).
@@ -112,5 +137,7 @@ public class Utils
     ClassUtils.instantiationNotAllowed();
   }
 
+  private static final String EXTERNAL_IP_API_URL =
+          "http://api.externalip.net/ip/";
   // End private interface
 }

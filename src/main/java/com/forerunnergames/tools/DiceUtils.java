@@ -1,4 +1,4 @@
-// Copyright © 2011 - 2012 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games
 package com.forerunnergames.tools;
 
 import java.util.ArrayList;

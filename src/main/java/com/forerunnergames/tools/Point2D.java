@@ -25,9 +25,9 @@ public class Point2D
 
     if (object != null && object.getClass() == getClass())
     {
-      Point2D point2D = (Point2D) object;
+      Point2D point = (Point2D) object;
 
-      if (x_ == point2D.getX() && y_ == point2D.getY())
+      if (x_ == point.getX() && y_ == point.getY())
       {
         equals = true;
       }

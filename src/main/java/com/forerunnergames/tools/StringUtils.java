@@ -433,7 +433,7 @@ public class StringUtils
    * Converts a throwable's stack trace to a string.
    * 
    * @param throwable The throwable who's stack trace will be converted to a
-   *                  string.
+   *                  string, must not be null.
    * 
    * @return A string representation of the throwable's stack trace.
    */

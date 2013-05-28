@@ -102,7 +102,7 @@ public class Utils
   /**
    * Cause the current thread to sleep for the specified number of milliseconds.
    * <br/><br/>
-   * Note: This function is interrupt-friendly (i.e. allows interruption).
+   * Note: This method is interrupt-friendly (i.e. allows interruption).
    * 
    * @param milliseconds The number of milliseconds to sleep for, must be
    *                     greater than zero.

@@ -144,7 +144,7 @@ public class StringUtils
    * 
    * @param s The string to check, must not be null.
    * 
-   * @return True if the string s is comprised of only whitespace.
+   * @return True if the string s is comprised of only whitespace or is empty.
    */
   public static boolean isWhitespace (String s)
   {
@@ -568,7 +568,8 @@ public class StringUtils
    * @param letterCase The desired letter case of the list elements, must not be
    *                   null, choose Case.NONE to leave the list elements as-is.
    * @param hasAnd     Whether or not to insert the word 'and ' between the last
-   *                   two elements in the list, one space after the last comma.
+   *                   two elements in the list, one space after the last
+   *                   separator.
    * @return A string list of listElements, separated by separator, in case
    *         letterCase, with an optional 'and ' occurring between the last two
    *         elements of the list.

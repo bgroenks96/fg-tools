@@ -102,6 +102,23 @@ public class StringUtils
   }
 
   /**
+   * Checks whether the string s is comprised of only alphanumeric characters
+   * (a to z, A to Z, or 0-9).
+   * 
+   * @param s The string to check, must not be null.
+   * 
+   * @return True if the string s is comprised of only alphanumeric characters.
+   * False if the string s is empty, contains whitespace or any
+   * non-alphanumeric character.
+   */
+  public static boolean isAlphanumeric (String s)
+  {
+    Arguments.checkIsNotNull (s, "s"); 
+
+    return s.matches ("[a-zA-Z0-9]+");
+  }
+
+  /**
    * Checks whether the character c is a printable character.
    *
    * @param c The character to check.

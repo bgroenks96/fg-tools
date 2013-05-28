@@ -1,6 +1,8 @@
 // Copyright © 2011 - 2013 Forerunner Games
 package com.forerunnergames.tools;
 
+import com.google.common.collect.Iterables;
+
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -12,21 +14,21 @@ import java.util.Collection;
 public class Arguments
 {
   /**
-   * Checks if the specified collection has any null elements.
+   * Checks if the specified iterable has any null elements.
    * <br/><br/>
-   * Note: The check will pass if the collection itself is null.
+   * Note: The check will pass if the iterable itself is null.
    *
-   * @param collection The collection to check, may be null.
-   * @param collectionName The name of the collection to check, may be null.
+   * @param iterable The iterable to check, may be null.
+   * @param iterableName The name of the iterable to check, may be null.
    *
-   * @throws IllegalArgumentException If the collection has any null elements.
+   * @throws IllegalArgumentException If the iterable has any null elements.
    */
-  public static void checkHasNoNullElements (Collection <?> collection,
-                                             String collectionName)
+  public static void checkHasNoNullElements (Iterable <?> iterable,
+                                             String iterableName)
   {
-    if (collection != null && collection.contains (null))
+    if (iterable != null && Iterables.contains (iterable, null))
     {
-      Arguments.illegalArgument (collectionName, ArgumentStatus.NULL_ELEMENTS);
+      Arguments.illegalArgument (iterableName, ArgumentStatus.NULL_ELEMENTS);
     }
   }
 

@@ -1,11 +1,14 @@
 // Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
+/**
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+*/
 
 public class Textures
 {
+  /**
   public static Texture loadTexture (String        name,
                                      BufferedImage bufferedImage,
                                      ImageFormat   format,
@@ -48,4 +51,5 @@ public class Textures
   {
     Classes.instantiationNotAllowed();
   }
+  */
 }

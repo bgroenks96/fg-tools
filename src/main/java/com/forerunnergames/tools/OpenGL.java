@@ -1,7 +1,7 @@
 // Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
-/**
 package com.forerunnergames.tools;
 
+/**
 import java.nio.ByteBuffer;
 
 import org.lwjgl.opengl.GL11;
@@ -10,9 +10,11 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
+*/
 
 public class OpenGL
 {
+  /**
   public static void clearScreen()
   {
     GL11.glClearColor (0.0f, 0.0f, 0.0f, 1.0f);
@@ -124,5 +126,5 @@ public class OpenGL
   {
     Classes.instantiationNotAllowed();
   }
+  */
 }
- **/

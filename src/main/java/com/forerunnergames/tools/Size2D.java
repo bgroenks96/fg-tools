@@ -1,10 +1,6 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
-/**
- *
- * @author Aaron Mahan
- */
 public class Size2D
 {
   public Size2D (final int width, final int height)
@@ -12,8 +8,8 @@ public class Size2D
     Arguments.checkLowerInclusiveBound (width,  0, "width");
     Arguments.checkLowerInclusiveBound (height, 0, "height");
 
-    width_  = width;
-    height_ = height;
+    this.width  = width;
+    this.height = height;
   }
 
   @Override
@@ -30,7 +26,7 @@ public class Size2D
     {
       Size2D size2D = (Size2D) object;
 
-      if (width_ == size2D.getWidth() && height_ == size2D.getHeight())
+      if (this.width == size2D.getWidth() && this.height == size2D.getHeight())
       {
         equals = true;
       }
@@ -39,14 +35,19 @@ public class Size2D
     return equals;
   }
 
+  public long calculateArea()
+  {
+    return (long) this.width * this.height;
+  }
+
   public int getHeight()
   {
-    return height_;
+    return this.height;
   }
 
   public int getWidth()
   {
-    return width_;
+    return this.width;
   }
 
   @Override
@@ -55,8 +56,8 @@ public class Size2D
 
     int hash = 3;
 
-    hash = 97 * hash + height_;
-    hash = 97 * hash + width_;
+    hash = 97 * hash + this.height;
+    hash = 97 * hash + this.width;
 
     return hash;
   }
@@ -68,6 +69,6 @@ public class Size2D
             ": (w: %1$6s x h: %2$6s)", getWidth(), getHeight());
   }
 
-  private final int height_;
-  private final int width_;
+  private final int height;
+  private final int width;
 }

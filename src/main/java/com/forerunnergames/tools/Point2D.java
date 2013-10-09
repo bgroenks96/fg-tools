@@ -1,10 +1,6 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
-/**
- *
- * @author Aaron Mahan
- */
 public class Point2D
 {
   public Point2D (final int x, final int y)

@@ -1,4 +1,4 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import com.google.common.collect.Iterables;
@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Static Utility Class for String-related Functionality
  * 
- * @author Aaron Mahan
+ * @author Aaron Mahan <aaron@forerunnergames.com>
  */
 public class StringUtils
 {
@@ -234,12 +234,12 @@ public class StringUtils
    * Converts a single word to the specified case.
    * 
    * @param word The word to convert, must not be null;
-   * @param letterCase The case to convert the word to, use Case.NONE to leave
+   * @param letterCase The case to convert the word to, use LetterCase.NONE to leave
    *                   the word as-is, must not be null.
    * 
    * @return  The word, converted to the specified case.
    */
-  public static String toCase (String word, Case letterCase)
+  public static String toCase (String word, LetterCase letterCase)
   {
     Arguments.checkIsNotNull (word,       "word");
     Arguments.checkIsNotNull (letterCase, "letterCase");
@@ -566,7 +566,7 @@ public class StringUtils
    * @param separator The separator that should be added between list elements,
    *                  must not be null.
    * @param letterCase The desired letter case of the list elements, must not be
-   *                   null, choose Case.NONE to leave the list elements as-is.
+   *                   null, choose LetterCase.NONE to leave the list elements as-is.
    * @param hasAnd     Whether or not to insert the word 'and ' between the last
    *                   two elements in the list, one space after the last
    *                   separator.
@@ -575,7 +575,7 @@ public class StringUtils
    *         elements of the list.
    */
   public static <T> String toStringList (Collection <T> listElements,
-          String separator, Case letterCase, boolean hasAnd)
+          String separator, LetterCase letterCase, boolean hasAnd)
   {
     Arguments.checkIsNotNull         (listElements, "listElements");
     Arguments.checkHasNoNullElements (listElements, "listElements");
@@ -768,6 +768,6 @@ public class StringUtils
   
   private StringUtils()
   {
-    ClassUtils.instantiationNotAllowed();
+    Classes.instantiationNotAllowed();
   }
 }

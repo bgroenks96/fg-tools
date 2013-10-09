@@ -1,4 +1,4 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import java.security.NoSuchAlgorithmException;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Static Utility Class for Random Number-related Functionality
  *
- * @author Aaron Mahan
+ * @author Aaron Mahan <aaron@forerunnergames.com>
  */
 public class RandomUtils
 {

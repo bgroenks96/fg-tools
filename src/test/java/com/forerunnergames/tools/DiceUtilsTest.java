@@ -12,10 +12,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Aaron Mahan
- */
 public class DiceUtilsTest
 {
   @BeforeClass

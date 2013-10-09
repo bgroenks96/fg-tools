@@ -1,12 +1,10 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
-/**
- *
- * @author Aaron Mahan
- */
 public class Scaling2D
 {
+  public static final Scaling2D NONE = new Scaling2D (1.0f, 1.0f);
+
   public Scaling2D (final float scalingX, final float scalingY)
   {
     x_ = scalingX;

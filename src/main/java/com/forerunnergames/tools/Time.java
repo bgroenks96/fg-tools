@@ -1,10 +1,10 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 /**
  * Static Utility Class for Time-related Functionality
  * 
- * @author Aaron Mahan
+ * @author Aaron Mahan <aaron@forerunnergames.com>
  */
 public class Time
 {
@@ -44,6 +44,6 @@ public class Time
 
   private Time()
   {
-    ClassUtils.instantiationNotAllowed();
+    Classes.instantiationNotAllowed();
   }
 }

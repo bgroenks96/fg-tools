@@ -1,14 +1,10 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- *
- * @author Aaron Mahan
- */
 public class DiceUtils 
 {
   /**
@@ -109,6 +105,6 @@ public class DiceUtils
 
   private DiceUtils()
   {
-    ClassUtils.instantiationNotAllowed();
+    Classes.instantiationNotAllowed();
   }
 }

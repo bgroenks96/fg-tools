@@ -1,4 +1,4 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import com.forerunnergames.tools.exceptions.StreamParserException;
@@ -17,10 +17,6 @@ import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * 
- * @author Aaron Mahan
- */
 public class StreamParser
 {
   /*
@@ -31,11 +27,11 @@ public class StreamParser
    * @throws StreamParserException If the file cannot be open or found.
    */
   public StreamParser (File file) throws StreamParserException
-  { 
+  {
     Arguments.checkIsNotNull (file, "file");
 
     initialize (file);
-  } 
+  }
 
   /*
    * Constructs a new StreamParser with the specified filename.
@@ -46,11 +42,11 @@ public class StreamParser
    * @throws StreamParserException If filename cannot be open or found.
    */
   public StreamParser (String fileName) throws StreamParserException
-  { 
+  {
     Arguments.checkIsNotNullOrEmptyOrBlank (fileName, "fileName");
 
     initialize (fileName);
-  } 
+  }
 
   /*
    * Constructs a new StreamParser with the specified inputStream.
@@ -58,11 +54,11 @@ public class StreamParser
    * @param inputStream The input stream to parse, must not be null.
    */
   public StreamParser (InputStream inputStream)
-  { 
+  {
     Arguments.checkIsNotNull (inputStream, "inputStream");
 
     initialize (inputStream);
-  } 
+  }
 
   /*
    * Constructs a new StreamParser with the specified reader.
@@ -71,15 +67,15 @@ public class StreamParser
    *               must not be null.
    */
   public StreamParser (Reader reader)
-  { 
+  {
     Arguments.checkIsNotNull (reader, "reader");
 
     initialize (reader);
-  } 
+  }
 
   /**
    * Close the StreamParser and any associated open IO resources.
-   * 
+   *
    * @throws StreamParserException If the open IO resources cannot be closed.
    */
   public void close() throws StreamParserException
@@ -106,7 +102,7 @@ public class StreamParser
    *                                    character (excluding EOF).
    */
   public void discardNextCharacter() throws StreamParserException
-  {    
+  {
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.SINGLE_CHARACTER);
@@ -171,7 +167,7 @@ public class StreamParser
    */
   public void discardNextCharacters (Collection <Character> characters)
           throws StreamParserException
-  {      
+  {
     Arguments.checkIsNotNullOrEmpty  (characters, "characters");
     Arguments.checkHasNoNullElements (characters, "characters");
 
@@ -195,7 +191,7 @@ public class StreamParser
    *                                    (excluding EOF).
    */
   public void discardNextDouble() throws StreamParserException
-  {    
+  {
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.DOUBLE);
@@ -234,7 +230,7 @@ public class StreamParser
   public void discardNextDoubles (int count) throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
-    
+
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
       discardNextDouble();
@@ -258,7 +254,7 @@ public class StreamParser
    */
   public void discardNextDoubles (Collection <Double> doubles)
           throws StreamParserException
-  {      
+  {
     Arguments.checkIsNotNullOrEmpty  (doubles, "doubles");
     Arguments.checkHasNoNullElements (doubles, "doubles");
 
@@ -282,7 +278,7 @@ public class StreamParser
    *                                    (excluding EOF).
    */
   public void discardNextInteger() throws StreamParserException
-  {    
+  {
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.INTEGER);
@@ -321,7 +317,7 @@ public class StreamParser
   public void discardNextIntegers (int count) throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
-    
+
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
       discardNextInteger();
@@ -345,7 +341,7 @@ public class StreamParser
    */
   public void discardNextIntegers (Collection <Integer> integers)
           throws StreamParserException
-  {      
+  {
     Arguments.checkIsNotNullOrEmpty  (integers, "integers");
     Arguments.checkHasNoNullElements (integers, "integers");
 
@@ -482,7 +478,7 @@ public class StreamParser
    */
   public void discardNextQuotedStrings (Collection <String> quotedStrings)
           throws StreamParserException
-  {     
+  {
     Arguments.checkIsNotNullOrEmpty  (quotedStrings, "quotedStrings");
     Arguments.checkHasNoNullElements (quotedStrings, "quotedStrings");
 
@@ -535,7 +531,7 @@ public class StreamParser
    *                                    string (excluding EOF).
    */
   public void discardNextUnquotedString() throws StreamParserException
-  {    
+  {
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.UNQUOTED_STRING);
@@ -558,7 +554,7 @@ public class StreamParser
           throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmptyOrBlank (unquotedString, "unquotedString");
-    
+
     discardNextUnquotedString();
 
     checkTokenContentEquals (unquotedString);
@@ -623,7 +619,7 @@ public class StreamParser
   /**
    * Configures the StreamParser for CSV (comma separated values) files.
    */
-  public void enableCSVSyntax()
+  public StreamParser withCSVSyntax()
   {
     assert this.s != null;
 
@@ -645,15 +641,17 @@ public class StreamParser
     this.s.whitespaceChars    (44,  44);
     this.s.wordChars          (45,  47);
     this.s.wordChars          (58, 255);
+
+    return this;
   }
 
   /**
    * Attempt to get the next single character from the stream.
    * <br/><br/>
    * Note: This method will return -1 if EOF is encountered.
-   * 
+   *
    * @return The next single character code in the stream, or -1 on EOF.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next token from the stream,
    *                               <br/>If the next token is not a single
@@ -678,9 +676,9 @@ public class StreamParser
    *
    * @param count The number of single characters to get from the stream,
    *              must be > 0.
-   * 
+   *
    * @return A collection of single character codes from the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream,
    *                               <br/>If the next count tokens are not single
@@ -690,7 +688,7 @@ public class StreamParser
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
-    
+
     Collection <Integer> characterCodes = new ArrayList <Integer> (count);
 
     for (int i = 0; i < count && ! isEOF(); ++i)
@@ -707,14 +705,14 @@ public class StreamParser
    * Note: This method will return Double.MIN_VALUE if EOF is encountered.
    *
    * @return The next double in the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next token from the stream,
    *                               <br/>If the next token is not a double
    *                                    (excluding EOF).
    */
   public double getNextDouble() throws StreamParserException
-  {    
+  {
     assert this.s != null;
 
     parseNextToken();
@@ -730,11 +728,11 @@ public class StreamParser
    * Note: If EOF is encountered before the last double to get, then the size
    *       of the collection will be smaller than count, and the last double in
    *       the collection will have a value of Double.MIN_VALUE, indicating EOF.
-   * 
+   *
    * @param count The number of doubles to get from the stream, must be > 0.
-   * 
+   *
    * @return A collection of doubles from the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream,
    *                               <br/>If the next count tokens are not doubles
@@ -760,14 +758,14 @@ public class StreamParser
    * Note: This method will return Integer.MIN_VALUE if EOF is encountered.
    *
    * @return The next integer in the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next token from the stream,
    *                               <br/>If the next token is not an integer
    *                                    (excluding EOF).
    */
   public int getNextInteger() throws StreamParserException
-  {    
+  {
     assert this.s != null;
 
     parseNextToken();
@@ -784,11 +782,11 @@ public class StreamParser
    *       of the collection will be smaller than count, and the last integer in
    *       the collection will have a value of Integer.MIN_VALUE,
    *       indicating EOF.
-   * 
+   *
    * @param count The number of integers to get from the stream, must be > 0.
-   * 
+   *
    * @return A collection of integers from the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream,
    *                               <br/>If the next count tokens are not
@@ -816,14 +814,14 @@ public class StreamParser
    *       will return an empty string if EOF is encountered.
    *
    * @return The next line in the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next line from the stream (excluding
    *                                    EOF)
    */
   public String getNextLine() throws StreamParserException
   {
-    StringBuilder stringBuilder = new StringBuilder(); 
+    StringBuilder stringBuilder = new StringBuilder();
 
     enableEndOfLineTokens();
 
@@ -839,7 +837,7 @@ public class StreamParser
     while (! isEOL() && ! isEOF());
 
     disableEndOfLineTokens();
-    
+
     return stringBuilder.toString().trim();
   }
 
@@ -850,11 +848,11 @@ public class StreamParser
    *       encountered before the last line to get, then the size of the
    *       collection will be smaller than count, and the last line in the
    *       collection will be empty, to indicate EOF.
-   * 
+   *
    * @param count The number of lines to get from the stream, must be > 0.
-   * 
+   *
    * @return A collection of lines from the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream
    *                                    (excluding EOF)
@@ -880,14 +878,14 @@ public class StreamParser
    * Note: This method will return an empty string if EOF is encountered.
    *
    * @return The next quoted string in the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next token from the stream,
    *                               <br/>If the next token is not a quoted string
    *                                    (excluding EOF).
    */
   public String getNextQuotedString() throws StreamParserException
-  { 
+  {
     assert this.s != null;
 
     parseNextToken();
@@ -903,12 +901,12 @@ public class StreamParser
    * Note: If EOF is encountered before the last quoted string to get, then the
    *       size of the collection will be smaller than count, and the last
    *       quoted string in the collection will be empty, indicating EOF.
-   * 
+   *
    * @param count The number of quoted strings to get from the stream,
    *              must be > 0.
-   * 
+   *
    * @return An collection of quoted strings from the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream,
    *                               <br/>If the next count tokens are not
@@ -933,9 +931,9 @@ public class StreamParser
    * Attempt to get the next token from the stream.
    * <br/><br/>
    * Note: This method will return an empty string if EOF is encountered.
-   * 
+   *
    * @return The next token in the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next token from the stream.
    */
@@ -952,11 +950,11 @@ public class StreamParser
    * Note: If EOF is encountered before the last token to get, then the size of
    *       the collection will be smaller than count, and the last token in the
    *       collection will be an empty string, indicating EOF.
-   * 
+   *
    * @param count The number of tokens to get from the stream, must be > 0.
-   * 
+   *
    * @return A collection of tokens from the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream.
    */
@@ -979,9 +977,9 @@ public class StreamParser
    * Attempt to get the next unquoted string from the stream.
    * <br/><br/>
    * Note: This method will return an empty string if EOF is encountered.
-   * 
+   *
    * @return The next unquoted string in the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next token from the stream,
    *                               <br/>If the next token is not an unquoted
@@ -1004,12 +1002,12 @@ public class StreamParser
    * Note: If EOF is encountered before the last unquoted string to get, then
    *       the size of the collection will be smaller than count, and the last
    *       unquoted string in the collection will be empty, indicating EOF.
-   * 
+   *
    * @param count The number of unquoted strings to get from the stream,
    *              must be > 0.
-   * 
+   *
    * @return An collection of unquoted strings from the stream.
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream,
    *                               <br/>If the next count tokens are not
@@ -1043,13 +1041,13 @@ public class StreamParser
   /**
    * Parse the next token and verify that it is EOF.
    *
-   * 
+   *
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next token from the stream,
    *                               <br/>If the next token is not the EOF token.
    */
   public void verifyEndOfFile() throws StreamParserException
-  {    
+  {
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.END_OF_FILE);
@@ -1057,12 +1055,12 @@ public class StreamParser
 
   /**
    * Default constructor not supported.
-   * 
+   *
    * @throws UnsupportedOperationException When called.
    */
   protected StreamParser()
   {
-    ClassUtils.defaultConstructorNotSupported();
+    Classes.defaultConstructorNotSupported();
   }
 
   private void checkTokenContentEquals (String expectedTokenContent)
@@ -1087,7 +1085,7 @@ public class StreamParser
           throws StreamParserException
   {
     assert expectedTokenType != null;
-    
+
     TokenType actualTokenType = getCurrentTokenType();
 
     if (! isEOF() && actualTokenType != expectedTokenType)
@@ -1108,7 +1106,7 @@ public class StreamParser
   private void enableEndOfLineTokens()
   {
     assert this.s != null;
-    
+
     this.s.eolIsSignificant (true);
   }
 
@@ -1180,14 +1178,14 @@ public class StreamParser
   private String getCurrentTokenInfo()
   {
     assert this.s != null;
-    
+
     return this.s.toString();
   }
-  
+
   private TokenType getCurrentTokenType() throws StreamParserException
   {
     assert this.s != null;
-    
+
     TokenType currentTokenType = null;
 
     switch (this.s.ttype)

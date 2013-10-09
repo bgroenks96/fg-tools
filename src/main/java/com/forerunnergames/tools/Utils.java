@@ -1,4 +1,4 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import com.google.common.collect.Multimap;
@@ -10,7 +10,7 @@ import java.net.URL;
 
 /**
  * 
- * @author Aaron Mahan
+ * @author Aaron Mahan <aaron@forerunnergames.com>
  */
 public class Utils
 {
@@ -128,7 +128,7 @@ public class Utils
 
   private Utils()
   {
-    ClassUtils.instantiationNotAllowed();
+    Classes.instantiationNotAllowed();
   }
 
   private static final String EXTERNAL_IP_API_URL =

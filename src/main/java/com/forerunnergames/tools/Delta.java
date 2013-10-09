@@ -1,32 +1,29 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
-/**
- *
- * @author Aaron Mahan
- */
 public class Delta
 {
   public Delta (final int dx, final int dy)
   {
-    dx_ = dx;
-    dy_ = dy;
+    this.dx = dx;
+    this.dy = dy;
   }
 
   @Override
   public boolean equals (Object object)
   {
-    boolean equals = false;
-
     if (this == object)
     {
-      equals = true;
+      return true;
     }
-    else if (object != null && object.getClass() == getClass())
+
+    boolean equals = false;
+
+    if (object != null && object.getClass() == getClass())
     {
       Delta delta = (Delta) object;
 
-      if (dx_ == delta.getDx() && dy_ == delta.getDy())
+      if (dx == delta.getDx() && dy == delta.getDy())
       {
         equals = true;
       }
@@ -37,12 +34,12 @@ public class Delta
 
   public int getDx()
   {
-    return dx_;
+    return dx;
   }
 
   public int getDy()
   {
-    return dy_;
+    return dy;
   }
 
   @Override
@@ -50,12 +47,12 @@ public class Delta
   {
     int hash = 7;
 
-    hash = 23 * hash + dx_;
-    hash = 23 * hash + dy_;
+    hash = 23 * hash + dx;
+    hash = 23 * hash + dy;
 
     return hash;
   }
 
-  private final int dx_;
-  private final int dy_;
+  private final int dx;
+  private final int dy;
 }

@@ -1,12 +1,10 @@
-// Copyright © 2011 - 2013 Forerunner Games
+// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
-/**
- *
- * @author Aaron Mahan
- */
 public class Translation2D
 {
+  public static final Translation2D NONE = new Translation2D (0, 0);
+
   public Translation2D (int translationX, int translationY)
   {
     translationX_ = translationX;
@@ -32,9 +30,9 @@ public class Translation2D
 
   private Translation2D()
   {
-    ClassUtils.defaultConstructorNotSupported();
+    Classes.defaultConstructorNotSupported();
   }
 
-  int translationX_;
-  int translationY_;
+  private int translationX_;
+  private int translationY_;
 }

@@ -1,4 +1,5 @@
 // Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
+/**
 package com.forerunnergames.tools;
 
 import java.nio.ByteBuffer;
@@ -124,3 +125,4 @@ public class OpenGL
     Classes.instantiationNotAllowed();
   }
 }
+ **/

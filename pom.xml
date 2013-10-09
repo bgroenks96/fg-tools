@@ -13,7 +13,6 @@
   </organization>
 
   <properties>
-    <lwjgl.version>2.9.0</lwjgl.version>
     <mockito.version>1.9.5</mockito.version>
     <powermock.version>1.5</powermock.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,16 +24,6 @@
       <artifactId>guava</artifactId>
       <version>13.0.1</version>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.lwjgl.lwjgl</groupId>
-      <artifactId>lwjgl</artifactId>
-      <version>${lwjgl.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.lwjgl.lwjgl</groupId>
-      <artifactId>lwjgl_util</artifactId>
-      <version>${lwjgl.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>

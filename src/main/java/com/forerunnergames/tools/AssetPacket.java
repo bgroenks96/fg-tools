@@ -4,4 +4,5 @@ package com.forerunnergames.tools;
 public interface AssetPacket
 {
   public String getName();
+  public int getId();
 }

@@ -47,6 +47,7 @@ public class Asset implements Comparable <Asset>, AssetPacket
     return equals;
   }
 
+  @Override
   public int getId()
   {
     return id;

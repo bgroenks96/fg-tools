@@ -1,7 +1,7 @@
 // Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
-public class Asset implements Comparable <Asset>
+public class Asset implements Comparable <Asset>, AssetPacket
 {
   public Asset (final int id)
   {

@@ -52,6 +52,7 @@ public class Asset implements Comparable <Asset>, AssetPacket
     return id;
   }
 
+  @Override
   public String getName()
   {
     return name;

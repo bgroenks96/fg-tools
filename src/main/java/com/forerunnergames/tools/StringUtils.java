@@ -81,6 +81,28 @@ public class StringUtils
   }
 
   /**
+   * Deletes the last character from the specified StringBuilder.
+   *
+   * @param s The StringBuilder from which to delete the last character, must not be null, may be empty.
+   *
+   * @return The StringBuilder with its last character deleted and any remaining characters shifted left, or the
+   * original StringBuilder if it was already empty.
+   */
+  public static StringBuilder deleteLastChar (final StringBuilder s)
+  {
+    Arguments.checkIsNotNull (s, "s");
+
+    if (s.length() > 0)
+    {
+      return s.deleteCharAt (s.length() - 1);
+    }
+    else
+    {
+      return s;
+    }
+  }
+
+  /**
    * Gets a trimmed substring from the specified string. Any extra whitespace
    * will be deleted from the beginning and end of the substring.
    * 

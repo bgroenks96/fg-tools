@@ -52,6 +52,20 @@ public class StringUtils
   }
 
   /**
+   * Deletes the contents of the specified StringBuilder
+   *
+   * @param s The StringBuilder to delete the content of, must not be null.
+   *
+   * @return The empty StringBuilder.
+   */
+  public static StringBuilder clear (final StringBuilder s)
+  {
+    Arguments.checkIsNotNull (s, "s");
+
+    return s.delete (0, s.length());
+  }
+
+  /**
    * Replaces any duplicate whitespace in a string with a single space, also
    * removing tabs, newlines, etc in the process.
    * 

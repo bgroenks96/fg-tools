@@ -150,6 +150,18 @@ public class StringUtils
   }
 
   /**
+   * Checks whether the string s is a printable string.
+   *
+   * @param s The string to check.
+   *
+   * @return True if the string s is a printable string, false if it is null, empty, or whitespace-only.
+   */
+  public static boolean isPrintable (final String s)
+  {
+    return s != null && ! s.isEmpty() && ! isWhitespace (s);
+  }
+
+  /**
    * Checks whether the string s is comprised of only whitespace.
    * <br/><br/>
    * Note: The input string may contain supplementary characters.

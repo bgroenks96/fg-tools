@@ -139,7 +139,7 @@ public class StringUtils
    * 
    * @return True if the character c is a printable character, false otherwise.
    */
-  public static boolean isPrintableCharacter (char c)
+  public static boolean isPrintable (char c)
   {
     Character.UnicodeBlock unicodeBlock = Character.UnicodeBlock.of (c);
 

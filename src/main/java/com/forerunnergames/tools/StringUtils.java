@@ -58,7 +58,7 @@ public class StringUtils
    *
    * @return The empty StringBuilder.
    */
-  public static StringBuilder clear (final StringBuilder s)
+  public static StringBuilder clear (StringBuilder s)
   {
     Arguments.checkIsNotNull (s, "s");
 
@@ -88,7 +88,7 @@ public class StringUtils
    * @return The StringBuilder with its last character deleted and any remaining characters shifted left, or the
    * original StringBuilder if it was already empty.
    */
-  public static StringBuilder deleteLastChar (final StringBuilder s)
+  public static StringBuilder deleteLastChar (StringBuilder s)
   {
     Arguments.checkIsNotNull (s, "s");
 

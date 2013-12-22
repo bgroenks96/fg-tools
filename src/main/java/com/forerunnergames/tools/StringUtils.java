@@ -475,30 +475,17 @@ public class StringUtils
   }
   
   /**
-   * Converts a single word to proper case (first letter is capitalized, all 
-   * subsequent characters are lowercase).
-   * 
+   * Converts a single word to proper case (first letter is capitalized, all subsequent characters are lowercase).
+   *
    * @param word The single word to convert to proper case, must not be null.
-   * 
+   *
    * @return The word converted to proper case.
    */
   public static String toProperCase (String word)
   {
     Arguments.checkIsNotNull (word, "word");
-
-    String lowerCaseWord = word.toLowerCase();
-
-    String properCaseWord = "";
-
-    if (word.length() > 0)
-    {
-      String firstLetter = lowerCaseWord.substring (0, 1);
-
-      properCaseWord = lowerCaseWord.replace (firstLetter,
-                                              firstLetter.toUpperCase());
-    }
-
-    return properCaseWord;
+    String firstLetter = word.toLowerCase().substring (0, 1);
+    return word.toLowerCase().replaceFirst (firstLetter, firstLetter.toUpperCase());
   }
 
   /**

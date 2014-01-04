@@ -599,18 +599,41 @@ public class Arguments
                                        final String    boundName,
                                        final BoundType boundType) throws IllegalArgumentException
   {
+    final int stackLevel = getStackLevelOfFirstClassOutsideThisClass();
     throw new IllegalArgumentException (valueName + " [value: " + value + "]" + " must be " +
                                         boundType.getMessage() + " " + boundName + " [value: " + bound + "] " +
-                                        "when invoking " + Classes.getClassName (1) + "." +
-                                        Methods.getMethodName (1) + ".");
+                                        "when invoking " + Classes.getClassName (stackLevel) + "." +
+                                        Methods.getMethodName (stackLevel) + ".");
+  }
+
+  private static int getStackLevelOfFirstClassOutsideThisClass()
+  {
+    final int maxStackLevel = getMaxStackLevel();
+    final String thisClassName = Classes.getClassName (0);
+
+    for (int stackLevel = 1; stackLevel <= maxStackLevel; ++stackLevel)
+    {
+      if (! thisClassName.equals (Classes.getClassName (stackLevel)))
+      {
+        return stackLevel - 1;
+      }
+    }
+
+    return maxStackLevel - 1;
+  }
+
+  private static int getMaxStackLevel()
+  {
+    return Thread.currentThread().getStackTrace().length - 1;
   }
 
   private static void illegalArgument (final String         argumentName,
                                        final ArgumentStatus argumentStatus) throws IllegalArgumentException
   {
-    throw new IllegalArgumentException ("\nLocation: " + Classes.getClassName (2) + "." +
-                                        Methods.getMethodName (2) + "\nReason:   argument '" + argumentName + "' " +
-                                        argumentStatus.getMessage());
+    final int stackLevel = getStackLevelOfFirstClassOutsideThisClass();
+    throw new IllegalArgumentException ("\nLocation: " + Classes.getClassName (stackLevel) + "." +
+                                        Methods.getMethodName (stackLevel) + "\nReason:   argument '" + argumentName +
+                                        "' " + argumentStatus.getMessage());
   }
 
   private enum ArgumentStatus

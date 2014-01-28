@@ -17,7 +17,7 @@ import java.util.Map;
  * 
  * @author Aaron Mahan <aaron@forerunnergames.com>
  */
-public class StringUtils
+public final class Strings
 {
   /*
    * Gets the correct English article ("a" or "an") for the word proceeding it.
@@ -370,7 +370,7 @@ public class StringUtils
    */
   public static String toMixedOrdinal (int n)
   {
-    String ordinal = StringUtils.toOrdinal (n);
+    String ordinal = Strings.toOrdinal (n);
 
     return n + ordinal.substring (ordinal.length() - 2);
   }
@@ -401,7 +401,7 @@ public class StringUtils
         nonOrdinalPart =
                 (int) ((Math.floor ((double) nonnegativeN / 100.0)) * 100.0);
 
-        ordinal.append (StringUtils.toWords (nonOrdinalPart));
+        ordinal.append (Strings.toWords (nonOrdinalPart));
 
         ordinalPart = nonnegativeN - nonOrdinalPart;
 
@@ -429,7 +429,7 @@ public class StringUtils
           case 12: ordinal.append ("twelfth");     break;
 
           default: ordinal.append(
-                           StringUtils.toWords(ordinalPart)).append ("th");
+                           Strings.toWords (ordinalPart)).append ("th");
                    break;
         }
       }
@@ -450,11 +450,11 @@ public class StringUtils
                      (int) ((Math.floor ((double) ordinalPart / 10.0)) * 10.0);
 
                    ordinal.append(
-                           StringUtils.toWords(nonOrdinalPart)).append ("-");
+                           Strings.toWords (nonOrdinalPart)).append ("-");
 
                    ordinalPart -= nonOrdinalPart;
 
-                   ordinal.append (StringUtils.toOrdinal (ordinalPart));
+                   ordinal.append (Strings.toOrdinal (ordinalPart));
 
                    break;
         }
@@ -660,8 +660,8 @@ public class StringUtils
     }
     else if (listElements.size() == 1)
     {
-      return StringUtils.toCase (
-              Iterables.getOnlyElement(listElements).toString(), letterCase);
+      return Strings.toCase (
+              Iterables.getOnlyElement (listElements).toString (), letterCase);
     }
     else if (listElements.size() == 2)
     {
@@ -671,17 +671,17 @@ public class StringUtils
       // "item1 and item2" or "item1,item2" (if no "and" is desired)
       // because "item1, and item2" doesn't make sense grammatically, which is
       // what would happen if we didn't treat this as a special case
-      return StringUtils.toCase (
-              iterator.next().toString() + (hasAnd? " and " : separator) +
-              iterator.next().toString(), letterCase);
+      return Strings.toCase (
+              iterator.next ().toString () + (hasAnd ? " and " : separator) +
+                      iterator.next ().toString (), letterCase);
     }
 
     StringBuilder s = new StringBuilder();
 
     for (T element : listElements)
     {
-      String elementString = StringUtils.toCase (element.toString(),
-                                                 letterCase);
+      String elementString = Strings.toCase (element.toString (),
+              letterCase);
       s.append(elementString).append (separator);
     }
 
@@ -767,13 +767,13 @@ public class StringUtils
 
         if (remainder != 0)
         {
-          words.append("-").append (StringUtils.toWords (remainder));
+          words.append ("-").append (Strings.toWords (remainder));
         }
       }
       else if (nonnegativeN >= 100 && nonnegativeN < 1000)
       {
         words.append (
-                StringUtils.toWords ((int) Math.floor (nonnegativeN / 100.0)));
+                Strings.toWords ((int) Math.floor (nonnegativeN / 100.0)));
 
         words.append (" hundred");
 
@@ -781,13 +781,13 @@ public class StringUtils
 
         if (remainder != 0)
         {
-          words.append(" and ").append (StringUtils.toWords (remainder));
+          words.append (" and ").append (Strings.toWords (remainder));
         }
       }
       else if (nonnegativeN >= 1000 && nonnegativeN < 1000000)
       {
         words.append (
-                StringUtils.toWords ((int) Math.floor (nonnegativeN / 1000.0)));
+                Strings.toWords ((int) Math.floor (nonnegativeN / 1000.0)));
 
         words.append (" thousand");
 
@@ -795,12 +795,12 @@ public class StringUtils
 
         if (remainder != 0)
         {
-          words.append(" ").append (StringUtils.toWords (remainder));
+          words.append (" ").append (Strings.toWords (remainder));
         }
       }
       else if (nonnegativeN >= 1000000 && nonnegativeN < 1000000000)
       {
-        words.append (StringUtils.toWords ((int) Math.floor (
+        words.append (Strings.toWords ((int) Math.floor (
                 (double) nonnegativeN / 1000000.0)));
 
         words.append (" million");
@@ -809,12 +809,12 @@ public class StringUtils
 
         if (remainder != 0)
         {
-          words.append(" ").append (StringUtils.toWords (remainder));
+          words.append (" ").append (Strings.toWords (remainder));
         }
       }
       else
       {
-        words.append (StringUtils.toWords ((int) Math.floor (
+        words.append (Strings.toWords ((int) Math.floor (
                 (double) nonnegativeN / 1000000000.0)));
         
         words.append (" billion");
@@ -823,7 +823,7 @@ public class StringUtils
 
         if (remainder != 0)
         {
-          words.append(" ").append (StringUtils.toWords (remainder));
+          words.append (" ").append (Strings.toWords (remainder));
         }
       }
     }
@@ -837,7 +837,7 @@ public class StringUtils
     return words.toString();
   }
   
-  private StringUtils()
+  private Strings ()
   {
     Classes.instantiationNotAllowed();
   }

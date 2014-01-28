@@ -135,7 +135,7 @@ public class AssetManager <T extends Asset>
   @Override
   public String toString()
   {
-    return String.format ("%1$s Registered Assets:\n%2$s", assets.size(), StringUtils.toString (assets));
+    return String.format ("%1$s Registered Assets:\n%2$s", assets.size(), Strings.toString (assets));
   }
 
   private Map <Integer, T> assets;

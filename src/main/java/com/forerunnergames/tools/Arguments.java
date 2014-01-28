@@ -116,7 +116,7 @@ public class Arguments
       {
         Arguments.illegalArgument (collectionName, ArgumentStatus.EMPTY_ELEMENTS);
       }
-      else if (StringUtils.isWhitespace (s))
+      else if (Strings.isWhitespace (s))
       {
         Arguments.illegalArgument (collectionName, ArgumentStatus.BLANK_ELEMENTS);
       }
@@ -319,7 +319,7 @@ public class Arguments
     {
       Arguments.illegalArgument (stringName, ArgumentStatus.EMPTY);
     }
-    else if (StringUtils.isWhitespace (s))
+    else if (Strings.isWhitespace (s))
     {
       Arguments.illegalArgument (stringName, ArgumentStatus.BLANK);
     }

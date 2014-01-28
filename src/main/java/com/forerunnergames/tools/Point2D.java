@@ -56,8 +56,7 @@ public class Point2D
   @Override
   public String toString()
   {
-    return String.format (getClass().getSimpleName() + ": (x: %1$6s, y: %2$6s)",
-                          getX(), getY());
+    return String.format (getClass().getSimpleName() + ": (x: %1$6s, y: %2$6s)", getX(), getY());
   }
 
   private final int x_;

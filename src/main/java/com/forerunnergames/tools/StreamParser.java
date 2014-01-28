@@ -3,8 +3,6 @@ package com.forerunnergames.tools;
 
 import com.forerunnergames.tools.exceptions.StreamParserException;
 
-import com.google.common.base.Strings;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -1249,8 +1247,8 @@ public class StreamParser
 
   private void initialize (String filePath) throws StreamParserException
   {
-    assert ! Strings.isNullOrEmpty    (filePath);
-    assert ! StringUtils.isWhitespace (filePath);
+    assert ! com.google.common.base.Strings.isNullOrEmpty (filePath);
+    assert ! Strings.isWhitespace (filePath);
 
     initialize (new File (filePath));
   }

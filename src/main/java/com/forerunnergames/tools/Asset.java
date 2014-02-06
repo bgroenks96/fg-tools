@@ -86,7 +86,7 @@ public class Asset implements Comparable <Asset>, AssetPacket
   @Override
   public String toString()
   {
-    return String.format ("Name: %1$-25s | Id: %2$4s", getName(), getId());
+    return String.format ("%1$s: Name: %2$s | Id: %3$s", getClass().getSimpleName(), getName(), getId());
   }
 
   private final String name;

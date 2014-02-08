@@ -492,13 +492,14 @@ public final class Strings
    * Converts a collection to a string representation.
    *
    * @param <T> The type of collection to convert to a string.
-   * @param collection The collection to convert to a string, must not be null.
+   * @param collection The collection to convert to a string, must not be null, must not have any null elements.
    * 
    * @return A string representation of the collection and its elements.
    */
   public static <T> String toString (Collection <T> collection)
   {
     Arguments.checkIsNotNull (collection, "collection");
+    Arguments.checkHasNoNullElements (collection, "collection");
 
     int elementCounter = 0;
 

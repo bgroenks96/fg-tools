@@ -7,6 +7,7 @@ import com.google.common.collect.Multimap;
 import java.awt.event.KeyEvent;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
@@ -514,6 +515,22 @@ public final class Strings
     }
 
     return stringBuilder.toString();
+  }
+
+  /**
+   * Converts an array to a string representation.
+   *
+   * @param <T> The type of array to convert to a string.
+   * @param array The array to convert to a string, must not be null, must not have any null elements.
+   *
+   * @return A string representation of the array and its elements.
+   */
+  public static <T> String toString (T[] array)
+  {
+    Arguments.checkIsNotNull (array, "array");
+    Arguments.checkHasNoNullElements (array, "array");
+
+    return toString (Arrays.asList (array));
   }
 
   /**

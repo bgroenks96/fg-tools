@@ -661,7 +661,7 @@ public final class Strings
     else if (listElements.size() == 1)
     {
       return Strings.toCase (
-              Iterables.getOnlyElement (listElements).toString (), letterCase);
+              Iterables.getOnlyElement (listElements).toString(), letterCase);
     }
     else if (listElements.size() == 2)
     {
@@ -672,15 +672,15 @@ public final class Strings
       // because "item1, and item2" doesn't make sense grammatically, which is
       // what would happen if we didn't treat this as a special case
       return Strings.toCase (
-              iterator.next ().toString () + (hasAnd ? " and " : separator) +
-                      iterator.next ().toString (), letterCase);
+              iterator.next().toString() + (hasAnd ? " and " : separator) +
+                      iterator.next().toString(), letterCase);
     }
 
     StringBuilder s = new StringBuilder();
 
     for (T element : listElements)
     {
-      String elementString = Strings.toCase (element.toString (),
+      String elementString = Strings.toCase (element.toString(),
               letterCase);
       s.append(elementString).append (separator);
     }
@@ -837,7 +837,7 @@ public final class Strings
     return words.toString();
   }
   
-  private Strings ()
+  private Strings()
   {
     Classes.instantiationNotAllowed();
   }

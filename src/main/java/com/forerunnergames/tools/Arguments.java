@@ -393,6 +393,77 @@ public class Arguments
   }
 
   /**
+   * Checks if the specified floating point value is greater than or equal to lowerInclusiveBound.
+   *
+   * @param value The floating point value to check.
+   * @param lowerInclusiveBound The lower inclusive bound.
+   * @param valueName The name of the floating point value to check, must not be null.
+   *
+   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   */
+  public static void checkLowerInclusiveBound (final float value,
+                                               final float lowerInclusiveBound,
+                                               final String valueName)
+  {
+    checkLowerInclusiveBound ((double) value, (double) lowerInclusiveBound, valueName, "");
+  }
+
+  /**
+   * Checks if the specified floating point value is greater than or equal to lowerInclusiveBound.
+   *
+   * @param value The floating point value to check.
+   * @param lowerInclusiveBound The lower inclusive bound.
+   * @param valueName The name of the floating point value to check, must not be null.
+   * @param lowerInclusiveBoundName The name of the lower inclusive bound, must not be null.
+   *
+   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   */
+  public static void checkLowerInclusiveBound (final float value,
+                                               final float lowerInclusiveBound,
+                                               final String valueName,
+                                               final String lowerInclusiveBoundName)
+  {
+    checkLowerInclusiveBound ((double) value, (double) lowerInclusiveBound, valueName, lowerInclusiveBoundName);
+  }
+
+  /**
+   * Checks if the specified double value is greater than or equal to lowerInclusiveBound.
+   *
+   * @param value The double value to check.
+   * @param lowerInclusiveBound The lower inclusive bound.
+   * @param valueName The name of the double value to check, must not be null.
+   *
+   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   */
+  public static void checkLowerInclusiveBound (final double value,
+                                               final double lowerInclusiveBound,
+                                               final String valueName)
+  {
+    checkLowerInclusiveBound (value, lowerInclusiveBound, valueName, "");
+  }
+
+  /**
+   * Checks if the specified double value is greater than or equal to lowerInclusiveBound.
+   *
+   * @param value The double value to check.
+   * @param lowerInclusiveBound The lower inclusive bound.
+   * @param valueName The name of the double value to check, must not be null.
+   * @param lowerInclusiveBoundName The name of the lower inclusive bound, must not be null.
+   *
+   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   */
+  public static void checkLowerInclusiveBound (final double value,
+                                               final double lowerInclusiveBound,
+                                               final String valueName,
+                                               final String lowerInclusiveBoundName)
+  {
+    if (value < lowerInclusiveBound)
+    {
+      boundsViolation (value, lowerInclusiveBound, valueName, lowerInclusiveBoundName, BoundType.LOWER_INCLUSIVE);
+    }
+  }
+
+  /**
    * Checks if the specified integer value is strictly greater than lowerExclusiveBound.
    *
    * @param value The integer value to check.
@@ -450,6 +521,77 @@ public class Arguments
    */
   public static void checkLowerExclusiveBound (final long   value,
                                                final long   lowerExclusiveBound,
+                                               final String valueName,
+                                               final String lowerExclusiveBoundName)
+  {
+    if (value <= lowerExclusiveBound)
+    {
+      boundsViolation (value, lowerExclusiveBound, valueName, lowerExclusiveBoundName, BoundType.LOWER_EXCLUSIVE);
+    }
+  }
+
+  /**
+   * Checks if the specified floating point value is strictly greater than lowerExclusiveBound.
+   *
+   * @param value The floating point value to check.
+   * @param lowerExclusiveBound The exclusive lower bound.
+   * @param valueName The name of the floating point value to check, must not be null.
+   *
+   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   */
+  public static void checkLowerExclusiveBound (final float value,
+                                               final float lowerExclusiveBound,
+                                               final String valueName)
+  {
+    checkLowerExclusiveBound ((double) value, (double) lowerExclusiveBound, valueName, "");
+  }
+
+  /**
+   * Checks if the specified floating point value is strictly greater than lowerExclusiveBound.
+   *
+   * @param value The floating point value to check.
+   * @param lowerExclusiveBound The exclusive lower bound.
+   * @param valueName The name of the floating point value to check, must not be null.
+   * @param lowerExclusiveBoundName The name of the lower exclusive bound, must not be null.
+   *
+   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   */
+  public static void checkLowerExclusiveBound (final float value,
+                                               final float lowerExclusiveBound,
+                                               final String valueName,
+                                               final String lowerExclusiveBoundName)
+  {
+    checkLowerExclusiveBound ((double) value, (double) lowerExclusiveBound, valueName, lowerExclusiveBoundName);
+  }
+
+  /**
+   * Checks if the specified double value is strictly greater than lowerExclusiveBound.
+   *
+   * @param value The double value to check.
+   * @param lowerExclusiveBound The exclusive lower bound.
+   * @param valueName The name of the double value to check, must not be null.
+   *
+   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   */
+  public static void checkLowerExclusiveBound (final double value,
+                                               final double lowerExclusiveBound,
+                                               final String valueName)
+  {
+    checkLowerExclusiveBound (value, lowerExclusiveBound, valueName, "");
+  }
+
+  /**
+   * Checks if the specified double value is strictly greater than lowerExclusiveBound.
+   *
+   * @param value The double value to check.
+   * @param lowerExclusiveBound The exclusive lower bound.
+   * @param valueName The name of the double value to check, must not be null.
+   * @param lowerExclusiveBoundName The name of the lower exclusive bound, must not be null.
+   *
+   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   */
+  public static void checkLowerExclusiveBound (final double value,
+                                               final double lowerExclusiveBound,
                                                final String valueName,
                                                final String lowerExclusiveBoundName)
   {
@@ -527,6 +669,75 @@ public class Arguments
   }
 
   /**
+   * Checks if the specified floating point value is less than or equal to upperInclusiveBound.
+   *
+   * @param value The floating point value to check.
+   * @param upperInclusiveBound The upper inclusive bound.
+   * @param valueName The name of the floating point value to check, must not be null.
+   *
+   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   */
+  public static void checkUpperInclusiveBound (final float value, final float upperInclusiveBound, final String valueName)
+  {
+    checkUpperInclusiveBound ((double) value, (double) upperInclusiveBound, valueName, "");
+  }
+
+  /**
+   * Checks if the specified floating point value is less than or equal to upperInclusiveBound.
+   *
+   * @param value The floating point value to check.
+   * @param upperInclusiveBound The upper inclusive bound.
+   * @param valueName The name of the floating point value to check, must not be null.
+   * @param upperInclusiveBoundName The name of the upper inclusive bound, must not be null.
+   *
+   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   */
+  public static void checkUpperInclusiveBound (final float value,
+                                               final float upperInclusiveBound,
+                                               final String valueName,
+                                               final String upperInclusiveBoundName)
+  {
+    checkUpperInclusiveBound ((double) value, (double) upperInclusiveBound, valueName, upperInclusiveBoundName);
+  }
+
+  /**
+   * Checks if the specified double value is less than or equal to upperInclusiveBound.
+   *
+   * @param value The double value to check.
+   * @param upperInclusiveBound The upper inclusive bound.
+   * @param valueName The name of the double value to check, must not be null.
+   *
+   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   */
+  public static void checkUpperInclusiveBound (final double value,
+                                               final double upperInclusiveBound,
+                                               final String valueName)
+  {
+    checkUpperInclusiveBound (value, upperInclusiveBound, valueName, "");
+  }
+
+  /**
+   * Checks if the specified double value is less than or equal to upperInclusiveBound.
+   *
+   * @param value The double value to check.
+   * @param upperInclusiveBound The upper inclusive bound.
+   * @param valueName The name of the double value to check, must not be null.
+   * @param upperInclusiveBoundName The name of the upper inclusive bound, must not be null.
+   *
+   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   */
+  public static void checkUpperInclusiveBound (final double value,
+                                               final double upperInclusiveBound,
+                                               final String valueName,
+                                               final String upperInclusiveBoundName)
+  {
+    if (value > upperInclusiveBound)
+    {
+      boundsViolation (value, upperInclusiveBound, valueName, upperInclusiveBoundName, BoundType.UPPER_INCLUSIVE);
+    }
+  }
+
+  /**
    * Checks if the specified integer value is strictly less than upperExclusiveBound.
    *
    * @param value The integer value to check.
@@ -584,6 +795,75 @@ public class Arguments
    */
   public static void checkUpperExclusiveBound (final long   value,
                                                final long   upperExclusiveBound,
+                                               final String valueName,
+                                               final String upperExclusiveBoundName)
+  {
+    if (value >= upperExclusiveBound)
+    {
+      boundsViolation (value, upperExclusiveBound, valueName, upperExclusiveBoundName, BoundType.UPPER_EXCLUSIVE);
+    }
+  }
+
+  /**
+   * Checks if the specified floating point value is strictly less than upperExclusiveBound.
+   *
+   * @param value The floating point value to check.
+   * @param upperExclusiveBound The upper exclusive bound.
+   * @param valueName The name of the floating point value to check, must not be null.
+   *
+   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   */
+  public static void checkUpperExclusiveBound (final float value,
+                                               final float upperExclusiveBound,
+                                               final String valueName)
+  {
+    checkUpperExclusiveBound ((double) value, (double) upperExclusiveBound, valueName, "");
+  }
+
+  /**
+   * Checks if the specified floating point value is strictly less than upperExclusiveBound.
+   *
+   * @param value The floating point value to check.
+   * @param upperExclusiveBound The upper exclusive bound.
+   * @param valueName The name of the floating point value to check, must not be null.
+   * @param upperExclusiveBoundName The name of the upper exclusive bound, must not be null.
+   *
+   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   */
+  public static void checkUpperExclusiveBound (final float value,
+                                               final float upperExclusiveBound,
+                                               final String valueName,
+                                               final String upperExclusiveBoundName)
+  {
+    checkUpperExclusiveBound ((double) value, (double) upperExclusiveBound, valueName, upperExclusiveBoundName);
+  }
+
+  /**
+   * Checks if the specified double value is strictly less than upperExclusiveBound.
+   *
+   * @param value The double value to check.
+   * @param upperExclusiveBound The upper exclusive bound.
+   * @param valueName The name of the double value to check, must not be null.
+   *
+   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   */
+  public static void checkUpperExclusiveBound (final double value, final double upperExclusiveBound, final String valueName)
+  {
+    checkUpperExclusiveBound (value, upperExclusiveBound, valueName, "");
+  }
+
+  /**
+   * Checks if the specified double is strictly less than upperExclusiveBound.
+   *
+   * @param value The double value to check.
+   * @param upperExclusiveBound The upper exclusive bound.
+   * @param valueName The name of the double value to check, must not be null.
+   * @param upperExclusiveBoundName The name of the upper exclusive bound, must not be null.
+   *
+   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   */
+  public static void checkUpperExclusiveBound (final double value,
+                                               final double upperExclusiveBound,
                                                final String valueName,
                                                final String upperExclusiveBoundName)
   {

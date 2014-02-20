@@ -67,20 +67,6 @@ public final class Strings
   }
 
   /**
-   * Deletes the contents of the specified StringBuilder
-   *
-   * @param s The StringBuilder to delete the content of, must not be null.
-   *
-   * @return The empty StringBuilder.
-   */
-  public static com.badlogic.gdx.utils.StringBuilder clear (com.badlogic.gdx.utils.StringBuilder s)
-  {
-    Arguments.checkIsNotNull (s, "s");
-
-    return s.delete (0, s.length());
-  }
-
-  /**
    * Replaces any duplicate whitespace in a string with a single space, also
    * removing tabs, newlines, etc in the process.
    * 
@@ -104,28 +90,6 @@ public final class Strings
    * original StringBuilder if it was already empty.
    */
   public static StringBuilder deleteLastChar (StringBuilder s)
-  {
-    Arguments.checkIsNotNull (s, "s");
-
-    if (s.length() > 0)
-    {
-      return s.deleteCharAt (s.length() - 1);
-    }
-    else
-    {
-      return s;
-    }
-  }
-
-  /**
-   * Deletes the last character from the specified StringBuilder.
-   *
-   * @param s The StringBuilder from which to delete the last character, must not be null, may be empty.
-   *
-   * @return The StringBuilder with its last character deleted and any remaining characters shifted left, or the
-   * original StringBuilder if it was already empty.
-   */
-  public static com.badlogic.gdx.utils.StringBuilder deleteLastChar (com.badlogic.gdx.utils.StringBuilder s)
   {
     Arguments.checkIsNotNull (s, "s");
 

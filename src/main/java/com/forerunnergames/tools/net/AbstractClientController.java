@@ -104,6 +104,11 @@ public abstract class AbstractClientController extends AbstractController <Clien
     return getClient().isConnected();
   }
 
+  public void disconnect()
+  {
+    getClient().disconnect();
+  }
+
   @Override
   public boolean shouldShutDown()
   {
@@ -156,5 +161,12 @@ public abstract class AbstractClientController extends AbstractController <Clien
   private void stopClient()
   {
     getClient().stop();
+  }
+
+  public void sendToServer (final Object object)
+  {
+    Arguments.checkIsNotNull (object, "object");
+
+    getClient().sendToServer (object);
   }
 }

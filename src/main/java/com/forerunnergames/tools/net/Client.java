@@ -12,7 +12,7 @@ public interface Client
   public boolean isRunning();
   public void registerClass (final Class <?> type);
   public void removeListener (final NetworkListener listener);
-  public void sendToServer (int connectionId, Object object);
+  public void sendToServer (Object object);
   public void shutDown();
   public void start();
   public void stop();

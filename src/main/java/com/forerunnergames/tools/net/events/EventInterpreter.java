@@ -48,17 +48,59 @@ public final class EventInterpreter
     return event.getClientAddress();
   }
 
-  public static final Object objectFrom (final ClientCommunicationEvent event)
+  public static final Object remoteObjectFrom (final ClientCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
     return event.getRemoteObject();
   }
 
-  public static final Class objectClassFrom (final ClientCommunicationEvent event)
+  public static final Class remoteObjectClassFrom (final ClientCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getRemoteObject ().getClass();
+    return event.getRemoteObject().getClass();
+  }
+
+  public static final Object remoteObjectFrom (final ServerCommunicationEvent event)
+  {
+    Arguments.checkIsNotNull (event, "event");
+
+    return event.getRemoteObject();
+  }
+
+  public static final Class remoteObjectClassFrom (final ServerCommunicationEvent event)
+  {
+    Arguments.checkIsNotNull (event, "event");
+
+    return event.getRemoteObject().getClass();
+  }
+
+  public static final InetSocketAddress addressFrom (final ServerCommunicationEvent event)
+  {
+    Arguments.checkIsNotNull (event, "event");
+
+    return event.getServerAddress();
+  }
+
+  public static final InetSocketAddress addressFrom (final ServerConnectionEvent event)
+  {
+    Arguments.checkIsNotNull (event, "event");
+
+    return event.getServerAddress();
+  }
+
+  public static final InetSocketAddress addressFrom (final ServerDisconnectionEvent event)
+  {
+    Arguments.checkIsNotNull (event, "event");
+
+    return event.getServerAddress();
+  }
+
+  public static final int connectionIdFrom (final ServerDisconnectionEvent event)
+  {
+    Arguments.checkIsNotNull (event, "event");
+
+    return event.getConnectionId();
   }
 }

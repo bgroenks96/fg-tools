@@ -31,28 +31,28 @@ public final class EventInterpreter
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getClientAddress ();
+    return event.getClientAddress();
   }
 
   public static final InetSocketAddress addressFrom (final ClientConnectionEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getClientAddress ();
+    return event.getClientAddress();
   }
 
   public static final InetSocketAddress addressFrom (final ClientCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getClientAddress ();
+    return event.getClientAddress();
   }
 
   public static final Object objectFrom (final ClientCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getRemoteObject ();
+    return event.getRemoteObject();
   }
 
   public static final Class objectClassFrom (final ClientCommunicationEvent event)

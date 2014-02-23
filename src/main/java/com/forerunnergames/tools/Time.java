@@ -1,24 +1,17 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 /**
- * Static Utility Class for Time-related Functionality
- * 
- * @author Aaron Mahan <aaron@forerunnergames.com>
+ * Utility class for time-related functionality.
  */
 public class Time
 {
   /**
-   * Calculate the number of milliseconds based on the specified number of
-   * seconds.
-   * <br/><br/>
-   * Note: Increases readability (e.g. Thread.sleep (Time.Seconds (3)), rather
-   *       than Thread.sleep (3000)).
+   * Calculate the number of milliseconds based on the specified number of seconds. Increases readability (e.g.
+   * Thread.sleep (Time.Seconds (3)), rather than Thread.sleep (3000)).
    * 
    * @param seconds The number of seconds to convert to milliseconds.
    * 
-   * @return The number of milliseconds, calculated from the specified number of
-   *         seconds.
+   * @return The number of milliseconds, calculated from the specified number of seconds.
    */
   public static long Seconds (int seconds)
   {
@@ -26,16 +19,12 @@ public class Time
   }
 
   /**
-   * Calculate the number of milliseconds based on the specified number of
-   * seconds.
-   * <br/><br/>
-   * Note: Increases readability (e.g. Thread.sleep (Time.Seconds (3.25)),
-   *       rather than Thread.sleep (3250))
+   * Calculate the number of milliseconds based on the specified number of seconds. Increases readability (e.g.
+   * Thread.sleep (Time.Seconds (3.25)), rather than Thread.sleep (3250))
    * 
    * @param seconds The number of seconds to convert to milliseconds.
    * 
-   * @return The number of milliseconds, calculated from the specified number of
-   *         seconds.
+   * @return The number of milliseconds, calculated from the specified number of seconds.
    */
   public static long Seconds (double seconds)
   {

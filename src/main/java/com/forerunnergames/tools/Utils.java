@@ -87,7 +87,7 @@ public class Utils
    *         machine.
    * 
    * @throws IOException If the external IP address of the local machine could
-   *                     now be found.
+   *                     not be found.
    */
   public static String resolveExternalIpAddress() throws IOException
   {

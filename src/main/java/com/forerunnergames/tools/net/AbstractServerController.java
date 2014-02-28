@@ -32,8 +32,8 @@ public abstract class AbstractServerController extends AbstractController <Serve
     checkIsNotInitialized();
 
     registerClasses();
-    startServer();
     addListener();
+    startServer();
 
     setInitialized (true);
   }

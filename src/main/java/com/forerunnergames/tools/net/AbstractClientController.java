@@ -30,8 +30,8 @@ public abstract class AbstractClientController extends AbstractController <Clien
     checkIsNotInitialized();
 
     registerClasses();
-    startClient();
     addListener();
+    startClient();
 
     setInitialized (true);
   }

@@ -8,6 +8,8 @@ public abstract class Message implements MessagePacket
 
   public Message (final String text)
   {
+    Arguments.checkIsNotNull (text, "text");
+
     this.text = text;
   }
 

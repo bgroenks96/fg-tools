@@ -16,4 +16,10 @@ public abstract class Message implements MessagePacket
   {
     return this.text;
   }
+
+  // Required for network serialization
+  protected Message()
+  {
+    text = null;
+  }
 }

@@ -89,6 +89,13 @@ public class Asset implements Comparable <Asset>, AssetPacket
     return String.format ("%1$s: Name: %2$s | Id: %3$s", getClass().getSimpleName(), getName(), getId());
   }
 
+  // Required for network serialization
+  protected Asset()
+  {
+    name = null;
+    id = 0;
+  }
+
   private final String name;
   private final int    id;
 }

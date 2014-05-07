@@ -4,7 +4,6 @@ import com.forerunnergames.tools.AbstractController;
 import com.forerunnergames.tools.Arguments;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 
 public abstract class AbstractServerController extends AbstractController <Server>
 {
@@ -22,9 +21,9 @@ public abstract class AbstractServerController extends AbstractController <Serve
     classesToRegister = classesToRegisterForNetworkSerialization;
   }
 
-  public abstract void onClientConnection (final int connectionId, final InetSocketAddress address);
-  public abstract void onClientDisconnection (final int connectionId, final InetSocketAddress address);
-  public abstract void onClientCommunication (final Object remoteObject, final int connectionId, final InetSocketAddress address);
+  public abstract void onConnection (final Remote client);
+  public abstract void onDisconnection (final Remote client);
+  public abstract void onCommunication (final Object object, final Remote client);
 
   @Override
   public void initialize()
@@ -48,7 +47,7 @@ public abstract class AbstractServerController extends AbstractController <Serve
 
   private void registerClass (final Class <?> type)
   {
-    getServer().registerClass (type);
+    getServer().register (type);
   }
 
   private Server getServer()
@@ -73,28 +72,33 @@ public abstract class AbstractServerController extends AbstractController <Serve
     getServer().addListener (new NetworkListener()
     {
       @Override
-      public void connected (final int connectionId, final InetSocketAddress remoteAddress)
+      public void connected (final Remote client)
       {
-        onClientConnection (connectionId, remoteAddress);
+        Arguments.checkIsNotNull (client, "client");
+
+        onConnection (client);
       }
 
       @Override
-      public void disconnected (final int connectionId, InetSocketAddress remoteAddress)
+      public void disconnected (final Remote client)
       {
-        onClientDisconnection (connectionId, remoteAddress);
+        Arguments.checkIsNotNull (client, "client");
+
+        onDisconnection (client);
       }
 
       @Override
-      public void received (final Object remoteObject, final int connectionId, final InetSocketAddress remoteAddress)
+      public void received (final Object object, final Remote client)
       {
-        Arguments.checkIsNotNull (remoteObject, "object");
+        Arguments.checkIsNotNull (object, "object");
+        Arguments.checkIsNotNull (client, "client");
 
-        onClientCommunication (remoteObject, connectionId, remoteAddress);
+        onCommunication (object, client);
       }
     });
   }
 
-  public void sendToAllClients (final Object object)
+  public void sendToAll (final Object object)
   {
     Arguments.checkIsNotNull (object, "object");
 
@@ -105,11 +109,12 @@ public abstract class AbstractServerController extends AbstractController <Serve
       return;
     }
 
-    getServer().sendToAllClients (object);
+    getServer().sendToAll (object);
   }
 
-  public void sendToAllClientsExcept (final int connectionId, final Object object)
+  public void sendToAllExcept (final Remote client, final Object object)
   {
+    Arguments.checkIsNotNull (client, "client");
     Arguments.checkIsNotNull (object, "object");
 
     checkIsInitialized();
@@ -119,11 +124,12 @@ public abstract class AbstractServerController extends AbstractController <Serve
       return;
     }
 
-    getServer().sendToAllClientsExcept (connectionId, object);
+    getServer().sendToAllExcept (client, object);
   }
 
-  public void sendToClient (final int connectionId, final Object object)
+  public void sendTo (final Remote client, final Object object)
   {
+    Arguments.checkIsNotNull (client, "client");
     Arguments.checkIsNotNull (object, "object");
 
     checkIsInitialized();
@@ -133,7 +139,7 @@ public abstract class AbstractServerController extends AbstractController <Serve
       return;
     }
 
-    getServer().sendToClient (connectionId, object);
+    getServer().sendTo (client, object);
   }
 
   @Override
@@ -160,7 +166,7 @@ public abstract class AbstractServerController extends AbstractController <Serve
 
   private void shutDownServer()
   {
-    closeAllConnections();
+    disconnectAll();
     stopServer();
   }
 
@@ -180,13 +186,20 @@ public abstract class AbstractServerController extends AbstractController <Serve
     getServer().update();
   }
 
-  private void closeAllConnections()
+  private void disconnectAll()
   {
-    getServer().closeAllConnections();
+    getServer().disconnectAll();
   }
 
   private void stopServer()
   {
     getServer().stop();
+  }
+
+  public void disconnect (final Remote client)
+  {
+    Arguments.checkIsNotNull (client, "client");
+
+    getServer().disconnect (client);
   }
 }

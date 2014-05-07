@@ -9,16 +9,18 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class AssetManager <T extends Asset>
+public class AssetManager <T extends AbstractAsset>
 {
+  private Map <Id, T> assets;
+
   public AssetManager()
   {
     super();
 
-    assets = new HashMap <Integer, T>();
+    assets = new HashMap <Id, T>();
   }
 
-  public void deregister (final int assetId)
+  public void deregister (final Id assetId)
   {
     Arguments.checkIsNotNull (assetId, "assetId");
 
@@ -37,14 +39,14 @@ public class AssetManager <T extends Asset>
     assets.remove (asset.getId());
   }
 
-  public Collection <T> get (Collection <Integer> assetIds)
+  public Collection <T> get (Collection <Id> assetIds)
   {
     Arguments.checkIsNotNull         (assetIds, "assetIds");
     Arguments.checkHasNoNullElements (assetIds, "assetIds");
 
     Collection <T> matchingAssets = new ArrayList <T>();
 
-    for (Integer assetId : assetIds)
+    for (Id assetId : assetIds)
     {
       T asset = get (assetId);
 
@@ -54,7 +56,7 @@ public class AssetManager <T extends Asset>
     return matchingAssets;
   }
 
-  public T get (final int assetId)
+  public T get (final Id assetId)
   {
     if (! assets.containsKey (assetId))
     {
@@ -69,31 +71,36 @@ public class AssetManager <T extends Asset>
     return assets.values();
   }
 
-  public Set <Integer> getIds()
+  public Set <Id> getIds()
   {
     return assets.keySet();
   }
 
-  public String getName (final int assetId)
+  public String getName (final Id assetId)
   {
-    return get (assetId).getName();
+    return get(assetId).getName();
   }
 
-  public int getNextId()
+  public Id getNextId()
   {
-    int requestedId = 0;
+    int requestedIdValue = 0;
 
-    while (has (requestedId) && requestedId < Integer.MAX_VALUE)
+    while (existsAssetWith (requestedIdValue))
     {
-      ++requestedId;
+      ++requestedIdValue;
     }
 
-    if (requestedId == Integer.MAX_VALUE)
+    return new Id (requestedIdValue);
+  }
+
+  public boolean existsAssetWith (final int idValue)
+  {
+    for (T asset : getAll())
     {
-      throw new IllegalStateException ("There are no more available id's.");
+      if (asset.getId().value() == idValue) return true;
     }
 
-    return requestedId;
+    return false;
   }
 
   public boolean has (final T asset)
@@ -103,7 +110,7 @@ public class AssetManager <T extends Asset>
     return has (asset.getId());
   }
 
-  public boolean has (final int assetId)
+  public boolean has (final Id assetId)
   {
     return assets.containsKey (assetId);
   }
@@ -137,6 +144,4 @@ public class AssetManager <T extends Asset>
   {
     return String.format ("%1$s Registered Assets:\n%2$s", assets.size(), Strings.toString (assets));
   }
-
-  private Map <Integer, T> assets;
 }

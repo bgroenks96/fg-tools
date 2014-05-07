@@ -1,41 +1,27 @@
 package com.forerunnergames.tools.net.events;
 
-import com.forerunnergames.tools.Arguments;
+import com.forerunnergames.tools.net.Remote;
 
-import java.net.InetSocketAddress;
-
-public final class ServerCommunicationEvent
+public final class ServerCommunicationEvent extends NetworkCommunicationEvent
 {
-  private final Object remoteObject;
-  private final int connectionId;
-  private final InetSocketAddress serverAddress;
-
-  public ServerCommunicationEvent (final Object remoteObject, final int connectionId, final InetSocketAddress serverAddress)
+  public ServerCommunicationEvent (final AnswerEvent answer, final Remote server)
   {
-    Arguments.checkIsNotNull (remoteObject, "remoteObject");
-
-    this.remoteObject = remoteObject;
-    this.connectionId = connectionId;
-    this.serverAddress = serverAddress;
+    super (answer, server);
   }
 
-  public final Object getRemoteObject()
+  public AnswerEvent getAnswer()
   {
-    return remoteObject;
+    return (AnswerEvent) getMessage();
   }
 
-  public final int getConnectionId()
+  public Remote getServer()
   {
-    return connectionId;
+    return getSender();
   }
 
-  public boolean hasServerAddress()
+  @Override
+  public String toString()
   {
-    return serverAddress != null;
-  }
-
-  public final InetSocketAddress getServerAddress()
-  {
-    return serverAddress;
+    return String.format ("%1$s: Answer: %2$s | Server: %3$s", getClass().getSimpleName(), getAnswer(), getServer());
   }
 }

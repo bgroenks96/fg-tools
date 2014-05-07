@@ -4,9 +4,8 @@ import com.forerunnergames.tools.AbstractController;
 import com.forerunnergames.tools.Arguments;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 
-public abstract class AbstractClientController extends AbstractController <Client>
+public abstract class AbstractClientController extends AbstractController <Client> implements ServerCommunicator
 {
   private final Class[] classesToRegister;
 
@@ -20,9 +19,9 @@ public abstract class AbstractClientController extends AbstractController <Clien
     classesToRegister = classesToRegisterForNetworkSerialization;
   }
 
-  public abstract void onConnectionToServer (final int connectionId, final InetSocketAddress remoteAddress);
-  public abstract void onDisconnectionFromServer (final int connectionId, final InetSocketAddress remoteAddress);
-  public abstract void onServerCommunication (final Object remoteObject, final int connectionId, final InetSocketAddress remoteAddress);
+  public abstract void onConnectionTo (final Remote server);
+  public abstract void onDisconnectionFrom (final Remote server);
+  public abstract void onCommunication (final Object object, final Remote server);
 
   @Override
   public void initialize()
@@ -46,7 +45,7 @@ public abstract class AbstractClientController extends AbstractController <Clien
 
   private void registerClass (final Class <?> type)
   {
-    getClient().registerClass (type);
+    getClient().register (type);
   }
 
   private Client getClient()
@@ -64,39 +63,39 @@ public abstract class AbstractClientController extends AbstractController <Clien
     getClient().addListener (new NetworkListener()
     {
       @Override
-      public void connected (final int connectionId, final InetSocketAddress remoteAddress)
+      public void connected (final Remote server)
       {
-        onConnectionToServer (connectionId, remoteAddress);
+        Arguments.checkIsNotNull (server, "server");
+
+        onConnectionTo (server);
       }
 
       @Override
-      public void disconnected (final int connectionId, InetSocketAddress remoteAddress)
+      public void disconnected (final Remote server)
       {
-        onDisconnectionFromServer (connectionId, remoteAddress);
+        Arguments.checkIsNotNull (server, "server");
+
+        onDisconnectionFrom (server);
       }
 
       @Override
-      public void received (final Object remoteObject, final int connectionId, final InetSocketAddress remoteAddress)
+      public void received (final Object object, final Remote server)
       {
-        Arguments.checkIsNotNull (remoteObject, "object");
+        Arguments.checkIsNotNull (object, "object");
+        Arguments.checkIsNotNull (server, "server");
 
-        onServerCommunication (remoteObject, connectionId, remoteAddress);
+        onCommunication (object, server);
       }
     });
   }
 
-  public void connect (final int timeoutMs, final String host, final int tcpPort) throws IOException
+  public void connectTo (final String host, final int tcpPort, final int timeoutMs) throws IOException
   {
-    Arguments.checkIsNotNegative (timeoutMs, "timeoutMs");
     Arguments.checkIsNotNull (host, "host");
     Arguments.checkIsNotNegative (tcpPort, "tcpPort");
+    Arguments.checkIsNotNegative (timeoutMs, "timeoutMs");
 
-    getClient().connect (timeoutMs, host, tcpPort);
-  }
-
-  public int getConnectionId()
-  {
-    return getClient().getConnectionId();
+    getClient().connectTo (host, tcpPort, timeoutMs);
   }
 
   public boolean isConnected()
@@ -163,10 +162,11 @@ public abstract class AbstractClientController extends AbstractController <Clien
     getClient().stop();
   }
 
+  @Override
   public void sendToServer (final Object object)
   {
     Arguments.checkIsNotNull (object, "object");
 
-    getClient().sendToServer (object);
+    getClient().send (object);
   }
 }

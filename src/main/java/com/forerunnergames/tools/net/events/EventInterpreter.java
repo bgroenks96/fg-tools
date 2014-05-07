@@ -1,106 +1,63 @@
 package com.forerunnergames.tools.net.events;
 
 import com.forerunnergames.tools.Arguments;
-
-import java.net.InetSocketAddress;
+import com.forerunnergames.tools.net.Remote;
 
 public final class EventInterpreter
 {
-  public static final int connectionIdFrom (final ClientConnectionEvent event)
+  public static final QuestionEvent questionFrom (final ClientCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getConnectionId();
+    return event.getQuestion();
   }
 
-  public static final int connectionIdFrom (final ClientDisconnectionEvent event)
+  public static final Remote clientFrom (final ClientCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getConnectionId();
+    return event.getClient();
   }
 
-  public static final int connectionIdFrom (final ClientCommunicationEvent event)
+  public static final Remote clientFrom (final ClientConnectionEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getConnectionId();
+    return event.getClient();
   }
 
-  public static final InetSocketAddress addressFrom (final ClientDisconnectionEvent event)
+  public static final Remote clientFrom (final ClientDisconnectionEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getClientAddress();
+    return event.getClient();
   }
 
-  public static final InetSocketAddress addressFrom (final ClientConnectionEvent event)
+  public static final AnswerEvent answerFrom (final ServerCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getClientAddress();
+    return event.getAnswer();
   }
 
-  public static final InetSocketAddress addressFrom (final ClientCommunicationEvent event)
+  public static final Remote serverFrom (final ServerCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getClientAddress();
+    return event.getServer();
   }
 
-  public static final Object remoteObjectFrom (final ClientCommunicationEvent event)
+  public static final Remote serverFrom (final ServerConnectionEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getRemoteObject();
+    return event.getServer();
   }
 
-  public static final Class remoteObjectClassFrom (final ClientCommunicationEvent event)
+  public static final Remote serverFrom (final ServerDisconnectionEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getRemoteObject().getClass();
-  }
-
-  public static final Object remoteObjectFrom (final ServerCommunicationEvent event)
-  {
-    Arguments.checkIsNotNull (event, "event");
-
-    return event.getRemoteObject();
-  }
-
-  public static final Class remoteObjectClassFrom (final ServerCommunicationEvent event)
-  {
-    Arguments.checkIsNotNull (event, "event");
-
-    return event.getRemoteObject().getClass();
-  }
-
-  public static final InetSocketAddress addressFrom (final ServerCommunicationEvent event)
-  {
-    Arguments.checkIsNotNull (event, "event");
-
-    return event.getServerAddress();
-  }
-
-  public static final InetSocketAddress addressFrom (final ServerConnectionEvent event)
-  {
-    Arguments.checkIsNotNull (event, "event");
-
-    return event.getServerAddress();
-  }
-
-  public static final InetSocketAddress addressFrom (final ServerDisconnectionEvent event)
-  {
-    Arguments.checkIsNotNull (event, "event");
-
-    return event.getServerAddress();
-  }
-
-  public static final int connectionIdFrom (final ServerDisconnectionEvent event)
-  {
-    Arguments.checkIsNotNull (event, "event");
-
-    return event.getConnectionId();
+    return event.getServer();
   }
 }

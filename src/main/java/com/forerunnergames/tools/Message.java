@@ -1,27 +1,6 @@
 package com.forerunnergames.tools;
 
-import com.forerunnergames.tools.net.MessagePacket;
-
-public abstract class Message implements MessagePacket
+public interface Message
 {
-  private final String text;
-
-  public Message (final String text)
-  {
-    Arguments.checkIsNotNull (text, "text");
-
-    this.text = text;
-  }
-
-  @Override
-  public String getText()
-  {
-    return this.text;
-  }
-
-  // Required for network serialization
-  protected Message()
-  {
-    text = null;
-  }
+  public String getText();
 }

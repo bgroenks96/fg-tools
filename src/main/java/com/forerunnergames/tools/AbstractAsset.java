@@ -48,6 +48,20 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   }
 
   @Override
+  public boolean is (final Asset asset)
+  {
+    Arguments.checkIsNotNull (asset, "asset");
+
+    return this.equals (asset);
+  }
+
+  @Override
+  public boolean isNot (final Asset asset)
+  {
+    return ! is (asset);
+  }
+
+  @Override
   public int compareTo (final Asset asset)
   {
     Arguments.checkIsNotNull (asset, "asset");

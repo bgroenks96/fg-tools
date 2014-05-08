@@ -73,12 +73,13 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   public boolean equals (final Object o)
   {
     if (this == o) return true;
-
-    if (o == null || getClass() != o.getClass()) return false;
+    if (! (o instanceof AbstractAsset)) return false;
 
     final AbstractAsset that = (AbstractAsset) o;
 
-    return id.equals (that.id);
+    if (! id.equals (that.id)) return false;
+
+    return true;
   }
 
   @Override

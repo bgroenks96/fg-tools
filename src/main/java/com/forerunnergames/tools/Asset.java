@@ -4,6 +4,7 @@ public interface Asset
 {
   public String getName();
   public Id getId();
+  public boolean doesNotHave (final Id id);
   public boolean has (final String name);
   public boolean has (final Id id);
   public boolean is (final Asset asset);

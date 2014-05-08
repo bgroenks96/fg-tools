@@ -32,6 +32,12 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   }
 
   @Override
+  public boolean doesNotHave (final Id id)
+  {
+    return ! has (id);
+  }
+
+  @Override
   public boolean has (final String name)
   {
     Arguments.checkIsNotNull (name, "name");

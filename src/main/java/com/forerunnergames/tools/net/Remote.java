@@ -8,6 +8,8 @@ public interface Remote
   public boolean has (final int connectionId);
   public boolean hasAddress();
   public boolean has (final InetSocketAddress address);
+  public boolean is (final Remote remote);
+  public boolean isNot (final Remote remote);
   public InetSocketAddress getAddress();
   @Override
   public boolean equals (final Object o);

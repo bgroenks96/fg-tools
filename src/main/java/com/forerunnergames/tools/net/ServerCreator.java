@@ -1,9 +1,10 @@
 package com.forerunnergames.tools.net;
 
+import com.forerunnergames.tools.Result;
+
 public interface ServerCreator
 {
-  public void create (final int tcpPort);
-  public boolean isCreated();
-  public String getErrorMessage();
+  public Result create (final String name, final int tcpPort);
+  public String resolveAddress();
   public void destroy();
 }

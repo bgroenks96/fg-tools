@@ -6,18 +6,22 @@ import com.forerunnergames.tools.Arguments;
 import java.io.IOException;
 
 public abstract class AbstractServerController extends AbstractController <Server>
+        implements ClientConnector, ClientCommunicator
 {
   private final int tcpPort;
   private final Class[] classesToRegister;
 
-  public AbstractServerController (final Server server, final int tcpPort, final Class... classesToRegisterForNetworkSerialization)
+  public AbstractServerController (final Server server,
+                                   final int serverTcpPort,
+                                   final Class... classesToRegisterForNetworkSerialization)
   {
     super (server);
 
     Arguments.checkIsNotNull (classesToRegisterForNetworkSerialization, "classesToRegisterForNetworkSerialization");
+    Arguments.checkIsNotNegative (serverTcpPort, "serverTcpPort");
     Arguments.checkHasNoNullElements (classesToRegisterForNetworkSerialization, "classesToRegisterForNetworkSerialization");
 
-    this.tcpPort = tcpPort;
+    this.tcpPort = serverTcpPort;
     classesToRegister = classesToRegisterForNetworkSerialization;
   }
 
@@ -98,20 +102,17 @@ public abstract class AbstractServerController extends AbstractController <Serve
     });
   }
 
+  @Override
   public void sendToAll (final Object object)
   {
     Arguments.checkIsNotNull (object, "object");
 
     checkIsInitialized();
 
-    if (! serverIsRunning())
-    {
-      return;
-    }
-
     getServer().sendToAll (object);
   }
 
+  @Override
   public void sendToAllExcept (final Remote client, final Object object)
   {
     Arguments.checkIsNotNull (client, "client");
@@ -119,25 +120,16 @@ public abstract class AbstractServerController extends AbstractController <Serve
 
     checkIsInitialized();
 
-    if (! serverIsRunning())
-    {
-      return;
-    }
-
     getServer().sendToAllExcept (client, object);
   }
 
+  @Override
   public void sendTo (final Remote client, final Object object)
   {
     Arguments.checkIsNotNull (client, "client");
     Arguments.checkIsNotNull (object, "object");
 
     checkIsInitialized();
-
-    if (! serverIsRunning())
-    {
-      return;
-    }
 
     getServer().sendTo (client, object);
   }
@@ -151,55 +143,35 @@ public abstract class AbstractServerController extends AbstractController <Serve
   @Override
   public void shutDown()
   {
-    if (! serverIsRunning())
-    {
-      return;
-    }
-
-    shutDownServer();
-  }
-
-  public boolean serverIsRunning()
-  {
-    return getServer().isRunning();
-  }
-
-  private void shutDownServer()
-  {
     disconnectAll();
-    stopServer();
+    getServer().stop();
   }
 
   @Override
   public void update()
   {
-    if (! isInitialized())
-    {
-      return;
-    }
-
-    updateServer();
-  }
-
-  private void updateServer()
-  {
     getServer().update();
   }
 
-  private void disconnectAll()
+  @Override
+  public void disconnectAll()
   {
     getServer().disconnectAll();
   }
 
-  private void stopServer()
-  {
-    getServer().stop();
-  }
-
+  @Override
   public void disconnect (final Remote client)
   {
     Arguments.checkIsNotNull (client, "client");
 
     getServer().disconnect (client);
+  }
+
+  @Override
+  public boolean isConnected (final Remote client)
+  {
+    Arguments.checkIsNotNull (client, "client");
+
+    return getServer().isConnected (client);
   }
 }

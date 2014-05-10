@@ -2,10 +2,10 @@ package com.forerunnergames.tools.net;
 
 import com.forerunnergames.tools.AbstractController;
 import com.forerunnergames.tools.Arguments;
+import com.forerunnergames.tools.Result;
 
-import java.io.IOException;
-
-public abstract class AbstractClientController extends AbstractController <Client> implements ServerCommunicator
+public abstract class AbstractClientController extends AbstractController <Client>
+        implements ServerConnector, ServerCommunicator
 {
   private final Class[] classesToRegister;
 
@@ -89,22 +89,28 @@ public abstract class AbstractClientController extends AbstractController <Clien
     });
   }
 
-  public void connectTo (final String host, final int tcpPort, final int timeoutMs) throws IOException
+  @Override
+  public Result connect (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts)
   {
-    Arguments.checkIsNotNull (host, "host");
+    Arguments.checkIsNotNull (address, "address");
     Arguments.checkIsNotNegative (tcpPort, "tcpPort");
     Arguments.checkIsNotNegative (timeoutMs, "timeoutMs");
+    Arguments.checkIsNotNegative (maxAttempts, "maxAttempts");
 
-    getClient().connectTo (host, tcpPort, timeoutMs);
+    return getClient().connect (address, tcpPort, timeoutMs, maxAttempts);
   }
 
+  @Override
   public boolean isConnected()
   {
     return getClient().isConnected();
   }
 
+  @Override
   public void disconnect()
   {
+    if (! isConnected()) return;
+
     getClient().disconnect();
   }
 
@@ -117,28 +123,8 @@ public abstract class AbstractClientController extends AbstractController <Clien
   @Override
   public void shutDown()
   {
-    if (! clientIsRunning())
-    {
-      return;
-    }
-
-    shutDownClient();
-  }
-
-  public boolean clientIsRunning()
-  {
-    return getClient().isRunning();
-  }
-
-  private void shutDownClient()
-  {
-    disconnectClient();
-    stopClient();
-  }
-
-  private void disconnectClient()
-  {
-    getClient().disconnect();
+    disconnect();
+    stop();
   }
 
   @Override
@@ -157,13 +143,13 @@ public abstract class AbstractClientController extends AbstractController <Clien
     getClient().update();
   }
 
-  private void stopClient()
+  private void stop()
   {
     getClient().stop();
   }
 
   @Override
-  public void sendToServer (final Object object)
+  public void send (final Object object)
   {
     Arguments.checkIsNotNull (object, "object");
 

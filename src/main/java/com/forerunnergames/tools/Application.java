@@ -43,10 +43,7 @@ public class Application extends AbstractController <List <Controller>>
   {
     for (Controller controller : getControllers())
     {
-      if (controller.shouldShutDown())
-      {
-        return true;
-      }
+      if (controller.shouldShutDown()) return true;
     }
 
     return false;

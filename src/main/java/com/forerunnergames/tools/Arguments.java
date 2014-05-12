@@ -261,23 +261,23 @@ public class Arguments
   }
 
   /**
-   * Checks if the specified collection is null or empty.
+   * Checks if the specified iterable is null or empty.
    *
-   * @param <T> The type of collection to check.
-   * @param collection The collection to check.
-   * @param collectionName The name of the collection to check, must not be null.
+   * @param <T> The type of iterable to check.
+   * @param iterable The iterable to check.
+   * @param iterableName The name of the iterable to check, must not be null.
    *
-   * @throws IllegalArgumentException If the collection is null or empty.
+   * @throws IllegalArgumentException If the iterable is null or empty.
    */
-  public static <T> void checkIsNotNullOrEmpty (final Collection <T> collection, final String collectionName)
+  public static <T> void checkIsNotNullOrEmpty (final Iterable <T> iterable, final String iterableName)
   {
-    if (collection == null)
+    if (iterable == null)
     {
-      Arguments.illegalArgument (collectionName, ArgumentStatus.NULL);
+      Arguments.illegalArgument (iterableName, ArgumentStatus.NULL);
     }
-    else if (collection.isEmpty())
+    else if (! iterable.iterator().hasNext())
     {
-      Arguments.illegalArgument (collectionName, ArgumentStatus.EMPTY);
+      Arguments.illegalArgument (iterableName, ArgumentStatus.EMPTY);
     }
   }
 

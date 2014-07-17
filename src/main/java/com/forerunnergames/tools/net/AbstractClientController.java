@@ -1,66 +1,49 @@
 package com.forerunnergames.tools.net;
 
-import com.forerunnergames.tools.AbstractController;
 import com.forerunnergames.tools.Arguments;
 import com.forerunnergames.tools.Result;
 
-public abstract class AbstractClientController extends AbstractController <Client>
-        implements ServerConnector, ServerCommunicator
+import com.google.common.collect.ImmutableSet;
+
+public abstract class AbstractClientController implements ClientController
 {
-  private final Class[] classesToRegister;
+  private final Client client;
+  private final ImmutableSet <Class <?>> classesToRegisterForNetworkSerialization;
 
-  public AbstractClientController (final Client client, final Class... classesToRegisterForNetworkSerialization)
+  protected AbstractClientController (final Client client,
+                                      final ImmutableSet <Class <?>> classesToRegisterForNetworkSerialization)
   {
-    super (client);
-
+    Arguments.checkIsNotNull (client, "client");
     Arguments.checkIsNotNull (classesToRegisterForNetworkSerialization, "classesToRegisterForNetworkSerialization");
     Arguments.checkHasNoNullElements (classesToRegisterForNetworkSerialization, "classesToRegisterForNetworkSerialization");
 
-    classesToRegister = classesToRegisterForNetworkSerialization;
+    this.client = client;
+    this.classesToRegisterForNetworkSerialization = classesToRegisterForNetworkSerialization;
   }
 
-  public abstract void onConnectionTo (final Remote server);
-  public abstract void onDisconnectionFrom (final Remote server);
-  public abstract void onCommunication (final Object object, final Remote server);
+  protected abstract void onConnectionTo (final Remote server);
+  protected abstract void onDisconnectionFrom (final Remote server);
+  protected abstract void onCommunication (final Object object, final Remote server);
 
   @Override
   public void initialize()
   {
-    checkIsNotInitialized();
-
     registerClasses();
     addListener();
     startClient();
-
-    setInitialized (true);
   }
 
   private void registerClasses()
   {
-    for (Class classToRegister : classesToRegister)
+    for (final Class <?> classToRegister : classesToRegisterForNetworkSerialization)
     {
-      registerClass (classToRegister);
+      client.register (classToRegister);
     }
-  }
-
-  private void registerClass (final Class <?> type)
-  {
-    getClient().register (type);
-  }
-
-  private Client getClient()
-  {
-    return getControllee();
-  }
-
-  private void startClient()
-  {
-    getClient().start();
   }
 
   private void addListener()
   {
-    getClient().addListener (new NetworkListener()
+    client.add (new NetworkListener()
     {
       @Override
       public void connected (final Remote server)
@@ -89,29 +72,9 @@ public abstract class AbstractClientController extends AbstractController <Clien
     });
   }
 
-  @Override
-  public Result connect (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts)
+  private void startClient()
   {
-    Arguments.checkIsNotNull (address, "address");
-    Arguments.checkIsNotNegative (tcpPort, "tcpPort");
-    Arguments.checkIsNotNegative (timeoutMs, "timeoutMs");
-    Arguments.checkIsNotNegative (maxAttempts, "maxAttempts");
-
-    return getClient().connect (address, tcpPort, timeoutMs, maxAttempts);
-  }
-
-  @Override
-  public boolean isConnected()
-  {
-    return getClient().isConnected();
-  }
-
-  @Override
-  public void disconnect()
-  {
-    if (! isConnected()) return;
-
-    getClient().disconnect();
+    client.start();
   }
 
   @Override
@@ -124,28 +87,30 @@ public abstract class AbstractClientController extends AbstractController <Clien
   public void shutDown()
   {
     disconnect();
-    stop();
+    client.stop();
   }
 
   @Override
-  public void update()
+  public Result connect (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts)
   {
-    if (! isInitialized())
-    {
-      return;
-    }
+    Arguments.checkIsNotNull (address, "address");
+    Arguments.checkIsNotNegative (tcpPort, "tcpPort");
+    Arguments.checkIsNotNegative (timeoutMs, "timeoutMs");
+    Arguments.checkIsNotNegative (maxAttempts, "maxAttempts");
 
-    updateClient();
+    return client.connect (address, tcpPort, timeoutMs, maxAttempts);
   }
 
-  private void updateClient()
+  @Override
+  public boolean isConnected()
   {
-    getClient().update();
+    return client.isConnected();
   }
 
-  private void stop()
+  @Override
+  public void disconnect()
   {
-    getClient().stop();
+    client.disconnect();
   }
 
   @Override
@@ -153,6 +118,6 @@ public abstract class AbstractClientController extends AbstractController <Clien
   {
     Arguments.checkIsNotNull (object, "object");
 
-    getClient().send (object);
+    client.send (object);
   }
 }

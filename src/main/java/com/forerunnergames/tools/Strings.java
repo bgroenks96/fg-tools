@@ -1,4 +1,3 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import com.google.common.collect.Iterables;
@@ -13,11 +12,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * Static Utility Class for String-related Functionality
- * 
- * @author Aaron Mahan <aaron@forerunnergames.com>
- */
 public final class Strings
 {
   /*
@@ -32,24 +26,17 @@ public final class Strings
    * example: "An umbrella starts with a u." (correct) vs
    * "An umbrella starts with an u." (incorrect)
    */
-  public static String aOrAn (String nextWord)
+  public static String aOrAn (final String nextWord)
   {
     Arguments.checkIsNotNullOrEmptyOrBlank (nextWord, "word");
 
-    String aOrAn = "a";
-
-    String nextWordLowerCase = nextWord.toLowerCase (Locale.ENGLISH);
+    final String nextWordLowerCase = nextWord.toLowerCase (Locale.ENGLISH);
     
-    if (nextWordLowerCase.startsWith ("a") ||
+    return nextWordLowerCase.startsWith ("a") ||
         nextWordLowerCase.startsWith ("e") ||
         nextWordLowerCase.startsWith ("i") ||
         nextWordLowerCase.startsWith ("o") ||
-       (nextWordLowerCase.startsWith ("u") && nextWordLowerCase.length() > 1))
-    {
-      aOrAn = "an";
-    }
-
-    return aOrAn;
+       (nextWordLowerCase.startsWith ("u") && nextWordLowerCase.length() > 1) ? "an" : "a";
   }
 
   /**
@@ -59,7 +46,7 @@ public final class Strings
    *
    * @return The empty StringBuilder.
    */
-  public static StringBuilder clear (StringBuilder s)
+  public static StringBuilder clear (final StringBuilder s)
   {
     Arguments.checkIsNotNull (s, "s");
 
@@ -74,7 +61,7 @@ public final class Strings
    * 
    * @return The compressed string. 
    */
-  public static String compressWhitespace (String s)
+  public static String compressWhitespace (final String s)
   {
     Arguments.checkIsNotNull (s, "s");
 
@@ -89,18 +76,11 @@ public final class Strings
    * @return The StringBuilder with its last character deleted and any remaining characters shifted left, or the
    * original StringBuilder if it was already empty.
    */
-  public static StringBuilder deleteLastChar (StringBuilder s)
+  public static StringBuilder deleteLastChar (final StringBuilder s)
   {
     Arguments.checkIsNotNull (s, "s");
 
-    if (s.length() > 0)
-    {
-      return s.deleteCharAt (s.length() - 1);
-    }
-    else
-    {
-      return s;
-    }
+    return s.length() > 0 ? s.deleteCharAt (s.length() - 1) : s;
   }
 
   /**
@@ -121,19 +101,13 @@ public final class Strings
    * 
    * @return The trimmed substring.
    */
-  public static String getTrimmedSubstring (String s, int beginIndex,
-                                                      int endIndex)
+  public static String getTrimmedSubstring (final String s, final int beginIndex, final int endIndex)
   {
     Arguments.checkIsNotNullOrEmpty (s, "s");
-
     Arguments.checkLowerInclusiveBound (beginIndex, 0, "beginIndex");
-    Arguments.checkLowerInclusiveBound (endIndex,   0, "endIndex");
-
-    Arguments.checkUpperExclusiveBound (beginIndex, endIndex, "beginIndex",
-                                                              "endIndex");
-
-    Arguments.checkUpperInclusiveBound (endIndex, s.length(), "endIndex",
-                                                              "s.length()");
+    Arguments.checkLowerInclusiveBound (endIndex, 0, "endIndex");
+    Arguments.checkUpperExclusiveBound (beginIndex, endIndex, "beginIndex", "endIndex");
+    Arguments.checkUpperInclusiveBound (endIndex, s.length(), "endIndex", "s.length()");
 
     return s.substring(beginIndex, endIndex).trim();
   }
@@ -148,7 +122,7 @@ public final class Strings
    * False if the string s is empty, contains whitespace or any
    * non-alphanumeric character.
    */
-  public static boolean isAlphanumeric (String s)
+  public static boolean isAlphanumeric (final String s)
   {
     Arguments.checkIsNotNull (s, "s"); 
 
@@ -162,9 +136,9 @@ public final class Strings
    * 
    * @return True if the character c is a printable character, false otherwise.
    */
-  public static boolean isPrintable (char c)
+  public static boolean isPrintable (final char c)
   {
-    Character.UnicodeBlock unicodeBlock = Character.UnicodeBlock.of (c);
+    final Character.UnicodeBlock unicodeBlock = Character.UnicodeBlock.of (c);
 
     return ! Character.isISOControl (c) &&
            c != KeyEvent.CHAR_UNDEFINED &&
@@ -195,23 +169,16 @@ public final class Strings
    * 
    * @return True if the string s is comprised of only whitespace or is empty.
    */
-  public static boolean isWhitespace (String s)
+  public static boolean isWhitespace (final String s)
   {
     Arguments.checkIsNotNull (s, "s"); 
 
-    boolean isWhitespace = true;
-
     for (int i = 0; i < s.length(); ++i)
     {
-      if (! Character.isWhitespace (s.codePointAt (i)))
-      {
-        isWhitespace = false;
-
-        break;
-      }
+      if (! Character.isWhitespace (s.codePointAt (i))) return false;
     }
 
-    return isWhitespace;
+    return true;
   }
 
   /**
@@ -230,10 +197,9 @@ public final class Strings
    * 
    * @see #pluralizeS(int, java.lang.String)
    */
-  public static String pluralize (int variable, String singular, String plural)
+  public static String pluralize (final int variable, final String singular, final String plural)
   {
-    return String.valueOf (variable) + " " +
-           (variable == 1 ? singular : plural);
+    return String.valueOf (variable) + " " + (variable == 1 ? singular : plural);
   }
 
   /**
@@ -256,10 +222,9 @@ public final class Strings
    * 
    * @see #pluralize(int, java.lang.String, java.lang.String)
    */
-  public static String pluralizeS (int variable, String singular)
+  public static String pluralizeS (final int variable, final String singular)
   {
-    return String.valueOf (variable) + " " + singular +
-           (variable == 1 ? "" : "s");
+    return String.valueOf (variable) + " " + singular + (variable == 1 ? "" : "s");
   }
 
   /**
@@ -272,7 +237,7 @@ public final class Strings
    * 
    * @see java.util.regex.Pattern
    */
-  public static String stripWhitespace (String s)
+  public static String stripWhitespace (final String s)
   {
     Arguments.checkIsNotNull (s, "s");
 
@@ -288,7 +253,7 @@ public final class Strings
    * 
    * @return  The word, converted to the specified case.
    */
-  public static String toCase (String word, LetterCase letterCase)
+  public static String toCase (final String word, final LetterCase letterCase)
   {
     Arguments.checkIsNotNull (word,       "word");
     Arguments.checkIsNotNull (letterCase, "letterCase");
@@ -333,9 +298,9 @@ public final class Strings
    * @return A string containing the English ordinal abbreviation for the
    *         specified integer.
    */
-  public static String toMixedOrdinal (int n)
+  public static String toMixedOrdinal (final int n)
   {
-    String ordinal = Strings.toOrdinal (n);
+    final String ordinal = toOrdinal (n);
 
     return n + ordinal.substring (ordinal.length() - 2);
   }
@@ -348,25 +313,24 @@ public final class Strings
    * @return A string containing the English ordinal words for the specified
    *         integer.
    */
-  public static String toOrdinal (int n)
+  public static String toOrdinal (final int n)
   {
-    StringBuilder ordinal = new StringBuilder();
+    final StringBuilder ordinal = new StringBuilder();
 
-    ordinal.append ((n < 0)? "negative " : "");
+    ordinal.append ((n < 0) ? "negative " : "");
 
     if (n != 0 && n != Integer.MIN_VALUE)
     {
       int nonOrdinalPart = 0;
-      int ordinalPart    = 0;
+      int ordinalPart = 0;
 
       int nonnegativeN = Math.abs (n);
 
       if (nonnegativeN >= 100)
       {
-        nonOrdinalPart =
-                (int) ((Math.floor ((double) nonnegativeN / 100.0)) * 100.0);
+        nonOrdinalPart = (int) ((Math.floor (nonnegativeN / 100.0)) * 100.0);
 
-        ordinal.append (Strings.toWords (nonOrdinalPart));
+        ordinal.append (toWords (nonOrdinalPart));
 
         ordinalPart = nonnegativeN - nonOrdinalPart;
 
@@ -384,18 +348,15 @@ public final class Strings
       {
         switch (ordinalPart)
         {
-          case  0: ordinal.append ("th");          break;
-          case  1: ordinal.append ("first");       break;
-          case  2: ordinal.append ("second");      break;
-          case  3: ordinal.append ("third");       break;
-          case  5: ordinal.append ("fifth");       break;
-          case  8: ordinal.append ("eighth");      break;
-          case  9: ordinal.append ("ninth");       break;
-          case 12: ordinal.append ("twelfth");     break;
-
-          default: ordinal.append(
-                           Strings.toWords (ordinalPart)).append ("th");
-                   break;
+          case  0: ordinal.append ("th"); break;
+          case  1: ordinal.append ("first"); break;
+          case  2: ordinal.append ("second"); break;
+          case  3: ordinal.append ("third"); break;
+          case  5: ordinal.append ("fifth"); break;
+          case  8: ordinal.append ("eighth"); break;
+          case  9: ordinal.append ("ninth"); break;
+          case 12: ordinal.append ("twelfth"); break;
+          default: ordinal.append (toWords (ordinalPart)).append ("th"); break;
         }
       }
       else
@@ -411,16 +372,10 @@ public final class Strings
           case 80: ordinal.append ("eightieth");   break;
           case 90: ordinal.append ("ninetieth");   break;
 
-          default: nonOrdinalPart =
-                     (int) ((Math.floor ((double) ordinalPart / 10.0)) * 10.0);
-
-                   ordinal.append(
-                           Strings.toWords (nonOrdinalPart)).append ("-");
-
+          default: nonOrdinalPart = (int) ((Math.floor (ordinalPart / 10.0)) * 10.0);
+                   ordinal.append(toWords (nonOrdinalPart)).append ("-");
                    ordinalPart -= nonOrdinalPart;
-
-                   ordinal.append (Strings.toOrdinal (ordinalPart));
-
+                   ordinal.append (toOrdinal (ordinalPart));
                    break;
         }
       }
@@ -446,39 +401,13 @@ public final class Strings
    *
    * @return The word converted to proper case.
    */
-  public static String toProperCase (String word)
+  public static String toProperCase (final String word)
   {
     Arguments.checkIsNotNull (word, "word");
-    String firstLetter = word.toLowerCase().substring (0, 1);
+
+    final String firstLetter = word.toLowerCase().substring (0, 1);
+
     return word.toLowerCase().replaceFirst (firstLetter, firstLetter.toUpperCase());
-  }
-
-  /**
-   * Converts a collection to a string representation.
-   *
-   * @param <T> The type of collection to convert to a string.
-   * @param collection The collection to convert to a string, must not be null, must not have any null elements.
-   * 
-   * @return A string representation of the collection and its elements.
-   */
-  public static <T> String toString (Collection <T> collection)
-  {
-    Arguments.checkIsNotNull (collection, "collection");
-    Arguments.checkHasNoNullElements (collection, "collection");
-
-    int elementCounter = 0;
-
-    StringBuilder stringBuilder = new StringBuilder();
-
-    for (T element: collection)
-    {
-      ++elementCounter;
-
-      stringBuilder.append (String.format ("%1$-13s %2$4s: %3$s\n",
-              element.getClass().getSimpleName(), elementCounter, element));
-    }
-
-    return stringBuilder.toString();
   }
 
   /**
@@ -489,7 +418,7 @@ public final class Strings
    *
    * @return A string representation of the array and its elements.
    */
-  public static <T> String toString (T[] array)
+  public static <T> String toString (final T[] array)
   {
     Arguments.checkIsNotNull (array, "array");
     Arguments.checkHasNoNullElements (array, "array");
@@ -505,12 +434,12 @@ public final class Strings
    * 
    * @return A string representation of the throwable's stack trace.
    */
-  public static String toString (Throwable throwable)
+  public static String toString (final Throwable throwable)
   {
     Arguments.checkIsNotNull (throwable, "throwable");
 
-    StringWriter stringWriter = new StringWriter();
-    PrintWriter  printWriter  = new PrintWriter (stringWriter);
+    final StringWriter stringWriter = new StringWriter();
+    final PrintWriter printWriter = new PrintWriter (stringWriter);
 
     throwable.printStackTrace (printWriter);
 
@@ -518,27 +447,26 @@ public final class Strings
   }
 
   /**
-   * Converts an iterable to a string representation.
+   * Converts an Iterable to a string representation.
    *
-   * @param <T> The type of iterable to convert to a string.
-   * @param iterable The iterable to convert to a string, must not be null.
-   * 
-   * @return A string representation of the iterable and its elements.
+   * @param <T> The type of Iterable to convert to a string.
+   * @param iterable The Iterable to convert to a string, must not be null.
+   *
+   * @return A string representation of the Iterable and its elements.
    */
-  public static <T> String toString (Iterable <T> iterable)
+  public static <T> String toString (final Iterable <T> iterable)
   {
     Arguments.checkIsNotNull (iterable, "iterable");
 
+    final StringBuilder stringBuilder = new StringBuilder ("\n");
+
     int elementCounter = 0;
 
-    StringBuilder stringBuilder = new StringBuilder();
-
-    for (T element: iterable)
+    for (final T element: iterable)
     {
       ++elementCounter;
 
-      stringBuilder.append (String.format ("%1$-13s %2$4s: %3$s\n",
-              element.getClass().getSimpleName(), elementCounter, element));
+      stringBuilder.append (String.format ("%1$s: %2$s\n", elementCounter, element));
     }
 
     return stringBuilder.toString();
@@ -549,28 +477,26 @@ public final class Strings
    *
    * @param <T> The key type of the specified map.
    * @param <U> The value type of the specified map.
-   * 
    * @param map The map to convert to a string, must not be null.
-   * 
+   *
    * @return A string representation of the map and its elements.
    */
-  public static <T, U> String toString (Map <T, U> map)
+  public static <T, U> String toString (final Map <T, U> map)
   {
     Arguments.checkIsNotNull (map, "map");
 
-    StringBuilder stringBuilder = new StringBuilder();
+    final StringBuilder stringBuilder = new StringBuilder ("\n");
 
     int entryCounter = 0;
 
-    for (Map.Entry <T, U> entry : map.entrySet())
+    for (final Map.Entry <T, U> entry : map.entrySet())
     {
       ++entryCounter;
 
-      T entryKey   = entry.getKey();
-      U entryValue = entry.getValue();
+      final T entryKey = entry.getKey();
+      final U entryValue = entry.getValue();
 
-      stringBuilder.append (String.format ("Entry         %1$4s:[" +
-              "%2$10s, %3$10s]\n", entryCounter, entryKey, entryValue));
+      stringBuilder.append (String.format ("Entry %1$s:[%2$s, %3$s]\n", entryCounter, entryKey, entryValue));
     }
 
     return stringBuilder.toString();
@@ -586,23 +512,22 @@ public final class Strings
    * 
    * @return A string representation of the multimap and its elements.
    */
-  public static <T, U> String toString (Multimap <T, U> multimap)
+  public static <T, U> String toString (final Multimap <T, U> multimap)
   {
     Arguments.checkIsNotNull (multimap, "multimap");
 
-    StringBuilder stringBuilder = new StringBuilder();
+    final StringBuilder stringBuilder = new StringBuilder ("\n");
 
     int entryCounter = 0;
 
-    for (Map.Entry <T, U> entry : multimap.entries())
+    for (final Map.Entry <T, U> entry : multimap.entries())
     {
       ++entryCounter;
 
-      T entryKey   = entry.getKey();
-      U entryValue = entry.getValue();
+      final T entryKey = entry.getKey();
+      final U entryValue = entry.getValue();
 
-      stringBuilder.append (String.format ("Entry         %1$4s:[" +
-              "%2$10s, %3$10s]\n", entryCounter, entryKey, entryValue));
+      stringBuilder.append (String.format ("Entry %1$s:[%2$s, %3$s]\n", entryCounter, entryKey, entryValue));
     }
 
     return stringBuilder.toString();
@@ -627,8 +552,10 @@ public final class Strings
    *         letterCase, with an optional 'and ' occurring between the last two
    *         elements of the list.
    */
-  public static <T> String toStringList (Collection <T> listElements,
-          String separator, LetterCase letterCase, boolean hasAnd)
+  public static <T> String toStringList (final Collection <T> listElements,
+                                         final String separator,
+                                         final LetterCase letterCase,
+                                         final boolean hasAnd)
   {
     Arguments.checkIsNotNull         (listElements, "listElements");
     Arguments.checkHasNoNullElements (listElements, "listElements");
@@ -642,28 +569,25 @@ public final class Strings
     }
     else if (listElements.size() == 1)
     {
-      return Strings.toCase (
-              Iterables.getOnlyElement (listElements).toString(), letterCase);
+      return toCase (Iterables.getOnlyElement (listElements).toString(), letterCase);
     }
     else if (listElements.size() == 2)
     {
-      Iterator <T> iterator = listElements.iterator();
+      final Iterator <T> iterator = listElements.iterator();
 
       // Here, if the separator is a comma, for example, it's either:
       // "item1 and item2" or "item1,item2" (if no "and" is desired)
       // because "item1, and item2" doesn't make sense grammatically, which is
       // what would happen if we didn't treat this as a special case
-      return Strings.toCase (
-              iterator.next().toString() + (hasAnd ? " and " : separator) +
-                      iterator.next().toString(), letterCase);
+      return toCase (iterator.next().toString() + (hasAnd ? " and " : separator) + iterator.next().toString(), letterCase);
     }
 
-    StringBuilder s = new StringBuilder();
+    final StringBuilder s = new StringBuilder();
 
-    for (T element : listElements)
+    for (final T element : listElements)
     {
-      String elementString = Strings.toCase (element.toString(),
-              letterCase);
+      final String elementString = toCase (element.toString(), letterCase);
+
       s.append(elementString).append (separator);
     }
 
@@ -693,9 +617,9 @@ public final class Strings
    *
    * @return A string containing the English words for the specified integer.
    */
-  public static String toWords (int n)
+  public static String toWords (final int n)
   {
-    StringBuilder words = new StringBuilder(); 
+    final StringBuilder words = new StringBuilder();
 
     words.append ((n < 0)? "negative " : "");
 
@@ -703,7 +627,7 @@ public final class Strings
     {
       int remainder = 0;
 
-      int nonnegativeN = Math.abs (n);
+      final int nonnegativeN = Math.abs (n);
 
       if (nonnegativeN >= 0 && nonnegativeN < 20)
       {
@@ -749,13 +673,12 @@ public final class Strings
 
         if (remainder != 0)
         {
-          words.append ("-").append (Strings.toWords (remainder));
+          words.append ("-").append (toWords (remainder));
         }
       }
       else if (nonnegativeN >= 100 && nonnegativeN < 1000)
       {
-        words.append (
-                Strings.toWords ((int) Math.floor (nonnegativeN / 100.0)));
+        words.append (toWords ((int) Math.floor (nonnegativeN / 100.0)));
 
         words.append (" hundred");
 
@@ -763,13 +686,12 @@ public final class Strings
 
         if (remainder != 0)
         {
-          words.append (" and ").append (Strings.toWords (remainder));
+          words.append (" and ").append (toWords (remainder));
         }
       }
       else if (nonnegativeN >= 1000 && nonnegativeN < 1000000)
       {
-        words.append (
-                Strings.toWords ((int) Math.floor (nonnegativeN / 1000.0)));
+        words.append (toWords ((int) Math.floor (nonnegativeN / 1000.0)));
 
         words.append (" thousand");
 
@@ -777,13 +699,12 @@ public final class Strings
 
         if (remainder != 0)
         {
-          words.append (" ").append (Strings.toWords (remainder));
+          words.append (" ").append (toWords (remainder));
         }
       }
       else if (nonnegativeN >= 1000000 && nonnegativeN < 1000000000)
       {
-        words.append (Strings.toWords ((int) Math.floor (
-                (double) nonnegativeN / 1000000.0)));
+        words.append (toWords ((int) Math.floor (nonnegativeN / 1000000.0)));
 
         words.append (" million");
 
@@ -791,13 +712,12 @@ public final class Strings
 
         if (remainder != 0)
         {
-          words.append (" ").append (Strings.toWords (remainder));
+          words.append (" ").append (toWords (remainder));
         }
       }
       else
       {
-        words.append (Strings.toWords ((int) Math.floor (
-                (double) nonnegativeN / 1000000000.0)));
+        words.append (toWords ((int) Math.floor (nonnegativeN / 1000000000.0)));
         
         words.append (" billion");
 
@@ -805,7 +725,7 @@ public final class Strings
 
         if (remainder != 0)
         {
-          words.append (" ").append (Strings.toWords (remainder));
+          words.append (" ").append (toWords (remainder));
         }
       }
     }

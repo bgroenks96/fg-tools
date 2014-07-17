@@ -10,7 +10,7 @@ public class Classes
    */
   public static void defaultConstructorNotSupported() throws UnsupportedOperationException
   {
-    throw new UnsupportedOperationException ("Default constructor not supported for class " + Classes.getClassName (1) + ".");
+    throw new UnsupportedOperationException ("Default constructor not supported for class " + getClassName (1) + ".");
   }
 
   /**
@@ -39,7 +39,7 @@ public class Classes
    */
   public static void instantiationNotAllowed() throws UnsupportedOperationException
   {
-    throw new UnsupportedOperationException ("Instantiation not allowed for class " + Classes.getClassName (1) + ".");
+    throw new UnsupportedOperationException ("Instantiation not allowed for class " + getClassName (1) + ".");
   }
 
   private Classes()

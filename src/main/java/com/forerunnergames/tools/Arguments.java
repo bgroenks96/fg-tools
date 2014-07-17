@@ -1,4 +1,3 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import com.google.common.collect.Iterables;
@@ -6,7 +5,7 @@ import com.google.common.collect.Iterables;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class Arguments
+public final class Arguments
 {
   /**
    * Checks if the specified Iterable has any null elements.
@@ -21,7 +20,7 @@ public class Arguments
   {
     if (iterable != null && Iterables.contains (iterable, null))
     {
-      Arguments.illegalArgument (iterableName, ArgumentStatus.NULL_ELEMENTS);
+      illegalArgument (iterableName, ArgumentStatus.NULL_ELEMENTS);
     }
   }
 
@@ -38,7 +37,7 @@ public class Arguments
   {
     if (array != null && Arrays.asList(array).contains (null))
     {
-      Arguments.illegalArgument (arrayName, ArgumentStatus.NULL_ELEMENTS);
+      illegalArgument (arrayName, ArgumentStatus.NULL_ELEMENTS);
     }
   }
 
@@ -58,15 +57,15 @@ public class Arguments
       return;
     }
 
-    for (String s : strings)
+    for (final String s : strings)
     {
       if (s == null)
       {
-        Arguments.illegalArgument (collectionName, ArgumentStatus.NULL_ELEMENTS);
+        illegalArgument (collectionName, ArgumentStatus.NULL_ELEMENTS);
       }
       else if (s.isEmpty())
       {
-        Arguments.illegalArgument (collectionName, ArgumentStatus.EMPTY_ELEMENTS);
+        illegalArgument (collectionName, ArgumentStatus.EMPTY_ELEMENTS);
       }
     }
   }
@@ -106,19 +105,19 @@ public class Arguments
       return;
     }
 
-    for (String s : strings)
+    for (final String s : strings)
     {
       if (s == null)
       {
-        Arguments.illegalArgument (collectionName, ArgumentStatus.NULL_ELEMENTS);
+        illegalArgument (collectionName, ArgumentStatus.NULL_ELEMENTS);
       }
       else if (s.isEmpty())
       {
-        Arguments.illegalArgument (collectionName, ArgumentStatus.EMPTY_ELEMENTS);
+        illegalArgument (collectionName, ArgumentStatus.EMPTY_ELEMENTS);
       }
       else if (Strings.isWhitespace (s))
       {
-        Arguments.illegalArgument (collectionName, ArgumentStatus.BLANK_ELEMENTS);
+        illegalArgument (collectionName, ArgumentStatus.BLANK_ELEMENTS);
       }
     }
   }
@@ -204,10 +203,7 @@ public class Arguments
    */
   public static void checkIsTrue (final boolean condition, final String errorMessage)
   {
-    if (! condition)
-    {
-      throw new IllegalArgumentException (errorMessage);
-    }
+    Preconditions.checkIsTrue (condition, errorMessage);
   }
 
   /**
@@ -220,7 +216,7 @@ public class Arguments
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage)
   {
-    checkIsTrue (! condition, errorMessage);
+    Preconditions.checkIsFalse (condition, errorMessage);
   }
 
   /**
@@ -236,7 +232,7 @@ public class Arguments
   {
     if (object == null)
     {
-      Arguments.illegalArgument (objectName, Arguments.ArgumentStatus.NULL);
+      illegalArgument (objectName, ArgumentStatus.NULL);
     }
   }
 
@@ -252,11 +248,11 @@ public class Arguments
   {
     if (s == null)
     {
-      Arguments.illegalArgument (stringName, ArgumentStatus.NULL);
+      illegalArgument (stringName, ArgumentStatus.NULL);
     }
     else if (s.isEmpty())
     {
-      Arguments.illegalArgument (stringName, ArgumentStatus.EMPTY);
+      illegalArgument (stringName, ArgumentStatus.EMPTY);
     }
   }
 
@@ -273,11 +269,11 @@ public class Arguments
   {
     if (iterable == null)
     {
-      Arguments.illegalArgument (iterableName, ArgumentStatus.NULL);
+      illegalArgument (iterableName, ArgumentStatus.NULL);
     }
     else if (! iterable.iterator().hasNext())
     {
-      Arguments.illegalArgument (iterableName, ArgumentStatus.EMPTY);
+      illegalArgument (iterableName, ArgumentStatus.EMPTY);
     }
   }
 
@@ -293,11 +289,11 @@ public class Arguments
   {
     if (array == null)
     {
-      Arguments.illegalArgument (arrayName, ArgumentStatus.NULL);
+      illegalArgument (arrayName, ArgumentStatus.NULL);
     }
     else if (array.length == 0)
     {
-      Arguments.illegalArgument (arrayName, ArgumentStatus.EMPTY);
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
     }
   }
 
@@ -313,15 +309,15 @@ public class Arguments
   {
     if (s == null)
     {
-      Arguments.illegalArgument (stringName, ArgumentStatus.NULL);
+      illegalArgument (stringName, ArgumentStatus.NULL);
     }
     else if (s.isEmpty())
     {
-      Arguments.illegalArgument (stringName, ArgumentStatus.EMPTY);
+      illegalArgument (stringName, ArgumentStatus.EMPTY);
     }
     else if (Strings.isWhitespace (s))
     {
-      Arguments.illegalArgument (stringName, ArgumentStatus.BLANK);
+      illegalArgument (stringName, ArgumentStatus.BLANK);
     }
   }
 
@@ -880,6 +876,7 @@ public class Arguments
                                        final BoundType boundType) throws IllegalArgumentException
   {
     final int stackLevel = getStackLevelOfFirstClassOutsideThisClass();
+
     throw new IllegalArgumentException (valueName + " [value: " + value + "]" + " must be " +
                                         boundType.getMessage() + " " + boundName + " [value: " + bound + "] " +
                                         "when invoking " + Classes.getClassName (stackLevel) + "." +
@@ -907,7 +904,7 @@ public class Arguments
     return Thread.currentThread().getStackTrace().length - 1;
   }
 
-  private static void illegalArgument (final String         argumentName,
+  private static void illegalArgument (final String argumentName,
                                        final ArgumentStatus argumentStatus) throws IllegalArgumentException
   {
     final int stackLevel = getStackLevelOfFirstClassOutsideThisClass();

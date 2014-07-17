@@ -1,33 +1,24 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
-import java.util.ArrayList;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Maps;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
-public class AssetManager <T extends AbstractAsset>
+public final class AssetManager <T extends Asset>
 {
-  private Map <Id, T> assets;
+  private final Map <Id, T> assets = Maps.newHashMap();
 
-  public AssetManager()
+  public void remove (final Id id)
   {
-    super();
+    Arguments.checkIsNotNull (id, "id");
 
-    assets = new HashMap <Id, T>();
+    remove (assetWith (id));
   }
 
-  public void deregister (final Id assetId)
-  {
-    Arguments.checkIsNotNull (assetId, "assetId");
-
-    deregister (get (assetId));
-  }
-
-  public void deregister (final T asset)
+  public void remove (final T asset)
   {
     Arguments.checkIsNotNull (asset, "asset");
 
@@ -39,49 +30,48 @@ public class AssetManager <T extends AbstractAsset>
     assets.remove (asset.getId());
   }
 
-  public Collection <T> get (Collection <Id> assetIds)
+  public ImmutableCollection <T> get (final ImmutableCollection <Id> ids)
   {
-    Arguments.checkIsNotNull         (assetIds, "assetIds");
-    Arguments.checkHasNoNullElements (assetIds, "assetIds");
+    Arguments.checkIsNotNull (ids, "ids");
+    Arguments.checkHasNoNullElements (ids, "ids");
 
-    Collection <T> matchingAssets = new ArrayList <T>();
+    ImmutableCollection.Builder <T> matchingAssetsBuilder = new ImmutableList.Builder<T>();
 
-    for (Id assetId : assetIds)
+    for (final Id assetId : ids)
     {
-      T asset = get (assetId);
-
-      matchingAssets.add (asset);
+      matchingAssetsBuilder.add (assetWith (assetId));
     }
 
-    return matchingAssets;
+    return matchingAssetsBuilder.build();
   }
 
-  public T get (final Id assetId)
+  public T assetWith (final Id id)
   {
-    if (! assets.containsKey (assetId))
-    {
-      throw new IllegalStateException ("Asset with id " + assetId + "does not exist.");
-    }
+    Arguments.checkIsNotNull (id, "id");
 
-    return assets.get (assetId);
+    if (! assets.containsKey (id)) throw new IllegalStateException ("Cannot find asset with id [" + id + "].");
+
+    return assets.get (id);
   }
 
-  public Collection <T> getAll()
+  public ImmutableCollection <T> allAssets()
   {
-    return assets.values();
+    return ImmutableList.copyOf (assets.values());
   }
 
-  public Set <Id> getIds()
+  public ImmutableSet <Id> allIds()
   {
-    return assets.keySet();
+    return ImmutableSet.copyOf (assets.keySet());
   }
 
-  public String getName (final Id assetId)
+  public String nameOf (final Id id)
   {
-    return get(assetId).getName();
+    Arguments.checkIsNotNull (id, "id");
+
+    return assetWith(id).getName();
   }
 
-  public Id getNextId()
+  public Id nextAvailableId()
   {
     int requestedIdValue = 0;
 
@@ -95,7 +85,7 @@ public class AssetManager <T extends AbstractAsset>
 
   public boolean existsAssetWith (final int idValue)
   {
-    for (T asset : getAll())
+    for (final T asset : allAssets())
     {
       if (asset.getId().value() == idValue) return true;
     }
@@ -110,28 +100,16 @@ public class AssetManager <T extends AbstractAsset>
     return has (asset.getId());
   }
 
-  public boolean has (final Id assetId)
+  public boolean has (final Id id)
   {
-    return assets.containsKey (assetId);
+    return assets.containsKey (id);
   }
 
-  public Iterator <T> iterator()
-  {
-    return getAll().iterator();
-  }
-
-  public void register (final T asset)
+  public void add (final T asset)
   {
     Arguments.checkIsNotNull (asset, "asset");
 
-    if (assets.size() < Integer.MAX_VALUE)
-    {
-      assets.put (asset.getId(), asset);
-    }
-    else
-    {
-      throw new IllegalStateException ("Max number of assets reached: " + assets.size());
-    }
+    assets.put (asset.getId(), asset);
   }
 
   public int size()
@@ -142,6 +120,7 @@ public class AssetManager <T extends AbstractAsset>
   @Override
   public String toString()
   {
-    return String.format ("%1$s Registered Assets:\n%2$s", assets.size(), Strings.toString (assets));
+    return String.format ("%1$s: Asset Count: %2$s | Assets: %3$s",
+            getClass().getSimpleName(), assets.size(), Strings.toString (assets));
   }
 }

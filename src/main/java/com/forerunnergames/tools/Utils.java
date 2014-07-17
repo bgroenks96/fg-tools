@@ -1,14 +1,7 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import com.google.common.collect.Multimap;
 
-import java.net.UnknownHostException;
-
-/**
- * 
- * @author Aaron Mahan <aaron@forerunnergames.com>
- */
 public class Utils
 {
   /**
@@ -19,8 +12,7 @@ public class Utils
    * 
    * @return The key, if found; Integer.MIN_VALUE otherwise.
    */
-  public static int findKeyFromValue (int value,
-                                      Multimap <Integer, Integer> multiMap)
+  public static int findKeyFromValue (int value, Multimap <Integer, Integer> multiMap)
   {
     Arguments.checkIsNotNull (value,    "value");
     Arguments.checkIsNotNull (multiMap, "multiMap");
@@ -36,10 +28,7 @@ public class Utils
     {
       boxedKey = keyIterator.next();
 
-      if (multiMap.containsEntry (boxedKey, boxedValue))
-      {
-        foundKey = true;
-      }
+      if (multiMap.containsEntry (boxedKey, boxedValue)) foundKey = true;
     }
 
     assert foundKey;
@@ -49,9 +38,9 @@ public class Utils
 
   /**
    * Checks whether the double n is equal to a mathematical integer.
-   * <br/><br/>
-   * Note: If n is infinite, or NaN, this method will return false. If n is
-   *       positive or negative zero, this method will return true.
+   *
+   * If n is infinite, or NaN, this method will return false. If n is positive or negative zero, this method will
+   * return true.
    * 
    * @param n The double to check.
    * 
@@ -63,30 +52,15 @@ public class Utils
   }
 
   /**
-   * Prints the specified text to the system console.
-   * 
-   * @param text The text to print to the system console, must not be null or
-   *             empty.
-   */
-  public static void printToConsole (String text)
-  {
-    Arguments.checkIsNotNullOrEmpty (text, "Text");
-
-    System.out.print (text);
-  }
-
-  /**
    * Cause the current thread to sleep for the specified number of milliseconds.
-   * <br/><br/>
-   * Note: This method is interrupt-friendly (i.e. allows interruption).
+   *
+   * This method is interrupt-friendly (i.e. allows interruption).
    * 
-   * @param milliseconds The number of milliseconds to sleep for, must be
-   *                     greater than zero.
+   * @param milliseconds The number of milliseconds to sleep for, must be greater than zero.
    * 
-   * @throws IllegalArgumentException If milliseconds is less than or equal to 
-   *                                  zero.
+   * @throws IllegalArgumentException If milliseconds is less than or equal to  zero.
    * 
-   * @see Time
+   * @see {@link com.forerunnergames.tools.Time}
    */
   public static void sleep (long milliseconds)
   {
@@ -106,7 +80,4 @@ public class Utils
   {
     Classes.instantiationNotAllowed();
   }
-
-  private static final String EXTERNAL_IP_API_URL =
-          "http://api.externalip.net/ip/";
 }

@@ -1,6 +1,6 @@
 package com.forerunnergames.tools;
 
-public interface Asset
+public interface Asset extends Comparable <Asset>
 {
   public String getName();
   public Id getId();
@@ -9,8 +9,6 @@ public interface Asset
   public boolean has (final Id id);
   public boolean is (final Asset asset);
   public boolean isNot (final Asset asset);
+  @Override
   public int compareTo (final Asset asset);
-  public boolean equals (final Object object);
-  public int hashCode();
-  public String toString();
 }

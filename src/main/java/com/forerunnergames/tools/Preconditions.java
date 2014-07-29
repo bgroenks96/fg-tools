@@ -12,10 +12,7 @@ public final class Preconditions
    */
   public static void checkIsTrue (final boolean condition, final String errorMessage)
   {
-    if (! condition)
-    {
-      throw new IllegalArgumentException (errorMessage);
-    }
+    if (! condition) throw new IllegalArgumentException (errorMessage);
   }
   /**
    * Checks if the specified boolean condition evaluates to false.
@@ -27,7 +24,7 @@ public final class Preconditions
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage)
   {
-    checkIsTrue (! condition, errorMessage);
+    if (condition) throw new IllegalArgumentException (errorMessage);
   }
 
   private Preconditions()

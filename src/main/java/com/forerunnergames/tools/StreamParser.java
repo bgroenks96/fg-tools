@@ -20,6 +20,17 @@ public final class StreamParser
   private Reader reader;
   private StreamTokenizer s;
 
+  private enum TokenType
+  {
+    DOUBLE,
+    END_OF_FILE,
+    END_OF_LINE,
+    INTEGER,
+    QUOTED_STRING,
+    SINGLE_CHARACTER,
+    UNQUOTED_STRING
+  }
+
   /*
    * Constructs a new StreamParser with the specified file.
    *
@@ -1334,16 +1345,5 @@ public final class StreamParser
     s.wordChars        (58, 126);
     s.whitespaceChars (127, 159);
     s.wordChars       (160, 255);
-  }
-
-  private enum TokenType
-  {
-    DOUBLE,
-    END_OF_FILE,
-    END_OF_LINE,
-    INTEGER,
-    QUOTED_STRING,
-    SINGLE_CHARACTER,
-    UNQUOTED_STRING
   }
 }

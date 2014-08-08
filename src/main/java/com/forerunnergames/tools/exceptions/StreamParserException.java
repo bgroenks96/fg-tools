@@ -1,27 +1,15 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools.exceptions;
 
-import com.forerunnergames.tools.Classes;
-
-/**
- * 
- * @author Aaron Mahan <aaron@forerunnergames.com>
- */
 @SuppressWarnings("serial")
-public class StreamParserException extends Exception
+public class StreamParserException extends RuntimeException
 {
-  public StreamParserException (String errorMessage)
+  public StreamParserException (final String errorMessage)
   {
     super (errorMessage);
   }
 
-  public StreamParserException (String error_message, Throwable cause)
+  public StreamParserException (final String errorMessage, final Throwable cause)
   {
-    super (error_message, cause);
-  }
-
-  private StreamParserException()
-  {
-    Classes.defaultConstructorNotSupported();
+    super (errorMessage, cause);
   }
 }

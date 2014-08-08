@@ -1,4 +1,3 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
 import com.forerunnergames.tools.exceptions.StreamParserException;
@@ -15,8 +14,12 @@ import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class StreamParser
+public final class StreamParser
 {
+  private static final int QUOTE_CHARACTER_ASCII_CODE = (int) '\"';
+  private Reader reader;
+  private StreamTokenizer s;
+
   /*
    * Constructs a new StreamParser with the specified file.
    *
@@ -24,7 +27,7 @@ public class StreamParser
    *
    * @throws StreamParserException If the file cannot be open or found.
    */
-  public StreamParser (File file) throws StreamParserException
+  public StreamParser (final File file) throws StreamParserException
   {
     Arguments.checkIsNotNull (file, "file");
 
@@ -39,7 +42,7 @@ public class StreamParser
    *
    * @throws StreamParserException If filename cannot be open or found.
    */
-  public StreamParser (String fileName) throws StreamParserException
+  public StreamParser (final String fileName) throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmptyOrBlank (fileName, "fileName");
 
@@ -51,7 +54,7 @@ public class StreamParser
    *
    * @param inputStream The input stream to parse, must not be null.
    */
-  public StreamParser (InputStream inputStream)
+  public StreamParser (final InputStream inputStream)
   {
     Arguments.checkIsNotNull (inputStream, "inputStream");
 
@@ -64,7 +67,7 @@ public class StreamParser
    * @param reader The reader object providing the input stream to parse,
    *               must not be null.
    */
-  public StreamParser (Reader reader)
+  public StreamParser (final Reader reader)
   {
     Arguments.checkIsNotNull (reader, "reader");
 
@@ -78,13 +81,13 @@ public class StreamParser
    */
   public void close() throws StreamParserException
   {
-    if (this.reader != null)
+    if (reader != null)
     {
       try
       {
-        this.reader.close();
+        reader.close();
       }
-      catch (IOException e)
+      catch (final IOException e)
       {
         throw new StreamParserException ("Unable to close resources.", e);
       }
@@ -119,7 +122,7 @@ public class StreamParser
    *                                    not equal the content of the parsed
    *                                    token (excluding EOF).
    */
-  public void discardNextCharacter (char c) throws StreamParserException
+  public void discardNextCharacter (final char c) throws StreamParserException
   {
     discardNextCharacter();
 
@@ -137,7 +140,7 @@ public class StreamParser
    *                               <br/>If the next count tokens are not single
    *                                    characters (excluding EOF).
    */
-  public void discardNextCharacters (int count) throws StreamParserException
+  public void discardNextCharacters (final int count) throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
@@ -163,13 +166,13 @@ public class StreamParser
    *                                    equal the content of the parsed tokens
    *                                    (excluding EOF).
    */
-  public void discardNextCharacters (Collection <Character> characters)
+  public void discardNextCharacters (final Collection <Character> characters)
           throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmpty  (characters, "characters");
     Arguments.checkHasNoNullElements (characters, "characters");
 
-    for (Character c : characters)
+    for (final Character c : characters)
     {
       discardNextCharacter (c.charValue());
 
@@ -208,7 +211,7 @@ public class StreamParser
    *                                    content of the parsed token (excluding
    *                                    EOF).
    */
-  public void discardNextDouble (double n) throws StreamParserException
+  public void discardNextDouble (final double n) throws StreamParserException
   {
     discardNextDouble();
 
@@ -225,7 +228,7 @@ public class StreamParser
    *                               <br/>If the next count tokens are not
    *                                    doubles (excluding EOF).
    */
-  public void discardNextDoubles (int count) throws StreamParserException
+  public void discardNextDoubles (final int count) throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
@@ -250,13 +253,13 @@ public class StreamParser
    *                                    equal the content of the parsed tokens
    *                                    (excluding EOF).
    */
-  public void discardNextDoubles (Collection <Double> doubles)
+  public void discardNextDoubles (final Collection <Double> doubles)
           throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmpty  (doubles, "doubles");
     Arguments.checkHasNoNullElements (doubles, "doubles");
 
-    for (Double d : doubles)
+    for (final Double d : doubles)
     {
       discardNextDouble (d.doubleValue());
 
@@ -295,7 +298,7 @@ public class StreamParser
    *                                    content of the parsed token (excluding
    *                                    EOF).
    */
-  public void discardNextInteger (int n) throws StreamParserException
+  public void discardNextInteger (final int n) throws StreamParserException
   {
     discardNextInteger();
 
@@ -312,7 +315,7 @@ public class StreamParser
    *                               <br/>If the next count tokens are not
    *                                    integers (excluding EOF).
    */
-  public void discardNextIntegers (int count) throws StreamParserException
+  public void discardNextIntegers (final int count) throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
@@ -337,13 +340,13 @@ public class StreamParser
    *                                    equal the content of the parsed tokens
    *                                    (excluding EOF).
    */
-  public void discardNextIntegers (Collection <Integer> integers)
+  public void discardNextIntegers (final Collection <Integer> integers)
           throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmpty  (integers, "integers");
     Arguments.checkHasNoNullElements (integers, "integers");
 
-    for (Integer i : integers)
+    for (final Integer i : integers)
     {
       discardNextInteger (i.intValue());
 
@@ -381,7 +384,7 @@ public class StreamParser
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count lines from the stream.
    */
-  public void discardNextLines (int count) throws StreamParserException
+  public void discardNextLines (final int count) throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
@@ -428,7 +431,7 @@ public class StreamParser
    *                                    equal the content of the parsed token
    *                                    (excluding  EOF).
    */
-  public void discardNextQuotedString (String quotedString)
+  public void discardNextQuotedString (final String quotedString)
           throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmptyOrBlank (quotedString, "quotedString");
@@ -448,7 +451,7 @@ public class StreamParser
    *                               <br/>If the next count tokens are not quoted
    *                                    strings (excluding EOF).
    */
-  public void discardNextQuotedStrings (int count) throws StreamParserException
+  public void discardNextQuotedStrings (final int count) throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
@@ -474,13 +477,13 @@ public class StreamParser
    *                                    equal the content of the parsed tokens
    *                                    (excluding EOF).
    */
-  public void discardNextQuotedStrings (Collection <String> quotedStrings)
+  public void discardNextQuotedStrings (final Collection <String> quotedStrings)
           throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmpty  (quotedStrings, "quotedStrings");
     Arguments.checkHasNoNullElements (quotedStrings, "quotedStrings");
 
-    for (String quotedString : quotedStrings)
+    for (final String quotedString : quotedStrings)
     {
       discardNextQuotedString (quotedString);
 
@@ -510,7 +513,7 @@ public class StreamParser
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream.
    */
-  public void discardNextTokens (int count) throws StreamParserException
+  public void discardNextTokens (final int count) throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
@@ -548,7 +551,7 @@ public class StreamParser
    *                                    not equal the content of the parsed
    *                                    token (excluding EOF).
    */
-  public void discardNextUnquotedString (String unquotedString)
+  public void discardNextUnquotedString (final String unquotedString)
           throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmptyOrBlank (unquotedString, "unquotedString");
@@ -569,7 +572,7 @@ public class StreamParser
    *                               <br/>If the next count tokens are not
    *                                    unquoted Strings (excluding EOF).
    */
-  public void discardNextUnquotedStrings (int count)
+  public void discardNextUnquotedStrings (final int count)
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
@@ -597,13 +600,13 @@ public class StreamParser
    *                                    not equal the content of the parsed
    *                                    tokens (excluding EOF).
    */
-  public void discardNextUnquotedStrings (Collection <String> unquotedStrings)
+  public void discardNextUnquotedStrings (final Collection <String> unquotedStrings)
           throws StreamParserException
   {
     Arguments.checkIsNotNullOrEmpty  (unquotedStrings, "unquotedStrings");
     Arguments.checkHasNoNullElements (unquotedStrings, "unquotedStrings");
 
-    for (String unquotedString : unquotedStrings)
+    for (final String unquotedString : unquotedStrings)
     {
       discardNextUnquotedString (unquotedString);
 
@@ -619,26 +622,26 @@ public class StreamParser
    */
   public StreamParser withCSVSyntax()
   {
-    assert this.s != null;
+    assert s != null;
 
-    this.s.resetSyntax();
-    this.s.parseNumbers();
-    this.s.slashSlashComments (false);
-    this.s.slashStarComments  (false);
-    this.s.lowerCaseMode      (false);
-    this.s.eolIsSignificant   (false);
-    this.s.wordChars          (0,    9);
-    this.s.whitespaceChars    (10,  10);
-    this.s.wordChars          (11,  12);
-    this.s.whitespaceChars    (13,  13);
-    this.s.wordChars          (14,  31);
-    this.s.whitespaceChars    (32,  32);
-    this.s.wordChars          (33,  33);
-    this.s.quoteChar          (34);
-    this.s.wordChars          (35,  43);
-    this.s.whitespaceChars    (44,  44);
-    this.s.wordChars          (45,  47);
-    this.s.wordChars          (58, 255);
+    s.resetSyntax();
+    s.parseNumbers();
+    s.slashSlashComments (false);
+    s.slashStarComments  (false);
+    s.lowerCaseMode      (false);
+    s.eolIsSignificant   (false);
+    s.wordChars          (0,    9);
+    s.whitespaceChars    (10,  10);
+    s.wordChars          (11,  12);
+    s.whitespaceChars    (13,  13);
+    s.wordChars          (14,  31);
+    s.whitespaceChars    (32,  32);
+    s.wordChars          (33,  33);
+    s.quoteChar          (34);
+    s.wordChars          (35,  43);
+    s.whitespaceChars    (44,  44);
+    s.wordChars          (45,  47);
+    s.wordChars          (58, 255);
 
     return this;
   }
@@ -657,11 +660,11 @@ public class StreamParser
    */
   public int getNextCharacter() throws StreamParserException
   {
-    assert this.s != null;
+    assert s != null;
 
     discardNextCharacter();
 
-    return isEOF() ? -1 : this.s.ttype;
+    return isEOF() ? -1 : s.ttype;
   }
 
   /**
@@ -682,12 +685,12 @@ public class StreamParser
    *                               <br/>If the next count tokens are not single
    *                                    characters (excluding EOF).
    */
-  public Collection <Integer> getNextCharacters (int count)
+  public Collection <Integer> getNextCharacters (final int count)
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    Collection <Integer> characterCodes = new ArrayList <Integer> (count);
+    final Collection <Integer> characterCodes = new ArrayList <Integer> (count);
 
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
@@ -711,13 +714,13 @@ public class StreamParser
    */
   public double getNextDouble() throws StreamParserException
   {
-    assert this.s != null;
+    assert s != null;
 
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.DOUBLE);
 
-    return isEOF() ? Double.MIN_VALUE : this.s.nval;
+    return isEOF() ? Double.MIN_VALUE : s.nval;
   }
 
   /**
@@ -736,12 +739,12 @@ public class StreamParser
    *                               <br/>If the next count tokens are not doubles
    *                                    (excluding EOF).
    */
-  public Collection <Double> getNextDoubles (int count)
+  public Collection <Double> getNextDoubles (final int count)
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    Collection <Double> doubles = new ArrayList <Double> (count);
+    final Collection <Double> doubles = new ArrayList <Double> (count);
 
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
@@ -764,13 +767,13 @@ public class StreamParser
    */
   public int getNextInteger() throws StreamParserException
   {
-    assert this.s != null;
+    assert s != null;
 
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.INTEGER);
 
-    return isEOF() ? Integer.MIN_VALUE : (int) this.s.nval;
+    return isEOF() ? Integer.MIN_VALUE : (int) s.nval;
   }
 
   /**
@@ -790,12 +793,12 @@ public class StreamParser
    *                               <br/>If the next count tokens are not
    *                                    integers (excluding EOF).
    */
-  public Collection <Integer> getNextIntegers (int count)
+  public Collection <Integer> getNextIntegers (final int count)
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    Collection <Integer> integers = new ArrayList <Integer> (count);
+    final Collection <Integer> integers = new ArrayList <Integer> (count);
 
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
@@ -819,7 +822,7 @@ public class StreamParser
    */
   public String getNextLine() throws StreamParserException
   {
-    StringBuilder stringBuilder = new StringBuilder();
+    final StringBuilder stringBuilder = new StringBuilder();
 
     enableEndOfLineTokens();
 
@@ -855,12 +858,12 @@ public class StreamParser
    *                                    next count tokens from the stream
    *                                    (excluding EOF)
    */
-  public Collection <String> getNextLines (int count)
+  public Collection <String> getNextLines (final int count)
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    Collection <String> lines = new ArrayList <String> (count);
+    final Collection <String> lines = new ArrayList <String> (count);
 
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
@@ -884,13 +887,13 @@ public class StreamParser
    */
   public String getNextQuotedString() throws StreamParserException
   {
-    assert this.s != null;
+    assert s != null;
 
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.QUOTED_STRING);
 
-    return isEOF() ? "" : this.s.sval;
+    return isEOF() ? "" : s.sval;
   }
 
   /**
@@ -910,12 +913,12 @@ public class StreamParser
    *                               <br/>If the next count tokens are not
    *                                    quoted strings (excluding EOF).
    */
-  public Collection <String> getNextQuotedStrings (int count)
+  public Collection <String> getNextQuotedStrings (final int count)
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    Collection <String> quotedStrings = new ArrayList <String> (count);
+    final Collection <String> quotedStrings = new ArrayList <String> (count);
 
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
@@ -956,12 +959,12 @@ public class StreamParser
    * @throws StreamParserException <br/>If the StreamParser could not read the
    *                                    next count tokens from the stream.
    */
-  public Collection <String> getNextTokens (int count)
+  public Collection <String> getNextTokens (final int count)
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    Collection <String> tokens = new ArrayList <String> (count);
+    final Collection <String> tokens = new ArrayList <String> (count);
 
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
@@ -985,13 +988,13 @@ public class StreamParser
    */
   public String getNextUnquotedString() throws StreamParserException
   {
-    assert this.s != null;
+    assert s != null;
 
     parseNextToken();
 
     checkTokenTypeEquals (TokenType.UNQUOTED_STRING);
 
-    return isEOF() ? "" : this.s.sval;
+    return isEOF() ? "" : s.sval;
   }
 
   /**
@@ -1011,12 +1014,12 @@ public class StreamParser
    *                               <br/>If the next count tokens are not
    *                                    unquoted strings (excluding EOF).
    */
-  public Collection <String> getNextUnquotedStrings (int count)
+  public Collection <String> getNextUnquotedStrings (final int count)
           throws StreamParserException
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    Collection <String> unquotedStrings = new ArrayList <String> (count);
+    final Collection <String> unquotedStrings = new ArrayList <String> (count);
 
     for (int i = 0; i < count && ! isEOF(); ++i)
     {
@@ -1061,14 +1064,14 @@ public class StreamParser
     Classes.defaultConstructorNotSupported();
   }
 
-  private void checkTokenContentEquals (String expectedTokenContent)
+  private void checkTokenContentEquals (final String expectedTokenContent)
           throws StreamParserException
   {
     assert expectedTokenContent != null;
 
     if (! isEOF())
     {
-      String actualTokenContent = getCurrentTokenContent();
+      final String actualTokenContent = getCurrentTokenContent();
 
       if (! actualTokenContent.equals (expectedTokenContent))
       {
@@ -1079,12 +1082,12 @@ public class StreamParser
     }
   }
 
-  private void checkTokenTypeEquals (TokenType expectedTokenType)
+  private void checkTokenTypeEquals (final TokenType expectedTokenType)
           throws StreamParserException
   {
     assert expectedTokenType != null;
 
-    TokenType actualTokenType = getCurrentTokenType();
+    final TokenType actualTokenType = getCurrentTokenType();
 
     if (! isEOF() && actualTokenType != expectedTokenType)
     {
@@ -1096,35 +1099,35 @@ public class StreamParser
 
   private void disableEndOfLineTokens()
   {
-    assert this.s != null;
+    assert s != null;
 
-    this.s.eolIsSignificant (false);
+    s.eolIsSignificant (false);
   }
 
   private void enableEndOfLineTokens()
   {
-    assert this.s != null;
+    assert s != null;
 
-    this.s.eolIsSignificant (true);
+    s.eolIsSignificant (true);
   }
 
   private String getCurrentTokenContent() throws StreamParserException
   {
-    assert this.s != null;
+    assert s != null;
 
     String currentTokenContent = "";
 
-    switch (this.s.ttype)
+    switch (s.ttype)
     {
       case StreamTokenizer.TT_NUMBER:
       {
-        if (Utils.isInteger (this.s.nval))
+        if (Utils.isInteger (s.nval))
         {
-          currentTokenContent = String.valueOf ((int) (this.s.nval));
+          currentTokenContent = String.valueOf ((int) (s.nval));
         }
         else
         {
-          currentTokenContent = String.valueOf (this.s.nval);
+          currentTokenContent = String.valueOf (s.nval);
         }
 
         break;
@@ -1132,7 +1135,7 @@ public class StreamParser
 
       case StreamTokenizer.TT_WORD:
       {
-        currentTokenContent = this.s.sval;
+        currentTokenContent = s.sval;
 
         break;
       }
@@ -1151,18 +1154,18 @@ public class StreamParser
                 "Last token successfully parsed: " + getCurrentTokenInfo());
       }
 
-      case StreamParser.QUOTE_CHARACTER_ASCII_CODE:
+      case QUOTE_CHARACTER_ASCII_CODE:
       {
-        currentTokenContent = this.s.sval;
+        currentTokenContent = s.sval;
 
         break;
       }
 
       default:
       {
-        assert this.s.ttype >= 0 && this.s.ttype <= Character.MAX_VALUE;
+        assert s.ttype >= 0 && s.ttype <= Character.MAX_VALUE;
 
-        currentTokenContent = String.valueOf ((char) this.s.ttype);
+        currentTokenContent = String.valueOf ((char) s.ttype);
 
         break;
       }
@@ -1175,22 +1178,22 @@ public class StreamParser
 
   private String getCurrentTokenInfo()
   {
-    assert this.s != null;
+    assert s != null;
 
-    return this.s.toString();
+    return s.toString();
   }
 
   private TokenType getCurrentTokenType() throws StreamParserException
   {
-    assert this.s != null;
+    assert s != null;
 
     TokenType currentTokenType = null;
 
-    switch (this.s.ttype)
+    switch (s.ttype)
     {
       case StreamTokenizer.TT_NUMBER:
       {
-        if (Utils.isInteger (this.s.nval))
+        if (Utils.isInteger (s.nval))
         {
           currentTokenType = TokenType.INTEGER;
         }
@@ -1232,7 +1235,7 @@ public class StreamParser
 
       default:
       {
-        assert this.s.ttype >= 0 && this.s.ttype <= Character.MAX_VALUE;
+        assert s.ttype >= 0 && s.ttype <= Character.MAX_VALUE;
 
         currentTokenType = TokenType.SINGLE_CHARACTER;
 
@@ -1245,7 +1248,7 @@ public class StreamParser
     return currentTokenType;
   }
 
-  private void initialize (String filePath) throws StreamParserException
+  private void initialize (final String filePath) throws StreamParserException
   {
     assert ! com.google.common.base.Strings.isNullOrEmpty (filePath);
     assert ! Strings.isWhitespace (filePath);
@@ -1253,7 +1256,7 @@ public class StreamParser
     initialize (new File (filePath));
   }
 
-  private void initialize (File file) throws StreamParserException
+  private void initialize (final File file) throws StreamParserException
   {
     assert file != null;
 
@@ -1261,53 +1264,53 @@ public class StreamParser
     {
       initialize (new FileReader (file));
     }
-    catch (FileNotFoundException e)
+    catch (final FileNotFoundException e)
     {
       throw new StreamParserException ("Could not load file: " + file, e);
     }
   }
 
-  private void initialize (InputStream inputStream)
+  private void initialize (final InputStream inputStream)
   {
     assert inputStream != null;
 
     initialize (new BufferedReader (new InputStreamReader (inputStream)));
   }
 
-  private void initialize (Reader reader)
+  private void initialize (final Reader reader)
   {
     assert reader != null;
 
     this.reader = reader;
 
-    this.s = new StreamTokenizer (this.reader);
+    s = new StreamTokenizer (reader);
 
     setupSyntaxTables();
   }
 
   private boolean isEOF()
   {
-    assert this.s != null;
+    assert s != null;
 
-    return this.s.ttype == StreamTokenizer.TT_EOF;
+    return s.ttype == StreamTokenizer.TT_EOF;
   }
 
   private boolean isEOL()
   {
-    assert this.s != null;
+    assert s != null;
 
-    return this.s.ttype == StreamTokenizer.TT_EOL;
+    return s.ttype == StreamTokenizer.TT_EOL;
   }
 
   private void parseNextToken() throws StreamParserException
   {
-    assert this.s != null;
+    assert s != null;
 
     try
     {
-      this.s.nextToken();
+      s.nextToken();
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new StreamParserException ("Could not read next token.\n\n" +
               "Last token successfully parsed: " + getCurrentTokenInfo(), e);
@@ -1316,21 +1319,21 @@ public class StreamParser
 
   private void setupSyntaxTables()
   {
-    assert this.s != null;
+    assert s != null;
 
-    this.s.resetSyntax();
-    this.s.parseNumbers();
-    this.s.slashSlashComments (false);
-    this.s.slashStarComments  (false);
-    this.s.lowerCaseMode      (false);
-    this.s.eolIsSignificant   (false);
-    this.s.whitespaceChars   (0,  32);
-    this.s.wordChars        (33,  33);
-    this.s.quoteChar        (34);
-    this.s.wordChars        (35,  47);
-    this.s.wordChars        (58, 126);
-    this.s.whitespaceChars (127, 159);
-    this.s.wordChars       (160, 255);
+    s.resetSyntax();
+    s.parseNumbers();
+    s.slashSlashComments (false);
+    s.slashStarComments  (false);
+    s.lowerCaseMode      (false);
+    s.eolIsSignificant   (false);
+    s.whitespaceChars   (0,  32);
+    s.wordChars        (33,  33);
+    s.quoteChar        (34);
+    s.wordChars        (35,  47);
+    s.wordChars        (58, 126);
+    s.whitespaceChars (127, 159);
+    s.wordChars       (160, 255);
   }
 
   private enum TokenType
@@ -1343,9 +1346,4 @@ public class StreamParser
     SINGLE_CHARACTER,
     UNQUOTED_STRING
   }
-
-  private Reader          reader;
-  private StreamTokenizer s;
-
-  private static final int QUOTE_CHARACTER_ASCII_CODE = (int) '\"';
 }

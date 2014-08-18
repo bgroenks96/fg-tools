@@ -203,7 +203,7 @@ public final class Arguments
    */
   public static void checkIsTrue (final boolean condition, final String errorMessage)
   {
-    Preconditions.checkIsTrue (condition, errorMessage);
+    if (! condition) throw new IllegalArgumentException (errorMessage);
   }
 
   /**
@@ -216,7 +216,7 @@ public final class Arguments
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage)
   {
-    Preconditions.checkIsFalse (condition, errorMessage);
+    if (condition) throw new IllegalArgumentException (errorMessage);
   }
 
   /**

@@ -16,7 +16,42 @@ import java.util.Collection;
 
 public final class StreamParser
 {
-  private static final int QUOTE_CHARACTER_ASCII_CODE = (int) '\"';
+  public enum CommentType
+  {
+    SLASH_SLASH,
+    SLASH_STAR;
+
+    public boolean is (final CommentType type)
+    {
+      Arguments.checkIsNotNull (type, "type");
+
+      return equals (type);
+    }
+  }
+
+  public enum CommentStatus
+  {
+    ENABLED (true),
+    DISABLED (false);
+
+    public boolean isEnabled()
+    {
+      return isEnabled;
+    }
+
+    private CommentStatus (final boolean isEnabled)
+    {
+      this.isEnabled = isEnabled;
+    }
+
+    private boolean isEnabled;
+  }
+
+  private static final int QUOTE_CHARACTER = (int) '\"';
+  private static final int FORWARD_SLASH_CHARACTER = (int) '/';
+  private static final int STAR_CHARACTER = (int) '*';
+  private boolean areSlashSlashCommentsEnabled = false;
+  private boolean areSlashStarCommentsEnabled = false;
   private Reader reader;
   private StreamTokenizer s;
 
@@ -83,6 +118,96 @@ public final class StreamParser
     Arguments.checkIsNotNull (reader, "reader");
 
     initialize (reader);
+  }
+
+  /**
+   * Configures the StreamParser for CSV (comma separated values) files.
+   *
+   * @return The StreamParser instance, configured for parsing CSV files.
+   */
+  public StreamParser withCSVSyntax()
+  {
+    assert s != null;
+
+    s.resetSyntax();
+    s.parseNumbers();
+    s.lowerCaseMode      (false);
+    s.eolIsSignificant   (false);
+    s.wordChars          (0,    9);
+    s.whitespaceChars    (10,  10);
+    s.wordChars          (11,  12);
+    s.whitespaceChars    (13,  13);
+    s.wordChars          (14,  31);
+    s.whitespaceChars    (32,  32);
+    s.wordChars          (33,  33);
+    s.quoteChar          (34);
+    s.wordChars          (35,  41);
+    s.wordChars          (43,  43);
+    s.whitespaceChars    (44,  44);
+    s.wordChars          (45,  46);
+    s.wordChars          (58, 255);
+
+    configureComments();
+
+    return this;
+  }
+
+  private void configureComments()
+  {
+    if (areSlashStarCommentsEnabled || areSlashSlashCommentsEnabled)
+    {
+      s.ordinaryChar (FORWARD_SLASH_CHARACTER);
+    }
+    else
+    {
+      s.wordChars (FORWARD_SLASH_CHARACTER, FORWARD_SLASH_CHARACTER);
+    }
+
+    if (areSlashStarCommentsEnabled)
+    {
+      s.ordinaryChar (STAR_CHARACTER);
+    }
+    else
+    {
+      s.wordChars (STAR_CHARACTER, STAR_CHARACTER);
+    }
+
+    s.slashSlashComments (areSlashSlashCommentsEnabled);
+    s.slashStarComments  (areSlashStarCommentsEnabled);
+  }
+
+  /**
+   * Enable / disable slash-slash comments or slash-star (/*) comments.
+   *
+   * When slash-slash comments are enabled, lines beginning with two forward slashes are ignored.
+   * When slash-star comments are enabled, all lines between a forward slash + star & a star + forward slash are
+   * ignored (including the forward slash + star & star + forward slash characters themselves).
+   * When either comment type is disabled, the comment characters and comments are parsed ordinarily.
+   *
+   * Note: All comment types are disabled by default.
+   *
+   * @param commentType
+   * @param commentStatus
+   *
+   * @return The StreamParser instance, configured with the specified comment settings.
+   */
+  public StreamParser withComments (final CommentType commentType, final CommentStatus commentStatus)
+  {
+    switch (commentType)
+    {
+      case SLASH_SLASH:
+      {
+        areSlashSlashCommentsEnabled = commentStatus.isEnabled();
+      }
+      case SLASH_STAR:
+      {
+        areSlashStarCommentsEnabled = commentStatus.isEnabled();
+      }
+    }
+
+    configureComments();
+
+    return this;
   }
 
   /**
@@ -180,7 +305,7 @@ public final class StreamParser
   public void discardNextCharacters (final Collection <Character> characters)
           throws StreamParserException
   {
-    Arguments.checkIsNotNullOrEmpty  (characters, "characters");
+    Arguments.checkIsNotNullOrEmpty (characters, "characters");
     Arguments.checkHasNoNullElements (characters, "characters");
 
     for (final Character c : characters)
@@ -267,7 +392,7 @@ public final class StreamParser
   public void discardNextDoubles (final Collection <Double> doubles)
           throws StreamParserException
   {
-    Arguments.checkIsNotNullOrEmpty  (doubles, "doubles");
+    Arguments.checkIsNotNullOrEmpty (doubles, "doubles");
     Arguments.checkHasNoNullElements (doubles, "doubles");
 
     for (final Double d : doubles)
@@ -354,7 +479,7 @@ public final class StreamParser
   public void discardNextIntegers (final Collection <Integer> integers)
           throws StreamParserException
   {
-    Arguments.checkIsNotNullOrEmpty  (integers, "integers");
+    Arguments.checkIsNotNullOrEmpty (integers, "integers");
     Arguments.checkHasNoNullElements (integers, "integers");
 
     for (final Integer i : integers)
@@ -491,7 +616,7 @@ public final class StreamParser
   public void discardNextQuotedStrings (final Collection <String> quotedStrings)
           throws StreamParserException
   {
-    Arguments.checkIsNotNullOrEmpty  (quotedStrings, "quotedStrings");
+    Arguments.checkIsNotNullOrEmpty (quotedStrings, "quotedStrings");
     Arguments.checkHasNoNullElements (quotedStrings, "quotedStrings");
 
     for (final String quotedString : quotedStrings)
@@ -626,35 +751,6 @@ public final class StreamParser
         break;
       }
     }
-  }
-
-  /**
-   * Configures the StreamParser for CSV (comma separated values) files.
-   */
-  public StreamParser withCSVSyntax()
-  {
-    assert s != null;
-
-    s.resetSyntax();
-    s.parseNumbers();
-    s.slashSlashComments (false);
-    s.slashStarComments  (false);
-    s.lowerCaseMode      (false);
-    s.eolIsSignificant   (false);
-    s.wordChars          (0,    9);
-    s.whitespaceChars    (10,  10);
-    s.wordChars          (11,  12);
-    s.whitespaceChars    (13,  13);
-    s.wordChars          (14,  31);
-    s.whitespaceChars    (32,  32);
-    s.wordChars          (33,  33);
-    s.quoteChar          (34);
-    s.wordChars          (35,  43);
-    s.whitespaceChars    (44,  44);
-    s.wordChars          (45,  47);
-    s.wordChars          (58, 255);
-
-    return this;
   }
 
   /**
@@ -1165,7 +1261,7 @@ public final class StreamParser
                 "Last token successfully parsed: " + getCurrentTokenInfo());
       }
 
-      case QUOTE_CHARACTER_ASCII_CODE:
+      case QUOTE_CHARACTER:
       {
         currentTokenContent = s.sval;
 
@@ -1237,7 +1333,7 @@ public final class StreamParser
         break;
       }
 
-      case StreamParser.QUOTE_CHARACTER_ASCII_CODE:
+      case StreamParser.QUOTE_CHARACTER:
       {
         currentTokenType = TokenType.QUOTED_STRING;
 
@@ -1334,16 +1430,17 @@ public final class StreamParser
 
     s.resetSyntax();
     s.parseNumbers();
-    s.slashSlashComments (false);
-    s.slashStarComments  (false);
-    s.lowerCaseMode      (false);
-    s.eolIsSignificant   (false);
-    s.whitespaceChars   (0,  32);
-    s.wordChars        (33,  33);
-    s.quoteChar        (34);
-    s.wordChars        (35,  47);
-    s.wordChars        (58, 126);
-    s.whitespaceChars (127, 159);
-    s.wordChars       (160, 255);
+    s.lowerCaseMode (false);
+    s.eolIsSignificant (false);
+    s.whitespaceChars   (0,   32);
+    s.wordChars         (33,  33);
+    s.quoteChar         (34);
+    s.wordChars         (35,  41);
+    s.wordChars         (43,  46);
+    s.wordChars         (58, 126);
+    s.whitespaceChars  (127, 159);
+    s.wordChars        (160, 255);
+
+    configureComments();
   }
 }

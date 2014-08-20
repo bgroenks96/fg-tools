@@ -1,64 +1,61 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools;
 
-public class Point2D
+public final class Point2D
 {
+  private final int x;
+  private final int y;
+
   public Point2D (final int x, final int y)
   {
-    x_ = x;
-    y_ = y;
-  }
-
-  @Override
-  public boolean equals (Object object)
-  {
-    if (this == object)
-    {
-      return true;
-    }
-
-    boolean equals = false;
-
-    if (object != null && object.getClass() == getClass())
-    {
-      Point2D point = (Point2D) object;
-
-      if (x_ == point.getX() && y_ == point.getY())
-      {
-        equals = true;
-      }
-    }
-
-    return equals;
+    this.x = x;
+    this.y = y;
   }
 
   public int getX()
   {
-    return x_;
+    return x;
   }
 
   public int getY()
   {
-    return y_;
+    return y;
+  }
+
+  public Point2D add (final Point2D point)
+  {
+    return new Point2D (x + point.getX(), y + point.getY());
+  }
+
+  public Point2D subtract (final Point2D point)
+  {
+    return new Point2D (x - point.getX(), y - point.getY());
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    final Point2D point2D = (Point2D) o;
+
+    if (x != point2D.x) return false;
+    if (y != point2D.y) return false;
+
+    return true;
   }
 
   @Override
   public int hashCode()
   {
-    int hash = 7;
-
-    hash = 47 * hash + x_;
-    hash = 47 * hash + y_;
-
-    return hash;
+    int result = x;
+    result = 31 * result + y;
+    return result;
   }
 
   @Override
   public String toString()
   {
-    return String.format (getClass().getSimpleName() + ": (x: %1$6s, y: %2$6s)", getX(), getY());
+    return String.format ("%1$s: X: %2$s | Y: %3$s", getClass().getSimpleName(), x, y);
   }
-
-  private final int x_;
-  private final int y_;
 }

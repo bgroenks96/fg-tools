@@ -877,10 +877,10 @@ public final class Arguments
   {
     final int stackLevel = getStackLevelOfFirstClassOutsideThisClass();
 
-    throw new IllegalArgumentException (valueName + " [value: " + value + "]" + " must be " +
-                                        boundType.getMessage() + " " + boundName + " [value: " + bound + "] " +
-                                        "when invoking " + Classes.getClassName (stackLevel) + "." +
-                                        Methods.getMethodName (stackLevel) + ".");
+    throw new IllegalArgumentException ("Argument \"" + valueName + "\" [value: " + value + "]" + " must be " +
+            boundType.getMessage() + " " + (boundName.isEmpty() ? "" : "\"" + boundName + "\" ") + "[value: " + bound +
+            "]" + " when invoking [" + Classes.getClassName (stackLevel) + "." + Methods.getMethodName (stackLevel) +
+            "].");
   }
 
   private static int getStackLevelOfFirstClassOutsideThisClass()
@@ -890,10 +890,7 @@ public final class Arguments
 
     for (int stackLevel = 1; stackLevel <= maxStackLevel; ++stackLevel)
     {
-      if (! thisClassName.equals (Classes.getClassName (stackLevel)))
-      {
-        return stackLevel - 1;
-      }
+      if (! thisClassName.equals (Classes.getClassName (stackLevel))) return stackLevel - 1;
     }
 
     return maxStackLevel - 1;
@@ -908,6 +905,7 @@ public final class Arguments
                                        final ArgumentStatus argumentStatus) throws IllegalArgumentException
   {
     final int stackLevel = getStackLevelOfFirstClassOutsideThisClass();
+
     throw new IllegalArgumentException ("\nLocation: " + Classes.getClassName (stackLevel) + "." +
                                         Methods.getMethodName (stackLevel) + "\nReason:   argument '" + argumentName +
                                         "' " + argumentStatus.getMessage());

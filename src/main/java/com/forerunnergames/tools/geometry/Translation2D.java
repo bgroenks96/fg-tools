@@ -1,5 +1,7 @@
 // Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
-package com.forerunnergames.tools;
+package com.forerunnergames.tools.geometry;
+
+import com.forerunnergames.tools.Classes;
 
 public class Translation2D
 {
@@ -30,7 +32,7 @@ public class Translation2D
 
   private Translation2D()
   {
-    Classes.defaultConstructorNotSupported();
+    Classes.defaultConstructorNotSupported ();
   }
 
   private int translationX_;

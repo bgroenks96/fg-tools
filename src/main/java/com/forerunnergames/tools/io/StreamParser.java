@@ -1,5 +1,9 @@
-package com.forerunnergames.tools;
+package com.forerunnergames.tools.io;
 
+import com.forerunnergames.tools.Arguments;
+import com.forerunnergames.tools.Classes;
+import com.forerunnergames.tools.Strings;
+import com.forerunnergames.tools.Utils;
 import com.forerunnergames.tools.exceptions.StreamParserException;
 
 import java.io.BufferedReader;
@@ -1168,7 +1172,7 @@ public final class StreamParser
    */
   protected StreamParser()
   {
-    Classes.defaultConstructorNotSupported();
+    Classes.defaultConstructorNotSupported ();
   }
 
   private void checkTokenContentEquals (final String expectedTokenContent)

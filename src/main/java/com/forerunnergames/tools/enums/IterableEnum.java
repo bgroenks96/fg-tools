@@ -1,4 +1,4 @@
-package com.forerunnergames.tools;
+package com.forerunnergames.tools.enums;
 
 public interface IterableEnum <E extends Enum <E>>
 {

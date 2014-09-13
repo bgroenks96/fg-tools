@@ -1,5 +1,7 @@
 // Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
-package com.forerunnergames.tools;
+package com.forerunnergames.tools.io;
+
+import com.forerunnergames.tools.Classes;
 
 import java.io.InputStream;
 
@@ -21,6 +23,6 @@ public class Resources
 
   private Resources()
   {
-    Classes.instantiationNotAllowed();
+    Classes.instantiationNotAllowed ();
   }
 }

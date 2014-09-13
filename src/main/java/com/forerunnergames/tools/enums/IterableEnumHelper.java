@@ -1,20 +1,24 @@
-package com.forerunnergames.tools;
+package com.forerunnergames.tools.enums;
+
+import com.forerunnergames.tools.Arguments;
+import com.forerunnergames.tools.Classes;
+import com.forerunnergames.tools.Strings;
 
 /**
  * This class exists as a workaround to some fundamental {@link java.lang.Enum} limitations.
  *
- * It replaces an abstract implementation of {@link com.forerunnergames.tools.IterableEnum},
+ * It replaces an abstract implementation of {@link IterableEnum},
  * since it is impossible to create an abstract {@code enum}, or more specifically, impossible
- * to provide an abstract base class that implements {@link com.forerunnergames.tools.IterableEnum}.
+ * to provide an abstract base class that implements {@link IterableEnum}.
  *
  * It is also worth noting that it is also impossible for this class to be a default concrete implementation of
- * {@link com.forerunnergames.tools.IterableEnum} because it would require this class to be an enum, and therefore,
+ * {@link IterableEnum} because it would require this class to be an enum, and therefore,
  * it could not have generic type parameters, so it would essentially be useless.
  *
  * The workaround is to provide static utility methods that will act upon an {@link java.lang.Enum},
- * which a concrete implementation of {@link com.forerunnergames.tools.IterableEnum} can delegate to.
+ * which a concrete implementation of {@link IterableEnum} can delegate to.
  *
- * In this way, various implementations of {@link com.forerunnergames.tools.IterableEnum} can re-use
+ * In this way, various implementations of {@link IterableEnum} can re-use
  * common functionality.
  */
 public final class IterableEnumHelper
@@ -165,6 +169,6 @@ public final class IterableEnumHelper
 
   private IterableEnumHelper()
   {
-    Classes.instantiationNotAllowed();
+    Classes.instantiationNotAllowed ();
   }
 }

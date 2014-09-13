@@ -1,5 +1,5 @@
 // Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
-package com.forerunnergames.tools;
+package com.forerunnergames.tools.geometry;
 
 public class Scaling2D
 {

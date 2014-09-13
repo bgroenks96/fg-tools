@@ -1,11 +1,13 @@
 // Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
-package com.forerunnergames.tools;
+package com.forerunnergames.tools.geometry;
+
+import com.forerunnergames.tools.Arguments;
 
 public class Size2D
 {
   public Size2D (final int width, final int height)
   {
-    Arguments.checkLowerInclusiveBound (width,  0, "width");
+    Arguments.checkLowerInclusiveBound (width, 0, "width");
     Arguments.checkLowerInclusiveBound (height, 0, "height");
 
     this.width  = width;

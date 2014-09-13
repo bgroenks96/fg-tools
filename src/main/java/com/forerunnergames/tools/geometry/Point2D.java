@@ -1,4 +1,4 @@
-package com.forerunnergames.tools;
+package com.forerunnergames.tools.geometry;
 
 public final class Point2D
 {

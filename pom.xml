@@ -9,7 +9,6 @@
 
   <modules>
     <module>common</module>
-    <module>niftygui</module>
     <module>randomx</module>
   </modules>
 
@@ -21,7 +20,6 @@
   </organization>
 
   <properties>
-    <niftygui.version>1.4.1-SNAPSHOT</niftygui.version>
     <mockito.version>1.9.5</mockito.version>
     <powermock.version>1.5</powermock.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,30 +31,6 @@
         <groupId>com.forerunnergames.tools</groupId>
         <artifactId>common</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>lessvoid</groupId>
-        <artifactId>nifty</artifactId>
-        <version>${niftygui.version}</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>lessvoid</groupId>
-        <artifactId>nifty-style-black</artifactId>
-        <version>${niftygui.version}</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>lessvoid</groupId>
-        <artifactId>nifty-default-controls</artifactId>
-        <version>${niftygui.version}</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>lessvoid</groupId>
-        <artifactId>nifty-libgdx-renderer</artifactId>
-        <version>${niftygui.version}</version>
         <scope>compile</scope>
       </dependency>
       <dependency>

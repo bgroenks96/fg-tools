@@ -32,7 +32,7 @@ public class Translation2D
 
   private Translation2D()
   {
-    Classes.defaultConstructorNotSupported ();
+    Classes.defaultConstructorNotSupported();
   }
 
   private int translationX_;

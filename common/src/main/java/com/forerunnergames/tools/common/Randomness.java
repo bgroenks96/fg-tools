@@ -80,8 +80,7 @@ public final class Randomness
    * 
    * @throws IllegalArgumentException If inclusiveLowerBound is not strictly less than inclusiveUpperBound.
    */
-  public static int getRandomIntegerBetween (int inclusiveLowerBound,
-                                             int inclusiveUpperBound)
+  public static int getRandomIntegerFrom (int inclusiveLowerBound, int inclusiveUpperBound)
   {
     Arguments.checkUpperExclusiveBound (inclusiveLowerBound,
             inclusiveUpperBound, "inclusiveLowerBound", "inclusiveUpperBound");

@@ -68,7 +68,7 @@ public class DiceUtils
     for (int i = 0; i < dieCount; ++i)
     {
       int rollAmount = 
-              Randomness.getRandomIntegerBetween (1, DiceUtils.FACES_PER_DIE);
+              Randomness.getRandomIntegerFrom (1, DiceUtils.FACES_PER_DIE);
 
       rolls.add (rollAmount);
     }

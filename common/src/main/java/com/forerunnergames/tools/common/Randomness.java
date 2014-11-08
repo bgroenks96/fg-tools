@@ -72,18 +72,15 @@ public final class Randomness
    * Gets a random integer in the range [inclusiveLowerBound, inclusiveUpperBound] using a cryptographically secure
    * pseudo random number generator.
    *
-   * @param inclusiveLowerBound The inclusive lower bound, must be strictly less than inclusiveUpperBound.
+   * @param inclusiveLowerBound The inclusive lower bound, must be less than or equal to inclusiveUpperBound.
    * 
-   * @param inclusiveUpperBound The inclusive upper bound, must be strictly greater than inclusiveLowerBound.
+   * @param inclusiveUpperBound The inclusive upper bound, must be greater than or equal to inclusiveLowerBound.
    *
    * @return A random integer in the range [inclusiveLowerBound, inclusiveUpperBound].
-   * 
-   * @throws IllegalArgumentException If inclusiveLowerBound is not strictly less than inclusiveUpperBound.
    */
   public static int getRandomIntegerFrom (int inclusiveLowerBound, int inclusiveUpperBound)
   {
-    Arguments.checkUpperExclusiveBound (inclusiveLowerBound,
-            inclusiveUpperBound, "inclusiveLowerBound", "inclusiveUpperBound");
+    Arguments.checkUpperInclusiveBound (inclusiveLowerBound, inclusiveUpperBound, "inclusiveLowerBound", "inclusiveUpperBound");
 
     long n = (long) inclusiveUpperBound - inclusiveLowerBound + 1;
 

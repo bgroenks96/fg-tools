@@ -69,6 +69,22 @@ public final class Strings
   }
 
   /**
+   * Checks whether the specifiied string is contained in the specified StringBuilder.
+   *
+   * @param stringBuilder The StringBuilder, must not be null.
+   * @param s, The string, must not be null.
+   *
+   * @return true if at least one instance of s is contained within stringBuilder, false otherwise
+   */
+  public static boolean contains (final StringBuilder stringBuilder, final String s)
+  {
+    Arguments.checkIsNotNull (stringBuilder, "stringbuilder");
+    Arguments.checkIsNotNullOrEmptyOrBlank (s, "s");
+
+    return stringBuilder.indexOf (s) > -1;
+  }
+
+  /**
    * Deletes the last character from the specified StringBuilder.
    *
    * @param s The StringBuilder from which to delete the last character, must not be null, may be empty.

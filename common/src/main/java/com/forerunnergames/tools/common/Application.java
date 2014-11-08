@@ -1,5 +1,7 @@
 package com.forerunnergames.tools.common;
 
-public interface Application extends Controller
+public interface Application
 {
+  public void initialize();
+  public void shutDown();
 }

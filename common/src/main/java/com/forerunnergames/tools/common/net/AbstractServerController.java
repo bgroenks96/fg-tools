@@ -1,10 +1,11 @@
 package com.forerunnergames.tools.common.net;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.controllers.ControllerAdapter;
 
 import com.google.common.collect.ImmutableSet;
 
-public abstract class AbstractServerController implements ServerController
+public abstract class AbstractServerController extends ControllerAdapter implements ServerController
 {
   private final Server server;
   private final int tcpPort;
@@ -78,12 +79,6 @@ public abstract class AbstractServerController implements ServerController
   private void startServer()
   {
     server.start (tcpPort);
-  }
-
-  @Override
-  public boolean shouldShutDown()
-  {
-    return false;
   }
 
   @Override

@@ -2,10 +2,11 @@ package com.forerunnergames.tools.common.net;
 
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Result;
+import com.forerunnergames.tools.common.controllers.ControllerAdapter;
 
 import com.google.common.collect.ImmutableSet;
 
-public abstract class AbstractClientController implements ClientController
+public abstract class AbstractClientController extends ControllerAdapter implements ClientController
 {
   private final Client client;
   private final ImmutableSet <Class <?>> classesToRegisterForNetworkSerialization;
@@ -75,12 +76,6 @@ public abstract class AbstractClientController implements ClientController
   private void startClient()
   {
     client.start();
-  }
-
-  @Override
-  public boolean shouldShutDown()
-  {
-    return false;
   }
 
   @Override

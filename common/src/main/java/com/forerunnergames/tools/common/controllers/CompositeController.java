@@ -1,4 +1,7 @@
-package com.forerunnergames.tools.common;
+package com.forerunnergames.tools.common.controllers;
+
+import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,5 +1,7 @@
 package com.forerunnergames.tools.common;
 
+import com.forerunnergames.tools.common.controllers.Controller;
+
 public interface Application
 {
   public void initialize();

@@ -1,4 +1,4 @@
-package com.forerunnergames.tools.common;
+package com.forerunnergames.tools.common.controllers;
 
 public interface Controller
 {

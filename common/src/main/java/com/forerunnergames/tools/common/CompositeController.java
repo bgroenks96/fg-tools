@@ -1,17 +1,34 @@
 package com.forerunnergames.tools.common;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public final class CompositeController implements Controller
 {
-  private final ImmutableSet <Controller> children;
+  private final List <Controller> children = new ArrayList<> ();
 
   public CompositeController (final Controller... children)
   {
     Arguments.checkIsNotNull (children, "children");
     Arguments.checkHasNoNullElements (children, "children");
 
-    this.children = ImmutableSet.copyOf (children);
+    this.children.addAll (Arrays.asList (children));
+  }
+
+  public void add (final Controller child)
+  {
+    Arguments.checkIsNotNull (child, "child");
+
+    children.add (child);
+  }
+
+  public void remove (final Controller child)
+  {
+    Arguments.checkIsNotNull (child, "child");
+    Arguments.checkIsTrue (children.contains (child), "Child [" + child + "] not found.");
+
+    children.remove (child);
   }
 
   @Override

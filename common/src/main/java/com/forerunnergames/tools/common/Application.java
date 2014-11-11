@@ -4,4 +4,5 @@ public interface Application
 {
   public void initialize();
   public void shutDown();
+  public boolean shouldShutDown();
 }

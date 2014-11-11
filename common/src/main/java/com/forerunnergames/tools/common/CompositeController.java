@@ -6,7 +6,7 @@ import java.util.List;
 
 public final class CompositeController implements Controller
 {
-  private final List <Controller> children = new ArrayList<> ();
+  private final List <Controller> children = new ArrayList<>();
 
   public CompositeController (final Controller... children)
   {
@@ -37,6 +37,15 @@ public final class CompositeController implements Controller
     for (final Controller controller : children)
     {
       controller.initialize();
+    }
+  }
+
+  @Override
+  public void update()
+  {
+    for (final Controller controller : children)
+    {
+      controller.update();
     }
   }
 

@@ -127,18 +127,18 @@ public final class Randomness
   {
     try
     {
-      final byte[] trueRandomEntropySeed = new byte[numBytes];
+      final byte[] trueRandomEntropySeed = new byte [numBytes];
 
       for (int i = 0; i < trueRandomEntropySeed.length; ++i)
       {
-        trueRandomEntropySeed[i] = TRNG.nextByte();
+        trueRandomEntropySeed [i] = TRNG.nextByte();
       }
 
       return trueRandomEntropySeed;
     }
     catch (final RuntimeException e)
     {
-      log.warn ("Could not obtain HotBits entropy! Falling back to a system entropy source", e);
+      log.warn ("Could not obtain HotBits entropy! Falling back to a system entropy source.", e);
 
       return generateSystemEntropySeed();
     }

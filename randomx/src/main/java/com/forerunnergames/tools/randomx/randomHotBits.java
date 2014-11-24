@@ -63,7 +63,7 @@ public class RandomHotBits extends RandomX
                 return buffer[bufptr++];
             }
         } catch (IOException e) {
-            throw new RuntimeException("Cannot obtain HotBits");
+            throw new RuntimeException("Cannot obtain HotBits", e);
         }
     }
 };

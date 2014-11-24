@@ -72,24 +72,26 @@ public final class Randomness
    * Gets a random integer in the range [inclusiveLowerBound, inclusiveUpperBound] using a cryptographically secure
    * pseudo random number generator.
    *
-   * @param inclusiveLowerBound The inclusive lower bound, must be less than or equal to inclusiveUpperBound.
+   * @param inclusiveLowerBound The inclusive lower bound, must be >= 0 and <= inclusiveUpperBound and < Integer.MAX_VALUE.
    * 
-   * @param inclusiveUpperBound The inclusive upper bound, must be greater than or equal to inclusiveLowerBound.
+   * @param inclusiveUpperBound The inclusive upper bound, must be >= 0 and >= inclusiveLowerBound and < Integer.MAX_VALUE.
    *
    * @return A random integer in the range [inclusiveLowerBound, inclusiveUpperBound].
    */
   public static int getRandomIntegerFrom (int inclusiveLowerBound, int inclusiveUpperBound)
   {
+    Arguments.checkIsNotNegative (inclusiveLowerBound, "inclusiveLowerBound");
+    Arguments.checkIsNotNegative (inclusiveUpperBound, "inclusiveUpperBound");
+    Arguments.checkUpperExclusiveBound (inclusiveLowerBound, Integer.MAX_VALUE, "inclusiveLowerBound", "Integer.MAX_VALUE");
+    Arguments.checkUpperExclusiveBound (inclusiveUpperBound, Integer.MAX_VALUE, "inclusiveUpperBound", "Integer.MAX_VALUE");
     Arguments.checkUpperInclusiveBound (inclusiveLowerBound, inclusiveUpperBound, "inclusiveLowerBound", "inclusiveUpperBound");
 
-    long n = (long) inclusiveUpperBound - inclusiveLowerBound + 1;
-
-    long randomNumber;
+    final long n = (long) inclusiveUpperBound - inclusiveLowerBound + 1;
 
     assert n > 0;
-    assert n < (long) Integer.MAX_VALUE;
+    assert n <= (long) Integer.MAX_VALUE;
 
-    randomNumber = (long) inclusiveLowerBound + Randomness.prng.nextInt ((int) n);
+    final long randomNumber = (long) inclusiveLowerBound + prng.nextInt ((int) n);
 
     assert randomNumber >= inclusiveLowerBound;
     assert randomNumber <= inclusiveUpperBound;

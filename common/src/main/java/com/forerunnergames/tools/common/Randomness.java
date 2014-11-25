@@ -53,7 +53,7 @@ public final class Randomness
   /**
    * Checks whether the specified mode is set.
    *
-   * @param mode, The mode to check, must not be null
+   * @param mode, The mode to check, must not be null.
    */
   public static boolean isMode (final Mode mode)
   {
@@ -120,14 +120,14 @@ public final class Randomness
 
   private static void reseedPrngWithHotBitsEntropy()
   {
-    prng.setSeed (generateHotBitsEntropySeed (SEED_BYTES));
+    prng.setSeed (generateHotBitsEntropySeed());
   }
 
-  private static byte[] generateHotBitsEntropySeed (final int numBytes)
+  private static byte[] generateHotBitsEntropySeed()
   {
     try
     {
-      final byte[] trueRandomEntropySeed = new byte [numBytes];
+      final byte[] trueRandomEntropySeed = new byte [SEED_BYTES];
 
       for (int i = 0; i < trueRandomEntropySeed.length; ++i)
       {

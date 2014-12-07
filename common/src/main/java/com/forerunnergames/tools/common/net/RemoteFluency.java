@@ -3,7 +3,7 @@ package com.forerunnergames.tools.common.net;
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
 
-public class RemoteInterpreter
+public class RemoteFluency
 {
   public static String addressOf (final Remote remote)
   {
@@ -13,7 +13,7 @@ public class RemoteInterpreter
   }
 
 
-  private RemoteInterpreter()
+  private RemoteFluency()
   {
     Classes.instantiationNotAllowed();
   }

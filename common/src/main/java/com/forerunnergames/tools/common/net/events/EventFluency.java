@@ -3,7 +3,7 @@ package com.forerunnergames.tools.common.net.events;
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.net.Remote;
 
-public final class EventInterpreter
+public final class EventFluency
 {
   public static QuestionEvent questionFrom (final ClientCommunicationEvent event)
   {

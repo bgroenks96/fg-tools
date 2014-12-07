@@ -50,6 +50,11 @@ public class Id implements Comparable <Id>
     return ! is (id);
   }
 
+  public boolean hasValue (final int value)
+  {
+    return this.value == value;
+  }
+
   @Override
   public String toString()
   {

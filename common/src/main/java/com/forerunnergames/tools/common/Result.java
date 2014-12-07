@@ -1,20 +1,21 @@
 package com.forerunnergames.tools.common;
 
-public final class Result
+public final class Result <T>
 {
   private final boolean isSuccessful;
-  private final String message;
+  private final T failureReason;
 
-  public static Result success()
+  public static <U> Result <U> success()
   {
-    return new Result (true, "");
+    return new Result <> (true, null);
   }
 
-  public static Result failure (final String message)
+  @SuppressWarnings ("unchecked")
+  public static <V> Result <V> failure (final V failureReason)
   {
-    Arguments.checkIsNotNull (message, "message");
+    Arguments.checkIsNotNull (failureReason, "failureReason");
 
-    return new Result (false, message);
+    return new Result <> (false, failureReason);
   }
 
   public boolean isSuccessful()
@@ -22,19 +23,43 @@ public final class Result
     return isSuccessful;
   }
 
+  public boolean succeeded()
+  {
+    return isSuccessful();
+  }
+
   public boolean isFailure()
   {
     return ! isSuccessful;
   }
 
-  public String getMessage()
+  public boolean failed()
   {
-    return message;
+    return isFailure();
   }
 
-  private Result (final boolean isSuccessful, final String message)
+  public boolean failedBecauseOf (final T failureReason)
+  {
+    return isFailure() && failureReasonIs (failureReason);
+  }
+
+  public boolean failureReasonIs (final T failureReason)
+  {
+    Arguments.checkIsNotNull (failureReason, "failureReason");
+
+    return getFailureReason().equals (failureReason);
+  }
+
+  public T getFailureReason()
+  {
+    Preconditions.checkIsTrue (isFailure(), "Cannot get failure reason when result is successful.");
+
+    return failureReason;
+  }
+
+  private Result (final boolean isSuccessful, final T failureReason)
   {
     this.isSuccessful = isSuccessful;
-    this.message = message;
+    this.failureReason = failureReason;
   }
 }

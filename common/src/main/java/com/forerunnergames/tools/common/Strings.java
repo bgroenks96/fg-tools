@@ -72,7 +72,7 @@ public final class Strings
    * Checks whether the specifiied string is contained in the specified StringBuilder.
    *
    * @param stringBuilder The StringBuilder, must not be null.
-   * @param s, The string, must not be null.
+   * @param s The string, must not be null.
    *
    * @return true if at least one instance of s is contained within stringBuilder, false otherwise
    */

@@ -53,7 +53,7 @@ public final class Randomness
   /**
    * Checks whether the specified mode is set.
    *
-   * @param mode, The mode to check, must not be null.
+   * @param mode The mode to check, must not be null.
    */
   public static boolean isMode (final Mode mode)
   {
@@ -65,7 +65,7 @@ public final class Randomness
   /**
    * Sets the specified mode. Idempotent - nothing will happen if the specified mode has already been set.
    *
-   * @param mode, The mode to set, must not be null.
+   * @param mode The mode to set, must not be null.
    *
    * @see #isMode
    */

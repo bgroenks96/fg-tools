@@ -86,7 +86,7 @@ public abstract class AbstractClientController extends ControllerAdapter impleme
   }
 
   @Override
-  public Result connect (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts)
+  public Result <String> connect (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts)
   {
     Arguments.checkIsNotNull (address, "address");
     Arguments.checkIsNotNegative (tcpPort, "tcpPort");

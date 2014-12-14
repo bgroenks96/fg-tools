@@ -31,7 +31,7 @@ package com.forerunnergames.tools.common;
 
 /**
  * A completion listener for async jobs. It is invoked via
- * {@link #invokeLater(java.lang.Runnable) }
+ * {@link AsyncExecution#invokeLater(java.lang.Runnable) }
  *
  * @param <V> the result type of the async job
  * @author Matthias Mann

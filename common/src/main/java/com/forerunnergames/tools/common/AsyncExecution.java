@@ -46,7 +46,7 @@ public class AsyncExecution {
     private final LinkedBlockingQueue<Runnable> completionQueue;
 
     public AsyncExecution() {
-        this.completionQueue = new LinkedBlockingQueue<Runnable>();
+        this.completionQueue = new LinkedBlockingQueue<>();
     }
     
     /**

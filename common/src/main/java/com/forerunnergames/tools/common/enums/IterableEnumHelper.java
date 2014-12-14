@@ -157,7 +157,7 @@ public final class IterableEnumHelper
    *
    * @param e The specified {@link java.lang.Enum} value, must not be null.
    *
-   * @see {@link #getPosition(Enum)}
+   * @see #getPosition(Enum) getPosition
    */
   public static <E extends Enum <E> & IterableEnum <E>> String toMixedOrdinalPosition (final E e)
   {

@@ -18,7 +18,7 @@ package com.forerunnergames.tools.randomx;
     Designed and implemented in July 1996 by
     <a href="http://www.fourmilab.ch/">John Walker</a>.
 
-@see java.util.Random
+* @see java.util.Random
 */
 
 public abstract class RandomX

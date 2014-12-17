@@ -1,7 +1,6 @@
 allprojects {
   apply plugin: "idea"
   apply plugin: "eclipse"
-  apply plugin: "maven"
   apply plugin: "java"
 
   group = projectGroup
@@ -12,78 +11,6 @@ allprojects {
 
   repositories {
     mavenCentral()
-    maven { url "https://raw.github.com/synergian/wagon-git/releases" }
-  }
-}
-
-subprojects {
-  configurations {
-    deployerJar
-  }
-
-  dependencies {
-    deployerJar "ar.com.synergian:wagon-git:0.2.3"
-  }
-
-  task sourcesJar (type: Jar, dependsOn: classes) {
-    classifier = "sources"
-    from sourceSets.main.allSource
-  }
-
-  task javadocJar (type: Jar, dependsOn: javadoc) {
-    classifier = "javadoc"
-    from javadoc.destinationDir
-    javadoc.options.links "http://docs.oracle.com/javase/7/docs/api/"
-  }
-
-  artifacts {
-    archives jar
-    archives sourcesJar
-    archives javadocJar
-  }
-
-  uploadArchives {
-    repositories {
-      mavenDeployer {
-        configuration = configurations.deployerJar
-        uniqueVersion = false
-
-        repository (url: "git:releases://git@github.com:forerunnergames/fg-tools.git") {
-          authentication (userName: githubUsername, password: githubPassword)
-        }
-
-        snapshotRepository (url: "git:snapshots://git@github.com:forerunnergames/fg-tools.git") {
-          authentication (userName: githubUsername, password: githubPassword)
-        }
-
-        pom.project {
-          name "Forerunner Games Utility Library"
-          description "Provides simple, re-usable game development tools."
-          packaging "jar"
-          url "https://github.com/forerunnergames/fg-tools"
-
-          issueManagement {
-            url "https://github.com/forerunnergames/fg-tools/issues"
-            system "GitHub Issues"
-          }
-
-          scm {
-            url "https://github.com/forerunnergames/fg-tools"
-            connection "scm:git:git://github.com/forerunnergames/fg-tools.git"
-            developerConnection "scm:git:git@github.com:forerunnergames/fg-tools.git"
-          }
-
-          developers {
-            developer {
-              id "3xp0n3nt"
-              name "Aaron Mahan"
-              email "aaron@forerunnergames.com"
-              url "http://forerunnergames.com/"
-            }
-          }
-        }
-      }
-    }
   }
 }
 

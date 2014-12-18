@@ -1,9 +1,10 @@
 package com.forerunnergames.tools.common.net.events;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Event;
 import com.forerunnergames.tools.common.net.Remote;
 
-public abstract class NetworkEvent
+public abstract class NetworkEvent implements Event
 {
   private final Remote remote;
 

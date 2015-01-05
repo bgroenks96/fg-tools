@@ -17,7 +17,7 @@ public abstract class NetworkCommunicationEvent extends NetworkEvent
     this.message = message;
   }
 
-  protected final Event getMessage()
+  public final Event getMessage()
   {
     return message;
   }

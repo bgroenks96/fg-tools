@@ -1,17 +1,13 @@
 package com.forerunnergames.tools.common.net.events;
 
+import com.forerunnergames.tools.common.Event;
 import com.forerunnergames.tools.common.net.Remote;
 
 public final class ServerCommunicationEvent extends NetworkCommunicationEvent
 {
-  public ServerCommunicationEvent (final AnswerEvent answer, final Remote server)
+  public ServerCommunicationEvent (final Event message, final Remote server)
   {
-    super (answer, server);
-  }
-
-  public AnswerEvent getAnswer()
-  {
-    return (AnswerEvent) getMessage();
+    super (message, server);
   }
 
   public Remote getServer()
@@ -22,6 +18,6 @@ public final class ServerCommunicationEvent extends NetworkCommunicationEvent
   @Override
   public String toString()
   {
-    return String.format ("%1$s: Answer: %2$s | Server: %3$s", getClass().getSimpleName(), getAnswer(), getServer());
+    return String.format ("%1$s | Server: %2$s", super.toString(), getServer());
   }
 }

@@ -1,6 +1,7 @@
 package com.forerunnergames.tools.common.net.events;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Event;
 import com.forerunnergames.tools.common.net.Remote;
 
 public final class EventFluency
@@ -33,11 +34,11 @@ public final class EventFluency
     return event.getClient();
   }
 
-  public static AnswerEvent answerFrom (final ServerCommunicationEvent event)
+  public static Event messageFrom (final ServerCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 
-    return event.getAnswer();
+    return event.getMessage();
   }
 
   public static Remote serverFrom (final ServerCommunicationEvent event)

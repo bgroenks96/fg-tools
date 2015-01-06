@@ -6,12 +6,6 @@ import com.forerunnergames.tools.common.net.Remote;
 
 public final class EventFluency
 {
-  public static QuestionEvent questionFrom (final ClientCommunicationEvent event)
-  {
-    Arguments.checkIsNotNull (event, "event");
-
-    return event.getQuestion();
-  }
 
   public static Remote clientFrom (final ClientCommunicationEvent event)
   {
@@ -34,7 +28,7 @@ public final class EventFluency
     return event.getClient();
   }
 
-  public static Event messageFrom (final ServerCommunicationEvent event)
+  public static Event messageFrom (final NetworkCommunicationEvent event)
   {
     Arguments.checkIsNotNull (event, "event");
 

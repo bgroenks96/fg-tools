@@ -63,12 +63,18 @@ public final class Point2D
 
   public Point2D add (final Point2D point)
   {
-    return new Point2D (x + point.getX(), y + point.getY());
+    x += point.getX();
+    y += point.getY();
+
+    return this;
   }
 
   public Point2D subtract (final Point2D point)
   {
-    return new Point2D (x - point.getX(), y - point.getY());
+    x -= point.getX();
+    y -= point.getY();
+
+    return this;
   }
 
   @Override

@@ -36,4 +36,10 @@ public abstract class AbstractRgbaColorComponent implements RgbaColorComponent
   {
     return value;
   }
+
+  @Override
+  public String toString()
+  {
+    return String.format ("%1$s: Value: %2$s", getClass().getSimpleName(), value);
+  }
 }

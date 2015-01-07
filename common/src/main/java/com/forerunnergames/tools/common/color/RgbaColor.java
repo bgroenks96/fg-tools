@@ -59,4 +59,11 @@ public final class RgbaColor
   {
     return color;
   }
+
+  @Override
+  public String toString()
+  {
+    return String.format ("%1$s: Color: %2$s | Red: %3$s | Green: %4$s | Blue: %5$s | Alpha: %6$s",
+            getClass().getSimpleName(), color, red, green, blue, alpha);
+  }
 }

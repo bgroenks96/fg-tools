@@ -1,9 +1,17 @@
 package com.forerunnergames.tools.common.geometry;
 
+import com.forerunnergames.tools.common.Arguments;
+
 public final class Point2D
 {
-  private final int x;
-  private final int y;
+  private int x;
+  private int y;
+
+  public Point2D()
+  {
+    x = 0;
+    y = 0;
+  }
 
   public Point2D (final int x, final int y)
   {
@@ -19,6 +27,30 @@ public final class Point2D
   public int getY()
   {
     return y;
+  }
+
+  public void setX (final int x)
+  {
+    this.x = x;
+  }
+
+  public void setY (final int y)
+  {
+    this.y = y;
+  }
+
+  public void set (final int x, final int y)
+  {
+    this.x = x;
+    this.y = y;
+  }
+
+  public void set (final Point2D point)
+  {
+    Arguments.checkIsNotNull (point, "point");
+
+    this.x = point.getX();
+    this.y = point.getY();
   }
 
   public Point2D add (final Point2D point)

@@ -29,28 +29,36 @@ public final class Point2D
     return y;
   }
 
-  public void setX (final int x)
+  public Point2D setX (final int x)
   {
     this.x = x;
+
+    return this;
   }
 
-  public void setY (final int y)
+  public Point2D setY (final int y)
   {
     this.y = y;
+
+    return this;
   }
 
-  public void set (final int x, final int y)
+  public Point2D set (final int x, final int y)
   {
     this.x = x;
     this.y = y;
+
+    return this;
   }
 
-  public void set (final Point2D point)
+  public Point2D set (final Point2D point)
   {
     Arguments.checkIsNotNull (point, "point");
 
     this.x = point.getX();
     this.y = point.getY();
+
+    return this;
   }
 
   public Point2D add (final Point2D point)

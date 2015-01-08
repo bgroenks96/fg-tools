@@ -1,5 +1,7 @@
 package com.forerunnergames.tools.common;
 
+import com.forerunnergames.tools.common.net.annotations.RequiredForNetworkSerialization;
+
 public abstract class AbstractAsset implements Asset, Comparable <Asset>
 {
   private final String name;
@@ -106,7 +108,7 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
     return String.format ("Name: %1$s | Id: %2$s", name, id);
   }
 
-  // Required for network serialization
+  @RequiredForNetworkSerialization
   protected AbstractAsset()
   {
     name = null;

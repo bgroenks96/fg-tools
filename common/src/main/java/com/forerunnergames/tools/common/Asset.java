@@ -12,4 +12,10 @@ public interface Asset extends Comparable <Asset>
   public boolean isNot (final Asset asset);
   @Override
   public int compareTo (final Asset asset);
+  @Override
+  public boolean equals (final Object obj);
+  @Override
+  public int hashCode();
+  @Override
+  public String toString();
 }

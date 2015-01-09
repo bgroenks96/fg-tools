@@ -1,5 +1,6 @@
 package com.forerunnergames.tools.common;
 
+import com.forerunnergames.tools.common.id.Id;
 import com.forerunnergames.tools.common.net.annotations.RequiredForNetworkSerialization;
 
 public abstract class AbstractAsset implements Asset, Comparable <Asset>

@@ -1,5 +1,7 @@
 package com.forerunnergames.tools.common;
 
+import com.forerunnergames.tools.common.id.Id;
+
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;

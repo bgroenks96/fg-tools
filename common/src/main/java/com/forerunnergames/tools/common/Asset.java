@@ -1,5 +1,7 @@
 package com.forerunnergames.tools.common;
 
+import com.forerunnergames.tools.common.id.Id;
+
 public interface Asset extends Comparable <Asset>
 {
   public String getName();

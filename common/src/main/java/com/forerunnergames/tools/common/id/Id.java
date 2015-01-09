@@ -1,4 +1,6 @@
-package com.forerunnergames.tools.common;
+package com.forerunnergames.tools.common.id;
+
+import com.forerunnergames.tools.common.Arguments;
 
 public class Id implements Comparable <Id>
 {

@@ -4,7 +4,7 @@ import com.forerunnergames.tools.common.Result;
 
 public interface ServerCreator
 {
-  public Result <String> create (final String name, final int tcpPort);
+  public Result <String> create (final ServerConfiguration config);
   public String resolveAddress();
   public void destroy();
 }

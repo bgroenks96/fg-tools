@@ -38,6 +38,7 @@ project (":common") {
   dependencies {
     compile project (":randomx")
     compile "com.google.guava:guava:13.0.1"
+    compile "org.apache.commons:commons-lang3:3.3.2"
     compile "com.google.code.findbugs:jsr305:2.0.3"
     compile "org.slf4j:slf4j-api:1.7.6"
     testCompile "org.hamcrest:hamcrest-all:1.3"

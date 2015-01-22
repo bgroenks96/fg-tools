@@ -1,5 +1,6 @@
 package com.forerunnergames.tools.common;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 
@@ -12,14 +13,16 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 public final class Strings
 {
   /*
    * Gets the correct English article ("a" or "an") for the word proceeding it.
-   * 
+   *
    * @param nextWord The word proceeding the article ("a" or "an"), must not be
    * null, empty, or blank (whitespace only).
-   * 
+   *
    * @return The correct English article ("a" or "an") for the word proceeding
    * it. "an" if nextWord stars with a vowel, "a" otherwise. Special case:
    * if nextWord is simply "u", it will return "a". Consider the following
@@ -31,7 +34,7 @@ public final class Strings
     Arguments.checkIsNotNullOrEmptyOrBlank (nextWord, "word");
 
     final String nextWordLowerCase = nextWord.toLowerCase (Locale.ENGLISH);
-    
+
     return nextWordLowerCase.startsWith ("a") ||
         nextWordLowerCase.startsWith ("e") ||
         nextWordLowerCase.startsWith ("i") ||
@@ -56,10 +59,10 @@ public final class Strings
   /**
    * Replaces any duplicate whitespace in a string with a single space, also
    * removing tabs, newlines, etc in the process.
-   * 
+   *
    * @param s The string to compress, must not be null.
-   * 
-   * @return The compressed string. 
+   *
+   * @return The compressed string.
    */
   public static String compressWhitespace (final String s)
   {
@@ -102,19 +105,19 @@ public final class Strings
   /**
    * Gets a trimmed substring from the specified string. Any extra whitespace
    * will be deleted from the beginning and end of the substring.
-   * 
+   *
    * @see String#trim()
    * @see String#substring(int, int)
-   * 
+   *
    * @param s The string to get the trimmed substring from, must not be null,
    *          must not be empty.
-   * 
+   *
    * @param beginIndex The character index to start the substring from,
    *                   must be >= 0 and < endIndex.
-   * 
+   *
    * @param endIndex The string character index one past the end of the
    *                 substring, must be >= 0, > beginIndex, and <= s.length().
-   * 
+   *
    * @return The trimmed substring.
    */
   public static String getTrimmedSubstring (final String s, final int beginIndex, final int endIndex)
@@ -131,16 +134,16 @@ public final class Strings
   /**
    * Checks whether the string s is comprised of only alphanumeric characters
    * (a to z, A to Z, or 0-9).
-   * 
+   *
    * @param s The string to check, must not be null.
-   * 
+   *
    * @return True if the string s is comprised of only alphanumeric characters.
    * False if the string s is empty, contains whitespace or any
    * non-alphanumeric character.
    */
   public static boolean isAlphanumeric (final String s)
   {
-    Arguments.checkIsNotNull (s, "s"); 
+    Arguments.checkIsNotNull (s, "s");
 
     return s.matches ("[a-zA-Z0-9]+");
   }
@@ -149,7 +152,7 @@ public final class Strings
    * Checks whether the character c is a printable character.
    *
    * @param c The character to check.
-   * 
+   *
    * @return True if the character c is a printable character, false otherwise.
    */
   public static boolean isPrintable (final char c)
@@ -180,14 +183,14 @@ public final class Strings
    * Note: The input string may contain supplementary characters.
    * For rules on which characters are considered whitespace,
    * see @see Character#isWhitespace(char)
-   * 
+   *
    * @param s The string to check, must not be null.
-   * 
+   *
    * @return True if the string s is comprised of only whitespace or is empty.
    */
   public static boolean isWhitespace (final String s)
   {
-    Arguments.checkIsNotNull (s, "s"); 
+    Arguments.checkIsNotNull (s, "s");
 
     for (int i = 0; i < s.length(); ++i)
     {
@@ -199,18 +202,18 @@ public final class Strings
 
   /**
    * Automatically gets the correct plurally-agreeing form of the given phrase
-   * depending on whether its preceding clarifying numerical value is equal 
+   * depending on whether its preceding clarifying numerical value is equal
    * to 1.
    * <br/><br/>
    * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a
    * balance of -3 dollars.
-   * 
+   *
    * @param variable The preceding clarifying numerical value
    * @param singular The singular form of the phrase
    * @param plural   The plural form of the phrase
-   * 
+   *
    * @return The plurally-agreeing form of the phrase
-   * 
+   *
    * @see #pluralizeS(int, java.lang.String)
    */
   public static String pluralize (final int variable, final String singular, final String plural)
@@ -230,12 +233,12 @@ public final class Strings
    * <br/><br/>
    * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a
    *       balance of -3 dollars
-   * 
+   *
    * @param variable The preceding clarifying numerical value
    * @param singular The singular form of the phrase
-   * 
+   *
    * @return The plurally-agreeing form of the phrase
-   * 
+   *
    * @see #pluralize(int, java.lang.String, java.lang.String)
    */
   public static String pluralizeS (final int variable, final String singular)
@@ -246,11 +249,11 @@ public final class Strings
   /**
    * Removes any whitespace characters ( \t\n\x0B\f\r) from the
    * specified string.
-   * 
+   *
    * @param s The string to remove any whitespace from.
-   * 
+   *
    * @return The whitespace-stripped string.
-   * 
+   *
    * @see java.util.regex.Pattern
    */
   public static String stripWhitespace (final String s)
@@ -262,11 +265,11 @@ public final class Strings
 
   /**
    * Converts a single word to the specified case.
-   * 
+   *
    * @param word The word to convert, must not be null;
    * @param letterCase The case to convert the word to, use LetterCase.NONE to leave
    *                   the word as-is, must not be null.
-   * 
+   *
    * @return  The word, converted to the specified case.
    */
   public static String toCase (final String word, final LetterCase letterCase)
@@ -409,7 +412,7 @@ public final class Strings
 
     return ordinal.toString();
   }
-  
+
   /**
    * Converts a single word to proper case (first letter is capitalized, all subsequent characters are lowercase).
    *
@@ -421,9 +424,7 @@ public final class Strings
   {
     Arguments.checkIsNotNull (word, "word");
 
-    final String firstLetter = word.toLowerCase().substring (0, 1);
-
-    return word.toLowerCase().replaceFirst (firstLetter, firstLetter.toUpperCase());
+    return WordUtils.capitalizeFully (word);
   }
 
   /**
@@ -444,10 +445,10 @@ public final class Strings
 
   /**
    * Converts a throwable's stack trace to a string.
-   * 
+   *
    * @param throwable The throwable who's stack trace will be converted to a
    *                  string, must not be null.
-   * 
+   *
    * @return A string representation of the throwable's stack trace.
    */
   public static String toString (final Throwable throwable)
@@ -523,9 +524,9 @@ public final class Strings
    *
    * @param <T> The key type of the specified multimap.
    * @param <U> The value type of the specified multimap.
-   * 
+   *
    * @param multimap The multimap to convert to a string, must not be null.
-   * 
+   *
    * @return A string representation of the multimap and its elements.
    */
   public static <T, U> String toString (final Multimap <T, U> multimap)
@@ -550,10 +551,37 @@ public final class Strings
   }
 
   /**
+   * Converts list elements to a string list, separated by separator, in case letterCase.
+   *
+   *
+   * @param <T> The type of the list elements.
+   * @param listElements The list elements to convert, must not be
+   *                     null, must not contain any null elements.
+   * @param separator The separator that should be added between list elements,
+   *                  must not be null.
+   * @param letterCase The desired letter case of the list elements, must not be
+   *                   null, choose LetterCase.NONE to leave the list elements as-is.
+   * @param hasAnd     Whether or not to insert the word 'and ' between the last
+   *                   two elements in the list, one space after the last
+   *                   separator.
+   * @return A string list of listElements, separated by separator, in case
+   *         letterCase, with an optional 'and ' occurring between the last two
+   *         elements of the list.
+   */
+  @SafeVarargs
+  public static <T> String toStringList (final String separator,
+                                         final LetterCase letterCase,
+                                         final boolean hasAnd,
+                                         final T... listElements)
+  {
+    return toStringList (ImmutableList.copyOf (listElements), separator, letterCase, hasAnd);
+  }
+
+  /**
    * Converts a collection of list elements to a string list, separated by
    * separator, in case letterCase.
-   * 
-   * 
+   *
+   *
    * @param <T> The type of the list elements.
    * @param listElements The collection of list elements to convert, must not be
    *                     null, must not contain any null elements.
@@ -578,18 +606,27 @@ public final class Strings
     Arguments.checkIsNotNull         (separator,    "separator");
     Arguments.checkIsNotNull         (letterCase,   "letterCase");
 
+    final ImmutableList.Builder <T> printableListElementsBuilder = ImmutableList.builder ();
+
+    for (final T element : listElements)
+    {
+      if (isPrintable (element.toString ())) printableListElementsBuilder.add (element);
+    }
+
+    final ImmutableList <T> printableListElements = printableListElementsBuilder.build();
+
     // Handle the first three special cases
-    if (listElements.isEmpty())
+    if (printableListElements.isEmpty())
     {
       return "";
     }
-    else if (listElements.size() == 1)
+    else if (printableListElements.size() == 1)
     {
-      return toCase (Iterables.getOnlyElement (listElements).toString(), letterCase);
+      return toCase (Iterables.getOnlyElement (printableListElements).toString(), letterCase);
     }
-    else if (listElements.size() == 2)
+    else if (printableListElements.size() == 2)
     {
-      final Iterator <T> iterator = listElements.iterator();
+      final Iterator <T> iterator = printableListElements.iterator();
 
       // Here, if the separator is a comma, for example, it's either:
       // "item1 and item2" or "item1,item2" (if no "and" is desired)
@@ -600,7 +637,7 @@ public final class Strings
 
     final StringBuilder s = new StringBuilder();
 
-    for (final T element : listElements)
+    for (final T element : printableListElements)
     {
       final String elementString = toCase (element.toString(), letterCase);
 
@@ -637,7 +674,7 @@ public final class Strings
   {
     final StringBuilder words = new StringBuilder();
 
-    words.append ((n < 0)? "negative " : "");
+    words.append ((n < 0) ? "negative " : "");
 
     if (n != Integer.MIN_VALUE)
     {
@@ -734,7 +771,7 @@ public final class Strings
       else
       {
         words.append (toWords ((int) Math.floor (nonnegativeN / 1000000000.0)));
-        
+
         words.append (" billion");
 
         remainder = nonnegativeN % 1000000000;
@@ -754,7 +791,7 @@ public final class Strings
 
     return words.toString();
   }
-  
+
   private Strings()
   {
     Classes.instantiationNotAllowed();

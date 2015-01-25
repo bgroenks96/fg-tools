@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 public final class Arguments
 {
@@ -38,6 +39,74 @@ public final class Arguments
     if (array != null && Arrays.asList(array).contains (null))
     {
       illegalArgument (arrayName, ArgumentStatus.NULL_ELEMENTS);
+    }
+  }
+
+  /**
+   * Checks if the specified Map has any null keys.
+   * The check will pass if the Map itself is null, or if the map has any null values.
+   *
+   * @param map The Map to check, may be null.
+   * @param mapName The name of the Map to check, must not be null.
+   *
+   * @throws IllegalArgumentException If the Map has any null keys.
+   */
+  public static void checkHasNoNullKeys (final Map <?, ?> map, final String mapName)
+  {
+    if (hasNullKeys (map)) illegalArgument (mapName, ArgumentStatus.NULL_KEYS);
+  }
+
+  private static boolean hasNullKeys (final Map <?, ?> map)
+  {
+    return map != null && Iterables.contains (map.keySet(), null);
+  }
+
+  /**
+   * Checks if the specified Map has any null values.
+   * The check will pass if the Map itself is null, or if the map has any null keys.
+   *
+   * @param map The Map to check, may be null.
+   * @param mapName The name of the Map to check, must not be null.
+   *
+   * @throws IllegalArgumentException If the Map has any null values.
+   */
+  public static void checkHasNoNullValues (final Map <?, ?> map, final String mapName)
+  {
+    if (hasNullValues (map)) illegalArgument (mapName, ArgumentStatus.NULL_VALUES);
+  }
+
+  private static boolean hasNullValues (final Map <?, ?> map)
+  {
+    return map != null && Iterables.contains (map.values(), null);
+  }
+
+  /**
+   * Checks if the specified Map has any null keys or null values.
+   * The check will pass if the Map itself is null.
+   *
+   * @param map The Map to check, may be null.
+   * @param mapName The name of the Map to check, must not be null.
+   *
+   * @throws IllegalArgumentException If the Map has any null keys or null values.
+   */
+  public static void checkHasNoNullKeysOrValues (final Map <?, ?> map, final String mapName)
+  {
+    final boolean hasNullKeys = hasNullKeys (map);
+    final boolean hasNullValues = hasNullValues (map);
+
+    if (! hasNullKeys && ! hasNullValues) return;
+
+    if (hasNullKeys && hasNullValues)
+    {
+      illegalArgument (mapName, ArgumentStatus.NULL_KEYS_AND_VALUES);
+    }
+    else if (hasNullKeys)
+    {
+      illegalArgument (mapName, ArgumentStatus.NULL_KEYS);
+    }
+    else
+    {
+      illegalArgument (mapName, ArgumentStatus.NULL_VALUES);
     }
   }
 
@@ -913,12 +982,15 @@ public final class Arguments
 
   private enum ArgumentStatus
   {
-    BLANK          ("is blank"),
-    BLANK_ELEMENTS ("has blank elements"),
-    EMPTY          ("is empty"),
-    EMPTY_ELEMENTS ("has empty elements"),
-    NULL           ("is null"),
-    NULL_ELEMENTS  ("has null elements");
+    BLANK                ("is blank"),
+    BLANK_ELEMENTS       ("has blank elements"),
+    EMPTY                ("is empty"),
+    EMPTY_ELEMENTS       ("has empty elements"),
+    NULL                 ("is null"),
+    NULL_ELEMENTS        ("has null elements"),
+    NULL_KEYS            ("has null keys"),
+    NULL_VALUES          ("has null values"),
+    NULL_KEYS_AND_VALUES ("has null keys & null values");
 
     private String getMessage()
     {

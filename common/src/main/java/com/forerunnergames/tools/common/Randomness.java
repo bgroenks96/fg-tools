@@ -9,6 +9,7 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -180,6 +181,43 @@ public final class Randomness
     return (int) randomNumber;
   }
 
+  /**
+   * Obtains a random element from the specified collection using a cryptographically secure pseudo random number
+   * generator.
+   *
+   * @param <T>  The element type of the specified collection.
+   * @param collection The collection to obtain a random element from, must not be null, must not contain null elements, must not be empty.
+   *
+   * @return A random element from the specified collection.
+   */
+  public static <T> T getRandomElementFrom (final Collection <T> collection)
+  {
+    Arguments.checkIsNotNull (collection, "collection");
+    Arguments.checkHasNoNullElements (collection, "collection");
+    Preconditions.checkIsFalse (collection.isEmpty(), "Cannot get random element from an empty collection.");
+
+    return shuffle (collection).get (0);
+  }
+
+  /**
+   * Obtains a random element from the specified elements using a cryptographically secure pseudo random number
+   * generator.
+   *
+   * @param <T>  The elements' type.
+   * @param elements The elements to obtain a random element from, must not be null, must not contain null elements, must not be empty.
+   *
+   * @return A random element from the specified elements.
+   */
+  @SafeVarargs
+  public static <T> T getRandomElementFrom (final T... elements)
+  {
+    Arguments.checkIsNotNull (elements, "elements");
+    Arguments.checkHasNoNullElements (elements, "elements");
+    Preconditions.checkIsTrue (elements.length > 0, "Cannot get random element from empty varargs elements.");
+
+    return shuffle (elements).get (0);
+  }
+
   private static void checkPrngUsage()
   {
     if (shouldReseedPrng()) reseedPrng();
@@ -217,22 +255,22 @@ public final class Randomness
   }
 
   /**
-   * Shuffles a copy of the specified list using a cryptographically secure pseudo random number generator.
+   * Shuffles a copy of the specified iterable using a cryptographically secure pseudo random number generator.
    *
-   * NOTE: The original list will not be modified.
+   * NOTE: The original iterable will not be modified.
    *
-   * @param <T>  The element type of the specified list.
-   * @param list The list to be shuffled, must not be null, may be immutable / unmodifiable, may contain null elements.
+   * @param <T>  The element type of the specified iterable.
+   * @param iterable The iterable to be shuffled, must not be null, may be immutable / unmodifiable, may contain null elements.
    *
-   * @return A shuffled, mutable copy of the original list.
+   * @return A shuffled, mutable copy of the original iterable.
    */
-  public static <T> List <T> shuffle (final List <T> list)
+  public static <T> List <T> shuffle (final Iterable <T> iterable)
   {
-    Arguments.checkIsNotNull (list, "List");
+    Arguments.checkIsNotNull (iterable, "iterable");
 
     checkPrngUsage();
 
-    final ArrayList <T> listCopy = Lists.newArrayList (list);
+    final ArrayList <T> listCopy = Lists.newArrayList (iterable);
 
     Collections.shuffle (listCopy, prng);
 
@@ -251,6 +289,7 @@ public final class Randomness
    *
    * @return A shuffled, mutable copy of the original elements.
    */
+  @SafeVarargs
   public static <T> List <T> shuffle (final T... elements)
   {
     Arguments.checkIsNotNull (elements, "elements");

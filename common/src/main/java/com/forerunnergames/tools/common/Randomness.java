@@ -2,9 +2,12 @@ package com.forerunnergames.tools.common;
 
 import com.forerunnergames.tools.randomx.RandomHotBits;
 
+import com.google.common.collect.Lists;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -213,12 +216,14 @@ public final class Randomness
   }
 
   /**
-   * Shuffles a list using a cryptographically secure pseudo random number generator.
-   * 
+   * Shuffles a copy of a list using a cryptographically secure pseudo random number generator.
+   *
+   * The original list will not be modified.
+   *
    * @param <T>  The element type of the specified list.
-   * @param list The list to be shuffled, must not be null.
-   * 
-   * @return A copy of the shuffled list.
+   * @param list The list to be shuffled, must not be null, may be immutable / unmodifiable.
+   *
+   * @return A shuffled, mutable copy of the original list.
    */
   public static <T> List <T> shuffle (final List <T> list)
   {
@@ -226,10 +231,12 @@ public final class Randomness
 
     checkPrngUsage();
 
-    Collections.shuffle (list, prng);
+    final ArrayList <T> listCopy = Lists.newArrayList (list);
 
-    updatePrngUsage (list.size());
+    Collections.shuffle (listCopy, prng);
 
-    return list;
+    updatePrngUsage (listCopy.size());
+
+    return listCopy;
   }
 }

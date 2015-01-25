@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -216,12 +217,12 @@ public final class Randomness
   }
 
   /**
-   * Shuffles a copy of a list using a cryptographically secure pseudo random number generator.
+   * Shuffles a copy of the specified list using a cryptographically secure pseudo random number generator.
    *
-   * The original list will not be modified.
+   * NOTE: The original list will not be modified.
    *
    * @param <T>  The element type of the specified list.
-   * @param list The list to be shuffled, must not be null, may be immutable / unmodifiable.
+   * @param list The list to be shuffled, must not be null, may be immutable / unmodifiable, may contain null elements.
    *
    * @return A shuffled, mutable copy of the original list.
    */
@@ -238,5 +239,22 @@ public final class Randomness
     updatePrngUsage (listCopy.size());
 
     return listCopy;
+  }
+
+  /**
+   * Shuffles a copy of the specified elements using a cryptographically secure pseudo random number generator.
+   *
+   * NOTE: The original element array will not be modified.
+   *
+   * @param <T>  The elements' type.
+   * @param elements The elements to be shuffled, must not be null, may contain null elements.
+   *
+   * @return A shuffled, mutable copy of the original elements.
+   */
+  public static <T> List <T> shuffle (final T... elements)
+  {
+    Arguments.checkIsNotNull (elements, "elements");
+
+    return shuffle (Arrays.asList (elements));
   }
 }

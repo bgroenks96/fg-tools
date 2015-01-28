@@ -27,7 +27,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.forerunnergames.tools.common;
+package de.matthiasmann;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;

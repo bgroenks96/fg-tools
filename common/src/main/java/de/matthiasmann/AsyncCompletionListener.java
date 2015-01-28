@@ -27,7 +27,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.forerunnergames.tools.common;
+package de.matthiasmann;
 
 /**
  * A completion listener for async jobs. It is invoked via {@link AsyncExecution#invokeLater(java.lang.Runnable) }

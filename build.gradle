@@ -36,7 +36,6 @@ subprojects {
 
 project (":common") {
   dependencies {
-    compile project (":randomx")
     compile "com.google.guava:guava:18.0"
     compile "org.apache.commons:commons-lang3:3.3.2"
     compile "com.google.code.findbugs:jsr305:2.0.3"

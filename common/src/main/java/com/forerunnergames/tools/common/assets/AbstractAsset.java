@@ -1,5 +1,6 @@
-package com.forerunnergames.tools.common;
+package com.forerunnergames.tools.common.assets;
 
+import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.id.Id;
 import com.forerunnergames.tools.common.net.annotations.RequiredForNetworkSerialization;
 

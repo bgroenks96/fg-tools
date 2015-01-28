@@ -1,5 +1,7 @@
-package com.forerunnergames.tools.common;
+package com.forerunnergames.tools.common.assets;
 
+import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.common.id.Id;
 
 import com.google.common.collect.ImmutableCollection;

@@ -1,5 +1,7 @@
-package com.forerunnergames.tools.common;
+package com.forerunnergames.tools.common.assets;
 
+import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Classes;
 import com.forerunnergames.tools.common.id.Id;
 
 public final class AssetFluency

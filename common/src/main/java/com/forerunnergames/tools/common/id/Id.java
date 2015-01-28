@@ -2,7 +2,7 @@ package com.forerunnergames.tools.common.id;
 
 import com.forerunnergames.tools.common.Arguments;
 
-public class Id implements Comparable <Id>
+public final class Id implements Comparable <Id>
 {
   private final int value;
 
@@ -11,7 +11,13 @@ public class Id implements Comparable <Id>
     this.value = value;
   }
 
-  public int value()
+  public int value ()
+  {
+    return value;
+  }
+
+  @Override
+  public int hashCode ()
   {
     return value;
   }
@@ -21,7 +27,7 @@ public class Id implements Comparable <Id>
   {
     if (this == o) return true;
 
-    if (o == null || getClass() != o.getClass()) return false;
+    if (o == null || getClass () != o.getClass ()) return false;
 
     final Id that = (Id) o;
 
@@ -29,9 +35,9 @@ public class Id implements Comparable <Id>
   }
 
   @Override
-  public int hashCode()
+  public String toString ()
   {
-    return value;
+    return String.valueOf (value);
   }
 
   @Override
@@ -39,7 +45,7 @@ public class Id implements Comparable <Id>
   {
     Arguments.checkIsNotNull (id, "id");
 
-    return this.value - id.value();
+    return this.value - id.value ();
   }
 
   public boolean is (final Id id)
@@ -49,17 +55,11 @@ public class Id implements Comparable <Id>
 
   public boolean isNot (final Id id)
   {
-    return ! is (id);
+    return !is (id);
   }
 
   public boolean hasValue (final int value)
   {
     return this.value == value;
-  }
-
-  @Override
-  public String toString()
-  {
-    return String.valueOf (value);
   }
 }

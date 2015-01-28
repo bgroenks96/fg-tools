@@ -36,131 +36,175 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Allows to execute code on a different thread and retrieve the
- * result synchronously by calling {@link #executeQueuedJobs() }
- * 
+ * Allows to execute code on a different thread and retrieve the result synchronously by calling
+ * {@link #executeQueuedJobs() }
+ *
  * @author Matthias Mann
  */
-public class AsyncExecution {
-    
-    private final LinkedBlockingQueue<Runnable> completionQueue;
+public class AsyncExecution
+{
 
-    public AsyncExecution() {
-        this.completionQueue = new LinkedBlockingQueue<>();
-    }
-    
-    /**
-     * Queues a job for execution by {@link #executeQueuedJobs() }
-     * @param job the job
-     * @throws NullPointerException when job is null
-     */
-    public void invokeLater(Runnable job) {
-        if(job == null) {
-            throw new NullPointerException("job");
-        }
-        completionQueue.add(job);
-    }
-    
-    /**
-     * Executes all queued jobs
-     * @see #invokeLater(java.lang.Runnable) 
-     */
-    public void executeQueuedJobs() {
-        Runnable job;
-        while((job=completionQueue.poll()) != null) {
-            try {
-                job.run();
-            } catch(Exception ex) {
-                Logger.getLogger(AsyncExecution.class.getName()).log(Level.SEVERE,
-                        "Exception while executing queued job", ex);
-            }
-        }
-    }
-    
-    /**
-     * Invokes a {@link Callable} job on the specified executor and invokes the
-     * {@code listener} via {@link #invokeLater(java.lang.Runnable) } once
-     * the job has completed normally or with an exception.
-     * 
-     * @param <V> the return type of the callable
-     * @param executor the executor for the async execution of the job
-     * @param asyncJob the job to execute
-     * @param listener the listener to invoke once the job has completed
-     * @throws NullPointerException when any of the arguments is null.
-     */
-    public<V> void invokeAsync(ExecutorService executor, Callable<V> asyncJob, AsyncCompletionListener<V> listener) {
-        if(executor == null) {
-            throw new NullPointerException("executor");
-        }
-        if(asyncJob == null) {
-            throw new NullPointerException("asyncJob");
-        }
-        if(listener == null) {
-            throw new NullPointerException("listener");
-        }
-        executor.submit((Callable<V>)new AC<V>(asyncJob, null, listener));
-    }
-    
-    /**
-     * Invokes a {@link Runnable} job on the specified executor and invokes the
-     * {@code listener} via {@link #invokeLater(java.lang.Runnable) } once
-     * the job has completed normally or with an exception.
-     * 
-     * @param executor the executor for the async execution of the job
-     * @param asyncJob the job to execute
-     * @param listener the listener to invoke once the job has completed
-     * @throws NullPointerException when any of the arguments is null.
-     */
-    public void invokeAsync(ExecutorService executor, Runnable asyncJob, AsyncCompletionListener<Void> listener) {
-        if(executor == null) {
-            throw new NullPointerException("executor");
-        }
-        if(asyncJob == null) {
-            throw new NullPointerException("asyncJob");
-        }
-        if(listener == null) {
-            throw new NullPointerException("listener");
-        }
-        executor.submit((Callable<Void>)new AC<Void>(null, asyncJob, listener));
-    }
-    
-    class AC<V> implements Callable<V>, Runnable {
-        private final Callable<V> jobC;
-        private final Runnable jobR;
-        private final AsyncCompletionListener<V> listener;
-        private V result;
-        private Exception exception;
+  private final LinkedBlockingQueue <Runnable> completionQueue;
 
-        AC(Callable<V> jobC, Runnable jobR, AsyncCompletionListener<V> listener) {
-            this.jobC = jobC;
-            this.jobR = jobR;
-            this.listener = listener;
-        }
+  public AsyncExecution ()
+  {
+    this.completionQueue = new LinkedBlockingQueue <> ();
+  }
 
-        @Override
-        public V call() throws Exception {
-            try {
-                if(jobC != null) {
-                    result = jobC.call();
-                } else {
-                    jobR.run();
-                }
-                invokeLater(this);
-                return result;
-            } catch(Exception ex) {
-                exception = ex;
-                invokeLater(this);
-                throw ex;
-            }
-        }
-
-        @Override
-        public void run() {
-            if(exception != null) {
-                listener.failed(exception);
-            } else {
-                listener.completed(result);
-            }
-        }
+  /**
+   * Queues a job for execution by {@link #executeQueuedJobs() }
+   *
+   * @param job
+   *          the job
+   *
+   * @throws NullPointerException
+   *           when job is null
+   */
+  public void invokeLater (Runnable job)
+  {
+    if (job == null)
+    {
+      throw new NullPointerException ("job");
     }
+    completionQueue.add (job);
+  }
+
+  /**
+   * Executes all queued jobs
+   *
+   * @see #invokeLater(java.lang.Runnable)
+   */
+  public void executeQueuedJobs ()
+  {
+    Runnable job;
+    while ((job = completionQueue.poll ()) != null)
+    {
+      try
+      {
+        job.run ();
+      }
+      catch (Exception ex)
+      {
+        Logger.getLogger (AsyncExecution.class.getName ()).log (Level.SEVERE, "Exception while executing queued job",
+                ex);
+      }
+    }
+  }
+
+  /**
+   * Invokes a {@link Callable} job on the specified executor and invokes the {@code listener} via
+   * {@link #invokeLater(java.lang.Runnable) } once the job has completed normally or with an exception.
+   *
+   * @param <V>
+   *          the return type of the callable
+   * @param executor
+   *          the executor for the async execution of the job
+   * @param asyncJob
+   *          the job to execute
+   * @param listener
+   *          the listener to invoke once the job has completed
+   *
+   * @throws NullPointerException
+   *           when any of the arguments is null.
+   */
+  public <V> void invokeAsync (ExecutorService executor, Callable <V> asyncJob, AsyncCompletionListener <V> listener)
+  {
+    if (executor == null)
+    {
+      throw new NullPointerException ("executor");
+    }
+    if (asyncJob == null)
+    {
+      throw new NullPointerException ("asyncJob");
+    }
+    if (listener == null)
+    {
+      throw new NullPointerException ("listener");
+    }
+    executor.submit ((Callable <V>) new AC <> (asyncJob, null, listener));
+  }
+
+  /**
+   * Invokes a {@link Runnable} job on the specified executor and invokes the {@code listener} via
+   * {@link #invokeLater(java.lang.Runnable) } once the job has completed normally or with an exception.
+   *
+   * @param executor
+   *          the executor for the async execution of the job
+   * @param asyncJob
+   *          the job to execute
+   * @param listener
+   *          the listener to invoke once the job has completed
+   *
+   * @throws NullPointerException
+   *           when any of the arguments is null.
+   */
+  public void invokeAsync (ExecutorService executor, Runnable asyncJob, AsyncCompletionListener <Void> listener)
+  {
+    if (executor == null)
+    {
+      throw new NullPointerException ("executor");
+    }
+    if (asyncJob == null)
+    {
+      throw new NullPointerException ("asyncJob");
+    }
+    if (listener == null)
+    {
+      throw new NullPointerException ("listener");
+    }
+    executor.submit ((Callable <Void>) new AC <> (null, asyncJob, listener));
+  }
+
+  class AC <V> implements Callable <V>, Runnable
+  {
+    private final Callable <V> jobC;
+    private final Runnable jobR;
+    private final AsyncCompletionListener <V> listener;
+    private V result;
+    private Exception exception;
+
+    AC (Callable <V> jobC, Runnable jobR, AsyncCompletionListener <V> listener)
+    {
+      this.jobC = jobC;
+      this.jobR = jobR;
+      this.listener = listener;
+    }
+
+    @Override
+    public V call () throws Exception
+    {
+      try
+      {
+        if (jobC != null)
+        {
+          result = jobC.call ();
+        }
+        else
+        {
+          jobR.run ();
+        }
+        invokeLater (this);
+        return result;
+      }
+      catch (Exception ex)
+      {
+        exception = ex;
+        invokeLater (this);
+        throw ex;
+      }
+    }
+
+    @Override
+    public void run ()
+    {
+      if (exception != null)
+      {
+        listener.failed (exception);
+      }
+      else
+      {
+        listener.completed (result);
+      }
+    }
+  }
 }

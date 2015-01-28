@@ -6,7 +6,7 @@ public final class ResultFluency
   {
     Arguments.checkIsNotNull (result, "result");
 
-    return result.getFailureReason();
+    return result.getFailureReason ();
   }
 
   public static <T> T withFailureReasonFrom (final Result <T> result)
@@ -14,8 +14,8 @@ public final class ResultFluency
     return failureReasonFrom (result);
   }
 
-  private ResultFluency()
+  private ResultFluency ()
   {
-    Classes.instantiationNotAllowed();
+    Classes.instantiationNotAllowed ();
   }
 }

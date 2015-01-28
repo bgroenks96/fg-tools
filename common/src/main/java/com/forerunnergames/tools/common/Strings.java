@@ -20,14 +20,11 @@ public final class Strings
   /*
    * Gets the correct English article ("a" or "an") for the word proceeding it.
    *
-   * @param nextWord The word proceeding the article ("a" or "an"), must not be
-   * null, empty, or blank (whitespace only).
+   * @param nextWord The word proceeding the article ("a" or "an"), must not be null, empty, or blank (whitespace only).
    *
-   * @return The correct English article ("a" or "an") for the word proceeding
-   * it. "an" if nextWord stars with a vowel, "a" otherwise. Special case:
-   * if nextWord is simply "u", it will return "a". Consider the following
-   * example: "An umbrella starts with a u." (correct) vs
-   * "An umbrella starts with an u." (incorrect)
+   * @return The correct English article ("a" or "an") for the word proceeding it. "an" if nextWord stars with a vowel,
+   * "a" otherwise. Special case: if nextWord is simply "u", it will return "a". Consider the following example:
+   * "An umbrella starts with a u." (correct) vs "An umbrella starts with an u." (incorrect)
    */
   public static String aOrAn (final String nextWord)
   {
@@ -35,17 +32,16 @@ public final class Strings
 
     final String nextWordLowerCase = nextWord.toLowerCase (Locale.ENGLISH);
 
-    return nextWordLowerCase.startsWith ("a") ||
-        nextWordLowerCase.startsWith ("e") ||
-        nextWordLowerCase.startsWith ("i") ||
-        nextWordLowerCase.startsWith ("o") ||
-       (nextWordLowerCase.startsWith ("u") && nextWordLowerCase.length() > 1) ? "an" : "a";
+    return nextWordLowerCase.startsWith ("a") || nextWordLowerCase.startsWith ("e")
+                    || nextWordLowerCase.startsWith ("i") || nextWordLowerCase.startsWith ("o")
+                    || (nextWordLowerCase.startsWith ("u") && nextWordLowerCase.length () > 1) ? "an" : "a";
   }
 
   /**
    * Deletes the contents of the specified StringBuilder
    *
-   * @param s The StringBuilder to delete the content of, must not be null.
+   * @param s
+   *          The StringBuilder to delete the content of, must not be null.
    *
    * @return The empty StringBuilder.
    */
@@ -53,14 +49,15 @@ public final class Strings
   {
     Arguments.checkIsNotNull (s, "s");
 
-    return s.delete (0, s.length());
+    return s.delete (0, s.length ());
   }
 
   /**
-   * Replaces any duplicate whitespace in a string with a single space, also
-   * removing tabs, newlines, etc in the process.
+   * Replaces any duplicate whitespace in a string with a single space, also removing tabs, newlines, etc in the
+   * process.
    *
-   * @param s The string to compress, must not be null.
+   * @param s
+   *          The string to compress, must not be null.
    *
    * @return The compressed string.
    */
@@ -68,14 +65,16 @@ public final class Strings
   {
     Arguments.checkIsNotNull (s, "s");
 
-    return s.trim().replaceAll ("\\s+", " ");
+    return s.trim ().replaceAll ("\\s+", " ");
   }
 
   /**
    * Checks whether the specifiied string is contained in the specified StringBuilder.
    *
-   * @param stringBuilder The StringBuilder, must not be null.
-   * @param s The string, must not be null.
+   * @param stringBuilder
+   *          The StringBuilder, must not be null.
+   * @param s
+   *          The string, must not be null.
    *
    * @return true if at least one instance of s is contained within stringBuilder, false otherwise
    */
@@ -90,35 +89,35 @@ public final class Strings
   /**
    * Deletes the last character from the specified StringBuilder.
    *
-   * @param s The StringBuilder from which to delete the last character, must not be null, may be empty.
+   * @param s
+   *          The StringBuilder from which to delete the last character, must not be null, may be empty.
    *
    * @return The StringBuilder with its last character deleted and any remaining characters shifted left, or the
-   * original StringBuilder if it was already empty.
+   *         original StringBuilder if it was already empty.
    */
   public static StringBuilder deleteLastChar (final StringBuilder s)
   {
     Arguments.checkIsNotNull (s, "s");
 
-    return s.length() > 0 ? s.deleteCharAt (s.length() - 1) : s;
+    return s.length () > 0 ? s.deleteCharAt (s.length () - 1) : s;
   }
 
   /**
-   * Gets a trimmed substring from the specified string. Any extra whitespace
-   * will be deleted from the beginning and end of the substring.
+   * Gets a trimmed substring from the specified string. Any extra whitespace will be deleted from the beginning and end
+   * of the substring.
+   *
+   * @param s
+   *          The string to get the trimmed substring from, must not be null, must not be empty.
+   * @param beginIndex
+   *          The character index to start the substring from, must be >= 0 and < endIndex.
+   * @param endIndex
+   *          The string character index one past the end of the substring, must be >= 0, > beginIndex, and <=
+   *          s.length().
+   *
+   * @return The trimmed substring.
    *
    * @see String#trim()
    * @see String#substring(int, int)
-   *
-   * @param s The string to get the trimmed substring from, must not be null,
-   *          must not be empty.
-   *
-   * @param beginIndex The character index to start the substring from,
-   *                   must be >= 0 and < endIndex.
-   *
-   * @param endIndex The string character index one past the end of the
-   *                 substring, must be >= 0, > beginIndex, and <= s.length().
-   *
-   * @return The trimmed substring.
    */
   public static String getTrimmedSubstring (final String s, final int beginIndex, final int endIndex)
   {
@@ -126,20 +125,19 @@ public final class Strings
     Arguments.checkLowerInclusiveBound (beginIndex, 0, "beginIndex");
     Arguments.checkLowerInclusiveBound (endIndex, 0, "endIndex");
     Arguments.checkUpperExclusiveBound (beginIndex, endIndex, "beginIndex", "endIndex");
-    Arguments.checkUpperInclusiveBound (endIndex, s.length(), "endIndex", "s.length()");
+    Arguments.checkUpperInclusiveBound (endIndex, s.length (), "endIndex", "s.length()");
 
-    return s.substring(beginIndex, endIndex).trim();
+    return s.substring (beginIndex, endIndex).trim ();
   }
 
   /**
-   * Checks whether the string s is comprised of only alphanumeric characters
-   * (a to z, A to Z, or 0-9).
+   * Checks whether the string s is comprised of only alphanumeric characters (a to z, A to Z, or 0-9).
    *
-   * @param s The string to check, must not be null.
+   * @param s
+   *          The string to check, must not be null.
    *
-   * @return True if the string s is comprised of only alphanumeric characters.
-   * False if the string s is empty, contains whitespace or any
-   * non-alphanumeric character.
+   * @return True if the string s is comprised of only alphanumeric characters. False if the string s is empty, contains
+   *         whitespace or any non-alphanumeric character.
    */
   public static boolean isAlphanumeric (final String s)
   {
@@ -151,7 +149,8 @@ public final class Strings
   /**
    * Checks whether the character c is a printable character.
    *
-   * @param c The character to check.
+   * @param c
+   *          The character to check.
    *
    * @return True if the character c is a printable character, false otherwise.
    */
@@ -159,32 +158,31 @@ public final class Strings
   {
     final Character.UnicodeBlock unicodeBlock = Character.UnicodeBlock.of (c);
 
-    return ! Character.isISOControl (c) &&
-           c != KeyEvent.CHAR_UNDEFINED &&
-           unicodeBlock != null &&
-           unicodeBlock != Character.UnicodeBlock.SPECIALS;
+    return !Character.isISOControl (c) && c != KeyEvent.CHAR_UNDEFINED && unicodeBlock != null
+                    && unicodeBlock != Character.UnicodeBlock.SPECIALS;
   }
 
   /**
    * Checks whether the string s is a printable string.
    *
-   * @param s The string to check.
+   * @param s
+   *          The string to check.
    *
    * @return True if the string s is a printable string, false if it is null, empty, or whitespace-only.
    */
   public static boolean isPrintable (final String s)
   {
-    return s != null && ! s.isEmpty() && ! isWhitespace (s);
+    return s != null && !s.isEmpty () && !isWhitespace (s);
   }
 
   /**
-   * Checks whether the string s is comprised of only whitespace.
-   * <br/><br/>
-   * Note: The input string may contain supplementary characters.
-   * For rules on which characters are considered whitespace,
-   * see @see Character#isWhitespace(char)
+   * Checks whether the string s is comprised of only whitespace. <br/>
+   * <br/>
+   * Note: The input string may contain supplementary characters. For rules on which characters are considered
+   * whitespace, see @see Character#isWhitespace(char)
    *
-   * @param s The string to check, must not be null.
+   * @param s
+   *          The string to check, must not be null.
    *
    * @return True if the string s is comprised of only whitespace or is empty.
    */
@@ -192,25 +190,26 @@ public final class Strings
   {
     Arguments.checkIsNotNull (s, "s");
 
-    for (int i = 0; i < s.length(); ++i)
+    for (int i = 0; i < s.length (); ++i)
     {
-      if (! Character.isWhitespace (s.codePointAt (i))) return false;
+      if (!Character.isWhitespace (s.codePointAt (i))) return false;
     }
 
     return true;
   }
 
   /**
-   * Automatically gets the correct plurally-agreeing form of the given phrase
-   * depending on whether its preceding clarifying numerical value is equal
-   * to 1.
-   * <br/><br/>
-   * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a
-   * balance of -3 dollars.
+   * Automatically gets the correct plurally-agreeing form of the given phrase depending on whether its preceding
+   * clarifying numerical value is equal to 1. <br/>
+   * <br/>
+   * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a balance of -3 dollars.
    *
-   * @param variable The preceding clarifying numerical value
-   * @param singular The singular form of the phrase
-   * @param plural   The plural form of the phrase
+   * @param variable
+   *          The preceding clarifying numerical value
+   * @param singular
+   *          The singular form of the phrase
+   * @param plural
+   *          The plural form of the phrase
    *
    * @return The plurally-agreeing form of the phrase
    *
@@ -222,20 +221,19 @@ public final class Strings
   }
 
   /**
-   * Automatically gets the correct plurally-agreeing simple -s (add s) form of
-   * the given phrase depending on whether its preceding clarifying numerical
-   * value is equal to 1.
-   * <br/><br/>
-   * If the phrase needs to be pluralized, a lowercase 's' will be appended to
-   * the end of the phrase, otherwise the singular form of the phrase will be
-   * returned. This method is only appropriate for phrases whose correct plural
-   * form only involves adding an 's'.
-   * <br/><br/>
-   * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a
-   *       balance of -3 dollars
+   * Automatically gets the correct plurally-agreeing simple -s (add s) form of the given phrase depending on whether
+   * its preceding clarifying numerical value is equal to 1. <br/>
+   * <br/>
+   * If the phrase needs to be pluralized, a lowercase 's' will be appended to the end of the phrase, otherwise the
+   * singular form of the phrase will be returned. This method is only appropriate for phrases whose correct plural form
+   * only involves adding an 's'. <br/>
+   * <br/>
+   * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a balance of -3 dollars
    *
-   * @param variable The preceding clarifying numerical value
-   * @param singular The singular form of the phrase
+   * @param variable
+   *          The preceding clarifying numerical value
+   * @param singular
+   *          The singular form of the phrase
    *
    * @return The plurally-agreeing form of the phrase
    *
@@ -247,10 +245,10 @@ public final class Strings
   }
 
   /**
-   * Removes any whitespace characters ( \t\n\x0B\f\r) from the
-   * specified string.
+   * Removes any whitespace characters ( \t\n\x0B\f\r) from the specified string.
    *
-   * @param s The string to remove any whitespace from.
+   * @param s
+   *          The string to remove any whitespace from.
    *
    * @return The whitespace-stripped string.
    *
@@ -260,21 +258,22 @@ public final class Strings
   {
     Arguments.checkIsNotNull (s, "s");
 
-    return s.replaceAll ("\\s","");
+    return s.replaceAll ("\\s", "");
   }
 
   /**
    * Converts a single word to the specified case.
    *
-   * @param word The word to convert, must not be null;
-   * @param letterCase The case to convert the word to, use LetterCase.NONE to leave
-   *                   the word as-is, must not be null.
+   * @param word
+   *          The word to convert, must not be null;
+   * @param letterCase
+   *          The case to convert the word to, use LetterCase.NONE to leave the word as-is, must not be null.
    *
-   * @return  The word, converted to the specified case.
+   * @return The word, converted to the specified case.
    */
   public static String toCase (final String word, final LetterCase letterCase)
   {
-    Arguments.checkIsNotNull (word,       "word");
+    Arguments.checkIsNotNull (word, "word");
     Arguments.checkIsNotNull (letterCase, "letterCase");
 
     String caseCorrectedWord = word;
@@ -289,13 +288,13 @@ public final class Strings
       }
       case LOWER:
       {
-        caseCorrectedWord = word.toLowerCase();
+        caseCorrectedWord = word.toLowerCase ();
 
         break;
       }
       case UPPER:
       {
-        caseCorrectedWord = word.toUpperCase();
+        caseCorrectedWord = word.toUpperCase ();
 
         break;
       }
@@ -309,32 +308,31 @@ public final class Strings
   }
 
   /**
-   * Gets the English ordinal abbreviation for the specified integer
-   * (e.g., 1st, 2nd, 3rd, etc.).
+   * Gets the English ordinal abbreviation for the specified integer (e.g., 1st, 2nd, 3rd, etc.).
    *
-   * @param n The integer to get the ordinal abbreviation for.
+   * @param n
+   *          The integer to get the ordinal abbreviation for.
    *
-   * @return A string containing the English ordinal abbreviation for the
-   *         specified integer.
+   * @return A string containing the English ordinal abbreviation for the specified integer.
    */
   public static String toMixedOrdinal (final int n)
   {
     final String ordinal = toOrdinal (n);
 
-    return n + ordinal.substring (ordinal.length() - 2);
+    return n + ordinal.substring (ordinal.length () - 2);
   }
 
   /**
    * Gets the English ordinal words for the specified integer.
    *
-   * @param n The integer to get the ordinal words for.
+   * @param n
+   *          The integer to get the ordinal words for.
    *
-   * @return A string containing the English ordinal words for the specified
-   *         integer.
+   * @return A string containing the English ordinal words for the specified integer.
    */
   public static String toOrdinal (final int n)
   {
-    final StringBuilder ordinal = new StringBuilder();
+    final StringBuilder ordinal = new StringBuilder ();
 
     ordinal.append ((n < 0) ? "negative " : "");
 
@@ -367,56 +365,91 @@ public final class Strings
       {
         switch (ordinalPart)
         {
-          case  0: ordinal.append ("th"); break;
-          case  1: ordinal.append ("first"); break;
-          case  2: ordinal.append ("second"); break;
-          case  3: ordinal.append ("third"); break;
-          case  5: ordinal.append ("fifth"); break;
-          case  8: ordinal.append ("eighth"); break;
-          case  9: ordinal.append ("ninth"); break;
-          case 12: ordinal.append ("twelfth"); break;
-          default: ordinal.append (toWords (ordinalPart)).append ("th"); break;
+          case 0:
+            ordinal.append ("th");
+            break;
+          case 1:
+            ordinal.append ("first");
+            break;
+          case 2:
+            ordinal.append ("second");
+            break;
+          case 3:
+            ordinal.append ("third");
+            break;
+          case 5:
+            ordinal.append ("fifth");
+            break;
+          case 8:
+            ordinal.append ("eighth");
+            break;
+          case 9:
+            ordinal.append ("ninth");
+            break;
+          case 12:
+            ordinal.append ("twelfth");
+            break;
+          default:
+            ordinal.append (toWords (ordinalPart)).append ("th");
+            break;
         }
       }
       else
       {
         switch (ordinalPart)
         {
-          case 20: ordinal.append ("twentieth");   break;
-          case 30: ordinal.append ("thirtieth");   break;
-          case 40: ordinal.append ("fortieth");    break;
-          case 50: ordinal.append ("fiftieth");    break;
-          case 60: ordinal.append ("sixtieth");    break;
-          case 70: ordinal.append ("seventieth");  break;
-          case 80: ordinal.append ("eightieth");   break;
-          case 90: ordinal.append ("ninetieth");   break;
+          case 20:
+            ordinal.append ("twentieth");
+            break;
+          case 30:
+            ordinal.append ("thirtieth");
+            break;
+          case 40:
+            ordinal.append ("fortieth");
+            break;
+          case 50:
+            ordinal.append ("fiftieth");
+            break;
+          case 60:
+            ordinal.append ("sixtieth");
+            break;
+          case 70:
+            ordinal.append ("seventieth");
+            break;
+          case 80:
+            ordinal.append ("eightieth");
+            break;
+          case 90:
+            ordinal.append ("ninetieth");
+            break;
 
-          default: nonOrdinalPart = (int) ((Math.floor (ordinalPart / 10.0)) * 10.0);
-                   ordinal.append(toWords (nonOrdinalPart)).append ("-");
-                   ordinalPart -= nonOrdinalPart;
-                   ordinal.append (toOrdinal (ordinalPart));
-                   break;
+          default:
+            nonOrdinalPart = (int) ((Math.floor (ordinalPart / 10.0)) * 10.0);
+            ordinal.append (toWords (nonOrdinalPart)).append ("-");
+            ordinalPart -= nonOrdinalPart;
+            ordinal.append (toOrdinal (ordinalPart));
+            break;
         }
       }
     }
     else if (n == Integer.MIN_VALUE)
     {
-      ordinal.append ("two billion one hundred forty-seven million four " +
-                      "hundred eighty-three thousand six hundred and " +
-                      "forty-eighth");
+      ordinal.append ("two billion one hundred forty-seven million four "
+                      + "hundred eighty-three thousand six hundred and " + "forty-eighth");
     }
     else
     {
       ordinal.append ("zeroth");
     }
 
-    return ordinal.toString();
+    return ordinal.toString ();
   }
 
   /**
    * Converts a single word to proper case (first letter is capitalized, all subsequent characters are lowercase).
    *
-   * @param word The single word to convert to proper case, must not be null.
+   * @param word
+   *          The single word to convert to proper case, must not be null.
    *
    * @return The word converted to proper case.
    */
@@ -430,8 +463,10 @@ public final class Strings
   /**
    * Converts an array to a string representation.
    *
-   * @param <T> The type of array to convert to a string.
-   * @param array The array to convert to a string, must not be null, must not have any null elements.
+   * @param <T>
+   *          The type of array to convert to a string.
+   * @param array
+   *          The array to convert to a string, must not be null, must not have any null elements.
    *
    * @return A string representation of the array and its elements.
    */
@@ -446,8 +481,8 @@ public final class Strings
   /**
    * Converts a throwable's stack trace to a string.
    *
-   * @param throwable The throwable who's stack trace will be converted to a
-   *                  string, must not be null.
+   * @param throwable
+   *          The throwable who's stack trace will be converted to a string, must not be null.
    *
    * @return A string representation of the throwable's stack trace.
    */
@@ -455,19 +490,21 @@ public final class Strings
   {
     Arguments.checkIsNotNull (throwable, "throwable");
 
-    final StringWriter stringWriter = new StringWriter();
+    final StringWriter stringWriter = new StringWriter ();
     final PrintWriter printWriter = new PrintWriter (stringWriter);
 
     throwable.printStackTrace (printWriter);
 
-    return stringWriter.toString();
+    return stringWriter.toString ();
   }
 
   /**
    * Converts an Iterable to a string representation.
    *
-   * @param <T> The type of Iterable to convert to a string.
-   * @param iterable The Iterable to convert to a string, must not be null.
+   * @param <T>
+   *          The type of Iterable to convert to a string.
+   * @param iterable
+   *          The Iterable to convert to a string, must not be null.
    *
    * @return A string representation of the Iterable and its elements.
    */
@@ -479,22 +516,25 @@ public final class Strings
 
     int elementCounter = 0;
 
-    for (final T element: iterable)
+    for (final T element : iterable)
     {
       ++elementCounter;
 
       stringBuilder.append (String.format ("%1$s: %2$s\n", elementCounter, element));
     }
 
-    return stringBuilder.toString();
+    return stringBuilder.toString ();
   }
 
   /**
    * Converts a map to a string representation.
    *
-   * @param <T> The key type of the specified map.
-   * @param <U> The value type of the specified map.
-   * @param map The map to convert to a string, must not be null.
+   * @param <T>
+   *          The key type of the specified map.
+   * @param <U>
+   *          The value type of the specified map.
+   * @param map
+   *          The map to convert to a string, must not be null.
    *
    * @return A string representation of the map and its elements.
    */
@@ -506,26 +546,28 @@ public final class Strings
 
     int entryCounter = 0;
 
-    for (final Map.Entry <T, U> entry : map.entrySet())
+    for (final Map.Entry <T, U> entry : map.entrySet ())
     {
       ++entryCounter;
 
-      final T entryKey = entry.getKey();
-      final U entryValue = entry.getValue();
+      final T entryKey = entry.getKey ();
+      final U entryValue = entry.getValue ();
 
       stringBuilder.append (String.format ("Entry %1$s:[%2$s, %3$s]\n", entryCounter, entryKey, entryValue));
     }
 
-    return stringBuilder.toString();
+    return stringBuilder.toString ();
   }
 
   /**
    * Converts a multimap to a string representation.
    *
-   * @param <T> The key type of the specified multimap.
-   * @param <U> The value type of the specified multimap.
-   *
-   * @param multimap The multimap to convert to a string, must not be null.
+   * @param <T>
+   *          The key type of the specified multimap.
+   * @param <U>
+   *          The value type of the specified multimap.
+   * @param multimap
+   *          The multimap to convert to a string, must not be null.
    *
    * @return A string representation of the multimap and its elements.
    */
@@ -537,36 +579,37 @@ public final class Strings
 
     int entryCounter = 0;
 
-    for (final Map.Entry <T, U> entry : multimap.entries())
+    for (final Map.Entry <T, U> entry : multimap.entries ())
     {
       ++entryCounter;
 
-      final T entryKey = entry.getKey();
-      final U entryValue = entry.getValue();
+      final T entryKey = entry.getKey ();
+      final U entryValue = entry.getValue ();
 
       stringBuilder.append (String.format ("Entry %1$s:[%2$s, %3$s]\n", entryCounter, entryKey, entryValue));
     }
 
-    return stringBuilder.toString();
+    return stringBuilder.toString ();
   }
 
   /**
    * Converts list elements to a string list, separated by separator, in case letterCase.
    *
+   * @param <T>
+   *          The type of the list elements.
+   * @param listElements
+   *          The list elements to convert, must not be null, must not contain any null elements.
+   * @param separator
+   *          The separator that should be added between list elements, must not be null.
+   * @param letterCase
+   *          The desired letter case of the list elements, must not be null, choose LetterCase.NONE to leave the list
+   *          elements as-is.
+   * @param hasAnd
+   *          Whether or not to insert the word 'and ' between the last two elements in the list, one space after the
+   *          last separator.
    *
-   * @param <T> The type of the list elements.
-   * @param listElements The list elements to convert, must not be
-   *                     null, must not contain any null elements.
-   * @param separator The separator that should be added between list elements,
-   *                  must not be null.
-   * @param letterCase The desired letter case of the list elements, must not be
-   *                   null, choose LetterCase.NONE to leave the list elements as-is.
-   * @param hasAnd     Whether or not to insert the word 'and ' between the last
-   *                   two elements in the list, one space after the last
-   *                   separator.
-   * @return A string list of listElements, separated by separator, in case
-   *         letterCase, with an optional 'and ' occurring between the last two
-   *         elements of the list.
+   * @return A string list of listElements, separated by separator, in case letterCase, with an optional 'and '
+   *         occurring between the last two elements of the list.
    */
   @SafeVarargs
   public static <T> String toStringList (final String separator,
@@ -578,33 +621,33 @@ public final class Strings
   }
 
   /**
-   * Converts a collection of list elements to a string list, separated by
-   * separator, in case letterCase.
+   * Converts a collection of list elements to a string list, separated by separator, in case letterCase.
    *
+   * @param <T>
+   *          The type of the list elements.
+   * @param listElements
+   *          The collection of list elements to convert, must not be null, must not contain any null elements.
+   * @param separator
+   *          The separator that should be added between list elements, must not be null.
+   * @param letterCase
+   *          The desired letter case of the list elements, must not be null, choose LetterCase.NONE to leave the list
+   *          elements as-is.
+   * @param hasAnd
+   *          Whether or not to insert the word 'and ' between the last two elements in the list, one space after the
+   *          last separator.
    *
-   * @param <T> The type of the list elements.
-   * @param listElements The collection of list elements to convert, must not be
-   *                     null, must not contain any null elements.
-   * @param separator The separator that should be added between list elements,
-   *                  must not be null.
-   * @param letterCase The desired letter case of the list elements, must not be
-   *                   null, choose LetterCase.NONE to leave the list elements as-is.
-   * @param hasAnd     Whether or not to insert the word 'and ' between the last
-   *                   two elements in the list, one space after the last
-   *                   separator.
-   * @return A string list of listElements, separated by separator, in case
-   *         letterCase, with an optional 'and ' occurring between the last two
-   *         elements of the list.
+   * @return A string list of listElements, separated by separator, in case letterCase, with an optional 'and '
+   *         occurring between the last two elements of the list.
    */
   public static <T> String toStringList (final Collection <T> listElements,
                                          final String separator,
                                          final LetterCase letterCase,
                                          final boolean hasAnd)
   {
-    Arguments.checkIsNotNull         (listElements, "listElements");
+    Arguments.checkIsNotNull (listElements, "listElements");
     Arguments.checkHasNoNullElements (listElements, "listElements");
-    Arguments.checkIsNotNull         (separator,    "separator");
-    Arguments.checkIsNotNull         (letterCase,   "letterCase");
+    Arguments.checkIsNotNull (separator, "separator");
+    Arguments.checkIsNotNull (letterCase, "letterCase");
 
     final ImmutableList.Builder <T> printableListElementsBuilder = ImmutableList.builder ();
 
@@ -613,41 +656,42 @@ public final class Strings
       if (isPrintable (element.toString ())) printableListElementsBuilder.add (element);
     }
 
-    final ImmutableList <T> printableListElements = printableListElementsBuilder.build();
+    final ImmutableList <T> printableListElements = printableListElementsBuilder.build ();
 
     // Handle the first three special cases
-    if (printableListElements.isEmpty())
+    if (printableListElements.isEmpty ())
     {
       return "";
     }
-    else if (printableListElements.size() == 1)
+    else if (printableListElements.size () == 1)
     {
-      return toCase (Iterables.getOnlyElement (printableListElements).toString(), letterCase);
+      return toCase (Iterables.getOnlyElement (printableListElements).toString (), letterCase);
     }
-    else if (printableListElements.size() == 2)
+    else if (printableListElements.size () == 2)
     {
-      final Iterator <T> iterator = printableListElements.iterator();
+      final Iterator <T> iterator = printableListElements.iterator ();
 
       // Here, if the separator is a comma, for example, it's either:
       // "item1 and item2" or "item1,item2" (if no "and" is desired)
       // because "item1, and item2" doesn't make sense grammatically, which is
       // what would happen if we didn't treat this as a special case
-      return toCase (iterator.next().toString() + (hasAnd ? " and " : separator) + iterator.next().toString(), letterCase);
+      return toCase (iterator.next ().toString () + (hasAnd ? " and " : separator) + iterator.next ().toString (),
+                      letterCase);
     }
 
-    final StringBuilder s = new StringBuilder();
+    final StringBuilder s = new StringBuilder ();
 
     for (final T element : printableListElements)
     {
-      final String elementString = toCase (element.toString(), letterCase);
+      final String elementString = toCase (element.toString (), letterCase);
 
-      s.append(elementString).append (separator);
+      s.append (elementString).append (separator);
     }
 
     try
     {
       // Delete the extra comma at the end of the last element in the list.
-      s.delete (s.length() - separator.length(), s.length());
+      s.delete (s.length () - separator.length (), s.length ());
 
       if (hasAnd && s.lastIndexOf (separator) >= 0)
       {
@@ -660,19 +704,20 @@ public final class Strings
     {
     }
 
-    return s.toString();
+    return s.toString ();
   }
 
   /**
    * Gets the English words for the specified integer.
    *
-   * @param n The integer to get the words for.
+   * @param n
+   *          The integer to get the words for.
    *
    * @return A string containing the English words for the specified integer.
    */
   public static String toWords (final int n)
   {
-    final StringBuilder words = new StringBuilder();
+    final StringBuilder words = new StringBuilder ();
 
     words.append ((n < 0) ? "negative " : "");
 
@@ -686,40 +731,96 @@ public final class Strings
       {
         switch (nonnegativeN)
         {
-          case  0: words.append ("zero");      break;
-          case  1: words.append ("one");       break;
-          case  2: words.append ("two");       break;
-          case  3: words.append ("three");     break;
-          case  4: words.append ("four");      break;
-          case  5: words.append ("five");      break;
-          case  6: words.append ("six");       break;
-          case  7: words.append ("seven");     break;
-          case  8: words.append ("eight");     break;
-          case  9: words.append ("nine");      break;
-          case 10: words.append ("ten");       break;
-          case 11: words.append ("eleven");    break;
-          case 12: words.append ("twelve");    break;
-          case 13: words.append ("thirteen");  break;
-          case 14: words.append ("fourteen");  break;
-          case 15: words.append ("fifteen");   break;
-          case 16: words.append ("sixteen");   break;
-          case 17: words.append ("seventeen"); break;
-          case 18: words.append ("eighteen");  break;
-          case 19: words.append ("nineteen");  break;
+          case 0:
+            words.append ("zero");
+            break;
+          case 1:
+            words.append ("one");
+            break;
+          case 2:
+            words.append ("two");
+            break;
+          case 3:
+            words.append ("three");
+            break;
+          case 4:
+            words.append ("four");
+            break;
+          case 5:
+            words.append ("five");
+            break;
+          case 6:
+            words.append ("six");
+            break;
+          case 7:
+            words.append ("seven");
+            break;
+          case 8:
+            words.append ("eight");
+            break;
+          case 9:
+            words.append ("nine");
+            break;
+          case 10:
+            words.append ("ten");
+            break;
+          case 11:
+            words.append ("eleven");
+            break;
+          case 12:
+            words.append ("twelve");
+            break;
+          case 13:
+            words.append ("thirteen");
+            break;
+          case 14:
+            words.append ("fourteen");
+            break;
+          case 15:
+            words.append ("fifteen");
+            break;
+          case 16:
+            words.append ("sixteen");
+            break;
+          case 17:
+            words.append ("seventeen");
+            break;
+          case 18:
+            words.append ("eighteen");
+            break;
+          case 19:
+            words.append ("nineteen");
+            break;
         }
       }
       else if (nonnegativeN >= 20 && nonnegativeN < 100)
       {
         switch ((int) Math.floor (nonnegativeN / 10.0))
         {
-          case 2: words.append ("twenty");  break;
-          case 3: words.append ("thirty");  break;
-          case 4: words.append ("forty");   break;
-          case 5: words.append ("fifty");   break;
-          case 6: words.append ("sixty");   break;
-          case 7: words.append ("seventy"); break;
-          case 8: words.append ("eighty");  break;
-          case 9: words.append ("ninety");  break;
+          case 2:
+            words.append ("twenty");
+            break;
+          case 3:
+            words.append ("thirty");
+            break;
+          case 4:
+            words.append ("forty");
+            break;
+          case 5:
+            words.append ("fifty");
+            break;
+          case 6:
+            words.append ("sixty");
+            break;
+          case 7:
+            words.append ("seventy");
+            break;
+          case 8:
+            words.append ("eighty");
+            break;
+          case 9:
+            words.append ("ninety");
+            break;
         }
 
         remainder = nonnegativeN % 10;
@@ -784,16 +885,15 @@ public final class Strings
     }
     else
     {
-      words.append ("two billion one hundred forty-seven million four " +
-                    "hundred eighty-three thousand six hundred and " +
-                    "forty-eight");
+      words.append ("two billion one hundred forty-seven million four "
+                      + "hundred eighty-three thousand six hundred and " + "forty-eight");
     }
 
-    return words.toString();
+    return words.toString ();
   }
 
-  private Strings()
+  private Strings ()
   {
-    Classes.instantiationNotAllowed();
+    Classes.instantiationNotAllowed ();
   }
 }

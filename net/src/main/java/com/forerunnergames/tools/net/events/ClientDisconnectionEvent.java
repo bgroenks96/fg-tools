@@ -9,8 +9,8 @@ public final class ClientDisconnectionEvent extends NetworkEvent
     super (client);
   }
 
-  public Remote getClient()
+  public Remote getClient ()
   {
-    return getRemote();
+    return getRemote ();
   }
 }

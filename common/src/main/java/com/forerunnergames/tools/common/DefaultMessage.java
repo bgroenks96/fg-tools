@@ -1,6 +1,6 @@
 package com.forerunnergames.tools.common;
 
-public class DefaultMessage implements Message
+public final class DefaultMessage implements Message
 {
   private final String text;
 
@@ -11,21 +11,21 @@ public class DefaultMessage implements Message
     this.text = text;
   }
 
+  // Required for network serialization
+  protected DefaultMessage ()
+  {
+    text = null;
+  }
+
   @Override
-  public String getText()
+  public String getText ()
   {
     return text;
   }
 
   @Override
-  public String toString()
+  public String toString ()
   {
-    return String.format ("%1$s", text);
-  }
-
-  // Required for network serialization
-  protected DefaultMessage()
-  {
-    text = null;
+    return String.format ("%1$s: Text: %2$s", getClass ().getSimpleName (), text);
   }
 }

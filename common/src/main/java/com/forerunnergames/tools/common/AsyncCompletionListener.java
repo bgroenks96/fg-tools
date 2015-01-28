@@ -30,26 +30,30 @@
 package com.forerunnergames.tools.common;
 
 /**
- * A completion listener for async jobs. It is invoked via
- * {@link AsyncExecution#invokeLater(java.lang.Runnable) }
+ * A completion listener for async jobs. It is invoked via {@link AsyncExecution#invokeLater(java.lang.Runnable) }
  *
- * @param <V> the result type of the async job
+ * @param <V>
+ *          the result type of the async job
+ *
  * @author Matthias Mann
  */
-public interface AsyncCompletionListener<V> {
-    
-    /**
-     * The job has completed normally
-     *
-     * @param result the result of the async job or {@code null} if it was a {@code Runnable}
-     */
-    public void completed(V result);
+public interface AsyncCompletionListener <V>
+{
 
-    /**
-     * The job has failed with an exception
-     *
-     * @param ex the exception thrown by the async job
-     */
-    public void failed(Exception ex);
-    
+  /**
+   * The job has completed normally
+   *
+   * @param result
+   *          the result of the async job or {@code null} if it was a {@code Runnable}
+   */
+  public void completed (V result);
+
+  /**
+   * The job has failed with an exception
+   *
+   * @param ex
+   *          the exception thrown by the async job
+   */
+  public void failed (Exception ex);
+
 }

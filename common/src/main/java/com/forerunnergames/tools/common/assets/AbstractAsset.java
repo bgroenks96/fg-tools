@@ -22,14 +22,20 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
     this.id = id;
   }
 
+  protected AbstractAsset ()
+  {
+    name = null;
+    id = null;
+  }
+
   @Override
-  public String getName()
+  public String getName ()
   {
     return name;
   }
 
   @Override
-  public Id getId()
+  public Id getId ()
   {
     return id;
   }
@@ -37,7 +43,7 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   @Override
   public boolean doesNotHave (final Id id)
   {
-    return ! has (id);
+    return !has (id);
   }
 
   @Override
@@ -45,7 +51,7 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   {
     Arguments.checkIsNotNull (name, "name");
 
-    return getName().equals (name);
+    return getName ().equals (name);
   }
 
   @Override
@@ -73,7 +79,7 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   @Override
   public boolean isNot (final Asset asset)
   {
-    return ! is (asset);
+    return !is (asset);
   }
 
   @Override
@@ -81,37 +87,31 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   {
     Arguments.checkIsNotNull (asset, "asset");
 
-    return getId().compareTo (asset.getId());
+    return getId ().compareTo (asset.getId ());
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return id.hashCode ();
   }
 
   @Override
   public boolean equals (final Object o)
   {
     if (this == o) return true;
-    if (! (o instanceof AbstractAsset)) return false;
+    if (!(o instanceof AbstractAsset)) return false;
 
     final AbstractAsset that = (AbstractAsset) o;
 
-    if (! id.equals (that.id)) return false;
+    if (!id.equals (that.id)) return false;
 
     return true;
   }
 
   @Override
-  public int hashCode()
-  {
-    return id.hashCode();
-  }
-
-  @Override
-  public String toString()
+  public String toString ()
   {
     return String.format ("Name: %1$s | Id: %2$s", name, id);
-  }
-
-  protected AbstractAsset()
-  {
-    name = null;
-    id = null;
   }
 }

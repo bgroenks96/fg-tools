@@ -10,14 +10,14 @@ public final class ServerCommunicationEvent extends NetworkCommunicationEvent
     super (message, server);
   }
 
-  public Remote getServer()
+  public Remote getServer ()
   {
-    return getSender();
+    return getSender ();
   }
 
   @Override
-  public String toString()
+  public String toString ()
   {
-    return String.format ("%1$s | Server: %2$s", super.toString(), getServer());
+    return String.format ("%1$s | Server: %2$s", super.toString (), getServer ());
   }
 }

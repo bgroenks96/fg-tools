@@ -15,7 +15,13 @@ public abstract class AbstractRgbaColorComponent implements RgbaColorComponent
   }
 
   @Override
-  public final int getValue()
+  public final int getValue ()
+  {
+    return value;
+  }
+
+  @Override
+  public final int hashCode ()
   {
     return value;
   }
@@ -24,7 +30,7 @@ public abstract class AbstractRgbaColorComponent implements RgbaColorComponent
   public final boolean equals (final Object o)
   {
     if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (o == null || getClass () != o.getClass ()) return false;
 
     final AbstractRgbaColorComponent that = (AbstractRgbaColorComponent) o;
 
@@ -32,14 +38,8 @@ public abstract class AbstractRgbaColorComponent implements RgbaColorComponent
   }
 
   @Override
-  public final int hashCode()
+  public String toString ()
   {
-    return value;
-  }
-
-  @Override
-  public String toString()
-  {
-    return String.format ("%1$s: Value: %2$s", getClass().getSimpleName(), value);
+    return String.format ("%1$s: Value: %2$s", getClass ().getSimpleName (), value);
   }
 }

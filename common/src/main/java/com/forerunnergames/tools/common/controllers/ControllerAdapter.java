@@ -3,23 +3,23 @@ package com.forerunnergames.tools.common.controllers;
 public class ControllerAdapter implements Controller
 {
   @Override
-  public void initialize()
+  public void initialize ()
   {
   }
 
   @Override
-  public void update()
+  public void update ()
   {
   }
 
   @Override
-  public boolean shouldShutDown()
+  public boolean shouldShutDown ()
   {
     return false;
   }
 
   @Override
-  public void shutDown()
+  public void shutDown ()
   {
   }
 }

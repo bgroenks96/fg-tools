@@ -41,8 +41,8 @@ public final class DefaultServerConfiguration implements ServerConfiguration
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Server name: %2$s | Server address: %3$s | Server port: %4$s (TCP)",
-                    getClass ().getSimpleName (), serverName, serverAddress, serverTcpPort);
+    return String.format ("%1$s: Server name: %2$s | Server address: %3$s | Server port: %4$s (TCP)", getClass ()
+                    .getSimpleName (), serverName, serverAddress, serverTcpPort);
   }
 
   @RequiredForNetworkSerialization

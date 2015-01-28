@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class CompositeController implements Controller
 {
-  private final List <Controller> children = new ArrayList<>();
+  private final List <Controller> children = new ArrayList <> ();
 
   public CompositeController (final Controller... children)
   {
@@ -35,46 +35,46 @@ public final class CompositeController implements Controller
   }
 
   @Override
-  public void initialize()
+  public void initialize ()
   {
     for (final Controller controller : children)
     {
-      controller.initialize();
+      controller.initialize ();
     }
   }
 
   @Override
-  public void update()
+  public void update ()
   {
     for (final Controller controller : children)
     {
-      controller.update();
+      controller.update ();
     }
   }
 
   @Override
-  public boolean shouldShutDown()
+  public boolean shouldShutDown ()
   {
     for (final Controller controller : children)
     {
-      if (controller.shouldShutDown()) return true;
+      if (controller.shouldShutDown ()) return true;
     }
 
     return false;
   }
 
   @Override
-  public void shutDown()
+  public void shutDown ()
   {
     for (final Controller controller : children)
     {
-      controller.shutDown();
+      controller.shutDown ();
     }
   }
 
   @Override
-  public String toString()
+  public String toString ()
   {
-    return String.format ("%1$s: Children: %2$s", getClass().getSimpleName(), Strings.toString (children));
+    return String.format ("%1$s: Children: %2$s", getClass ().getSimpleName (), Strings.toString (children));
   }
 }

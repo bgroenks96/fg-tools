@@ -47,12 +47,22 @@ public final class Delta2D
 
   public boolean isNot (final Delta2D delta)
   {
-    return ! is (delta);
+    return !is (delta);
   }
 
   public boolean isNot (final float dx, final float dy)
   {
-    return ! is (dx, dy);
+    return !is (dx, dy);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (dx != +0.0f ? Float.floatToIntBits (dx) : 0);
+
+    result = 31 * result + (dy != +0.0f ? Float.floatToIntBits (dy) : 0);
+
+    return result;
   }
 
   @Override
@@ -64,16 +74,6 @@ public final class Delta2D
     final Delta2D delta = (Delta2D) object;
 
     return Float.compare (delta.getDx (), dx) == 0 && Float.compare (delta.getDy (), dy) == 0;
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    int result = (dx != +0.0f ? Float.floatToIntBits (dx) : 0);
-
-    result = 31 * result + (dy != +0.0f ? Float.floatToIntBits (dy) : 0);
-
-    return result;
   }
 
   @Override

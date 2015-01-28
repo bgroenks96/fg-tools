@@ -7,7 +7,7 @@ import org.junit.Test;
 public class StringsTest
 {
   @Test
-  public void testToProperCase()
+  public void testToProperCase ()
   {
     final String test = "   hello world!  lol   ";
     final String expected = "   Hello World!  Lol   ";
@@ -17,7 +17,7 @@ public class StringsTest
   }
 
   @Test
-  public void testToStringList()
+  public void testToStringList ()
   {
     final String element1 = "  hello    ";
     final String element2 = "  big world    ";

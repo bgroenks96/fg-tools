@@ -60,12 +60,12 @@ public final class Size2D
 
   public boolean isNot (final Size2D size)
   {
-    return ! is (size);
+    return !is (size);
   }
 
   public boolean isNot (final float width, final float height)
   {
-    return ! is (width, height);
+    return !is (width, height);
   }
 
   @Override

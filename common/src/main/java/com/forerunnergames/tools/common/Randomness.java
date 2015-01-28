@@ -23,13 +23,15 @@ import org.slf4j.LoggerFactory;
  */
 public final class Randomness
 {
+  // @formatter:off
   private static final Logger log = LoggerFactory.getLogger (Randomness.class);
   private static final int SEED_BYTES = 8; // The number of bytes used to seed the pseudo random number generator.
   private static final int RESEED_THRESHOLD = 10000; // The number of random numbers that can be generated before reseeding.
-  private static final RandomHotBits TRNG = new RandomHotBits(); // True random number generator, used for seeding only, and only in RELEASE mode.
+  private static final RandomHotBits TRNG = new RandomHotBits (); // True random number generator, used for seeding only, and only in RELEASE mode.
   private static long reseedCounter = 0; // Keeps track of how many random numbers have been generated for reseeding purposes.
   private static SecureRandom csprng; // Cryptographically secure pseudo random number generator.
   private static Mode currentMode;
+  // @formatter:on
 
   /**
    * The default mode is DEBUG.
@@ -43,10 +45,9 @@ public final class Randomness
 
     /**
      * Uses HotBits entropy (https://www.fourmilab.ch/hotbits) to seed a cryptographically-secure random number
-     * generator. WARNING: HotBits will attempt to connect to and download the entropy from a remote server,
-     * so internet access is required, and the remote server must be online & functioning. If obtaining HotBits
-     * entropy fails, it will automatically fall back to using system entropy, with a log entry explaining what
-     * went wrong.
+     * generator. WARNING: HotBits will attempt to connect to and download the entropy from a remote server, so internet
+     * access is required, and the remote server must be online & functioning. If obtaining HotBits entropy fails, it
+     * will automatically fall back to using system entropy, with a log entry explaining what went wrong.
      */
     RELEASE
   }
@@ -60,7 +61,8 @@ public final class Randomness
   /**
    * Checks whether the specified mode is set.
    *
-   * @param mode The mode to check, must not be null.
+   * @param mode
+   *          The mode to check, must not be null.
    */
   public static boolean isMode (final Mode mode)
   {
@@ -72,7 +74,8 @@ public final class Randomness
   /**
    * Sets the specified mode. Idempotent - nothing will happen if the specified mode has already been set.
    *
-   * @param mode The mode to set, must not be null.
+   * @param mode
+   *          The mode to set, must not be null.
    *
    * @see #isMode
    */
@@ -84,26 +87,26 @@ public final class Randomness
 
     currentMode = mode;
 
-    createCsprng();
+    createCsprng ();
 
     switch (mode)
     {
       case DEBUG:
       {
-        reseedCsprngWithSystemEntropy();
+        reseedCsprngWithSystemEntropy ();
 
         break;
       }
       case RELEASE:
       {
-        reseedCsprngWithHotBitsEntropy();
+        reseedCsprngWithHotBitsEntropy ();
 
         break;
       }
     }
   }
 
-  private static void createCsprng()
+  private static void createCsprng ()
   {
     try
     {
@@ -113,11 +116,14 @@ public final class Randomness
     {
       try
       {
-        final Provider[] providers = Security.getProviders();
+        final Provider[] providers = Security.getProviders ();
 
-        if (providers == null || providers.length == 0) throw new RuntimeException ("Cannot create random number generator.", e);
+        if (providers == null || providers.length == 0)
+        {
+          throw new RuntimeException ("Cannot create random number generator.", e);
+        }
 
-        final Provider provider = providers [0];
+        final Provider provider = providers[0];
 
         log.warn ("Cannot find SUN provider, trying default (preferred) provider: {}.", provider);
 
@@ -134,22 +140,22 @@ public final class Randomness
     }
   }
 
-  private static void reseedCsprngWithSystemEntropy()
+  private static void reseedCsprngWithSystemEntropy ()
   {
-    csprng.setSeed (generateSystemEntropySeed());
+    csprng.setSeed (generateSystemEntropySeed ());
   }
 
-  private static byte[] generateSystemEntropySeed()
+  private static byte[] generateSystemEntropySeed ()
   {
     return csprng.generateSeed (SEED_BYTES);
   }
 
-  private static void reseedCsprngWithHotBitsEntropy()
+  private static void reseedCsprngWithHotBitsEntropy ()
   {
-    csprng.setSeed (generateHotBitsEntropySeed());
+    csprng.setSeed (generateHotBitsEntropySeed ());
   }
 
-  private static byte[] generateHotBitsEntropySeed()
+  private static byte[] generateHotBitsEntropySeed ()
   {
     try
     {
@@ -157,7 +163,7 @@ public final class Randomness
 
       for (int i = 0; i < trueRandomEntropySeed.length; ++i)
       {
-        trueRandomEntropySeed [i] = TRNG.nextByte();
+        trueRandomEntropySeed[i] = TRNG.nextByte ();
       }
 
       return trueRandomEntropySeed;
@@ -166,7 +172,7 @@ public final class Randomness
     {
       log.warn ("Could not obtain HotBits entropy! Falling back to a system entropy source.", e);
 
-      return generateSystemEntropySeed();
+      return generateSystemEntropySeed ();
     }
   }
 
@@ -174,23 +180,28 @@ public final class Randomness
    * Gets a random integer in the range [inclusiveLowerBound, inclusiveUpperBound] using a cryptographically secure
    * pseudo random number generator.
    *
-   * @param inclusiveLowerBound The inclusive lower bound, must be >= 0 and <= inclusiveUpperBound and < Integer.MAX_VALUE.
-   * @param inclusiveUpperBound The inclusive upper bound, must be >= 0 and >= inclusiveLowerBound and < Integer.MAX_VALUE.
+   * @param inclusiveLowerBound
+   *          The inclusive lower bound, must be >= 0 and <= inclusiveUpperBound and < Integer.MAX_VALUE.
+   * @param inclusiveUpperBound
+   *          The inclusive upper bound, must be >= 0 and >= inclusiveLowerBound and < Integer.MAX_VALUE.
    */
   public static int getRandomIntegerFrom (int inclusiveLowerBound, int inclusiveUpperBound)
   {
     Arguments.checkIsNotNegative (inclusiveLowerBound, "inclusiveLowerBound");
     Arguments.checkIsNotNegative (inclusiveUpperBound, "inclusiveUpperBound");
-    Arguments.checkUpperExclusiveBound (inclusiveLowerBound, Integer.MAX_VALUE, "inclusiveLowerBound", "Integer.MAX_VALUE");
-    Arguments.checkUpperExclusiveBound (inclusiveUpperBound, Integer.MAX_VALUE, "inclusiveUpperBound", "Integer.MAX_VALUE");
-    Arguments.checkUpperInclusiveBound (inclusiveLowerBound, inclusiveUpperBound, "inclusiveLowerBound", "inclusiveUpperBound");
+    Arguments.checkUpperExclusiveBound (inclusiveLowerBound, Integer.MAX_VALUE, "inclusiveLowerBound",
+                    "Integer.MAX_VALUE");
+    Arguments.checkUpperExclusiveBound (inclusiveUpperBound, Integer.MAX_VALUE, "inclusiveUpperBound",
+                    "Integer.MAX_VALUE");
+    Arguments.checkUpperInclusiveBound (inclusiveLowerBound, inclusiveUpperBound, "inclusiveLowerBound",
+                    "inclusiveUpperBound");
 
     final long n = (long) inclusiveUpperBound - inclusiveLowerBound + 1;
 
     assert n > 0;
     assert n <= (long) Integer.MAX_VALUE;
 
-    checkCsprngUsage();
+    checkCsprngUsage ();
 
     final long randomNumber = (long) inclusiveLowerBound + csprng.nextInt ((int) n);
 
@@ -206,8 +217,11 @@ public final class Randomness
    * Obtains a random element from the specified collection using a cryptographically secure pseudo random number
    * generator.
    *
-   * @param <T>  The element type of the specified collection.
-   * @param collection The collection to obtain a random element from, must not be null, must not contain null elements, must not be empty.
+   * @param <T>
+   *          The element type of the specified collection.
+   * @param collection
+   *          The collection to obtain a random element from, must not be null, must not contain null elements, must not
+   *          be empty.
    *
    * @return A random element from the specified collection.
    */
@@ -215,7 +229,7 @@ public final class Randomness
   {
     Arguments.checkIsNotNull (collection, "collection");
     Arguments.checkHasNoNullElements (collection, "collection");
-    Preconditions.checkIsFalse (collection.isEmpty(), "Cannot get random element from an empty collection.");
+    Preconditions.checkIsFalse (collection.isEmpty (), "Cannot get random element from an empty collection.");
 
     return shuffle (collection).get (0);
   }
@@ -224,8 +238,11 @@ public final class Randomness
    * Obtains a random element from the specified elements using a cryptographically secure pseudo random number
    * generator.
    *
-   * @param <T>  The elements' type.
-   * @param elements The elements to obtain a random element from, must not be null, must not contain null elements, must not be empty.
+   * @param <T>
+   *          The elements' type.
+   * @param elements
+   *          The elements to obtain a random element from, must not be null, must not contain null elements, must not
+   *          be empty.
    *
    * @return A random element from the specified elements.
    */
@@ -239,17 +256,17 @@ public final class Randomness
     return shuffle (elements).get (0);
   }
 
-  private static void checkCsprngUsage()
+  private static void checkCsprngUsage ()
   {
-    if (shouldReseedCsprng()) reseedCsprng();
+    if (shouldReseedCsprng ()) reseedCsprng ();
   }
 
-  private static boolean shouldReseedCsprng()
+  private static boolean shouldReseedCsprng ()
   {
     return reseedCounter > RESEED_THRESHOLD;
   }
 
-  private static void reseedCsprng()
+  private static void reseedCsprng ()
   {
     reseedCounter = 0;
 
@@ -257,13 +274,13 @@ public final class Randomness
     {
       case DEBUG:
       {
-        reseedCsprngWithSystemEntropy();
+        reseedCsprngWithSystemEntropy ();
 
         break;
       }
       case RELEASE:
       {
-        reseedCsprngWithHotBitsEntropy();
+        reseedCsprngWithHotBitsEntropy ();
 
         break;
       }
@@ -277,11 +294,13 @@ public final class Randomness
 
   /**
    * Shuffles a copy of the specified iterable using a cryptographically secure pseudo random number generator.
-   *
+   * <p/>
    * NOTE: The original iterable will not be modified.
    *
-   * @param <T>  The element type of the specified iterable.
-   * @param iterable The iterable to be shuffled, must not be null, may be immutable / unmodifiable, may contain null elements.
+   * @param <T>
+   *          The element type of the specified iterable.
+   * @param iterable
+   *          The iterable to be shuffled, must not be null, may be immutable / unmodifiable, may contain null elements.
    *
    * @return A shuffled, mutable copy of the original iterable.
    */
@@ -289,24 +308,26 @@ public final class Randomness
   {
     Arguments.checkIsNotNull (iterable, "iterable");
 
-    checkCsprngUsage();
+    checkCsprngUsage ();
 
     final ArrayList <T> listCopy = Lists.newArrayList (iterable);
 
     Collections.shuffle (listCopy, csprng);
 
-    updateCsprngUsage (listCopy.size());
+    updateCsprngUsage (listCopy.size ());
 
     return listCopy;
   }
 
   /**
    * Shuffles a copy of the specified elements using a cryptographically secure pseudo random number generator.
-   *
+   * <p/>
    * NOTE: The original element array will not be modified.
    *
-   * @param <T>  The elements' type.
-   * @param elements The elements to be shuffled, must not be null, may contain null elements.
+   * @param <T>
+   *          The elements' type.
+   * @param elements
+   *          The elements to be shuffled, must not be null, may contain null elements.
    *
    * @return A shuffled, mutable copy of the original elements.
    */

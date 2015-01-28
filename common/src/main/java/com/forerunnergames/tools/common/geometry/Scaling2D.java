@@ -48,12 +48,22 @@ public final class Scaling2D
 
   public boolean isNot (final Scaling2D scaling)
   {
-    return ! is (scaling);
+    return !is (scaling);
   }
 
   public boolean isNot (final float x, final float y)
   {
-    return ! is (x, y);
+    return !is (x, y);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
+
+    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
+
+    return result;
   }
 
   @Override
@@ -68,16 +78,7 @@ public final class Scaling2D
   }
 
   @Override
-  public int hashCode ()
-  {
-    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
-
-    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
-
-    return result;
-  }
-
-  @Override public String toString ()
+  public String toString ()
   {
     return String.format ("%1$s: x: %2$s | y: %3$s", getClass ().getSimpleName (), x, y);
   }

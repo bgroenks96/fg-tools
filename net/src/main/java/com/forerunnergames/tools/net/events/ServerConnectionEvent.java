@@ -9,8 +9,8 @@ public final class ServerConnectionEvent extends NetworkEvent
     super (server);
   }
 
-  public Remote getServer()
+  public Remote getServer ()
   {
-    return getRemote();
+    return getRemote ();
   }
 }

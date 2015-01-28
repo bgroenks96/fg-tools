@@ -9,12 +9,11 @@ public class RemoteFluency
   {
     Arguments.checkIsNotNull (remote, "remote");
 
-    return remote.getAddress();
+    return remote.getAddress ();
   }
 
-
-  private RemoteFluency()
+  private RemoteFluency ()
   {
-    Classes.instantiationNotAllowed();
+    Classes.instantiationNotAllowed ();
   }
 }

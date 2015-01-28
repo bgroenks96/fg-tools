@@ -1,7 +1,7 @@
 package com.forerunnergames.tools.common.io;
 
-@SuppressWarnings("serial")
-public class StreamParserException extends RuntimeException
+@SuppressWarnings ("serial")
+public final class StreamParserException extends RuntimeException
 {
   public StreamParserException (final String errorMessage)
   {

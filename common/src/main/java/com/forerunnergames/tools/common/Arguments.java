@@ -8,14 +8,61 @@ import java.util.Map;
 
 public final class Arguments
 {
+  private enum ArgumentStatus
+  {
+    BLANK("is blank"),
+    BLANK_ELEMENTS("has blank elements"),
+    EMPTY("is empty"),
+    EMPTY_ELEMENTS("has empty elements"),
+    NULL("is null"),
+    NULL_ELEMENTS("has null elements"),
+    NULL_KEYS("has null keys"),
+    NULL_VALUES("has null values"),
+    NULL_KEYS_AND_VALUES("has null keys & null values");
+
+    private final String message;
+
+    private String getMessage ()
+    {
+      return message;
+    }
+
+    private ArgumentStatus (final String message)
+    {
+      this.message = message;
+    }
+  }
+
+  private enum BoundType
+  {
+    LOWER_EXCLUSIVE("strictly greater than"),
+    UPPER_EXCLUSIVE("strictly less than"),
+    LOWER_INCLUSIVE("greater than or equal to"),
+    UPPER_INCLUSIVE("less than or equal to");
+
+    private final String message;
+
+    private String getMessage ()
+    {
+      return message;
+    }
+
+    private BoundType (final String message)
+    {
+      this.message = message;
+    }
+  }
+
   /**
-   * Checks if the specified Iterable has any null elements.
-   * The check will pass if the Iterable itself is null.
+   * Checks if the specified Iterable has any null elements. The check will pass if the Iterable itself is null.
    *
-   * @param iterable The Iterable to check, may be null.
-   * @param iterableName The name of the Iterable to check, must not be null.
+   * @param iterable
+   *          The Iterable to check, may be null.
+   * @param iterableName
+   *          The name of the Iterable to check, must not be null.
    *
-   * @throws IllegalArgumentException If the Iterable has any null elements.
+   * @throws IllegalArgumentException
+   *           If the Iterable has any null elements.
    */
   public static void checkHasNoNullElements (final Iterable <?> iterable, final String iterableName)
   {
@@ -26,30 +73,35 @@ public final class Arguments
   }
 
   /**
-   * Checks if the specified Object array has any null elements.
-   * The check will pass if the Object array itself is null.
+   * Checks if the specified Object array has any null elements. The check will pass if the Object array itself is null.
    *
-   * @param array The Object array to check, may be null.
-   * @param arrayName The name of the array to check, must not be null.
+   * @param array
+   *          The Object array to check, may be null.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
    *
-   * @throws IllegalArgumentException If the Object array has any null elements.
+   * @throws IllegalArgumentException
+   *           If the Object array has any null elements.
    */
   public static void checkHasNoNullElements (final Object[] array, final String arrayName)
   {
-    if (array != null && Arrays.asList(array).contains (null))
+    if (array != null && Arrays.asList (array).contains (null))
     {
       illegalArgument (arrayName, ArgumentStatus.NULL_ELEMENTS);
     }
   }
 
   /**
-   * Checks if the specified Map has any null keys.
-   * The check will pass if the Map itself is null, or if the map has any null values.
+   * Checks if the specified Map has any null keys. The check will pass if the Map itself is null, or if the map has any
+   * null values.
    *
-   * @param map The Map to check, may be null.
-   * @param mapName The name of the Map to check, must not be null.
+   * @param map
+   *          The Map to check, may be null.
+   * @param mapName
+   *          The name of the Map to check, must not be null.
    *
-   * @throws IllegalArgumentException If the Map has any null keys.
+   * @throws IllegalArgumentException
+   *           If the Map has any null keys.
    */
   public static void checkHasNoNullKeys (final Map <?, ?> map, final String mapName)
   {
@@ -58,17 +110,20 @@ public final class Arguments
 
   private static boolean hasNullKeys (final Map <?, ?> map)
   {
-    return map != null && Iterables.contains (map.keySet(), null);
+    return map != null && Iterables.contains (map.keySet (), null);
   }
 
   /**
-   * Checks if the specified Map has any null values.
-   * The check will pass if the Map itself is null, or if the map has any null keys.
+   * Checks if the specified Map has any null values. The check will pass if the Map itself is null, or if the map has
+   * any null keys.
    *
-   * @param map The Map to check, may be null.
-   * @param mapName The name of the Map to check, must not be null.
+   * @param map
+   *          The Map to check, may be null.
+   * @param mapName
+   *          The name of the Map to check, must not be null.
    *
-   * @throws IllegalArgumentException If the Map has any null values.
+   * @throws IllegalArgumentException
+   *           If the Map has any null values.
    */
   public static void checkHasNoNullValues (final Map <?, ?> map, final String mapName)
   {
@@ -77,24 +132,26 @@ public final class Arguments
 
   private static boolean hasNullValues (final Map <?, ?> map)
   {
-    return map != null && Iterables.contains (map.values(), null);
+    return map != null && Iterables.contains (map.values (), null);
   }
 
   /**
-   * Checks if the specified Map has any null keys or null values.
-   * The check will pass if the Map itself is null.
+   * Checks if the specified Map has any null keys or null values. The check will pass if the Map itself is null.
    *
-   * @param map The Map to check, may be null.
-   * @param mapName The name of the Map to check, must not be null.
+   * @param map
+   *          The Map to check, may be null.
+   * @param mapName
+   *          The name of the Map to check, must not be null.
    *
-   * @throws IllegalArgumentException If the Map has any null keys or null values.
+   * @throws IllegalArgumentException
+   *           If the Map has any null keys or null values.
    */
   public static void checkHasNoNullKeysOrValues (final Map <?, ?> map, final String mapName)
   {
     final boolean hasNullKeys = hasNullKeys (map);
     final boolean hasNullValues = hasNullValues (map);
 
-    if (! hasNullKeys && ! hasNullValues) return;
+    if (!hasNullKeys && !hasNullValues) return;
 
     if (hasNullKeys && hasNullValues)
     {
@@ -111,17 +168,20 @@ public final class Arguments
   }
 
   /**
-   * Checks if the specified string collection has any null or empty elements.
-   * The check will pass if the string collection itself is null or empty.
+   * Checks if the specified string collection has any null or empty elements. The check will pass if the string
+   * collection itself is null or empty.
    *
-   * @param strings The string collection to check, may be null.
-   * @param collectionName The name of the string collection to check, must not be null.
+   * @param strings
+   *          The string collection to check, may be null.
+   * @param collectionName
+   *          The name of the string collection to check, must not be null.
    *
-   * @throws IllegalArgumentException If the string collection has any null or empty elements.
+   * @throws IllegalArgumentException
+   *           If the string collection has any null or empty elements.
    */
   public static void checkHasNoNullOrEmptyElements (final Collection <String> strings, final String collectionName)
   {
-    if (strings == null || strings.isEmpty())
+    if (strings == null || strings.isEmpty ())
     {
       return;
     }
@@ -132,7 +192,7 @@ public final class Arguments
       {
         illegalArgument (collectionName, ArgumentStatus.NULL_ELEMENTS);
       }
-      else if (s.isEmpty())
+      else if (s.isEmpty ())
       {
         illegalArgument (collectionName, ArgumentStatus.EMPTY_ELEMENTS);
       }
@@ -140,13 +200,16 @@ public final class Arguments
   }
 
   /**
-   * Checks if the specified String array has any null or empty elements.
-   * The check will pass if the String array itself is null or empty.
+   * Checks if the specified String array has any null or empty elements. The check will pass if the String array itself
+   * is null or empty.
    *
-   * @param array The String array to check, may be null.
-   * @param arrayName The name of the array to check, must not be null.
+   * @param array
+   *          The String array to check, may be null.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
    *
-   * @throws IllegalArgumentException If the String array has any null or empty elements.
+   * @throws IllegalArgumentException
+   *           If the String array has any null or empty elements.
    */
   public static void checkHasNoNullOrEmptyElements (final String[] array, final String arrayName)
   {
@@ -159,17 +222,21 @@ public final class Arguments
   }
 
   /**
-   * Checks if the specified string collection has any null, empty, or blank (whitespace only) elements.
-   * The check will pass if the string collection itself is null or empty.
+   * Checks if the specified string collection has any null, empty, or blank (whitespace only) elements. The check will
+   * pass if the string collection itself is null or empty.
    *
-   * @param strings The string collection to check, may be null.
-   * @param collectionName The name of the string collection to check, must not be null.
+   * @param strings
+   *          The string collection to check, may be null.
+   * @param collectionName
+   *          The name of the string collection to check, must not be null.
    *
-   * @throws IllegalArgumentException If the string collection has any null, empty, or blank (whitespace only) elements.
+   * @throws IllegalArgumentException
+   *           If the string collection has any null, empty, or blank (whitespace only) elements.
    */
-  public static void checkHasNoNullOrEmptyOrBlankElements (final Collection <String> strings, final String collectionName)
+  public static void checkHasNoNullOrEmptyOrBlankElements (final Collection <String> strings,
+                                                           final String collectionName)
   {
-    if (strings == null || strings.isEmpty())
+    if (strings == null || strings.isEmpty ())
     {
       return;
     }
@@ -180,7 +247,7 @@ public final class Arguments
       {
         illegalArgument (collectionName, ArgumentStatus.NULL_ELEMENTS);
       }
-      else if (s.isEmpty())
+      else if (s.isEmpty ())
       {
         illegalArgument (collectionName, ArgumentStatus.EMPTY_ELEMENTS);
       }
@@ -192,13 +259,16 @@ public final class Arguments
   }
 
   /**
-   * Checks if the specified String array has any null, empty, or blank (whitespace only) elements.
-   * The check will pass if the String array itself is null or empty.
+   * Checks if the specified String array has any null, empty, or blank (whitespace only) elements. The check will pass
+   * if the String array itself is null or empty.
    *
-   * @param array The String array to check, may be null.
-   * @param arrayName The name of the array to check, must not be null.
+   * @param array
+   *          The String array to check, may be null.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
    *
-   * @throws IllegalArgumentException If the String array has any null, empty, or blank (whitespace only) elements.
+   * @throws IllegalArgumentException
+   *           If the String array has any null, empty, or blank (whitespace only) elements.
    */
   public static void checkHasNoNullOrEmptyOrBlankElements (final String[] array, final String arrayName)
   {
@@ -213,10 +283,13 @@ public final class Arguments
   /**
    * Checks if the specified integer value is strictly less than 0.
    *
-   * @param value The integer value to check.
-   * @param valueName The name of the integer value to check, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to 0.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to 0.
    */
   public static void checkIsNegative (final int value, final String valueName)
   {
@@ -226,10 +299,13 @@ public final class Arguments
   /**
    * Checks if the specified long value is strictly less than 0.
    *
-   * @param value The long value to check.
-   * @param valueName The name of the long value to check, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to 0.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to 0.
    */
   public static void checkIsNegative (final long value, final String valueName)
   {
@@ -239,10 +315,13 @@ public final class Arguments
   /**
    * Checks if the specified integer value is greater than or equal to 0.
    *
-   * @param value The integer value to check.
-   * @param valueName The name of the integer value to check, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than 0.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than 0.
    */
   public static void checkIsNotNegative (final int value, final String valueName)
   {
@@ -252,10 +331,13 @@ public final class Arguments
   /**
    * Checks if the specified long value is greater than or equal to 0.
    *
-   * @param value The long value to check.
-   * @param valueName The name of the long value to check, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than 0.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than 0.
    */
   public static void checkIsNotNegative (final long value, final String valueName)
   {
@@ -265,23 +347,29 @@ public final class Arguments
   /**
    * Checks if the specified boolean condition evaluates to true.
    *
-   * @param condition The boolean condition to check.
-   * @param errorMessage The error message to include in the exception.
+   * @param condition
+   *          The boolean condition to check.
+   * @param errorMessage
+   *          The error message to include in the exception.
    *
-   * @throws IllegalArgumentException If condition evaluates to false;
+   * @throws IllegalArgumentException
+   *           If condition evaluates to false;
    */
   public static void checkIsTrue (final boolean condition, final String errorMessage)
   {
-    if (! condition) throw new IllegalArgumentException (errorMessage);
+    if (!condition) throw new IllegalArgumentException (errorMessage);
   }
 
   /**
    * Checks if the specified boolean condition evaluates to false.
    *
-   * @param condition The boolean condition to check.
-   * @param errorMessage The error message to include in the exception.
+   * @param condition
+   *          The boolean condition to check.
+   * @param errorMessage
+   *          The error message to include in the exception.
    *
-   * @throws IllegalArgumentException If condition evaluates to true;
+   * @throws IllegalArgumentException
+   *           If condition evaluates to true;
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage)
   {
@@ -291,11 +379,15 @@ public final class Arguments
   /**
    * Checks if the specified object is null.
    *
-   * @param <T> The type of object to check.
-   * @param object The object to check.
-   * @param objectName The name of the object to check, must not be null.
+   * @param <T>
+   *          The type of object to check.
+   * @param object
+   *          The object to check.
+   * @param objectName
+   *          The name of the object to check, must not be null.
    *
-   * @throws IllegalArgumentException If object is null.
+   * @throws IllegalArgumentException
+   *           If object is null.
    */
   public static <T> void checkIsNotNull (final T object, final String objectName)
   {
@@ -308,10 +400,13 @@ public final class Arguments
   /**
    * Checks if the specified String is null or empty.
    *
-   * @param s The String to check.
-   * @param stringName The name of the String to check, must not be null.
+   * @param s
+   *          The String to check.
+   * @param stringName
+   *          The name of the String to check, must not be null.
    *
-   * @throws IllegalArgumentException If the String is null or empty.
+   * @throws IllegalArgumentException
+   *           If the String is null or empty.
    */
   public static void checkIsNotNullOrEmpty (final String s, final String stringName)
   {
@@ -319,7 +414,7 @@ public final class Arguments
     {
       illegalArgument (stringName, ArgumentStatus.NULL);
     }
-    else if (s.isEmpty())
+    else if (s.isEmpty ())
     {
       illegalArgument (stringName, ArgumentStatus.EMPTY);
     }
@@ -328,11 +423,15 @@ public final class Arguments
   /**
    * Checks if the specified iterable is null or empty.
    *
-   * @param <T> The type of iterable to check.
-   * @param iterable The iterable to check.
-   * @param iterableName The name of the iterable to check, must not be null.
+   * @param <T>
+   *          The type of iterable to check.
+   * @param iterable
+   *          The iterable to check.
+   * @param iterableName
+   *          The name of the iterable to check, must not be null.
    *
-   * @throws IllegalArgumentException If the iterable is null or empty.
+   * @throws IllegalArgumentException
+   *           If the iterable is null or empty.
    */
   public static <T> void checkIsNotNullOrEmpty (final Iterable <T> iterable, final String iterableName)
   {
@@ -340,7 +439,7 @@ public final class Arguments
     {
       illegalArgument (iterableName, ArgumentStatus.NULL);
     }
-    else if (! iterable.iterator().hasNext())
+    else if (!iterable.iterator ().hasNext ())
     {
       illegalArgument (iterableName, ArgumentStatus.EMPTY);
     }
@@ -349,10 +448,13 @@ public final class Arguments
   /**
    * Checks if the specified array is null or empty.
    *
-   * @param array The array to check.
-   * @param arrayName The name of the array to check, must not be null.
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
    *
-   * @throws IllegalArgumentException If array is null or empty.
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
    */
   public static void checkIsNotNullOrEmpty (final Object[] array, final String arrayName)
   {
@@ -369,10 +471,13 @@ public final class Arguments
   /**
    * Checks if the specified String is null, empty, or blank (whitespace only).
    *
-   * @param s The String to check.
-   * @param stringName The name of the String to check, must not be null.
+   * @param s
+   *          The String to check.
+   * @param stringName
+   *          The name of the String to check, must not be null.
    *
-   * @throws IllegalArgumentException If the String is null or empty, or blank (whitespace only).
+   * @throws IllegalArgumentException
+   *           If the String is null or empty, or blank (whitespace only).
    */
   public static void checkIsNotNullOrEmptyOrBlank (final String s, final String stringName)
   {
@@ -380,7 +485,7 @@ public final class Arguments
     {
       illegalArgument (stringName, ArgumentStatus.NULL);
     }
-    else if (s.isEmpty())
+    else if (s.isEmpty ())
     {
       illegalArgument (stringName, ArgumentStatus.EMPTY);
     }
@@ -393,11 +498,15 @@ public final class Arguments
   /**
    * Checks if the specified integer value is greater than or equal to lowerInclusiveBound.
    *
-   * @param value The integer value to check.
-   * @param lowerInclusiveBound The lower inclusive bound.
-   * @param valueName The name of the integer value to check, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param lowerInclusiveBound
+   *          The lower inclusive bound.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than lowerInclusiveBound.
    */
   public static void checkLowerInclusiveBound (final int value, final int lowerInclusiveBound, final String valueName)
   {
@@ -407,15 +516,20 @@ public final class Arguments
   /**
    * Checks if the specified integer value is greater than or equal to lowerInclusiveBound.
    *
-   * @param value The integer value to check.
-   * @param lowerInclusiveBound The lower inclusive bound.
-   * @param valueName The name of the integer value to check, must not be null.
-   * @param lowerInclusiveBoundName The name of the lower inclusive bound, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param lowerInclusiveBound
+   *          The lower inclusive bound.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
+   * @param lowerInclusiveBoundName
+   *          The name of the lower inclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than lowerInclusiveBound.
    */
-  public static void checkLowerInclusiveBound (final int   value,
-                                               final int   lowerInclusiveBound,
+  public static void checkLowerInclusiveBound (final int value,
+                                               final int lowerInclusiveBound,
                                                final String valueName,
                                                final String lowerInclusiveBoundName)
   {
@@ -425,13 +539,18 @@ public final class Arguments
   /**
    * Checks if the specified long value is greater than or equal to lowerInclusiveBound.
    *
-   * @param value The long value to check.
-   * @param lowerInclusiveBound The lower inclusive bound.
-   * @param valueName The name of the long value to check, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param lowerInclusiveBound
+   *          The lower inclusive bound.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than lowerInclusiveBound.
    */
-  public static void checkLowerInclusiveBound (final long value, final long lowerInclusiveBound, final String valueName)
+  public static  void
+                  checkLowerInclusiveBound (final long value, final long lowerInclusiveBound, final String valueName)
   {
     checkLowerInclusiveBound (value, lowerInclusiveBound, valueName, "");
   }
@@ -439,15 +558,20 @@ public final class Arguments
   /**
    * Checks if the specified long value is greater than or equal to lowerInclusiveBound.
    *
-   * @param value The long value to check.
-   * @param lowerInclusiveBound The lower inclusive bound.
-   * @param valueName The name of the long value to check, must not be null.
-   * @param lowerInclusiveBoundName The name of the lower inclusive bound, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param lowerInclusiveBound
+   *          The lower inclusive bound.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
+   * @param lowerInclusiveBoundName
+   *          The name of the lower inclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than lowerInclusiveBound.
    */
-  public static void checkLowerInclusiveBound (final long   value,
-                                               final long   lowerInclusiveBound,
+  public static void checkLowerInclusiveBound (final long value,
+                                               final long lowerInclusiveBound,
                                                final String valueName,
                                                final String lowerInclusiveBoundName)
   {
@@ -460,11 +584,15 @@ public final class Arguments
   /**
    * Checks if the specified floating point value is greater than or equal to lowerInclusiveBound.
    *
-   * @param value The floating point value to check.
-   * @param lowerInclusiveBound The lower inclusive bound.
-   * @param valueName The name of the floating point value to check, must not be null.
+   * @param value
+   *          The floating point value to check.
+   * @param lowerInclusiveBound
+   *          The lower inclusive bound.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than lowerInclusiveBound.
    */
   public static void checkLowerInclusiveBound (final float value,
                                                final float lowerInclusiveBound,
@@ -476,12 +604,17 @@ public final class Arguments
   /**
    * Checks if the specified floating point value is greater than or equal to lowerInclusiveBound.
    *
-   * @param value The floating point value to check.
-   * @param lowerInclusiveBound The lower inclusive bound.
-   * @param valueName The name of the floating point value to check, must not be null.
-   * @param lowerInclusiveBoundName The name of the lower inclusive bound, must not be null.
+   * @param value
+   *          The floating point value to check.
+   * @param lowerInclusiveBound
+   *          The lower inclusive bound.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
+   * @param lowerInclusiveBoundName
+   *          The name of the lower inclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than lowerInclusiveBound.
    */
   public static void checkLowerInclusiveBound (final float value,
                                                final float lowerInclusiveBound,
@@ -494,11 +627,15 @@ public final class Arguments
   /**
    * Checks if the specified double value is greater than or equal to lowerInclusiveBound.
    *
-   * @param value The double value to check.
-   * @param lowerInclusiveBound The lower inclusive bound.
-   * @param valueName The name of the double value to check, must not be null.
+   * @param value
+   *          The double value to check.
+   * @param lowerInclusiveBound
+   *          The lower inclusive bound.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than lowerInclusiveBound.
    */
   public static void checkLowerInclusiveBound (final double value,
                                                final double lowerInclusiveBound,
@@ -510,12 +647,17 @@ public final class Arguments
   /**
    * Checks if the specified double value is greater than or equal to lowerInclusiveBound.
    *
-   * @param value The double value to check.
-   * @param lowerInclusiveBound The lower inclusive bound.
-   * @param valueName The name of the double value to check, must not be null.
-   * @param lowerInclusiveBoundName The name of the lower inclusive bound, must not be null.
+   * @param value
+   *          The double value to check.
+   * @param lowerInclusiveBound
+   *          The lower inclusive bound.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
+   * @param lowerInclusiveBoundName
+   *          The name of the lower inclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly less than lowerInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly less than lowerInclusiveBound.
    */
   public static void checkLowerInclusiveBound (final double value,
                                                final double lowerInclusiveBound,
@@ -531,11 +673,15 @@ public final class Arguments
   /**
    * Checks if the specified integer value is strictly greater than lowerExclusiveBound.
    *
-   * @param value The integer value to check.
-   * @param lowerExclusiveBound The exclusive lower bound.
-   * @param valueName The name of the integer value to check, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param lowerExclusiveBound
+   *          The exclusive lower bound.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is less than or equal to lowerExclusiveBound.
    */
   public static void checkLowerExclusiveBound (final int value, final int lowerExclusiveBound, final String valueName)
   {
@@ -545,15 +691,20 @@ public final class Arguments
   /**
    * Checks if the specified integer value is strictly greater than lowerExclusiveBound.
    *
-   * @param value The integer value to check.
-   * @param lowerExclusiveBound The exclusive lower bound.
-   * @param valueName The name of the integer value to check, must not be null.
-   * @param lowerExclusiveBoundName The name of the lower exclusive bound, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param lowerExclusiveBound
+   *          The exclusive lower bound.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
+   * @param lowerExclusiveBoundName
+   *          The name of the lower exclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is less than or equal to lowerExclusiveBound.
    */
-  public static void checkLowerExclusiveBound (final int    value,
-                                               final int    lowerExclusiveBound,
+  public static void checkLowerExclusiveBound (final int value,
+                                               final int lowerExclusiveBound,
                                                final String valueName,
                                                final String lowerExclusiveBoundName)
   {
@@ -563,13 +714,18 @@ public final class Arguments
   /**
    * Checks if the specified long value is strictly greater than lowerExclusiveBound.
    *
-   * @param value The long value to check.
-   * @param lowerExclusiveBound The exclusive lower bound.
-   * @param valueName The name of the long value to check, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param lowerExclusiveBound
+   *          The exclusive lower bound.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is less than or equal to lowerExclusiveBound.
    */
-  public static void checkLowerExclusiveBound (final long value, final long lowerExclusiveBound, final String valueName)
+  public static  void
+                  checkLowerExclusiveBound (final long value, final long lowerExclusiveBound, final String valueName)
   {
     checkLowerExclusiveBound (value, lowerExclusiveBound, valueName, "");
   }
@@ -577,15 +733,20 @@ public final class Arguments
   /**
    * Checks if the specified long value is strictly greater than lowerExclusiveBound.
    *
-   * @param value The long value to check.
-   * @param lowerExclusiveBound The exclusive lower bound.
-   * @param valueName The name of the long value to check, must not be null.
-   * @param lowerExclusiveBoundName The name of the lower exclusive bound, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param lowerExclusiveBound
+   *          The exclusive lower bound.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
+   * @param lowerExclusiveBoundName
+   *          The name of the lower exclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is less than or equal to lowerExclusiveBound.
    */
-  public static void checkLowerExclusiveBound (final long   value,
-                                               final long   lowerExclusiveBound,
+  public static void checkLowerExclusiveBound (final long value,
+                                               final long lowerExclusiveBound,
                                                final String valueName,
                                                final String lowerExclusiveBoundName)
   {
@@ -598,11 +759,15 @@ public final class Arguments
   /**
    * Checks if the specified floating point value is strictly greater than lowerExclusiveBound.
    *
-   * @param value The floating point value to check.
-   * @param lowerExclusiveBound The exclusive lower bound.
-   * @param valueName The name of the floating point value to check, must not be null.
+   * @param value
+   *          The floating point value to check.
+   * @param lowerExclusiveBound
+   *          The exclusive lower bound.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is less than or equal to lowerExclusiveBound.
    */
   public static void checkLowerExclusiveBound (final float value,
                                                final float lowerExclusiveBound,
@@ -614,12 +779,17 @@ public final class Arguments
   /**
    * Checks if the specified floating point value is strictly greater than lowerExclusiveBound.
    *
-   * @param value The floating point value to check.
-   * @param lowerExclusiveBound The exclusive lower bound.
-   * @param valueName The name of the floating point value to check, must not be null.
-   * @param lowerExclusiveBoundName The name of the lower exclusive bound, must not be null.
+   * @param value
+   *          The floating point value to check.
+   * @param lowerExclusiveBound
+   *          The exclusive lower bound.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
+   * @param lowerExclusiveBoundName
+   *          The name of the lower exclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is less than or equal to lowerExclusiveBound.
    */
   public static void checkLowerExclusiveBound (final float value,
                                                final float lowerExclusiveBound,
@@ -632,11 +802,15 @@ public final class Arguments
   /**
    * Checks if the specified double value is strictly greater than lowerExclusiveBound.
    *
-   * @param value The double value to check.
-   * @param lowerExclusiveBound The exclusive lower bound.
-   * @param valueName The name of the double value to check, must not be null.
+   * @param value
+   *          The double value to check.
+   * @param lowerExclusiveBound
+   *          The exclusive lower bound.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is less than or equal to lowerExclusiveBound.
    */
   public static void checkLowerExclusiveBound (final double value,
                                                final double lowerExclusiveBound,
@@ -648,12 +822,17 @@ public final class Arguments
   /**
    * Checks if the specified double value is strictly greater than lowerExclusiveBound.
    *
-   * @param value The double value to check.
-   * @param lowerExclusiveBound The exclusive lower bound.
-   * @param valueName The name of the double value to check, must not be null.
-   * @param lowerExclusiveBoundName The name of the lower exclusive bound, must not be null.
+   * @param value
+   *          The double value to check.
+   * @param lowerExclusiveBound
+   *          The exclusive lower bound.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
+   * @param lowerExclusiveBoundName
+   *          The name of the lower exclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is less than or equal to lowerExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is less than or equal to lowerExclusiveBound.
    */
   public static void checkLowerExclusiveBound (final double value,
                                                final double lowerExclusiveBound,
@@ -669,11 +848,15 @@ public final class Arguments
   /**
    * Checks if the specified integer value is less than or equal to upperInclusiveBound.
    *
-   * @param value The integer value to check.
-   * @param upperInclusiveBound The upper inclusive bound.
-   * @param valueName The name of the integer value to check, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param upperInclusiveBound
+   *          The upper inclusive bound.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly greater than upperInclusiveBound.
    */
   public static void checkUpperInclusiveBound (final int value, final int upperInclusiveBound, final String valueName)
   {
@@ -683,15 +866,20 @@ public final class Arguments
   /**
    * Checks if the specified integer value is less than or equal to upperInclusiveBound.
    *
-   * @param value The integer value to check.
-   * @param upperInclusiveBound The upper inclusive bound.
-   * @param valueName The name of the integer value to check, must not be null.
-   * @param upperInclusiveBoundName The name of the upper inclusive bound, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param upperInclusiveBound
+   *          The upper inclusive bound.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
+   * @param upperInclusiveBoundName
+   *          The name of the upper inclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly greater than upperInclusiveBound.
    */
-  public static void checkUpperInclusiveBound (final int    value,
-                                               final int    upperInclusiveBound,
+  public static void checkUpperInclusiveBound (final int value,
+                                               final int upperInclusiveBound,
                                                final String valueName,
                                                final String upperInclusiveBoundName)
   {
@@ -701,13 +889,18 @@ public final class Arguments
   /**
    * Checks if the specified long value is less than or equal to upperInclusiveBound.
    *
-   * @param value The long value to check.
-   * @param upperInclusiveBound The upper inclusive bound.
-   * @param valueName The name of the long value to check, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param upperInclusiveBound
+   *          The upper inclusive bound.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly greater than upperInclusiveBound.
    */
-  public static void checkUpperInclusiveBound (final long value, final long upperInclusiveBound, final String valueName)
+  public static  void
+                  checkUpperInclusiveBound (final long value, final long upperInclusiveBound, final String valueName)
   {
     checkUpperInclusiveBound (value, upperInclusiveBound, valueName, "");
   }
@@ -715,15 +908,20 @@ public final class Arguments
   /**
    * Checks if the specified long value is less than or equal to upperInclusiveBound.
    *
-   * @param value The long value to check.
-   * @param upperInclusiveBound The upper inclusive bound.
-   * @param valueName The name of the long value to check, must not be null.
-   * @param upperInclusiveBoundName The name of the upper inclusive bound, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param upperInclusiveBound
+   *          The upper inclusive bound.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
+   * @param upperInclusiveBoundName
+   *          The name of the upper inclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly greater than upperInclusiveBound.
    */
-  public static void checkUpperInclusiveBound (final long   value,
-                                               final long   upperInclusiveBound,
+  public static void checkUpperInclusiveBound (final long value,
+                                               final long upperInclusiveBound,
                                                final String valueName,
                                                final String upperInclusiveBoundName)
   {
@@ -736,13 +934,19 @@ public final class Arguments
   /**
    * Checks if the specified floating point value is less than or equal to upperInclusiveBound.
    *
-   * @param value The floating point value to check.
-   * @param upperInclusiveBound The upper inclusive bound.
-   * @param valueName The name of the floating point value to check, must not be null.
+   * @param value
+   *          The floating point value to check.
+   * @param upperInclusiveBound
+   *          The upper inclusive bound.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly greater than upperInclusiveBound.
    */
-  public static void checkUpperInclusiveBound (final float value, final float upperInclusiveBound, final String valueName)
+  public static void checkUpperInclusiveBound (final float value,
+                                               final float upperInclusiveBound,
+                                               final String valueName)
   {
     checkUpperInclusiveBound ((double) value, (double) upperInclusiveBound, valueName, "");
   }
@@ -750,12 +954,17 @@ public final class Arguments
   /**
    * Checks if the specified floating point value is less than or equal to upperInclusiveBound.
    *
-   * @param value The floating point value to check.
-   * @param upperInclusiveBound The upper inclusive bound.
-   * @param valueName The name of the floating point value to check, must not be null.
-   * @param upperInclusiveBoundName The name of the upper inclusive bound, must not be null.
+   * @param value
+   *          The floating point value to check.
+   * @param upperInclusiveBound
+   *          The upper inclusive bound.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
+   * @param upperInclusiveBoundName
+   *          The name of the upper inclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly greater than upperInclusiveBound.
    */
   public static void checkUpperInclusiveBound (final float value,
                                                final float upperInclusiveBound,
@@ -768,11 +977,15 @@ public final class Arguments
   /**
    * Checks if the specified double value is less than or equal to upperInclusiveBound.
    *
-   * @param value The double value to check.
-   * @param upperInclusiveBound The upper inclusive bound.
-   * @param valueName The name of the double value to check, must not be null.
+   * @param value
+   *          The double value to check.
+   * @param upperInclusiveBound
+   *          The upper inclusive bound.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly greater than upperInclusiveBound.
    */
   public static void checkUpperInclusiveBound (final double value,
                                                final double upperInclusiveBound,
@@ -784,12 +997,17 @@ public final class Arguments
   /**
    * Checks if the specified double value is less than or equal to upperInclusiveBound.
    *
-   * @param value The double value to check.
-   * @param upperInclusiveBound The upper inclusive bound.
-   * @param valueName The name of the double value to check, must not be null.
-   * @param upperInclusiveBoundName The name of the upper inclusive bound, must not be null.
+   * @param value
+   *          The double value to check.
+   * @param upperInclusiveBound
+   *          The upper inclusive bound.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
+   * @param upperInclusiveBoundName
+   *          The name of the upper inclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is strictly greater than upperInclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is strictly greater than upperInclusiveBound.
    */
   public static void checkUpperInclusiveBound (final double value,
                                                final double upperInclusiveBound,
@@ -805,11 +1023,15 @@ public final class Arguments
   /**
    * Checks if the specified integer value is strictly less than upperExclusiveBound.
    *
-   * @param value The integer value to check.
-   * @param upperExclusiveBound The upper exclusive bound.
-   * @param valueName The name of the integer value to check, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param upperExclusiveBound
+   *          The upper exclusive bound.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to upperExclusiveBound.
    */
   public static void checkUpperExclusiveBound (final int value, final int upperExclusiveBound, final String valueName)
   {
@@ -819,15 +1041,20 @@ public final class Arguments
   /**
    * Checks if the specified integer value is strictly less than upperExclusiveBound.
    *
-   * @param value The integer value to check.
-   * @param upperExclusiveBound The upper exclusive bound.
-   * @param valueName The name of the integer value to check, must not be null.
-   * @param upperExclusiveBoundName The name of the upper exclusive bound, must not be null.
+   * @param value
+   *          The integer value to check.
+   * @param upperExclusiveBound
+   *          The upper exclusive bound.
+   * @param valueName
+   *          The name of the integer value to check, must not be null.
+   * @param upperExclusiveBoundName
+   *          The name of the upper exclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to upperExclusiveBound.
    */
-  public static void checkUpperExclusiveBound (final int    value,
-                                               final int    upperExclusiveBound,
+  public static void checkUpperExclusiveBound (final int value,
+                                               final int upperExclusiveBound,
                                                final String valueName,
                                                final String upperExclusiveBoundName)
   {
@@ -837,13 +1064,18 @@ public final class Arguments
   /**
    * Checks if the specified long value is strictly less than upperExclusiveBound.
    *
-   * @param value The long value to check.
-   * @param upperExclusiveBound The upper exclusive bound.
-   * @param valueName The name of the long value to check, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param upperExclusiveBound
+   *          The upper exclusive bound.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to upperExclusiveBound.
    */
-  public static void checkUpperExclusiveBound (final long value, final long upperExclusiveBound, final String valueName)
+  public static  void
+                  checkUpperExclusiveBound (final long value, final long upperExclusiveBound, final String valueName)
   {
     checkUpperExclusiveBound (value, upperExclusiveBound, valueName, "");
   }
@@ -851,15 +1083,20 @@ public final class Arguments
   /**
    * Checks if the specified long is strictly less than upperExclusiveBound.
    *
-   * @param value The long value to check.
-   * @param upperExclusiveBound The upper exclusive bound.
-   * @param valueName The name of the long value to check, must not be null.
-   * @param upperExclusiveBoundName The name of the upper exclusive bound, must not be null.
+   * @param value
+   *          The long value to check.
+   * @param upperExclusiveBound
+   *          The upper exclusive bound.
+   * @param valueName
+   *          The name of the long value to check, must not be null.
+   * @param upperExclusiveBoundName
+   *          The name of the upper exclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to upperExclusiveBound.
    */
-  public static void checkUpperExclusiveBound (final long   value,
-                                               final long   upperExclusiveBound,
+  public static void checkUpperExclusiveBound (final long value,
+                                               final long upperExclusiveBound,
                                                final String valueName,
                                                final String upperExclusiveBoundName)
   {
@@ -872,11 +1109,15 @@ public final class Arguments
   /**
    * Checks if the specified floating point value is strictly less than upperExclusiveBound.
    *
-   * @param value The floating point value to check.
-   * @param upperExclusiveBound The upper exclusive bound.
-   * @param valueName The name of the floating point value to check, must not be null.
+   * @param value
+   *          The floating point value to check.
+   * @param upperExclusiveBound
+   *          The upper exclusive bound.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to upperExclusiveBound.
    */
   public static void checkUpperExclusiveBound (final float value,
                                                final float upperExclusiveBound,
@@ -888,12 +1129,17 @@ public final class Arguments
   /**
    * Checks if the specified floating point value is strictly less than upperExclusiveBound.
    *
-   * @param value The floating point value to check.
-   * @param upperExclusiveBound The upper exclusive bound.
-   * @param valueName The name of the floating point value to check, must not be null.
-   * @param upperExclusiveBoundName The name of the upper exclusive bound, must not be null.
+   * @param value
+   *          The floating point value to check.
+   * @param upperExclusiveBound
+   *          The upper exclusive bound.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
+   * @param upperExclusiveBoundName
+   *          The name of the upper exclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to upperExclusiveBound.
    */
   public static void checkUpperExclusiveBound (final float value,
                                                final float upperExclusiveBound,
@@ -906,13 +1152,19 @@ public final class Arguments
   /**
    * Checks if the specified double value is strictly less than upperExclusiveBound.
    *
-   * @param value The double value to check.
-   * @param upperExclusiveBound The upper exclusive bound.
-   * @param valueName The name of the double value to check, must not be null.
+   * @param value
+   *          The double value to check.
+   * @param upperExclusiveBound
+   *          The upper exclusive bound.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to upperExclusiveBound.
    */
-  public static void checkUpperExclusiveBound (final double value, final double upperExclusiveBound, final String valueName)
+  public static void checkUpperExclusiveBound (final double value,
+                                               final double upperExclusiveBound,
+                                               final String valueName)
   {
     checkUpperExclusiveBound (value, upperExclusiveBound, valueName, "");
   }
@@ -920,12 +1172,17 @@ public final class Arguments
   /**
    * Checks if the specified double is strictly less than upperExclusiveBound.
    *
-   * @param value The double value to check.
-   * @param upperExclusiveBound The upper exclusive bound.
-   * @param valueName The name of the double value to check, must not be null.
-   * @param upperExclusiveBoundName The name of the upper exclusive bound, must not be null.
+   * @param value
+   *          The double value to check.
+   * @param upperExclusiveBound
+   *          The upper exclusive bound.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
+   * @param upperExclusiveBoundName
+   *          The name of the upper exclusive bound, must not be null.
    *
-   * @throws IllegalArgumentException If value is greater than or equal to upperExclusiveBound.
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to upperExclusiveBound.
    */
   public static void checkUpperExclusiveBound (final double value,
                                                final double upperExclusiveBound,
@@ -938,95 +1195,50 @@ public final class Arguments
     }
   }
 
-  private static void boundsViolation (final Number    value,
-                                       final Number    bound,
-                                       final String    valueName,
-                                       final String    boundName,
+  private static void boundsViolation (final Number value,
+                                       final Number bound,
+                                       final String valueName,
+                                       final String boundName,
                                        final BoundType boundType) throws IllegalArgumentException
   {
-    final int stackLevel = getStackLevelOfFirstClassOutsideThisClass();
+    final int stackLevel = getStackLevelOfFirstClassOutsideThisClass ();
 
-    throw new IllegalArgumentException ("Argument \"" + valueName + "\" [value: " + value + "]" + " must be " +
-            boundType.getMessage() + " " + (boundName.isEmpty() ? "" : "\"" + boundName + "\" ") + "[value: " + bound +
-            "]" + " when invoking [" + Classes.getClassName (stackLevel) + "." + Methods.getMethodName (stackLevel) +
-            "].");
+    throw new IllegalArgumentException ("Argument \"" + valueName + "\" [value: " + value + "]" + " must be "
+                    + boundType.getMessage () + " " + (boundName.isEmpty () ? "" : "\"" + boundName + "\" ")
+                    + "[value: " + bound + "]" + " when invoking [" + Classes.getClassName (stackLevel) + "."
+                    + Methods.getMethodName (stackLevel) + "].");
   }
 
-  private static int getStackLevelOfFirstClassOutsideThisClass()
+  private static int getStackLevelOfFirstClassOutsideThisClass ()
   {
-    final int maxStackLevel = getMaxStackLevel();
+    final int maxStackLevel = getMaxStackLevel ();
     final String thisClassName = Classes.getClassName (0);
 
     for (int stackLevel = 1; stackLevel <= maxStackLevel; ++stackLevel)
     {
-      if (! thisClassName.equals (Classes.getClassName (stackLevel))) return stackLevel - 1;
+      if (!thisClassName.equals (Classes.getClassName (stackLevel))) return stackLevel - 1;
     }
 
     return maxStackLevel - 1;
   }
 
-  private static int getMaxStackLevel()
+  private static int getMaxStackLevel ()
   {
-    return Thread.currentThread().getStackTrace().length - 1;
+    return Thread.currentThread ().getStackTrace ().length - 1;
   }
 
-  private static void illegalArgument (final String argumentName,
-                                       final ArgumentStatus argumentStatus) throws IllegalArgumentException
+  private static void illegalArgument (final String argumentName, final ArgumentStatus argumentStatus)
+                  throws IllegalArgumentException
   {
-    final int stackLevel = getStackLevelOfFirstClassOutsideThisClass();
+    final int stackLevel = getStackLevelOfFirstClassOutsideThisClass ();
 
-    throw new IllegalArgumentException ("\nLocation: " + Classes.getClassName (stackLevel) + "." +
-                                        Methods.getMethodName (stackLevel) + "\nReason:   argument '" + argumentName +
-                                        "' " + argumentStatus.getMessage());
+    throw new IllegalArgumentException ("\nLocation: " + Classes.getClassName (stackLevel) + "."
+                    + Methods.getMethodName (stackLevel) + "\nReason:   argument '" + argumentName + "' "
+                    + argumentStatus.getMessage ());
   }
 
-  private enum ArgumentStatus
+  private Arguments ()
   {
-    BLANK                ("is blank"),
-    BLANK_ELEMENTS       ("has blank elements"),
-    EMPTY                ("is empty"),
-    EMPTY_ELEMENTS       ("has empty elements"),
-    NULL                 ("is null"),
-    NULL_ELEMENTS        ("has null elements"),
-    NULL_KEYS            ("has null keys"),
-    NULL_VALUES          ("has null values"),
-    NULL_KEYS_AND_VALUES ("has null keys & null values");
-
-    private String getMessage()
-    {
-      return message;
-    }
-
-    private ArgumentStatus (final String message)
-    {
-      this.message = message;
-    }
-
-    private final String message;
-  }
-
-  private enum BoundType
-  {
-    LOWER_EXCLUSIVE ("strictly greater than"),
-    UPPER_EXCLUSIVE ("strictly less than"),
-    LOWER_INCLUSIVE ("greater than or equal to"),
-    UPPER_INCLUSIVE ("less than or equal to");
-
-    private String getMessage()
-    {
-      return message;
-    }
-
-    private BoundType (final String message)
-    {
-      this.message = message;
-    }
-
-    private final String message;
-  }
-
-  private Arguments()
-  {
-    Classes.instantiationNotAllowed();
+    Classes.instantiationNotAllowed ();
   }
 }

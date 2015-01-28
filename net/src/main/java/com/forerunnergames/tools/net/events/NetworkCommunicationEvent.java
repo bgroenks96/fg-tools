@@ -17,19 +17,20 @@ public abstract class NetworkCommunicationEvent extends NetworkEvent
     this.message = message;
   }
 
-  public final Event getMessage()
+  public final Event getMessage ()
   {
     return message;
   }
 
-  protected final Remote getSender()
+  @Override
+  public String toString ()
   {
-    return getRemote();
+    return String.format ("%1$s: Message: %2$s | Sender: %3$s", getClass ().getSimpleName (), getMessage (),
+                    getSender ());
   }
 
-  @Override
-  public String toString()
+  protected final Remote getSender ()
   {
-    return String.format ("%1$s: Message: %2$s | Sender: %3$s", getClass().getSimpleName(), getMessage(), getSender());
+    return getRemote ();
   }
 }

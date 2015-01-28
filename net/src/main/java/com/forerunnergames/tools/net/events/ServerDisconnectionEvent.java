@@ -9,8 +9,8 @@ public final class ServerDisconnectionEvent extends NetworkEvent
     super (server);
   }
 
-  public Remote getServer()
+  public Remote getServer ()
   {
-    return getRemote();
+    return getRemote ();
   }
 }

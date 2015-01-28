@@ -15,14 +15,14 @@ public abstract class NetworkEvent implements Event
     this.remote = remote;
   }
 
-  public Remote getRemote()
+  public Remote getRemote ()
   {
     return remote;
   }
 
   @Override
-  public String toString()
+  public String toString ()
   {
-    return String.format ("%1$s: Remote : %2$s", getClass().getSimpleName(), remote);
+    return String.format ("%1$s: Remote : %2$s", getClass ().getSimpleName (), remote);
   }
 }

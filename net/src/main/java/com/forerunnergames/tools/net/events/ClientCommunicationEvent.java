@@ -10,14 +10,14 @@ public final class ClientCommunicationEvent extends NetworkCommunicationEvent
     super (message, client);
   }
 
-  public Remote getClient()
+  public Remote getClient ()
   {
-    return getSender();
+    return getSender ();
   }
 
   @Override
-  public String toString()
+  public String toString ()
   {
-    return String.format ("%1$s | Client: %2$s", super.toString(), getClient());
+    return String.format ("%1$s | Client: %2$s", super.toString (), getClient ());
   }
 }

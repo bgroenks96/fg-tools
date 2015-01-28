@@ -1,17 +1,17 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools.common.io;
 
+import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
 
 import java.io.InputStream;
 
-public class Resources
+public final class Resources
 {
-  public static InputStream toInputStream (String resource)
+  public static InputStream toInputStream (final String resource)
   {
-    InputStream inputStream = Thread.currentThread()
-                                    .getContextClassLoader()
-                                    .getResourceAsStream (resource);
+    Arguments.checkIsNotNull (resource, "resource");
+
+    InputStream inputStream = Thread.currentThread ().getContextClassLoader ().getResourceAsStream (resource);
 
     if (inputStream == null)
     {
@@ -21,8 +21,8 @@ public class Resources
     return inputStream;
   }
 
-  private Resources()
+  private Resources ()
   {
-    Classes.instantiationNotAllowed();
+    Classes.instantiationNotAllowed ();
   }
 }

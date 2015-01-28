@@ -47,12 +47,22 @@ public final class Point2D
 
   public boolean isNot (final Point2D point)
   {
-    return ! is (point);
+    return !is (point);
   }
 
   public boolean isNot (final float x, final float y)
   {
-    return ! is (x, y);
+    return !is (x, y);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
+
+    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
+
+    return result;
   }
 
   @Override
@@ -64,16 +74,6 @@ public final class Point2D
     final Point2D point = (Point2D) object;
 
     return Float.compare (point.getX (), x) == 0 && Float.compare (point.getY (), y) == 0;
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
-
-    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
-
-    return result;
   }
 
   @Override

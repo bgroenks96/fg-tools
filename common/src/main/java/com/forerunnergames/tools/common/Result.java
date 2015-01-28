@@ -5,7 +5,7 @@ public final class Result <T>
   private final boolean isSuccessful;
   private final T failureReason;
 
-  public static <U> Result <U> success()
+  public static <U> Result <U> success ()
   {
     return new Result <> (true, null);
   }
@@ -18,41 +18,41 @@ public final class Result <T>
     return new Result <> (false, failureReason);
   }
 
-  public boolean isSuccessful()
+  public boolean isSuccessful ()
   {
     return isSuccessful;
   }
 
-  public boolean succeeded()
+  public boolean succeeded ()
   {
-    return isSuccessful();
+    return isSuccessful ();
   }
 
-  public boolean isFailure()
+  public boolean isFailure ()
   {
-    return ! isSuccessful;
+    return !isSuccessful;
   }
 
-  public boolean failed()
+  public boolean failed ()
   {
-    return isFailure();
+    return isFailure ();
   }
 
   public boolean failedBecauseOf (final T failureReason)
   {
-    return isFailure() && failureReasonIs (failureReason);
+    return isFailure () && failureReasonIs (failureReason);
   }
 
   public boolean failureReasonIs (final T failureReason)
   {
     Arguments.checkIsNotNull (failureReason, "failureReason");
 
-    return getFailureReason().equals (failureReason);
+    return getFailureReason ().equals (failureReason);
   }
 
-  public T getFailureReason()
+  public T getFailureReason ()
   {
-    Preconditions.checkIsTrue (isFailure(), "Cannot get failure reason when result is successful.");
+    Preconditions.checkIsTrue (isFailure (), "Cannot get failure reason when result is successful.");
 
     return failureReason;
   }

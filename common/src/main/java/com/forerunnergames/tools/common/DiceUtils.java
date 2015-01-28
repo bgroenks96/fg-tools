@@ -1,26 +1,28 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools.common;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class DiceUtils 
+public final class DiceUtils
 {
+  private static final int FACES_PER_DIE = 6;
+  private static int currentTestRoll = 0;
+  private static List <Integer> testRolls;
+
   /**
-   * Get a preset (fake) dice roll. Useful for testing purposes.
-   * It will get a preset (fake) dice roll until the presets are all used up,
-   * and then it will return 6 on each subsequent call.
-   * 
-   * @see DiceUtils#setTestRolls(int... rollAmounts) 
-   * 
+   * Get a preset (fake) dice roll. Useful for testing purposes. It will get a preset (fake) dice roll until the presets
+   * are all used up, and then it will return 6 on each subsequent call.
+   *
    * @return The roll amount.
+   *
+   * @see #setTestRolls (final int... rollAmounts)
    */
-  public static int getTestRoll()
+  public static int getTestRoll ()
   {
     int rollAmount;
 
-    if (DiceUtils.currentTestRoll < DiceUtils.testRolls.size())
+    if (DiceUtils.currentTestRoll < DiceUtils.testRolls.size ())
     {
       rollAmount = DiceUtils.testRolls.get (DiceUtils.currentTestRoll);
     }
@@ -35,41 +37,44 @@ public class DiceUtils
   }
 
   /**
-   * Create preset (fake) dice rolls. Useful for testing purposes.
-   * The rolls are used on a first-in first-out basis.
-   * 
-   * @see DiceUtils#getTestRoll() 
-   * 
-   * @param rollAmounts The list of preset (fake) roll amounts.
+   * Create preset (fake) dice rolls. Useful for testing purposes. The rolls are used on a first-in first-out basis.
+   *
+   * @param rollAmounts
+   *          The list of preset (fake) roll amounts.
+   *
+   * @see #getTestRoll()
    */
-  public static void setTestRolls (int... rollAmounts)
+  public static void setTestRolls (final int... rollAmounts)
   {
-    DiceUtils.testRolls = new ArrayList <Integer>();
+    Arguments.checkIsNotNull (rollAmounts, "rollAmounts");
 
-    for (int i = 0; i < rollAmounts.length; ++i)
+    DiceUtils.testRolls = new ArrayList <> ();
+
+    for (final int rollAmount : rollAmounts)
     {
-      testRolls.add (rollAmounts [i]);
+      testRolls.add (rollAmount);
     }
   }
 
   /**
    * Roll dieCount 6-sided dice and get the resulting roll amounts.
-   * 
-   * @param dieCount The number of dice to roll.
-   * 
+   *
+   * @param dieCount
+   *          The number of dice to roll.
+   *
    * @return A collection of the roll amounts as integers.
    */
-  public static Collection <Integer> rollDice (int dieCount)
+  public static Collection <Integer> rollDice (final int dieCount)
   {
     Arguments.checkLowerExclusiveBound (dieCount, 0, "dieCount");
 
-    Collection <Integer> rolls = new ArrayList <Integer> (dieCount);
+    final Collection <Integer> rolls = new ArrayList <> (dieCount);
+
+    int rollAmount;
 
     for (int i = 0; i < dieCount; ++i)
     {
-      int rollAmount = 
-              Randomness.getRandomIntegerFrom (1, DiceUtils.FACES_PER_DIE);
-
+      rollAmount = Randomness.getRandomIntegerFrom (1, DiceUtils.FACES_PER_DIE);
       rolls.add (rollAmount);
     }
 
@@ -78,18 +83,19 @@ public class DiceUtils
 
   /**
    * Roll dieCount 6-sided dice and get the resulting roll sum.
-   * 
-   * @param dieCount The number of dice to roll.
-   * 
+   *
+   * @param dieCount
+   *          The number of dice to roll.
+   *
    * @return The sum of the values of the individual dice.
    */
-  public static int rollSum (int dieCount)
+  public static int rollSum (final int dieCount)
   {
     Arguments.checkLowerExclusiveBound (dieCount, 0, "dieCount");
 
     int sum = 0;
 
-    for (Integer rollAmount : rollDice (dieCount))
+    for (final Integer rollAmount : rollDice (dieCount))
     {
       sum += rollAmount;
     }
@@ -97,14 +103,8 @@ public class DiceUtils
     return sum;
   }
 
-  private static int currentTestRoll = 0;
-
-  private static List <Integer> testRolls;
-
-  private static final int FACES_PER_DIE = 6;
-
-  private DiceUtils()
+  private DiceUtils ()
   {
-    Classes.instantiationNotAllowed();
+    Classes.instantiationNotAllowed ();
   }
 }

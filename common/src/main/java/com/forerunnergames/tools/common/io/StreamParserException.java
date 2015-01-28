@@ -1,4 +1,4 @@
-package com.forerunnergames.tools.common.exceptions;
+package com.forerunnergames.tools.common.io;
 
 @SuppressWarnings("serial")
 public class StreamParserException extends RuntimeException

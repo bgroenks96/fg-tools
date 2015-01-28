@@ -4,7 +4,6 @@ import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
 import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.common.Utils;
-import com.forerunnergames.tools.common.exceptions.StreamParserException;
 
 import java.io.BufferedReader;
 import java.io.File;

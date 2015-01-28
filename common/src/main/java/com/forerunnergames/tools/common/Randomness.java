@@ -28,7 +28,7 @@ public final class Randomness
   private static final int RESEED_THRESHOLD = 10000; // The number of random numbers that can be generated before reseeding.
   private static final RandomHotBits TRNG = new RandomHotBits(); // True random number generator, used for seeding only, and only in RELEASE mode.
   private static long reseedCounter = 0; // Keeps track of how many random numbers have been generated for reseeding purposes.
-  private static SecureRandom prng; // Cryptographically secure pseudo random number generator.
+  private static SecureRandom csprng; // Cryptographically secure pseudo random number generator.
   private static Mode currentMode;
 
   /**
@@ -84,36 +84,36 @@ public final class Randomness
 
     currentMode = mode;
 
-    createPrng();
+    createCsprng();
 
     switch (mode)
     {
       case DEBUG:
       {
-        reseedPrngWithSystemEntropy();
+        reseedCsprngWithSystemEntropy();
 
         break;
       }
       case RELEASE:
       {
-        reseedPrngWithHotBitsEntropy();
+        reseedCsprngWithHotBitsEntropy();
 
         break;
       }
     }
   }
 
-  private static void createPrng()
+  private static void createCsprng()
   {
     try
     {
-      prng = SecureRandom.getInstance ("SHA1PRNG", "SUN");
+      csprng = SecureRandom.getInstance ("SHA1PRNG", "SUN");
     }
     catch (final NoSuchProviderException e)
     {
       try
       {
-        final Provider[] providers = Security.getProviders ();
+        final Provider[] providers = Security.getProviders();
 
         if (providers == null || providers.length == 0) throw new RuntimeException ("Cannot create random number generator.", e);
 
@@ -121,7 +121,7 @@ public final class Randomness
 
         log.warn ("Cannot find SUN provider, trying default (preferred) provider: {}.", provider);
 
-        prng = SecureRandom.getInstance ("SHA1PRNG", provider);
+        csprng = SecureRandom.getInstance ("SHA1PRNG", provider);
       }
       catch (final NoSuchAlgorithmException e1)
       {
@@ -134,19 +134,19 @@ public final class Randomness
     }
   }
 
-  private static void reseedPrngWithSystemEntropy()
+  private static void reseedCsprngWithSystemEntropy()
   {
-    prng.setSeed (generateSystemEntropySeed());
+    csprng.setSeed (generateSystemEntropySeed());
   }
 
   private static byte[] generateSystemEntropySeed()
   {
-    return prng.generateSeed (SEED_BYTES);
+    return csprng.generateSeed (SEED_BYTES);
   }
 
-  private static void reseedPrngWithHotBitsEntropy()
+  private static void reseedCsprngWithHotBitsEntropy()
   {
-    prng.setSeed (generateHotBitsEntropySeed());
+    csprng.setSeed (generateHotBitsEntropySeed());
   }
 
   private static byte[] generateHotBitsEntropySeed()
@@ -190,11 +190,11 @@ public final class Randomness
     assert n > 0;
     assert n <= (long) Integer.MAX_VALUE;
 
-    checkPrngUsage();
+    checkCsprngUsage();
 
-    final long randomNumber = (long) inclusiveLowerBound + prng.nextInt ((int) n);
+    final long randomNumber = (long) inclusiveLowerBound + csprng.nextInt ((int) n);
 
-    updatePrngUsage (1);
+    updateCsprngUsage (1);
 
     assert randomNumber >= inclusiveLowerBound;
     assert randomNumber <= inclusiveUpperBound;
@@ -239,17 +239,17 @@ public final class Randomness
     return shuffle (elements).get (0);
   }
 
-  private static void checkPrngUsage()
+  private static void checkCsprngUsage()
   {
-    if (shouldReseedPrng()) reseedPrng();
+    if (shouldReseedCsprng()) reseedCsprng();
   }
 
-  private static boolean shouldReseedPrng()
+  private static boolean shouldReseedCsprng()
   {
     return reseedCounter > RESEED_THRESHOLD;
   }
 
-  private static void reseedPrng()
+  private static void reseedCsprng()
   {
     reseedCounter = 0;
 
@@ -257,20 +257,20 @@ public final class Randomness
     {
       case DEBUG:
       {
-        reseedPrngWithSystemEntropy();
+        reseedCsprngWithSystemEntropy();
 
         break;
       }
       case RELEASE:
       {
-        reseedPrngWithHotBitsEntropy();
+        reseedCsprngWithHotBitsEntropy();
 
         break;
       }
     }
   }
 
-  private static void updatePrngUsage (final int timesUsed)
+  private static void updateCsprngUsage (final int timesUsed)
   {
     reseedCounter += timesUsed;
   }
@@ -289,13 +289,13 @@ public final class Randomness
   {
     Arguments.checkIsNotNull (iterable, "iterable");
 
-    checkPrngUsage();
+    checkCsprngUsage();
 
     final ArrayList <T> listCopy = Lists.newArrayList (iterable);
 
-    Collections.shuffle (listCopy, prng);
+    Collections.shuffle (listCopy, csprng);
 
-    updatePrngUsage (listCopy.size());
+    updateCsprngUsage (listCopy.size());
 
     return listCopy;
   }

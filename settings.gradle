@@ -1,4 +1,4 @@
 rootProject.name = projectName
 
-include "common", "randomx"
+include "common", "net", "randomx"
 

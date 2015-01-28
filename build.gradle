@@ -48,6 +48,12 @@ project (":common") {
   }
 }
 
+project (":net") {
+  dependencies {
+    compile project (":common")
+  }
+}
+
 idea {
   project {
     languageLevel = "${projectSourceCompatibility}"

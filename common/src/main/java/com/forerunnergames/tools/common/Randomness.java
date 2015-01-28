@@ -6,7 +6,9 @@ import com.google.common.collect.Lists;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.Provider;
 import java.security.SecureRandom;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -107,9 +109,28 @@ public final class Randomness
     {
       prng = SecureRandom.getInstance ("SHA1PRNG", "SUN");
     }
-    catch (final NoSuchAlgorithmException | NoSuchProviderException e)
+    catch (final NoSuchProviderException e)
     {
-      throw new RuntimeException ("Cannot create random number generator", e);
+      try
+      {
+        final Provider[] providers = Security.getProviders ();
+
+        if (providers == null || providers.length == 0) throw new RuntimeException ("Cannot create random number generator.", e);
+
+        final Provider provider = providers [0];
+
+        log.warn ("Cannot find SUN provider, trying default (preferred) provider: {}.", provider);
+
+        prng = SecureRandom.getInstance ("SHA1PRNG", provider);
+      }
+      catch (final NoSuchAlgorithmException e1)
+      {
+        throw new RuntimeException ("Cannot create random number generator.", e);
+      }
+    }
+    catch (final NoSuchAlgorithmException e)
+    {
+      throw new RuntimeException ("Cannot create random number generator.", e);
     }
   }
 

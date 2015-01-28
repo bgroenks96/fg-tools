@@ -1,74 +1,97 @@
-// Copyright © 2011 - 2013 Forerunner Games. All rights reserved.
 package com.forerunnergames.tools.common.geometry;
 
 import com.forerunnergames.tools.common.Arguments;
 
-public class Size2D
+public final class Size2D
 {
-  public Size2D (final int width, final int height)
-  {
-    Arguments.checkLowerInclusiveBound (width, 0, "width");
-    Arguments.checkLowerInclusiveBound (height, 0, "height");
+  private final float width;
+  private final float height;
 
-    this.width  = width;
+  public Size2D (final float width, final float height)
+  {
+    Arguments.checkLowerInclusiveBound (width, 0.0f, "width");
+    Arguments.checkLowerInclusiveBound (height, 0.0f, "height");
+
+    this.width = width;
     this.height = height;
   }
 
+  public float getWidth ()
+  {
+    return width;
+  }
+
+  public float getHeight ()
+  {
+    return height;
+  }
+
+  public double calculateArea ()
+  {
+    return width * height;
+  }
+
+  public boolean hasArea (final double area)
+  {
+    return Double.compare (calculateArea (), area) == 0;
+  }
+
+  public boolean hasWidth (final float width)
+  {
+    return Float.compare (this.width, width) == 0;
+  }
+
+  public boolean hasHeight (final float height)
+  {
+    return Float.compare (this.height, height) == 0;
+  }
+
+  public boolean is (final Size2D size)
+  {
+    Arguments.checkIsNotNull (size, "size");
+
+    return equals (size);
+  }
+
+  public boolean is (final float width, final float height)
+  {
+    return Float.compare (this.width, width) == 0 && Float.compare (this.height, height) == 0;
+  }
+
+  public boolean isNot (final Size2D size)
+  {
+    return ! is (size);
+  }
+
+  public boolean isNot (final float width, final float height)
+  {
+    return ! is (width, height);
+  }
+
   @Override
-  public boolean equals (Object object)
+  public int hashCode ()
   {
-    if (this == object)
-    {
-      return true;
-    }
+    int result = (height != +0.0f ? Float.floatToIntBits (height) : 0);
 
-    boolean equals = false;
+    result = 31 * result + (width != +0.0f ? Float.floatToIntBits (width) : 0);
 
-    if (object != null && object.getClass() == getClass())
-    {
-      Size2D size2D = (Size2D) object;
-
-      if (this.width == size2D.getWidth() && this.height == size2D.getHeight())
-      {
-        equals = true;
-      }
-    }
-
-    return equals;
-  }
-
-  public long calculateArea()
-  {
-    return (long) this.width * this.height;
-  }
-
-  public int getHeight()
-  {
-    return this.height;
-  }
-
-  public int getWidth()
-  {
-    return this.width;
+    return result;
   }
 
   @Override
-  public int hashCode()
+  public boolean equals (final Object object)
   {
-    int hash = 3;
+    if (this == object) return true;
+    if (object == null || getClass () != object.getClass ()) return false;
 
-    hash = 97 * hash + this.height;
-    hash = 97 * hash + this.width;
+    final Size2D size = (Size2D) object;
 
-    return hash;
+    return Float.compare (size.getWidth (), width) == 0 && Float.compare (size.getHeight (), height) == 0;
   }
 
   @Override
-  public String toString()
+  public String toString ()
   {
-    return String.format (getClass().getSimpleName() + ": (w: %1$6s x h: %2$6s)", getWidth(), getHeight());
+    return String.format ("%1$s: width: %2$s | height: %3$s", getClass ().getSimpleName (), width, height);
   }
-
-  private final int height;
-  private final int width;
 }

@@ -1,48 +1,84 @@
 package com.forerunnergames.tools.common.geometry;
 
+import com.forerunnergames.tools.common.Arguments;
+
 public final class Point2D
 {
-  private final int x;
-  private final int y;
+  private final float x;
+  private final float y;
 
-  public Point2D (final int x, final int y)
+  public Point2D (final float x, final float y)
   {
     this.x = x;
     this.y = y;
   }
 
-  public int getX()
+  public float getX ()
   {
     return x;
   }
 
-  public int getY()
+  public float getY ()
   {
     return y;
   }
 
-  @Override
-  public boolean equals (final Object o)
+  public boolean hasX (final float x)
   {
-    if (this == o) return true;
-    if (o == null || getClass () != o.getClass ()) return false;
+    return Float.compare (this.x, x) == 0;
+  }
 
-    final Point2D point2D = (Point2D) o;
+  public boolean hasY (final float y)
+  {
+    return Float.compare (this.y, y) == 0;
+  }
 
-    return x == point2D.x && y == point2D.y;
+  public boolean is (final Point2D point)
+  {
+    Arguments.checkIsNotNull (point, "point");
+
+    return equals (point);
+  }
+
+  public boolean is (final float x, final float y)
+  {
+    return Float.compare (this.x, x) == 0 && Float.compare (this.y, y) == 0;
+  }
+
+  public boolean isNot (final Point2D point)
+  {
+    return ! is (point);
+  }
+
+  public boolean isNot (final float x, final float y)
+  {
+    return ! is (x, y);
   }
 
   @Override
-  public int hashCode()
+  public boolean equals (final Object object)
   {
-    int result = x;
-    result = 31 * result + y;
+    if (this == object) return true;
+    if (object == null || getClass () != object.getClass ()) return false;
+
+    final Point2D point = (Point2D) object;
+
+    return Float.compare (point.getX (), x) == 0 && Float.compare (point.getY (), y) == 0;
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
+
+    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
+
     return result;
   }
 
   @Override
-  public String toString()
+  public String toString ()
   {
-    return String.format ("%1$s: X: %2$s | Y: %3$s", getClass().getSimpleName(), x, y);
+    return String.format ("%1$s: x: %2$s | y: %3$s", getClass ().getSimpleName (), x, y);
   }
 }

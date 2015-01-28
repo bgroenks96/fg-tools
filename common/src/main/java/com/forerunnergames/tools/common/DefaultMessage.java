@@ -11,7 +11,6 @@ public final class DefaultMessage implements Message
     this.text = text;
   }
 
-  // Required for network serialization
   protected DefaultMessage ()
   {
     text = null;

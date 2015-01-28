@@ -1,6 +1,6 @@
 package com.forerunnergames.tools.common;
 
-import com.forerunnergames.tools.randomx.RandomHotBits;
+import ch.fourmilab.randomx.RandomHotBits;
 
 import com.google.common.collect.Lists;
 
@@ -91,18 +91,18 @@ public final class Randomness
 
     switch (mode)
     {
-      case DEBUG:
-      {
-        reseedCsprngWithSystemEntropy ();
+    case DEBUG:
+    {
+      reseedCsprngWithSystemEntropy ();
 
-        break;
-      }
-      case RELEASE:
-      {
-        reseedCsprngWithHotBitsEntropy ();
+      break;
+    }
+    case RELEASE:
+    {
+      reseedCsprngWithHotBitsEntropy ();
 
-        break;
-      }
+      break;
+    }
     }
   }
 
@@ -111,8 +111,7 @@ public final class Randomness
     try
     {
       csprng = SecureRandom.getInstance ("SHA1PRNG", "SUN");
-    }
-    catch (final NoSuchProviderException e)
+    } catch (final NoSuchProviderException e)
     {
       try
       {
@@ -128,13 +127,11 @@ public final class Randomness
         log.warn ("Cannot find SUN provider, trying default (preferred) provider: {}.", provider);
 
         csprng = SecureRandom.getInstance ("SHA1PRNG", provider);
-      }
-      catch (final NoSuchAlgorithmException e1)
+      } catch (final NoSuchAlgorithmException e1)
       {
         throw new RuntimeException ("Cannot create random number generator.", e);
       }
-    }
-    catch (final NoSuchAlgorithmException e)
+    } catch (final NoSuchAlgorithmException e)
     {
       throw new RuntimeException ("Cannot create random number generator.", e);
     }
@@ -159,7 +156,7 @@ public final class Randomness
   {
     try
     {
-      final byte[] trueRandomEntropySeed = new byte [SEED_BYTES];
+      final byte[] trueRandomEntropySeed = new byte[SEED_BYTES];
 
       for (int i = 0; i < trueRandomEntropySeed.length; ++i)
       {
@@ -167,8 +164,7 @@ public final class Randomness
       }
 
       return trueRandomEntropySeed;
-    }
-    catch (final RuntimeException e)
+    } catch (final RuntimeException e)
     {
       log.warn ("Could not obtain HotBits entropy! Falling back to a system entropy source.", e);
 
@@ -190,11 +186,11 @@ public final class Randomness
     Arguments.checkIsNotNegative (inclusiveLowerBound, "inclusiveLowerBound");
     Arguments.checkIsNotNegative (inclusiveUpperBound, "inclusiveUpperBound");
     Arguments.checkUpperExclusiveBound (inclusiveLowerBound, Integer.MAX_VALUE, "inclusiveLowerBound",
-                    "Integer.MAX_VALUE");
+                                        "Integer.MAX_VALUE");
     Arguments.checkUpperExclusiveBound (inclusiveUpperBound, Integer.MAX_VALUE, "inclusiveUpperBound",
-                    "Integer.MAX_VALUE");
+                                        "Integer.MAX_VALUE");
     Arguments.checkUpperInclusiveBound (inclusiveLowerBound, inclusiveUpperBound, "inclusiveLowerBound",
-                    "inclusiveUpperBound");
+                                        "inclusiveUpperBound");
 
     final long n = (long) inclusiveUpperBound - inclusiveLowerBound + 1;
 
@@ -272,18 +268,18 @@ public final class Randomness
 
     switch (currentMode)
     {
-      case DEBUG:
-      {
-        reseedCsprngWithSystemEntropy ();
+    case DEBUG:
+    {
+      reseedCsprngWithSystemEntropy ();
 
-        break;
-      }
-      case RELEASE:
-      {
-        reseedCsprngWithHotBitsEntropy ();
+      break;
+    }
+    case RELEASE:
+    {
+      reseedCsprngWithHotBitsEntropy ();
 
-        break;
-      }
+      break;
+    }
     }
   }
 

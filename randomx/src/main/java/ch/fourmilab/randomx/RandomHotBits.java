@@ -1,4 +1,4 @@
-package com.forerunnergames.tools.randomx;
+package ch.fourmilab.randomx;
 
 import java.io.IOException;
 import java.io.InputStream;

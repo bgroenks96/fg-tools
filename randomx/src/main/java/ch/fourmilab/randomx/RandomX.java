@@ -1,4 +1,4 @@
-package com.forerunnergames.tools.randomx;
+package ch.fourmilab.randomx;
 
 /**
  * Abstract superclass for emulations of java.util.Random with various underlying generators. These generators provide a

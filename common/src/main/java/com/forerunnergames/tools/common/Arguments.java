@@ -313,6 +313,38 @@ public final class Arguments
   }
 
   /**
+   * Checks if the specified floating point value is strictly less than 0.
+   *
+   * @param value
+   *          The floating point value to check.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to 0.
+   */
+  public static void checkIsNegative (final float value, final String valueName)
+  {
+    checkUpperExclusiveBound ((double) value, 0, valueName, "");
+  }
+
+  /**
+   * Checks if the specified double value is strictly less than 0.
+   *
+   * @param value
+   *          The double value to check.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If value is greater than or equal to 0.
+   */
+  public static void checkIsNegative (final double value, final String valueName)
+  {
+    checkUpperExclusiveBound (value, 0, valueName, "");
+  }
+
+  /**
    * Checks if the specified integer value is greater than or equal to 0.
    *
    * @param value
@@ -340,6 +372,38 @@ public final class Arguments
    *           If value is strictly less than 0.
    */
   public static void checkIsNotNegative (final long value, final String valueName)
+  {
+    checkLowerInclusiveBound (value, 0, valueName, "");
+  }
+
+  /**
+   * Checks if the specified floating point value is greater than or equal to 0.
+   *
+   * @param value
+   *          The floating point value to check.
+   * @param valueName
+   *          The name of the floating point value to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If value is strictly less than 0.
+   */
+  public static void checkIsNotNegative (final float value, final String valueName)
+  {
+    checkLowerInclusiveBound ((double) value, 0, valueName, "");
+  }
+
+  /**
+   * Checks if the specified double value is greater than or equal to 0.
+   *
+   * @param value
+   *          The double value to check.
+   * @param valueName
+   *          The name of the double value to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If value is strictly less than 0.
+   */
+  public static void checkIsNotNegative (final double value, final String valueName)
   {
     checkLowerInclusiveBound (value, 0, valueName, "");
   }

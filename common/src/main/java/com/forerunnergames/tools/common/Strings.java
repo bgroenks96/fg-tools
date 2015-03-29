@@ -33,8 +33,8 @@ public final class Strings
     final String nextWordLowerCase = nextWord.toLowerCase (Locale.ENGLISH);
 
     return nextWordLowerCase.startsWith ("a") || nextWordLowerCase.startsWith ("e")
-                    || nextWordLowerCase.startsWith ("i") || nextWordLowerCase.startsWith ("o")
-                    || (nextWordLowerCase.startsWith ("u") && nextWordLowerCase.length () > 1) ? "an" : "a";
+            || nextWordLowerCase.startsWith ("i") || nextWordLowerCase.startsWith ("o")
+            || (nextWordLowerCase.startsWith ("u") && nextWordLowerCase.length () > 1) ? "an" : "a";
   }
 
   /**
@@ -159,7 +159,7 @@ public final class Strings
     final Character.UnicodeBlock unicodeBlock = Character.UnicodeBlock.of (c);
 
     return !Character.isISOControl (c) && c != KeyEvent.CHAR_UNDEFINED && unicodeBlock != null
-                    && unicodeBlock != Character.UnicodeBlock.SPECIALS;
+            && unicodeBlock != Character.UnicodeBlock.SPECIALS;
   }
 
   /**
@@ -435,7 +435,7 @@ public final class Strings
     else if (n == Integer.MIN_VALUE)
     {
       ordinal.append ("two billion one hundred forty-seven million four "
-                      + "hundred eighty-three thousand six hundred and " + "forty-eighth");
+              + "hundred eighty-three thousand six hundred and " + "forty-eighth");
     }
     else
     {
@@ -676,7 +676,7 @@ public final class Strings
       // because "item1, and item2" doesn't make sense grammatically, which is
       // what would happen if we didn't treat this as a special case
       return toCase (iterator.next ().toString () + (hasAnd ? " and " : separator) + iterator.next ().toString (),
-                      letterCase);
+                     letterCase);
     }
 
     final StringBuilder s = new StringBuilder ();
@@ -886,7 +886,7 @@ public final class Strings
     else
     {
       words.append ("two billion one hundred forty-seven million four "
-                      + "hundred eighty-three thousand six hundred and " + "forty-eight");
+              + "hundred eighty-three thousand six hundred and " + "forty-eight");
     }
 
     return words.toString ();

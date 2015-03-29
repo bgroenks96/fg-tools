@@ -7,7 +7,7 @@ import org.junit.Test;
 public class MathsTest
 {
   @Test
-  public void testNextHigherMultiple()
+  public void testNextHigherMultiple ()
   {
     final int n = 10;
     final int multiple = 4;
@@ -18,7 +18,7 @@ public class MathsTest
   }
 
   @Test
-  public void testNextHigherMultiple2()
+  public void testNextHigherMultiple2 ()
   {
     final int n = 9872343;
     final int multiple = 394;
@@ -29,7 +29,7 @@ public class MathsTest
   }
 
   @Test
-  public void testNextHigherMultipleOfZero()
+  public void testNextHigherMultipleOfZero ()
   {
     final int n = 0;
     final int multiple = 4;
@@ -40,7 +40,7 @@ public class MathsTest
   }
 
   @Test
-  public void testNextHigherMultipleOfMaxValueWhenMultipleIsOne()
+  public void testNextHigherMultipleOfMaxValueWhenMultipleIsOne ()
   {
     final int n = Integer.MAX_VALUE;
     final int multiple = 1;
@@ -51,31 +51,31 @@ public class MathsTest
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void testNegativeNThrowsException()
+  public void testNegativeNThrowsException ()
   {
     Maths.nextHigherMultiple (-1, 2);
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void testZeroMultipleThrowsException()
+  public void testZeroMultipleThrowsException ()
   {
     Maths.nextHigherMultiple (0, 0);
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void testNegativeMultipleThrowsException()
+  public void testNegativeMultipleThrowsException ()
   {
     Maths.nextHigherMultiple (2, -1);
   }
 
   @Test (expected = ArithmeticException.class)
-  public void testMaxValueNAndMaxValueMultipleThrowsException()
+  public void testMaxValueNAndMaxValueMultipleThrowsException ()
   {
     Maths.nextHigherMultiple (Integer.MAX_VALUE, Integer.MAX_VALUE);
   }
 
   @Test (expected = ArithmeticException.class)
-  public void testNextHigherMultipleIsGreaterThanMaxValueThrowsException()
+  public void testNextHigherMultipleIsGreaterThanMaxValueThrowsException ()
   {
     Maths.nextHigherMultiple (Integer.MAX_VALUE, 2);
   }

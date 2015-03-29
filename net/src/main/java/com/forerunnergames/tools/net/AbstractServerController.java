@@ -19,7 +19,7 @@ public abstract class AbstractServerController extends ControllerAdapter impleme
     Arguments.checkIsNotNull (classesToRegisterForNetworkSerialization, "classesToRegisterForNetworkSerialization");
     Arguments.checkIsNotNegative (tcpPort, "tcpPort");
     Arguments.checkHasNoNullElements (classesToRegisterForNetworkSerialization,
-                    "classesToRegisterForNetworkSerialization");
+                                      "classesToRegisterForNetworkSerialization");
 
     this.server = server;
     this.tcpPort = tcpPort;

@@ -91,18 +91,18 @@ public final class Randomness
 
     switch (mode)
     {
-    case DEBUG:
-    {
-      reseedCsprngWithSystemEntropy ();
+      case DEBUG:
+      {
+        reseedCsprngWithSystemEntropy ();
 
-      break;
-    }
-    case RELEASE:
-    {
-      reseedCsprngWithHotBitsEntropy ();
+        break;
+      }
+      case RELEASE:
+      {
+        reseedCsprngWithHotBitsEntropy ();
 
-      break;
-    }
+        break;
+      }
     }
   }
 
@@ -111,7 +111,8 @@ public final class Randomness
     try
     {
       csprng = SecureRandom.getInstance ("SHA1PRNG", "SUN");
-    } catch (final NoSuchProviderException e)
+    }
+    catch (final NoSuchProviderException e)
     {
       try
       {
@@ -127,11 +128,13 @@ public final class Randomness
         log.warn ("Cannot find SUN provider, trying default (preferred) provider: {}.", provider);
 
         csprng = SecureRandom.getInstance ("SHA1PRNG", provider);
-      } catch (final NoSuchAlgorithmException e1)
+      }
+      catch (final NoSuchAlgorithmException e1)
       {
         throw new RuntimeException ("Cannot create random number generator.", e);
       }
-    } catch (final NoSuchAlgorithmException e)
+    }
+    catch (final NoSuchAlgorithmException e)
     {
       throw new RuntimeException ("Cannot create random number generator.", e);
     }
@@ -164,7 +167,8 @@ public final class Randomness
       }
 
       return trueRandomEntropySeed;
-    } catch (final RuntimeException e)
+    }
+    catch (final RuntimeException e)
     {
       log.warn ("Could not obtain HotBits entropy! Falling back to a system entropy source.", e);
 
@@ -268,18 +272,18 @@ public final class Randomness
 
     switch (currentMode)
     {
-    case DEBUG:
-    {
-      reseedCsprngWithSystemEntropy ();
+      case DEBUG:
+      {
+        reseedCsprngWithSystemEntropy ();
 
-      break;
-    }
-    case RELEASE:
-    {
-      reseedCsprngWithHotBitsEntropy ();
+        break;
+      }
+      case RELEASE:
+      {
+        reseedCsprngWithHotBitsEntropy ();
 
-      break;
-    }
+        break;
+      }
     }
   }
 

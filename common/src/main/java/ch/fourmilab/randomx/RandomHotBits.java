@@ -28,7 +28,7 @@ public class RandomHotBits extends RandomX
 
   public RandomHotBits ()
   {
-    buffer = new byte [nuflen];
+    buffer = new byte[nuflen];
   }
 
   /* Private method to fill buffer from HotBits server. */

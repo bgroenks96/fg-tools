@@ -88,7 +88,7 @@ public final class IterableEnumHelper
     if (!hasNext (e, values))
     {
       throw new IllegalStateException ("Cannot get next " + e.getClass ().getSimpleName () + " value because "
-                      + e.name () + " is the last value.");
+              + e.name () + " is the last value.");
     }
 
     return values[e.ordinal () + 1];
@@ -127,7 +127,7 @@ public final class IterableEnumHelper
     if (!hasPrevious (e))
     {
       throw new IllegalStateException ("Cannot get previous " + e.getClass ().getSimpleName () + " value because "
-                      + e.name () + " is the first value.");
+              + e.name () + " is the first value.");
     }
 
     return values[e.ordinal () - 1];

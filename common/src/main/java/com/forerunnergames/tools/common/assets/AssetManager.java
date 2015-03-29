@@ -125,6 +125,6 @@ public final class AssetManager <T extends Asset>
   public String toString ()
   {
     return String.format ("%1$s: Asset Count: %2$s | Assets: %3$s", getClass ().getSimpleName (), assets.size (),
-                    Strings.toString (assets));
+                          Strings.toString (assets));
   }
 }

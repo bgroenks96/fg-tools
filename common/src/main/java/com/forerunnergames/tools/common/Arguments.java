@@ -613,8 +613,8 @@ public final class Arguments
    * @throws IllegalArgumentException
    *           If value is strictly less than lowerInclusiveBound.
    */
-  public static  void
-                  checkLowerInclusiveBound (final long value, final long lowerInclusiveBound, final String valueName)
+  public static void
+          checkLowerInclusiveBound (final long value, final long lowerInclusiveBound, final String valueName)
   {
     checkLowerInclusiveBound (value, lowerInclusiveBound, valueName, "");
   }
@@ -788,8 +788,8 @@ public final class Arguments
    * @throws IllegalArgumentException
    *           If value is less than or equal to lowerExclusiveBound.
    */
-  public static  void
-                  checkLowerExclusiveBound (final long value, final long lowerExclusiveBound, final String valueName)
+  public static void
+          checkLowerExclusiveBound (final long value, final long lowerExclusiveBound, final String valueName)
   {
     checkLowerExclusiveBound (value, lowerExclusiveBound, valueName, "");
   }
@@ -963,8 +963,8 @@ public final class Arguments
    * @throws IllegalArgumentException
    *           If value is strictly greater than upperInclusiveBound.
    */
-  public static  void
-                  checkUpperInclusiveBound (final long value, final long upperInclusiveBound, final String valueName)
+  public static void
+          checkUpperInclusiveBound (final long value, final long upperInclusiveBound, final String valueName)
   {
     checkUpperInclusiveBound (value, upperInclusiveBound, valueName, "");
   }
@@ -1138,8 +1138,8 @@ public final class Arguments
    * @throws IllegalArgumentException
    *           If value is greater than or equal to upperExclusiveBound.
    */
-  public static  void
-                  checkUpperExclusiveBound (final long value, final long upperExclusiveBound, final String valueName)
+  public static void
+          checkUpperExclusiveBound (final long value, final long upperExclusiveBound, final String valueName)
   {
     checkUpperExclusiveBound (value, upperExclusiveBound, valueName, "");
   }
@@ -1268,9 +1268,9 @@ public final class Arguments
     final int stackLevel = getStackLevelOfFirstClassOutsideThisClass ();
 
     throw new IllegalArgumentException ("Argument \"" + valueName + "\" [value: " + value + "]" + " must be "
-                    + boundType.getMessage () + " " + (boundName.isEmpty () ? "" : "\"" + boundName + "\" ")
-                    + "[value: " + bound + "]" + " when invoking [" + Classes.getClassName (stackLevel) + "."
-                    + Methods.getMethodName (stackLevel) + "].");
+            + boundType.getMessage () + " " + (boundName.isEmpty () ? "" : "\"" + boundName + "\" ") + "[value: "
+            + bound + "]" + " when invoking [" + Classes.getClassName (stackLevel) + "."
+            + Methods.getMethodName (stackLevel) + "].");
   }
 
   private static int getStackLevelOfFirstClassOutsideThisClass ()
@@ -1292,13 +1292,13 @@ public final class Arguments
   }
 
   private static void illegalArgument (final String argumentName, final ArgumentStatus argumentStatus)
-                  throws IllegalArgumentException
+          throws IllegalArgumentException
   {
     final int stackLevel = getStackLevelOfFirstClassOutsideThisClass ();
 
     throw new IllegalArgumentException ("\nLocation: " + Classes.getClassName (stackLevel) + "."
-                    + Methods.getMethodName (stackLevel) + "\nReason:   argument '" + argumentName + "' "
-                    + argumentStatus.getMessage ());
+            + Methods.getMethodName (stackLevel) + "\nReason:   argument '" + argumentName + "' "
+            + argumentStatus.getMessage ());
   }
 
   private Arguments ()

@@ -31,7 +31,7 @@ public final class Methods
   public static void unsupportedMethod () throws UnsupportedOperationException
   {
     throw new UnsupportedOperationException ("Unsupported method: " + Classes.getClassName (1) + "."
-                    + Methods.getMethodName (1));
+            + Methods.getMethodName (1));
   }
 
   private Methods ()

@@ -26,7 +26,7 @@ public abstract class NetworkCommunicationEvent extends NetworkEvent
   public String toString ()
   {
     return String.format ("%1$s: Message: %2$s | Sender: %3$s", getClass ().getSimpleName (), getMessage (),
-                    getSender ());
+                          getSender ());
   }
 
   protected final Remote getSender ()

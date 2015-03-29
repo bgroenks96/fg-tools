@@ -17,7 +17,7 @@ public abstract class AbstractClientController extends ControllerAdapter impleme
     Arguments.checkIsNotNull (client, "client");
     Arguments.checkIsNotNull (classesToRegisterForNetworkSerialization, "classesToRegisterForNetworkSerialization");
     Arguments.checkHasNoNullElements (classesToRegisterForNetworkSerialization,
-                    "classesToRegisterForNetworkSerialization");
+                                      "classesToRegisterForNetworkSerialization");
 
     this.client = client;
     this.classesToRegisterForNetworkSerialization = classesToRegisterForNetworkSerialization;

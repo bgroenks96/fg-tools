@@ -86,7 +86,7 @@ public class AsyncExecution
       catch (Exception ex)
       {
         Logger.getLogger (AsyncExecution.class.getName ()).log (Level.SEVERE, "Exception while executing queued job",
-                ex);
+                                                                ex);
       }
     }
   }

@@ -1150,7 +1150,7 @@ public final class StreamParser
       if (!actualTokenContent.equals (expectedTokenContent))
       {
         throw new StreamParserException ("Token[" + expectedTokenContent + "] expected, but found Token["
-                        + actualTokenContent + "]\n\n" + "Last token successfully parsed: " + getCurrentTokenInfo ());
+                + actualTokenContent + "]\n\n" + "Last token successfully parsed: " + getCurrentTokenInfo ());
       }
     }
   }
@@ -1164,7 +1164,7 @@ public final class StreamParser
     if (!isEOF () && actualTokenType != expectedTokenType)
     {
       throw new StreamParserException ("Token type: " + expectedTokenType + " expected, but found token type: "
-                      + actualTokenType + "\n\nLast token successfully parsed: " + getCurrentTokenInfo ());
+              + actualTokenType + "\n\nLast token successfully parsed: " + getCurrentTokenInfo ());
     }
   }
 
@@ -1214,13 +1214,13 @@ public final class StreamParser
       case StreamTokenizer.TT_EOF:
       {
         throw new StreamParserException ("Cannot get token content for " + "current token type: "
-                        + TokenType.END_OF_FILE + "\n\n" + "Last token successfully parsed: " + getCurrentTokenInfo ());
+                + TokenType.END_OF_FILE + "\n\n" + "Last token successfully parsed: " + getCurrentTokenInfo ());
       }
 
       case StreamTokenizer.TT_EOL:
       {
         throw new StreamParserException ("Cannot get token content for " + "current token type: "
-                        + TokenType.END_OF_LINE + "\n\n" + "Last token successfully parsed: " + getCurrentTokenInfo ());
+                + TokenType.END_OF_LINE + "\n\n" + "Last token successfully parsed: " + getCurrentTokenInfo ());
       }
 
       case QUOTE_CHARACTER:
@@ -1382,7 +1382,7 @@ public final class StreamParser
     catch (final IOException e)
     {
       throw new StreamParserException ("Could not read next token.\n\n" + "Last token successfully parsed: "
-                      + getCurrentTokenInfo (), e);
+              + getCurrentTokenInfo (), e);
     }
   }
 

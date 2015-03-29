@@ -245,6 +245,46 @@ public final class IterableEnumHelper
     return Strings.toMixedOrdinal (getPosition (e));
   }
 
+  /**
+   * Converts the specified {@link java.lang.Enum} value to a lowercase {@link java.lang.String} representation.
+   *
+   * @param e
+   *          The specified {@link java.lang.Enum} value, must not be null.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> String toLowerCase (final E e)
+  {
+    Arguments.checkIsNotNull (e, "e");
+
+    return e.name ().toLowerCase ();
+  }
+
+  /**
+   * Converts the specified {@link java.lang.Enum} value to an uppercase {@link java.lang.String} representation.
+   *
+   * @param e
+   *          The specified {@link java.lang.Enum} value, must not be null.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> String toUpperCase (final E e)
+  {
+    Arguments.checkIsNotNull (e, "e");
+
+    return e.name ().toUpperCase ();
+  }
+
+  /**
+   * Converts the specified {@link java.lang.Enum} value to a proper case {@link java.lang.String} representation, where
+   * the first letter is uppercase, and the rest are lowercase.
+   *
+   * @param e
+   *          The specified {@link java.lang.Enum} value, must not be null.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> String toProperCase (final E e)
+  {
+    Arguments.checkIsNotNull (e, "e");
+
+    return Strings.toProperCase (e.name ());
+  }
+
   private IterableEnumHelper ()
   {
     Classes.instantiationNotAllowed ();

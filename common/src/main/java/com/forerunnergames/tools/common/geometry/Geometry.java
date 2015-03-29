@@ -47,6 +47,13 @@ public final class Geometry
     return new Point2D (point.getX () + translation.getX (), point.getY () + translation.getY ());
   }
 
+  public static Point2D absoluteValue (final Point2D point)
+  {
+    Arguments.checkIsNotNull (point, "point");
+
+    return new Point2D (Math.abs (point.getX ()), Math.abs (point.getY ()));
+  }
+
   private Geometry ()
   {
     Classes.instantiationNotAllowed ();

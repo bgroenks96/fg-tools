@@ -28,7 +28,7 @@ public class RandomHotBits extends RandomX
 
   public RandomHotBits ()
   {
-    buffer = new byte[nuflen];
+    buffer = new byte [nuflen];
   }
 
   /* Private method to fill buffer from HotBits server. */
@@ -50,7 +50,7 @@ public class RandomHotBits extends RandomX
         {
           fillBuffer ();
         }
-        return buffer[bufptr++];
+        return buffer [bufptr++];
       }
     }
     catch (IOException e)
@@ -68,7 +68,7 @@ public class RandomHotBits extends RandomX
     buflen = 0;
     while ((l = s.read ()) != -1)
     {
-      buffer[buflen++] = (byte) l;
+      buffer [buflen++] = (byte) l;
     }
     s.close ();
     bufptr = 0;

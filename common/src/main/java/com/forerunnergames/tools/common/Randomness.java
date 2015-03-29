@@ -123,7 +123,7 @@ public final class Randomness
           throw new RuntimeException ("Cannot create random number generator.", e);
         }
 
-        final Provider provider = providers[0];
+        final Provider provider = providers [0];
 
         log.warn ("Cannot find SUN provider, trying default (preferred) provider: {}.", provider);
 
@@ -159,11 +159,11 @@ public final class Randomness
   {
     try
     {
-      final byte[] trueRandomEntropySeed = new byte[SEED_BYTES];
+      final byte[] trueRandomEntropySeed = new byte [SEED_BYTES];
 
       for (int i = 0; i < trueRandomEntropySeed.length; ++i)
       {
-        trueRandomEntropySeed[i] = TRNG.nextByte ();
+        trueRandomEntropySeed [i] = TRNG.nextByte ();
       }
 
       return trueRandomEntropySeed;

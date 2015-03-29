@@ -30,7 +30,7 @@ public class Classes
     StackTraceElement[] stackTrace = Thread.currentThread ().getStackTrace ();
     Arguments.checkUpperExclusiveBound (level, stackTrace.length - 2, "level");
 
-    return stackTrace[level + 2].getClassName ();
+    return stackTrace [level + 2].getClassName ();
   }
 
   /**

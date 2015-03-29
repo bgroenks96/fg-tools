@@ -163,7 +163,7 @@ public abstract class RandomX
 
     while (buflen-- > 0)
     {
-      buf[i++] = nextByte ();
+      buf [i++] = nextByte ();
     }
   }
 

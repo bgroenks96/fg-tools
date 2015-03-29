@@ -19,7 +19,7 @@ public final class Methods
     Arguments.checkLowerInclusiveBound (level, 0, "level");
     Arguments.checkUpperExclusiveBound (level, length - 2, "level");
 
-    return Thread.currentThread ().getStackTrace ()[level + 2].getMethodName ();
+    return Thread.currentThread ().getStackTrace () [level + 2].getMethodName ();
   }
 
   /**

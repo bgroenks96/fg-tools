@@ -50,7 +50,7 @@ public final class IterableEnumHelper
     Arguments.checkIsNotNull (values, "values");
     Arguments.checkHasNoNullElements (values, "values");
 
-    return values[n - 1];
+    return values [n - 1];
   }
 
   /**
@@ -93,7 +93,7 @@ public final class IterableEnumHelper
               + e.name () + " is the last value.");
     }
 
-    return values[e.ordinal () + 1];
+    return values [e.ordinal () + 1];
   }
 
   /**
@@ -180,7 +180,7 @@ public final class IterableEnumHelper
               + e.name () + " is the first value.");
     }
 
-    return values[e.ordinal () - 1];
+    return values [e.ordinal () - 1];
   }
 
   /**

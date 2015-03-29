@@ -150,6 +150,19 @@ public final class IterableEnumHelper
   }
 
   /**
+   * Compares the two specified {@link java.lang.Enum} values for inequality.
+   *
+   * @param e1
+   *          The first specified {@link java.lang.Enum} value, must not be null.
+   * @param e2
+   *          The second specified {@link java.lang.Enum} value, must not be null.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> boolean isNot (final E e1, final E e2)
+  {
+    return !is (e1, e2);
+  }
+
+  /**
    * Gets the position of the specified {@link java.lang.Enum} value, the position being defined as an integer > 0 and
    * <= {@link #count(Enum[])} with respect to declarative order, the first position being 1, the second position being
    * 2, and so on.

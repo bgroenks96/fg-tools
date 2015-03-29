@@ -12,6 +12,8 @@ public interface IterableEnum <E extends Enum <E>>
 
   public boolean is (E e);
 
+  public boolean isNot (E e);
+
   public int getPosition ();
 
   public String toMixedOrdinalPosition ();

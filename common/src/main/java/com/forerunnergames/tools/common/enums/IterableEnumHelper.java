@@ -4,6 +4,8 @@ import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
 import com.forerunnergames.tools.common.Strings;
 
+import java.util.Collection;
+
 /**
  * This class exists as a workaround to some fundamental {@link java.lang.Enum} limitations.
  * <p/>
@@ -92,6 +94,54 @@ public final class IterableEnumHelper
     }
 
     return values[e.ordinal () + 1];
+  }
+
+  /**
+   * Gets whether not the specified {@link java.lang.Enum} value has a valid value succeeding it in declarative order.
+   *
+   * @param e
+   *          The specified {@link java.lang.Enum} value, must not be null.
+   *
+   * @param values
+   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *
+   * @param validValues
+   *          All of the valid {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> boolean hasNextValid (final E e,
+                                                                              final E[] values,
+                                                                              final Collection <E> validValues)
+  {
+    Arguments.checkIsNotNull (validValues, "validValues");
+    Arguments.checkHasNoNullElements (validValues, "validValues");
+
+    return hasNext (e, values) && validValues.contains (next (e, values));
+  }
+
+  /**
+   * Gets the valid {@link java.lang.Enum} value succeeding the specified {@link java.lang.Enum} value in declarative
+   * order.
+   *
+   * @param e
+   *          The specified {@link java.lang.Enum} value, must not be null.
+   *
+   * @param values
+   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *
+   * @param validValues
+   *          All of the valid {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> E nextValid (final E e,
+                                                                     final E[] values,
+                                                                     final Collection <E> validValues)
+  {
+    if (!hasNextValid (e, values, validValues))
+    {
+      throw new IllegalStateException ("Cannot get next " + e.getClass ().getSimpleName () + " value because "
+              + e.name () + " is the last value.");
+    }
+
+    return next (e, values);
   }
 
   /**

@@ -184,6 +184,34 @@ public final class IterableEnumHelper
   }
 
   /**
+   * Gets the {@link java.lang.Enum} value at the first position in declarative order.
+   *
+   * @param values
+   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> E first (final E[] values)
+  {
+    Arguments.checkIsNotNull (values, "values");
+    Arguments.checkHasNoNullElements (values, "values");
+
+    return getNthValue (1, values);
+  }
+
+  /**
+   * Gets the {@link java.lang.Enum} value at the last position in declarative order.
+   *
+   * @param values
+   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> E last (final E[] values)
+  {
+    Arguments.checkIsNotNull (values, "values");
+    Arguments.checkHasNoNullElements (values, "values");
+
+    return getNthValue (values.length, values);
+  }
+
+  /**
    * Compares the two specified {@link java.lang.Enum} values for equality.
    *
    * @param e1

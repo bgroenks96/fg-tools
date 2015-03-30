@@ -10,6 +10,10 @@ public interface IterableEnum <E extends Enum <E>>
 
   public E previous ();
 
+  public E first ();
+
+  public E last ();
+
   public boolean is (E e);
 
   public boolean isNot (E e);

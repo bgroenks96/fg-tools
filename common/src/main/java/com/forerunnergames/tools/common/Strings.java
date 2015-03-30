@@ -7,6 +7,7 @@ import com.google.common.collect.Multimap;
 import java.awt.event.KeyEvent;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -242,6 +243,33 @@ public final class Strings
   public static String pluralizeS (final int variable, final String singular)
   {
     return String.valueOf (variable) + " " + singular + (variable == 1 ? "" : "s");
+  }
+
+  /**
+   * Splits a word into multiple words using uppercase characters as a delimiter, but the delimiter is not discarded.
+   * For example: ThisWordHasUpperCASECharactersInIT will be split into the separate words: { "This", "Word", "Has",
+   * "Upper", "C", "A", "S", "E", "Characters", "In", "I", "T" }
+   *
+   * @param word
+   *          The word to split, must not be null, may be empty, may be blank (whitespace only), may contain whitespace,
+   *          may contain Unicode characters.
+   *
+   * @return An array of the split words, each one maintaining their original case, or the original word in a single
+   *         element array, if there was nothing to split, or an empty array of length 0 if the original word was empty.
+   */
+  public static String[] splitByUpperCase (final String word)
+  {
+    Arguments.checkIsNotNull (word, "word");
+
+    final String[] rawSplitWords = word.split ("(?=\\p{Lu})");
+    final ArrayList <String> nonEmptySplitWords = new ArrayList <> ();
+
+    for (final String splitWord : rawSplitWords)
+    {
+      if (!splitWord.isEmpty ()) nonEmptySplitWords.add (splitWord);
+    }
+
+    return nonEmptySplitWords.toArray (new String [nonEmptySplitWords.size ()]);
   }
 
   /**

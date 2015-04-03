@@ -7,6 +7,11 @@ public final class Size2D
   private final float width;
   private final float height;
 
+  public Size2D ()
+  {
+    this (0.0f, 0.0f);
+  }
+
   public Size2D (final float width, final float height)
   {
     Arguments.checkLowerInclusiveBound (width, 0.0f, "width");

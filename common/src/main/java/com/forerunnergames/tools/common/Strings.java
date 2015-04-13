@@ -29,7 +29,7 @@ public final class Strings
    */
   public static String aOrAn (final String nextWord)
   {
-    Arguments.checkIsNotNullOrEmptyOrBlank (nextWord, "word");
+    Arguments.checkIsNotNullOrEmptyOrBlank (nextWord, "nextWord");
 
     final String nextWordLowerCase = nextWord.toLowerCase (Locale.ENGLISH);
 

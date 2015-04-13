@@ -13,6 +13,14 @@ public final class Point2D
     this.y = y;
   }
 
+  public Point2D (final Point2D point)
+  {
+    Arguments.checkIsNotNull (point, "point");
+
+    x = point.getX ();
+    y = point.getY ();
+  }
+
   public float getX ()
   {
     return x;
@@ -56,16 +64,6 @@ public final class Point2D
   }
 
   @Override
-  public int hashCode ()
-  {
-    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
-
-    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
-
-    return result;
-  }
-
-  @Override
   public boolean equals (final Object object)
   {
     if (this == object) return true;
@@ -74,6 +72,16 @@ public final class Point2D
     final Point2D point = (Point2D) object;
 
     return Float.compare (point.getX (), x) == 0 && Float.compare (point.getY (), y) == 0;
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
+
+    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
+
+    return result;
   }
 
   @Override

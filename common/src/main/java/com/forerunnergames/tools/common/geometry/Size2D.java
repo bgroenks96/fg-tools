@@ -21,6 +21,14 @@ public final class Size2D
     this.height = height;
   }
 
+  public Size2D (final Size2D size)
+  {
+    Arguments.checkIsNotNull (size, "size");
+
+    width = size.getWidth ();
+    height = size.getHeight ();
+  }
+
   public float getWidth ()
   {
     return width;
@@ -74,16 +82,6 @@ public final class Size2D
   }
 
   @Override
-  public int hashCode ()
-  {
-    int result = (height != +0.0f ? Float.floatToIntBits (height) : 0);
-
-    result = 31 * result + (width != +0.0f ? Float.floatToIntBits (width) : 0);
-
-    return result;
-  }
-
-  @Override
   public boolean equals (final Object object)
   {
     if (this == object) return true;
@@ -92,6 +90,16 @@ public final class Size2D
     final Size2D size = (Size2D) object;
 
     return Float.compare (size.getWidth (), width) == 0 && Float.compare (size.getHeight (), height) == 0;
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (height != +0.0f ? Float.floatToIntBits (height) : 0);
+
+    result = 31 * result + (width != +0.0f ? Float.floatToIntBits (width) : 0);
+
+    return result;
   }
 
   @Override

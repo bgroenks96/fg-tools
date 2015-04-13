@@ -14,6 +14,14 @@ public final class Translation2D
     this.y = y;
   }
 
+  public Translation2D (final Translation2D translation)
+  {
+    Arguments.checkIsNotNull (translation, "translation");
+
+    x = translation.getX ();
+    y = translation.getY ();
+  }
+
   public float getX ()
   {
     return x;
@@ -57,16 +65,6 @@ public final class Translation2D
   }
 
   @Override
-  public int hashCode ()
-  {
-    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
-
-    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
-
-    return result;
-  }
-
-  @Override
   public boolean equals (final Object object)
   {
     if (this == object) return true;
@@ -75,6 +73,16 @@ public final class Translation2D
     final Translation2D translation = (Translation2D) object;
 
     return Float.compare (translation.getX (), x) == 0 && Float.compare (translation.getY (), y) == 0;
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
+
+    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
+
+    return result;
   }
 
   @Override

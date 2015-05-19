@@ -510,6 +510,29 @@ public final class Arguments
   }
 
   /**
+   * Checks if the specified map is null or empty (has no key-value mappings).
+   *
+   * @param map
+   *          The map to check.
+   * @param mapName
+   *          The name of the map to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If the map is null or empty (has no key-value mappings).
+   */
+  public static void checkIsNotNullOrEmpty (final Map <?, ?> map, final String mapName)
+  {
+    if (map == null)
+    {
+      illegalArgument (mapName, ArgumentStatus.NULL);
+    }
+    else if (map.isEmpty ())
+    {
+      illegalArgument (mapName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
    * Checks if the specified array is null or empty.
    *
    * @param array

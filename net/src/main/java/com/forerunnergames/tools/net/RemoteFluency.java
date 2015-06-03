@@ -12,6 +12,13 @@ public class RemoteFluency
     return remote.getAddress ();
   }
 
+  public static int portOf (final Remote remote)
+  {
+    Arguments.checkIsNotNull (remote, "remote");
+
+    return remote.getPort ();
+  }
+
   private RemoteFluency ()
   {
     Classes.instantiationNotAllowed ();

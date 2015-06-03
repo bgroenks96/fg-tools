@@ -6,9 +6,15 @@ public interface Remote
 {
   int getConnectionId ();
 
-  boolean has (final int connectionId);
+  boolean hasConnectionId (final int connectionId);
 
   boolean hasAddress ();
+
+  boolean hasPort ();
+
+  boolean hasAddressAndPort ();
+
+  boolean hasPort (final int port);
 
   boolean has (final InetSocketAddress address);
 
@@ -17,6 +23,8 @@ public interface Remote
   boolean isNot (final Remote remote);
 
   String getAddress ();
+
+  int getPort ();
 
   @Override
   int hashCode ();

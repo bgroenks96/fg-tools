@@ -2,11 +2,11 @@ package com.forerunnergames.tools.common.controllers;
 
 public interface Controller
 {
-  public void initialize ();
+  void initialize ();
 
-  public void update ();
+  void update ();
 
-  public boolean shouldShutDown ();
+  boolean shouldShutDown ();
 
-  public void shutDown ();
+  void shutDown ();
 }

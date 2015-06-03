@@ -4,15 +4,15 @@ import com.forerunnergames.tools.common.controllers.Controller;
 
 public interface Application
 {
-  public void initialize ();
+  void initialize ();
 
-  public void add (final Controller controller);
+  void add (final Controller controller);
 
-  public void remove (final Controller controller);
+  void remove (final Controller controller);
 
-  public void update ();
+  void update ();
 
-  public void shutDown ();
+  void shutDown ();
 
-  public boolean shouldShutDown ();
+  boolean shouldShutDown ();
 }

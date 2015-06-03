@@ -2,9 +2,9 @@ package com.forerunnergames.tools.net;
 
 public interface ServerConfiguration
 {
-  public String getServerAddress ();
+  String getServerAddress ();
 
-  public String getServerName ();
+  String getServerName ();
 
-  public int getServerTcpPort ();
+  int getServerTcpPort ();
 }

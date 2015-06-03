@@ -2,23 +2,23 @@ package com.forerunnergames.tools.common.enums;
 
 public interface IterableEnum <E extends Enum <E>>
 {
-  public boolean hasNext ();
+  boolean hasNext ();
 
-  public E next ();
+  E next ();
 
-  public boolean hasPrevious ();
+  boolean hasPrevious ();
 
-  public E previous ();
+  E previous ();
 
-  public E first ();
+  E first ();
 
-  public E last ();
+  E last ();
 
-  public boolean is (E e);
+  boolean is (E e);
 
-  public boolean isNot (E e);
+  boolean isNot (E e);
 
-  public int getPosition ();
+  int getPosition ();
 
-  public String toMixedOrdinalPosition ();
+  String toMixedOrdinalPosition ();
 }

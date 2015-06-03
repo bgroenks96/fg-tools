@@ -4,26 +4,26 @@ import java.net.InetSocketAddress;
 
 public interface Remote
 {
-  public int getConnectionId ();
+  int getConnectionId ();
 
-  public boolean has (final int connectionId);
+  boolean has (final int connectionId);
 
-  public boolean hasAddress ();
+  boolean hasAddress ();
 
-  public boolean has (final InetSocketAddress address);
+  boolean has (final InetSocketAddress address);
 
-  public boolean is (final Remote remote);
+  boolean is (final Remote remote);
 
-  public boolean isNot (final Remote remote);
+  boolean isNot (final Remote remote);
 
-  public String getAddress ();
-
-  @Override
-  public int hashCode ();
+  String getAddress ();
 
   @Override
-  public boolean equals (final Object o);
+  int hashCode ();
 
   @Override
-  public String toString ();
+  boolean equals (final Object o);
+
+  @Override
+  String toString ();
 }

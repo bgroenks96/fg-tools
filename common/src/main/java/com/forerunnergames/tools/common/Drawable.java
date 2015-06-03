@@ -2,7 +2,7 @@ package com.forerunnergames.tools.common;
 
 public interface Drawable
 {
-  public void draw ();
+  void draw ();
 
-  public void dispose ();
+  void dispose ();
 }

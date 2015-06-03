@@ -2,12 +2,12 @@ package com.forerunnergames.tools.common.color;
 
 public interface RgbaColorComponent
 {
-  public static final int MIN_VALUE = 0;
-  public static final int MAX_VALUE = 255;
+  int MIN_VALUE = 0;
+  int MAX_VALUE = 255;
 
-  public int getValue ();
+  int getValue ();
 
-  public int hashCode ();
+  int hashCode ();
 
-  public boolean equals (final Object o);
+  boolean equals (final Object o);
 }

@@ -2,15 +2,15 @@ package com.forerunnergames.tools.net;
 
 public interface Server extends ClientConnector, ClientCommunicator
 {
-  public void add (final NetworkListener listener);
+  void add (final NetworkListener listener);
 
-  public void remove (final NetworkListener listener);
+  void remove (final NetworkListener listener);
 
-  public void register (final Class <?> type);
+  void register (final Class<?> type);
 
-  public void start (final int tcpPort);
+  void start (final int tcpPort);
 
-  public void stop ();
+  void stop ();
 
-  public void shutDown ();
+  void shutDown ();
 }

@@ -46,7 +46,7 @@ public interface AsyncCompletionListener <V>
    * @param result
    *          the result of the async job or {@code null} if it was a {@code Runnable}
    */
-  public void completed (V result);
+  void completed (V result);
 
   /**
    * The job has failed with an exception
@@ -54,6 +54,6 @@ public interface AsyncCompletionListener <V>
    * @param ex
    *          the exception thrown by the async job
    */
-  public void failed (Exception ex);
+  void failed (Exception ex);
 
 }

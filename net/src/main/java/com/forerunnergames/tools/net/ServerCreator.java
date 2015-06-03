@@ -4,9 +4,9 @@ import com.forerunnergames.tools.common.Result;
 
 public interface ServerCreator
 {
-  public Result <String> create (final ServerConfiguration config);
+  Result <String> create (final ServerConfiguration config);
 
-  public String resolveAddress ();
+  String resolveAddress ();
 
-  public void destroy ();
+  void destroy ();
 }

@@ -4,31 +4,31 @@ import com.forerunnergames.tools.common.id.Id;
 
 public interface Asset extends Comparable <Asset>
 {
-  public String getName ();
+  String getName ();
 
-  public Id getId ();
+  Id getId ();
 
-  public boolean doesNotHave (final Id id);
+  boolean doesNotHave (final Id id);
 
-  public boolean has (final String name);
+  boolean has (final String name);
 
-  public boolean hasName (final String name);
+  boolean hasName (final String name);
 
-  public boolean has (final Id id);
+  boolean has (final Id id);
 
-  public boolean is (final Asset asset);
+  boolean is (final Asset asset);
 
-  public boolean isNot (final Asset asset);
-
-  @Override
-  public int compareTo (final Asset asset);
+  boolean isNot (final Asset asset);
 
   @Override
-  public int hashCode ();
+  int compareTo (final Asset asset);
 
   @Override
-  public boolean equals (final Object obj);
+  int hashCode ();
 
   @Override
-  public String toString ();
+  boolean equals (final Object obj);
+
+  @Override
+  String toString ();
 }

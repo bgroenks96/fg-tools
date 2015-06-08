@@ -4,7 +4,5 @@ public interface ServerConfiguration
 {
   String getServerAddress ();
 
-  String getServerName ();
-
   int getServerTcpPort ();
 }

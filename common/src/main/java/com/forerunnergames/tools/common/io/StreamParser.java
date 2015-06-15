@@ -5,7 +5,15 @@ import com.forerunnergames.tools.common.Classes;
 import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.common.Utils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -768,6 +776,37 @@ public final class StreamParser
   }
 
   /**
+   * Attempt to get the next remaining (if any) characters on the current line from the stream. <br/>
+   *
+   * @return A collection of single character codes from the stream.
+   *
+   * @throws StreamParserException
+   * <br/>
+   *           If the StreamParser could not read the next character from the stream, <br/>
+   *           If the next remaining tokens on the current line are not single characters (excluding EOL & EOF).
+   */
+  public Collection <Integer> getNextRemainingCharactersOnLine () throws StreamParserException
+  {
+    assert s != null;
+
+    final Collection <Integer> characterCodes = new ArrayList <> ();
+
+    enableEndOfLineTokens ();
+
+    do
+    {
+      discardNextCharacter ();
+
+      if (!isEOL () && !isEOF ()) characterCodes.add (s.ttype);
+    }
+    while (!isEOL () && !isEOF ());
+
+    disableEndOfLineTokens ();
+
+    return characterCodes;
+  }
+
+  /**
    * Attempt to get the next double from the stream. <br/>
    * <br/>
    * Note: This method will return Double.MIN_VALUE if EOF is encountered.
@@ -821,6 +860,37 @@ public final class StreamParser
   }
 
   /**
+   * Attempt to get the next remaining (if any) doubles on the current line from the stream. <br/>
+   *
+   * @return A collection of doubles from the stream.
+   *
+   * @throws StreamParserException
+   * <br/>
+   *           If the StreamParser could not read the next double from the stream, <br/>
+   *           If the next remaining tokens on the current line are not doubles (excluding EOL & EOF).
+   */
+  public Collection <Double> getNextRemainingDoublesOnLine () throws StreamParserException
+  {
+    assert s != null;
+
+    final Collection <Double> doubles = new ArrayList <> ();
+
+    enableEndOfLineTokens ();
+
+    do
+    {
+      discardNextDouble ();
+
+      if (!isEOL () && !isEOF ()) doubles.add (s.nval);
+    }
+    while (!isEOL () && !isEOF ());
+
+    disableEndOfLineTokens ();
+
+    return doubles;
+  }
+
+  /**
    * Attempt to get the next integer from the stream. <br/>
    * <br/>
    * Note: This method will return Integer.MIN_VALUE if EOF is encountered.
@@ -869,6 +939,37 @@ public final class StreamParser
     {
       integers.add (getNextInteger ());
     }
+
+    return integers;
+  }
+
+  /**
+   * Attempt to get the next remaining (if any) integers on the current line from the stream. <br/>
+   *
+   * @return A collection of integers from the stream.
+   *
+   * @throws StreamParserException
+   * <br/>
+   *           If the StreamParser could not read the next integers from the stream, <br/>
+   *           If the next remaining tokens on the current line are not integers (excluding EOL & EOF).
+   */
+  public Collection <Integer> getNextRemainingIntegersOnLine () throws StreamParserException
+  {
+    assert s != null;
+
+    final Collection <Integer> integers = new ArrayList <> ();
+
+    enableEndOfLineTokens ();
+
+    do
+    {
+      discardNextInteger ();
+
+      if (!isEOL () && !isEOF ()) integers.add ((int) s.nval);
+    }
+    while (!isEOL () && !isEOF ());
+
+    disableEndOfLineTokens ();
 
     return integers;
   }
@@ -991,6 +1092,37 @@ public final class StreamParser
   }
 
   /**
+   * Attempt to get the next remaining (if any) quoted strings on the current line from the stream. <br/>
+   *
+   * @return A collection of quoted strings from the stream.
+   *
+   * @throws StreamParserException
+   * <br/>
+   *           If the StreamParser could not read the next quoted strings from the stream, <br/>
+   *           If the next remaining tokens on the current line are not quoted strings (excluding EOL & EOF).
+   */
+  public Collection <String> getNextRemainingQuotedStringsOnLine () throws StreamParserException
+  {
+    assert s != null;
+
+    final Collection <String> quotedStrings = new ArrayList <> ();
+
+    enableEndOfLineTokens ();
+
+    do
+    {
+      discardNextQuotedString ();
+
+      if (!isEOL () && !isEOF ()) quotedStrings.add (s.sval);
+    }
+    while (!isEOL () && !isEOF ());
+
+    disableEndOfLineTokens ();
+
+    return quotedStrings;
+  }
+
+  /**
    * Attempt to get the next token from the stream. <br/>
    * <br/>
    * Note: This method will return an empty string if EOF is encountered.
@@ -1033,6 +1165,37 @@ public final class StreamParser
     {
       tokens.add (getNextToken ());
     }
+
+    return tokens;
+  }
+
+  /**
+   * Attempt to get the next remaining (if any) tokens on the current line from the stream. <br/>
+   *
+   * @return A collection of tokens from the stream.
+   *
+   * @throws StreamParserException
+   * <br/>
+   *           If the StreamParser could not read the next tokens from the stream, <br/>
+   *           If the next remaining tokens on the current line are not tokens (excluding EOL & EOF).
+   */
+  public Collection <String> getNextRemainingTokensOnLine () throws StreamParserException
+  {
+    assert s != null;
+
+    final Collection <String> tokens = new ArrayList <> ();
+
+    enableEndOfLineTokens ();
+
+    do
+    {
+      discardNextToken ();
+
+      if (!isEOL () && !isEOF ()) tokens.add (getCurrentTokenContent ());
+    }
+    while (!isEOL () && !isEOF ());
+
+    disableEndOfLineTokens ();
 
     return tokens;
   }
@@ -1086,6 +1249,37 @@ public final class StreamParser
     {
       unquotedStrings.add (getNextUnquotedString ());
     }
+
+    return unquotedStrings;
+  }
+
+  /**
+   * Attempt to get the next remaining (if any) unquoted strings on the current line from the stream. <br/>
+   *
+   * @return A collection of unquoted strings from the stream.
+   *
+   * @throws StreamParserException
+   * <br/>
+   *           If the StreamParser could not read the next unquoted strings from the stream, <br/>
+   *           If the next remaining tokens on the current line are not unquoted strings (excluding EOL & EOF).
+   */
+  public Collection <String> getNextRemainingUnquotedStringsOnLine () throws StreamParserException
+  {
+    assert s != null;
+
+    final Collection <String> unquotedStrings = new ArrayList <> ();
+
+    enableEndOfLineTokens ();
+
+    do
+    {
+      discardNextUnquotedString ();
+
+      if (!isEOL () && !isEOF ()) unquotedStrings.add (s.sval);
+    }
+    while (!isEOL () && !isEOF ());
+
+    disableEndOfLineTokens ();
 
     return unquotedStrings;
   }
@@ -1161,7 +1355,7 @@ public final class StreamParser
 
     final TokenType actualTokenType = getCurrentTokenType ();
 
-    if (!isEOF () && actualTokenType != expectedTokenType)
+    if (!isEOF () && !isEOL () && actualTokenType != expectedTokenType)
     {
       throw new StreamParserException ("Token type: " + expectedTokenType + " expected, but found token type: "
               + actualTokenType + "\n\nLast token successfully parsed: " + getCurrentTokenInfo ());

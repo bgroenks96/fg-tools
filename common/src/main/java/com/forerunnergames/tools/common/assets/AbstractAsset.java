@@ -112,6 +112,6 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   @Override
   public String toString ()
   {
-    return String.format ("Name: %1$s | Id: %2$s", name, id);
+    return String.format ("%1$s: Name: %2$s | Id: %3$s", getClass ().getSimpleName (), name, id);
   }
 }

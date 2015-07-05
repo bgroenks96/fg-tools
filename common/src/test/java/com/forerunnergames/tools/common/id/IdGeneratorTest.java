@@ -17,8 +17,7 @@ public class IdGeneratorTest
   @Test
   public void testIdGenValuesUnique ()
   {
-    Set <Id> idSet = new HashSet <> ();
-    IdGenerator.reset (); // ensure that IdGen is in initial state
+    final Set <Id> idSet = new HashSet <> ();
     final int N = 1000000;
     for (int i = 0; i < N; i++)
     {
@@ -27,12 +26,5 @@ public class IdGeneratorTest
     // since Set disallows duplicate objects, testing that the correct number
     // were added successfully should verify uniqueness
     assertTrue (idSet.size () == N);
-  }
-
-  @Test (expected = IllegalStateException.class)
-  public void testIdGenOverflow ()
-  {
-    IdGenerator.setInternalTickValue (Integer.MAX_VALUE + 1);
-    IdGenerator.generateUniqueId ();
   }
 }

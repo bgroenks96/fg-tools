@@ -2,7 +2,7 @@ package com.forerunnergames.tools.common.id;
 
 import com.forerunnergames.tools.common.Classes;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.UUID;
 
 /**
  * Provides a static interface for generating global, unique Id values. IdGen keeps and increments an AtomicInteger
@@ -10,14 +10,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public final class IdGenerator
 {
-
-  private static AtomicInteger globallyUniqueIdValue = createAtomicIdValue ();
-
-  private static AtomicInteger createAtomicIdValue ()
-  {
-    return new AtomicInteger (Integer.MIN_VALUE + 1);
-  }
-
   /**
    * Generates a globally unique Id value by fetching and incrementing a static, internal integer value.
    *
@@ -28,30 +20,9 @@ public final class IdGenerator
    */
   public static Id generateUniqueId ()
   {
-    final Id id = new Id (globallyUniqueIdValue.getAndIncrement ());
-
-    if (id.hasValue (Integer.MIN_VALUE)) throw new IllegalStateException ("Ran out of unique IDs!");
+    final Id id = new Id (UUID.randomUUID ());
 
     return id;
-  }
-
-  /**
-   * Resets the internal ID tick to its initial, minimum value.
-   */
-  public static void reset ()
-  {
-    globallyUniqueIdValue = createAtomicIdValue ();
-  }
-
-  /**
-   * Sets the internal ID tick to the given value. This method is provided for testing purposes.
-   *
-   * @param newValue
-   *          the new value that the internal global ID tick should be set to.
-   */
-  static void setInternalTickValue (final int newValue)
-  {
-    globallyUniqueIdValue.set (newValue);
   }
 
   private IdGenerator ()

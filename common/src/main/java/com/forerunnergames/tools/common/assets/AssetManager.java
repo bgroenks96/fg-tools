@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
+import java.util.UUID;
 
 public final class AssetManager <T extends Asset>
 {
@@ -39,7 +40,7 @@ public final class AssetManager <T extends Asset>
     Arguments.checkIsNotNull (ids, "ids");
     Arguments.checkHasNoNullElements (ids, "ids");
 
-    ImmutableCollection.Builder <T> matchingAssetsBuilder = new ImmutableList.Builder <> ();
+    final ImmutableCollection.Builder <T> matchingAssetsBuilder = new ImmutableList.Builder <> ();
 
     for (final Id assetId : ids)
     {
@@ -75,23 +76,13 @@ public final class AssetManager <T extends Asset>
     return assetWith (id).getName ();
   }
 
-  public Id nextAvailableId ()
+  public boolean existsAssetWith (final UUID idValue)
   {
-    int requestedIdValue = 0;
+    Arguments.checkIsNotNull (idValue, "idValue");
 
-    while (existsAssetWith (requestedIdValue))
-    {
-      ++requestedIdValue;
-    }
-
-    return new Id (requestedIdValue);
-  }
-
-  public boolean existsAssetWith (final int idValue)
-  {
     for (final T asset : allAssets ())
     {
-      if (asset.getId ().value () == idValue) return true;
+      if (asset.getId ().value ().equals (idValue)) return true;
     }
 
     return false;

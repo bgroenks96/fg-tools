@@ -11,7 +11,7 @@ public final class Id implements Comparable <Id>
   public Id (final UUID value)
   {
     Arguments.checkIsNotNull (value, "value");
-    
+
     this.value = value;
   }
 
@@ -29,8 +29,6 @@ public final class Id implements Comparable <Id>
   @Override
   public boolean equals (final Object o)
   {
-    Arguments.checkIsNotNull (o, "o");
-    
     if (this == o) return true;
 
     if (o == null || getClass () != o.getClass ()) return false;
@@ -57,21 +55,21 @@ public final class Id implements Comparable <Id>
   public boolean is (final Id id)
   {
     Arguments.checkIsNotNull (id, "id");
-    
+
     return equals (id);
   }
 
   public boolean isNot (final Id id)
   {
     Arguments.checkIsNotNull (id, "id");
-    
+
     return !is (id);
   }
 
   public boolean hasValue (final UUID value)
   {
     Arguments.checkIsNotNull (value, "value");
-    
+
     return this.value.equals (value);
   }
 }

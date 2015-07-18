@@ -25,6 +25,9 @@ subprojects {
   task javadocJar (type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     javadoc.options.links ("http://docs.oracle.com/javase/7/docs/api/");
+    if (JavaVersion.current().isJava8Compatible()) {
+      javadoc.options.addStringOption('Xdoclint:warning')
+    }
     from javadoc.destinationDir
   }
 

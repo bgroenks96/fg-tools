@@ -4,6 +4,13 @@ import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
 import com.forerunnergames.tools.common.Event;
 import com.forerunnergames.tools.net.Remote;
+import com.forerunnergames.tools.net.events.local.NetworkCommunicationEvent;
+import com.forerunnergames.tools.net.events.local.ServerCommunicationEvent;
+import com.forerunnergames.tools.net.events.local.ServerConnectionEvent;
+import com.forerunnergames.tools.net.events.local.ServerDisconnectionEvent;
+import com.forerunnergames.tools.net.events.local.ClientCommunicationEvent;
+import com.forerunnergames.tools.net.events.local.ClientConnectionEvent;
+import com.forerunnergames.tools.net.events.local.ClientDisconnectionEvent;
 
 public final class EventFluency
 {

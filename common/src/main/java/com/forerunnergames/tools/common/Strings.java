@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
+import org.slf4j.helpers.MessageFormatter;
+
 import org.apache.commons.lang3.text.WordUtils;
 
 public final class Strings
@@ -200,8 +202,8 @@ public final class Strings
   }
 
   /**
-   * Gets the correct plurally-agreeing form of the given phrase depending on whether its preceding
-   * clarifying numerical value is equal to 1. <br/>
+   * Gets the correct plurally-agreeing form of the given phrase depending on whether its preceding clarifying numerical
+   * value is equal to 1. <br/>
    * <br/>
    * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a balance of -3 dollars.
    *
@@ -212,8 +214,8 @@ public final class Strings
    * @param plural
    *          The plural form of the phrase
    *
-   * @return The plurally-agreeing form of the phrase, preceded by the count as a number, with a space between the
-   *         count & phrase.
+   * @return The plurally-agreeing form of the phrase, preceded by the count as a number, with a space between the count
+   *         & phrase.
    *
    * @see #pluralizeS(int, java.lang.String)
    * @see #pluralizeWord(int, String, String)
@@ -224,11 +226,10 @@ public final class Strings
   }
 
   /**
-   * Gets the correct plurally-agreeing form of the given phrase depending on whether its preceding
-   * clarifying numerical value is equal to 1. <br/>
+   * Gets the correct plurally-agreeing form of the given phrase depending on whether its preceding clarifying numerical
+   * value is equal to 1. <br/>
    * <br/>
-   * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a balance of -3 dollars.
-   * <br/>
+   * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a balance of -3 dollars. <br/>
    * This form only
    *
    * @param count
@@ -249,8 +250,8 @@ public final class Strings
   }
 
   /**
-   * Gets the correct plurally-agreeing simple -s (add s) form of the given phrase depending on whether
-   * its preceding clarifying numerical value is equal to 1. <br/>
+   * Gets the correct plurally-agreeing simple -s (add s) form of the given phrase depending on whether its preceding
+   * clarifying numerical value is equal to 1. <br/>
    * <br/>
    * If the phrase needs to be pluralized, a lowercase 's' will be appended to the end of the phrase, otherwise the
    * singular form of the phrase will be returned. This method is only appropriate for phrases whose correct plural form
@@ -263,8 +264,8 @@ public final class Strings
    * @param singular
    *          The singular form of the phrase
    *
-   * @return The plurally-agreeing form of the phrase, preceded by the count as a number, with a space between the
-   *         count & phrase.
+   * @return The plurally-agreeing form of the phrase, preceded by the count as a number, with a space between the count
+   *         & phrase.
    *
    * @see #pluralize(int, java.lang.String, java.lang.String)
    * @see #pluralizeWord(int, String, String)
@@ -398,7 +399,7 @@ public final class Strings
       int nonOrdinalPart = 0;
       int ordinalPart = 0;
 
-      int nonnegativeN = Math.abs (n);
+      final int nonnegativeN = Math.abs (n);
 
       if (nonnegativeN >= 100)
       {
@@ -757,7 +758,7 @@ public final class Strings
         s.insert (s.lastIndexOf (separator) + 1, "and ");
       }
     }
-    catch (StringIndexOutOfBoundsException ignoredException)
+    catch (final StringIndexOutOfBoundsException ignoredException)
     {
     }
 
@@ -947,6 +948,18 @@ public final class Strings
     }
 
     return words.toString ();
+  }
+
+  /**
+   * Formats the given String using the slf4j MessageFormatter.
+   */
+  public static String format (final String message, final Object... args)
+  {
+    Arguments.checkIsNotNull (message, "message");
+    Arguments.checkIsNotNull (args, "args");
+    Arguments.checkHasNoNullElements (args, "args");
+
+    return MessageFormatter.arrayFormat (message, args).getMessage ();
   }
 
   private Strings ()

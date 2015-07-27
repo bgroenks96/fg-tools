@@ -10,19 +10,12 @@ import java.nio.file.Paths;
 
 public final class FileUtils
 {
-  public static String loadFile (final String path, final Charset encoding)
+  public static String loadFile (final String path, final Charset encoding) throws IOException
   {
     Arguments.checkIsNotNull (path, "path");
     Arguments.checkIsNotNull (encoding, "encoding");
 
-    try
-    {
-      return new String (Files.readAllBytes (Paths.get (path)), encoding);
-    }
-    catch (final IOException e)
-    {
-      throw new RuntimeException ("Error loading file [" + path + "] with encoding [" + encoding + "]", e);
-    }
+    return new String (Files.readAllBytes (Paths.get (path)), encoding);
   }
 
   private FileUtils ()

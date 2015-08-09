@@ -17,8 +17,7 @@ public class DefaultExternalAddressResolver implements ExternalAddressResolver
 
   /**
    * @param url
-   *          The URL where the ip address and hostname will be printed on subsequent lines. The first line must be the
-   *          ip address string, and the second line must be the hostname string.
+   *          The URL where the ip address will be printed in plain text on the first line of the web page.
    */
   public DefaultExternalAddressResolver (final String url)
   {
@@ -35,39 +34,6 @@ public class DefaultExternalAddressResolver implements ExternalAddressResolver
     try
     {
       reader = new BufferedReader (new InputStreamReader (new URL (url).openStream ()));
-
-      return reader.readLine ();
-    }
-    catch (final IOException e)
-    {
-      log.error ("Could not resolve external ip address using URL [{}]\n\nCause:\n\n{}", url, e);
-
-      return "";
-    }
-    finally
-    {
-      if (reader != null)
-      {
-        try
-        {
-          reader.close ();
-        }
-        catch (final IOException ignored)
-        {
-        }
-      }
-    }
-  }
-
-  @Override
-  public String resolveHostName ()
-  {
-    BufferedReader reader = null;
-
-    try
-    {
-      reader = new BufferedReader (new InputStreamReader (new URL (url).openStream ()));
-      reader.readLine ();
 
       return reader.readLine ();
     }

@@ -3,7 +3,11 @@ package com.forerunnergames.tools.net;
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
 
+import com.google.common.net.InetAddresses;
+
 import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
 
 public final class NetworkConstants
 {
@@ -23,6 +27,11 @@ public final class NetworkConstants
 
     return address.equals (NetworkConstants.LOCALHOST_ADDRESS)
             || address.equalsIgnoreCase (NetworkConstants.LOCALHOST_NAME);
+  }
+
+  public static boolean isValidIpAddress (@Nullable final String address)
+  {
+    return address != null && InetAddresses.isInetAddress (address);
   }
 
   private NetworkConstants ()

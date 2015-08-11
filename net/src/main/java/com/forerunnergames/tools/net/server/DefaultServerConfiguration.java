@@ -1,6 +1,7 @@
 package com.forerunnergames.tools.net.server;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.net.NetworkConstants;
 import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
 
 public final class DefaultServerConfiguration implements ServerConfiguration
@@ -12,6 +13,7 @@ public final class DefaultServerConfiguration implements ServerConfiguration
   {
     Arguments.checkIsNotNull (serverAddress, "serverAddress");
     Arguments.checkIsNotNegative (serverTcpPort, "serverTcpPort");
+    Arguments.checkUpperInclusiveBound (serverTcpPort, NetworkConstants.MAX_PORT, "serverTcpPort");
 
     this.serverAddress = serverAddress;
     this.serverTcpPort = serverTcpPort;

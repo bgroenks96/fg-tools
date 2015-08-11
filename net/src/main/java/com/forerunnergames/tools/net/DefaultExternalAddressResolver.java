@@ -1,6 +1,9 @@
 package com.forerunnergames.tools.net;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Exceptions;
+
+import com.google.common.net.InetAddresses;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,7 +38,14 @@ public class DefaultExternalAddressResolver implements ExternalAddressResolver
     {
       reader = new BufferedReader (new InputStreamReader (new URL (url).openStream ()));
 
-      return reader.readLine ();
+      final String ipAddress = reader.readLine ();
+
+      if (ipAddress == null || !InetAddresses.isInetAddress (ipAddress))
+      {
+        Exceptions.throwIO ("Invalid IP address [{}].", ipAddress);
+      }
+
+      return ipAddress;
     }
     catch (final IOException e)
     {

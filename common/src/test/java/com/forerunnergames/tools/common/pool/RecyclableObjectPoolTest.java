@@ -38,6 +38,18 @@ public abstract class RecyclableObjectPoolTest <T> extends ObjectPoolTest <T>
     }
   }
 
+  @Test (expected = IllegalStateException.class)
+  public void testReleaseFailsWithForeignObject ()
+  {
+    try (final RecyclableObjectPool <T> pool = createObjectPool ();
+            final ObjectPool <T> otherPool = createObjectPool ())
+    {
+      pool.allocate (1);
+      otherPool.allocate (1);
+      pool.release (otherPool.acquire ().get ());
+    }
+  }
+
   @Test
   public void testListenerCalledOnRelease ()
   {

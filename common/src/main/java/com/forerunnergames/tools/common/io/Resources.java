@@ -63,11 +63,12 @@ public final class Resources
     Arguments.checkIsNotNull (parentDirectoryPath, "parentDirectoryPath");
     Preconditions.checkIsFalse (parentDirectoryPath.startsWith ("/"), "parentDirectoryPath must not start with /");
 
-    final URL resourceUrl = Resources.class.getResource ("/" + parentDirectoryPath);
+    final URL resourceUrl = jarClass.getResource ("/" + parentDirectoryPath);
 
     if (resourceUrl == null)
     {
-      throw new IllegalStateException (Strings.format ("Cannot find jar resource: {}", parentDirectoryPath));
+      throw new IllegalStateException (Strings.format ("Cannot find jar resource [{}] in jar containing class [{}]",
+                                                       parentDirectoryPath, jarClass));
     }
 
     try

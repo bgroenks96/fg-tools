@@ -61,7 +61,7 @@ public final class Resources
     Arguments.checkIsNotNull (jarClass, "jarClass");
     Arguments.checkIsNotNull (parentDirectoryPath, "parentDirectoryPath");
 
-    final URL resourceUrl = jarClass.getResource ("/" + parentDirectoryPath);
+    final URL resourceUrl = jarClass.getResource (parentDirectoryPath);
 
     if (resourceUrl == null)
     {

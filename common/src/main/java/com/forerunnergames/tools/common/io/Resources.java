@@ -2,7 +2,6 @@ package com.forerunnergames.tools.common.io;
 
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
-import com.forerunnergames.tools.common.Preconditions;
 import com.forerunnergames.tools.common.Strings;
 
 import com.google.common.collect.ImmutableList;
@@ -51,8 +50,8 @@ public final class Resources
    *
    * @param parentDirectoryPath
    *          The jar directory path, specified from the root of the jar, from which to obtain the child directory
-   *          names, must not be null, must not begin with a / (it is prepended automatically), may or may not end with
-   *          a / (doesn't affect the result).
+   *          names, must not be null, may or may not begin with a /, may or may not end with a / (ending / doesn't
+   *          affect the result).
    *
    * @return A list of sub-directory names, may be empty, will never be null, will never contain null elements.
    */
@@ -61,7 +60,6 @@ public final class Resources
   {
     Arguments.checkIsNotNull (jarClass, "jarClass");
     Arguments.checkIsNotNull (parentDirectoryPath, "parentDirectoryPath");
-    Preconditions.checkIsFalse (parentDirectoryPath.startsWith ("/"), "parentDirectoryPath must not start with /");
 
     final URL resourceUrl = jarClass.getResource ("/" + parentDirectoryPath);
 

@@ -1,6 +1,7 @@
 package com.forerunnergames.tools.common.pool;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Exceptions;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
@@ -30,20 +31,26 @@ public class SoftRecyclableObjectPool <T> extends SoftObjectPool <T> implements 
   {
     Arguments.checkIsNotNull (t, "t");
 
-    notifyListeners (t);
-
     // find the object in the checkout set and return it to the pool
     final Iterator <SoftReference <T>> checkoutItr = checkout.iterator ();
+    boolean foundMatch = false;
     while (checkoutItr.hasNext ())
     {
       final SoftReference <T> nextRef = checkoutItr.next ();
       final Optional <T> obj = Optional.fromNullable (nextRef.get ());
       // remove cleared references from checkout set + the reference to this object, if it hasn't been cleared
-      if (!obj.isPresent () || obj.get ().equals (t))
+      final boolean isMatch = obj.get ().equals (t);
+      if (!obj.isPresent () || isMatch)
       {
         checkoutItr.remove ();
+        if (!foundMatch) foundMatch = true;
       }
     }
+
+    if (!foundMatch) Exceptions.throwIllegalState ("Object [{}] is not a member of this pool.", t);
+
+    notifyListeners (t);
+
     pool.offer (t);
   }
 

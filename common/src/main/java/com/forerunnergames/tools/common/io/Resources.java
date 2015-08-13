@@ -71,15 +71,16 @@ public final class Resources
                                                        parentDirectoryPath, jarClass));
     }
 
+    FileSystem fileSystem = null;
+
     try
     {
       final URI uri = resourceUrl.toURI ();
-
       final Path myPath;
 
       if (uri.getScheme ().equals ("jar"))
       {
-        final FileSystem fileSystem = FileSystems.newFileSystem (uri, Collections.<String, Object> emptyMap ());
+        fileSystem = FileSystems.newFileSystem (uri, Collections.<String, Object> emptyMap ());
         myPath = fileSystem.getPath (parentDirectoryPath);
       }
       else
@@ -149,6 +150,19 @@ public final class Resources
     catch (final IOException | URISyntaxException e)
     {
       throw new IllegalStateException (Strings.format ("Failed to process jar resource: {}", parentDirectoryPath), e);
+    }
+    finally
+    {
+      if (fileSystem != null)
+      {
+        try
+        {
+          fileSystem.close ();
+        }
+        catch (final IOException ignored)
+        {
+        }
+      }
     }
   }
 

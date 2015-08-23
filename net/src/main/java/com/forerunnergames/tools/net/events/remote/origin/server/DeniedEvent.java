@@ -7,7 +7,7 @@ import com.forerunnergames.tools.net.events.remote.AnswerEvent;
  *
  * This event is intended to be sent over the network.
  */
-public interface DeniedEvent <T> extends AnswerEvent
+public interface DeniedEvent <T> extends ServerEvent, AnswerEvent
 {
   T getReason ();
 }

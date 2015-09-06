@@ -3,6 +3,7 @@ package com.forerunnergames.tools.net;
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
 
+import com.google.common.net.HostSpecifier;
 import com.google.common.net.InetAddresses;
 
 import java.util.regex.Pattern;
@@ -32,6 +33,11 @@ public final class NetworkConstants
   public static boolean isValidIpAddress (@Nullable final String address)
   {
     return address != null && InetAddresses.isInetAddress (address);
+  }
+
+  public static boolean isValidAddress (@Nullable final String address)
+  {
+    return address != null && HostSpecifier.isValid (address);
   }
 
   private NetworkConstants ()

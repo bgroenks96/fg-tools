@@ -5,6 +5,7 @@ import com.forerunnergames.tools.common.Classes;
 
 import com.google.common.net.HostSpecifier;
 import com.google.common.net.InetAddresses;
+import com.google.common.net.InternetDomainName;
 
 import java.util.regex.Pattern;
 
@@ -38,6 +39,11 @@ public final class NetworkConstants
   public static boolean isValidAddress (@Nullable final String address)
   {
     return address != null && HostSpecifier.isValid (address);
+  }
+
+  public static boolean isValidDomainName (@Nullable final String address)
+  {
+    return address != null && InternetDomainName.isValid (address);
   }
 
   private NetworkConstants ()

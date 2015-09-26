@@ -54,16 +54,6 @@ public class StringsTest
   }
 
   @Test
-  public void testSplitByUpperCaseUnicode ()
-  {
-    final String word = "MyÜberCoolString";
-    final String[] expected = { "My", "Über", "Cool", "String" };
-    final String[] actual = Strings.splitByUpperCase (word);
-
-    assertArrayEqualsPrintAllElementsOnFail (expected, actual);
-  }
-
-  @Test
   public void testSplitByUpperCaseNothingToSplit ()
   {
     final String word = " this string really doesn't have anything to split... ";

@@ -957,7 +957,6 @@ public final class Strings
   {
     Arguments.checkIsNotNull (message, "message");
     Arguments.checkIsNotNull (args, "args");
-    Arguments.checkHasNoNullElements (args, "args");
 
     return MessageFormatter.arrayFormat (message, args).getMessage ();
   }

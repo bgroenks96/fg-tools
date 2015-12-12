@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableSet;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -63,7 +64,7 @@ public abstract class AbstractGraphModel <T> implements GraphModel <T>
 
   /**
    * Computes the distance between two nodes using a conventional breadth first search algorithm.
-   * 
+   *
    * @return the distance between the two nodes, or -1 if there is no path from 'node0' to 'node1'
    */
   @Override
@@ -111,5 +112,43 @@ public abstract class AbstractGraphModel <T> implements GraphModel <T>
   public boolean isEmpty ()
   {
     return size == 0;
+  }
+
+  @Override
+  public Iterator <T> iterator ()
+  {
+    return new GraphIterator ();
+  }
+
+  private class GraphIterator implements Iterator <T>
+  {
+    private final Iterator <T> mapIterator;
+
+    GraphIterator ()
+    {
+      mapIterator = adjList.keySet ().iterator ();
+    }
+
+    @Override
+    public boolean hasNext ()
+    {
+      return mapIterator.hasNext ();
+    }
+
+    @Override
+    public T next ()
+    {
+      return mapIterator.next ();
+    }
+
+    /**
+     * @throws UnsupportedOperationException
+     */
+    @Override
+    public void remove ()
+    {
+      throw new UnsupportedOperationException (
+              Strings.format ("{} does not support Iterator.remove()", getClass ().getSimpleName ()));
+    }
   }
 }

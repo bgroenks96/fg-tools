@@ -18,6 +18,26 @@ public final class Result <T>
     return new Result <> (false, failureReason);
   }
 
+  public static <V> boolean anyResultsFailed (final Iterable <Result <V>> results)
+  {
+    for (final Result <V> result : results)
+    {
+      if (result.failed ()) return true;
+    }
+
+    return false;
+  }
+
+  public static <V extends ReturnStatus <?>> boolean anyStatusFailed (final Iterable <V> results)
+  {
+    for (final V status : results)
+    {
+      if (status.getResult ().failed ()) return true;
+    }
+
+    return false;
+  }
+
   public boolean isSuccessful ()
   {
     return isSuccessful;
@@ -55,6 +75,11 @@ public final class Result <T>
     Preconditions.checkIsTrue (isFailure (), "Cannot get failure reason when result is successful.");
 
     return failureReason;
+  }
+
+  public interface ReturnStatus <R>
+  {
+    Result <R> getResult ();
   }
 
   private Result (final boolean isSuccessful, final T failureReason)

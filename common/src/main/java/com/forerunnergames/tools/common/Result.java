@@ -1,6 +1,6 @@
 package com.forerunnergames.tools.common;
 
-public final class Result <T>
+public class Result <T>
 {
   private final boolean isSuccessful;
   private final T failureReason;
@@ -82,7 +82,7 @@ public final class Result <T>
     Result <R> getResult ();
   }
 
-  private Result (final boolean isSuccessful, final T failureReason)
+  protected Result (final boolean isSuccessful, final T failureReason)
   {
     this.isSuccessful = isSuccessful;
     this.failureReason = failureReason;

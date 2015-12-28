@@ -30,6 +30,18 @@ public abstract class AbstractGraphModel <T> implements GraphModel <T>
   }
 
   @Override
+  public int size ()
+  {
+    return size;
+  }
+
+  @Override
+  public boolean isEmpty ()
+  {
+    return size == 0;
+  }
+
+  @Override
   public ImmutableSet <T> getAdjacentNodes (final T node)
   {
     Arguments.checkIsNotNull (node, "node");
@@ -100,18 +112,6 @@ public abstract class AbstractGraphModel <T> implements GraphModel <T>
     }
 
     return -1;
-  }
-
-  @Override
-  public int size ()
-  {
-    return size;
-  }
-
-  @Override
-  public boolean isEmpty ()
-  {
-    return size == 0;
   }
 
   @Override

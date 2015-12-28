@@ -8,4 +8,3 @@ import com.forerunnergames.tools.common.Event;
 public interface RemoteEvent extends Event
 {
 }
-

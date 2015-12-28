@@ -26,7 +26,7 @@ public abstract class AbstractObjectPool <T> implements ObjectPool <T>
 
     try
     {
-      factory = new DynamicPoolFactory <T> (type, args);
+      factory = new DynamicPoolFactory <> (type, args);
     }
     catch (final NoSuchMethodException | SecurityException e)
     {
@@ -44,6 +44,12 @@ public abstract class AbstractObjectPool <T> implements ObjectPool <T>
     this.factory = factory;
   }
 
+  @Override
+  public Iterator <T> iterator ()
+  {
+    return new ObjectPoolIterator ();
+  }
+
   protected Class <T> getType ()
   {
     return type;
@@ -52,12 +58,6 @@ public abstract class AbstractObjectPool <T> implements ObjectPool <T>
   protected PoolFactory <T> getFactory ()
   {
     return factory;
-  }
-
-  @Override
-  public Iterator <T> iterator ()
-  {
-    return new ObjectPoolIterator ();
   }
 
   private class ObjectPoolIterator implements Iterator <T>

@@ -87,7 +87,8 @@ public class StringsTest
   public void testSplitByUpperCaseAllUppercase ()
   {
     final String word = "THISISALLUPPERCASE";
-    final String[] expected = { "T", "H", "I", "S", "I", "S", "A", "L", "L", "U", "P", "P", "E", "R", "C", "A", "S", "E" };
+    final String[] expected = { "T", "H", "I", "S", "I", "S", "A", "L", "L", "U", "P", "P", "E", "R", "C", "A", "S",
+            "E" };
     final String[] actual = Strings.splitByUpperCase (word);
 
     assertArrayEqualsPrintAllElementsOnFail (expected, actual);

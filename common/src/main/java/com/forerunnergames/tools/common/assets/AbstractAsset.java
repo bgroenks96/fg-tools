@@ -65,7 +65,7 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
   {
     Arguments.checkIsNotNull (id, "id");
 
-    return id.equals (id);
+    return this.id.equals (id);
   }
 
   @Override
@@ -104,9 +104,7 @@ public abstract class AbstractAsset implements Asset, Comparable <Asset>
 
     final AbstractAsset that = (AbstractAsset) o;
 
-    if (!id.equals (that.id)) return false;
-
-    return true;
+    return id.equals (that.id);
   }
 
   @Override

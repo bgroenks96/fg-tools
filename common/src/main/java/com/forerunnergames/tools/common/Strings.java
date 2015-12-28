@@ -72,7 +72,7 @@ public final class Strings
   }
 
   /**
-   * Checks whether the specifiied string is contained in the specified StringBuilder.
+   * Checks whether the specified string is contained in the specified StringBuilder.
    *
    * @param stringBuilder
    *          The StringBuilder, must not be null.
@@ -396,8 +396,8 @@ public final class Strings
 
     if (n != 0 && n != Integer.MIN_VALUE)
     {
-      int nonOrdinalPart = 0;
-      int ordinalPart = 0;
+      int nonOrdinalPart;
+      int ordinalPart;
 
       final int nonnegativeN = Math.abs (n);
 
@@ -758,7 +758,7 @@ public final class Strings
         s.insert (s.lastIndexOf (separator) + 1, "and ");
       }
     }
-    catch (final StringIndexOutOfBoundsException ignoredException)
+    catch (final StringIndexOutOfBoundsException ignored)
     {
     }
 
@@ -781,7 +781,7 @@ public final class Strings
 
     if (n != Integer.MIN_VALUE)
     {
-      int remainder = 0;
+      int remainder;
 
       final int nonnegativeN = Math.abs (n);
 

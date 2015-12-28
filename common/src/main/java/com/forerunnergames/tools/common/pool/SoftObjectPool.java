@@ -31,10 +31,10 @@ import org.slf4j.LoggerFactory;
 public class SoftObjectPool <T> extends AbstractObjectPool <T>
 {
   private static final Logger log = LoggerFactory.getLogger (SoftObjectPool.class);
-  private final ReferenceQueue <T> refQueue = new ReferenceQueue <T> ();
-  private final AtomicBoolean isClosed = new AtomicBoolean ();
   protected final ConcurrentLinkedQueue <T> pool = new ConcurrentLinkedQueue <> ();
   protected final Set <SoftReference <T>> checkout = Sets.newConcurrentHashSet ();
+  private final ReferenceQueue <T> refQueue = new ReferenceQueue <> ();
+  private final AtomicBoolean isClosed = new AtomicBoolean ();
 
   protected SoftObjectPool (final PoolFactory <T> factory, final Class <T> type)
   {
@@ -49,6 +49,20 @@ public class SoftObjectPool <T> extends AbstractObjectPool <T>
   protected SoftObjectPool (final Class <T> type, final Object... args)
   {
     super (type, args);
+  }
+
+  @Override
+  public synchronized void close ()
+  {
+    if (isClosed.get ()) return;
+    pool.clear ();
+    Reference <?> ref;
+    while ((ref = refQueue.poll ()) != null)
+    {
+      ref.clear ();
+    }
+    checkout.clear ();
+    isClosed.set (true);
   }
 
   @Override
@@ -72,7 +86,7 @@ public class SoftObjectPool <T> extends AbstractObjectPool <T>
 
     if (!canAcquire ()) return Optional.absent ();
     final T obj = pool.poll ();
-    checkout.add (new SoftReference <T> (obj, refQueue));
+    checkout.add (new SoftReference <> (obj, refQueue));
     log.trace ("Object taken from pool. type: {} | current checkout count: {}", getType (), checkout.size ());
     return Optional.of (obj);
   }
@@ -89,20 +103,6 @@ public class SoftObjectPool <T> extends AbstractObjectPool <T>
     Preconditions.checkIsFalse (isClosed.get (), "Object pool has been closed.");
 
     return pool.size ();
-  }
-
-  @Override
-  public synchronized void close ()
-  {
-    if (isClosed.get ()) return;
-    pool.clear ();
-    Reference <?> ref;
-    while ((ref = refQueue.poll ()) != null)
-    {
-      ref.clear ();
-    }
-    checkout.clear ();
-    isClosed.set (true);
   }
 
   @Override

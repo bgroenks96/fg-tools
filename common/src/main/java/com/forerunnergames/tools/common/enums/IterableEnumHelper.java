@@ -10,7 +10,8 @@ import java.util.Collection;
  * This class exists as a workaround to some fundamental {@link java.lang.Enum} limitations.
  * <p/>
  * It replaces an abstract implementation of {@link IterableEnum}, since it is impossible to create an abstract
- * {@code enum}, or more specifically, impossible to provide an abstract base class that implements {@link IterableEnum}.
+ * {@code enum}, or more specifically, impossible to provide an abstract base class that implements {@link IterableEnum}
+ * .
  * <p/>
  * It is also worth noting that it is also impossible for this class to be a default concrete implementation of
  * {@link IterableEnum} because it would require this class to be an enum, and therefore, it could not have generic type

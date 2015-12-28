@@ -33,6 +33,12 @@ public final class Randomness
   private static Mode currentMode;
   // @formatter:on
 
+  // Initialize the random number generator.
+  static
+  {
+    setModeTo (Mode.DEBUG);
+  }
+
   /**
    * The default mode is DEBUG.
    */
@@ -50,12 +56,6 @@ public final class Randomness
      * will automatically fall back to using system entropy, with a log entry explaining what went wrong.
      */
     RELEASE
-  }
-
-  // Initialize the random number generator.
-  static
-  {
-    setModeTo (Mode.DEBUG);
   }
 
   /**
@@ -103,76 +103,6 @@ public final class Randomness
 
         break;
       }
-    }
-  }
-
-  private static void createCsprng ()
-  {
-    try
-    {
-      csprng = SecureRandom.getInstance ("SHA1PRNG", "SUN");
-    }
-    catch (final NoSuchProviderException e)
-    {
-      try
-      {
-        final Provider[] providers = Security.getProviders ();
-
-        if (providers == null || providers.length == 0)
-        {
-          throw new RuntimeException ("Cannot create random number generator.", e);
-        }
-
-        final Provider provider = providers [0];
-
-        log.warn ("Cannot find SUN provider, trying default (preferred) provider: {}.", provider);
-
-        csprng = SecureRandom.getInstance ("SHA1PRNG", provider);
-      }
-      catch (final NoSuchAlgorithmException e1)
-      {
-        throw new RuntimeException ("Cannot create random number generator.", e);
-      }
-    }
-    catch (final NoSuchAlgorithmException e)
-    {
-      throw new RuntimeException ("Cannot create random number generator.", e);
-    }
-  }
-
-  private static void reseedCsprngWithSystemEntropy ()
-  {
-    csprng.setSeed (generateSystemEntropySeed ());
-  }
-
-  private static byte[] generateSystemEntropySeed ()
-  {
-    return csprng.generateSeed (SEED_BYTES);
-  }
-
-  private static void reseedCsprngWithHotBitsEntropy ()
-  {
-    csprng.setSeed (generateHotBitsEntropySeed ());
-  }
-
-  private static byte[] generateHotBitsEntropySeed ()
-  {
-    try
-    {
-      final byte[] trueRandomEntropySeed = new byte [SEED_BYTES];
-
-      for (int i = 0; i < trueRandomEntropySeed.length; ++i)
-      {
-        trueRandomEntropySeed [i] = TRNG.nextByte ();
-      }
-
-      return trueRandomEntropySeed;
-    }
-    catch (final RuntimeException e)
-    {
-      log.warn ("Could not obtain HotBits entropy! Falling back to a system entropy source.", e);
-
-      return generateSystemEntropySeed ();
     }
   }
 
@@ -256,42 +186,6 @@ public final class Randomness
     return shuffle (elements).get (0);
   }
 
-  private static void checkCsprngUsage ()
-  {
-    if (shouldReseedCsprng ()) reseedCsprng ();
-  }
-
-  private static boolean shouldReseedCsprng ()
-  {
-    return reseedCounter > RESEED_THRESHOLD;
-  }
-
-  private static void reseedCsprng ()
-  {
-    reseedCounter = 0;
-
-    switch (currentMode)
-    {
-      case DEBUG:
-      {
-        reseedCsprngWithSystemEntropy ();
-
-        break;
-      }
-      case RELEASE:
-      {
-        reseedCsprngWithHotBitsEntropy ();
-
-        break;
-      }
-    }
-  }
-
-  private static void updateCsprngUsage (final int timesUsed)
-  {
-    reseedCounter += timesUsed;
-  }
-
   /**
    * Shuffles a copy of the specified iterable using a cryptographically secure pseudo random number generator.
    * <p/>
@@ -337,5 +231,111 @@ public final class Randomness
     Arguments.checkIsNotNull (elements, "elements");
 
     return shuffle (Arrays.asList (elements));
+  }
+
+  private static void createCsprng ()
+  {
+    try
+    {
+      csprng = SecureRandom.getInstance ("SHA1PRNG", "SUN");
+    }
+    catch (final NoSuchProviderException e)
+    {
+      try
+      {
+        final Provider[] providers = Security.getProviders ();
+
+        if (providers == null || providers.length == 0)
+        {
+          throw new RuntimeException ("Cannot create random number generator.", e);
+        }
+
+        final Provider provider = providers [0];
+
+        log.warn ("Cannot find SUN provider, trying default (preferred) provider: {}.", provider);
+
+        csprng = SecureRandom.getInstance ("SHA1PRNG", provider);
+      }
+      catch (final NoSuchAlgorithmException e1)
+      {
+        throw new RuntimeException ("Cannot create random number generator.", e);
+      }
+    }
+    catch (final NoSuchAlgorithmException e)
+    {
+      throw new RuntimeException ("Cannot create random number generator.", e);
+    }
+  }
+
+  private static void reseedCsprngWithSystemEntropy ()
+  {
+    csprng.setSeed (generateSystemEntropySeed ());
+  }
+
+  private static byte[] generateSystemEntropySeed ()
+  {
+    return csprng.generateSeed (SEED_BYTES);
+  }
+
+  private static void reseedCsprngWithHotBitsEntropy ()
+  {
+    csprng.setSeed (generateHotBitsEntropySeed ());
+  }
+
+  private static byte[] generateHotBitsEntropySeed ()
+  {
+    try
+    {
+      final byte[] trueRandomEntropySeed = new byte [SEED_BYTES];
+
+      for (int i = 0; i < trueRandomEntropySeed.length; ++i)
+      {
+        trueRandomEntropySeed [i] = TRNG.nextByte ();
+      }
+
+      return trueRandomEntropySeed;
+    }
+    catch (final RuntimeException e)
+    {
+      log.warn ("Could not obtain HotBits entropy! Falling back to a system entropy source.", e);
+
+      return generateSystemEntropySeed ();
+    }
+  }
+
+  private static void checkCsprngUsage ()
+  {
+    if (shouldReseedCsprng ()) reseedCsprng ();
+  }
+
+  private static boolean shouldReseedCsprng ()
+  {
+    return reseedCounter > RESEED_THRESHOLD;
+  }
+
+  private static void reseedCsprng ()
+  {
+    reseedCounter = 0;
+
+    switch (currentMode)
+    {
+      case DEBUG:
+      {
+        reseedCsprngWithSystemEntropy ();
+
+        break;
+      }
+      case RELEASE:
+      {
+        reseedCsprngWithHotBitsEntropy ();
+
+        break;
+      }
+    }
+  }
+
+  private static void updateCsprngUsage (final int timesUsed)
+  {
+    reseedCounter += timesUsed;
   }
 }

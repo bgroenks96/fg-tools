@@ -27,12 +27,6 @@ public class SoftObjectPoolTest
   {
     private static final String value = "Test";
 
-    @Override
-    protected ObjectPool <String> createObjectPool ()
-    {
-      return Pools.createSoftPoolWithArgs (String.class, value);
-    }
-
     @Test
     public void testAcquireReturnsValidValues ()
     {
@@ -45,25 +39,18 @@ public class SoftObjectPoolTest
           assertEquals (value, s);
         }
       }
+    }    @Override
+    protected ObjectPool <String> createObjectPool ()
+    {
+      return Pools.createSoftPoolWithArgs (String.class, value);
     }
+
+
   }
 
   public static class TestPoolWithTypeInteger extends ObjectPoolTest <Integer>
   {
     private static final int value = 50;
-
-    @Override
-    protected ObjectPool <Integer> createObjectPool ()
-    {
-      return Pools.createSoftPool (Integer.class, new PoolFactory <Integer> ()
-      {
-        @Override
-        public Integer make ()
-        {
-          return value;
-        }
-      });
-    }
 
     @Test
     public void testAcquireReturnsValidValues ()
@@ -77,6 +64,19 @@ public class SoftObjectPoolTest
           assertEquals (value, i);
         }
       }
+    }    @Override
+    protected ObjectPool <Integer> createObjectPool ()
+    {
+      return Pools.createSoftPool (Integer.class, new PoolFactory <Integer> ()
+      {
+        @Override
+        public Integer make ()
+        {
+          return value;
+        }
+      });
     }
+
+
   }
 }

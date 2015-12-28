@@ -17,7 +17,6 @@ package ch.fourmilab.randomx;
 
 public abstract class RandomX
 {
-
   private int nbits = 0;
   private boolean iset = false;
   private double gset;
@@ -76,7 +75,7 @@ public abstract class RandomX
 
   public long nextLong ()
   {
-    return (((long) nextInt ()) << 32) | (((long) nextInt ()) & 0xFFFFFFFFl);
+    return (((long) nextInt ()) << 32) | (((long) nextInt ()) & 0xFFFFFFFFL);
   }
 
   /**
@@ -94,7 +93,7 @@ public abstract class RandomX
 
   public double nextDouble ()
   {
-    return (nextLong () & 0x7FFFFFFFFFFFFFFFl) / (0x7FFFFFFFFFFFFFFFl * 1.0);
+    return (nextLong () & 0x7FFFFFFFFFFFFFFFL) / (0x7FFFFFFFFFFFFFFFL * 1.0);
   }
 
   // Extended generator access methods with default implementations

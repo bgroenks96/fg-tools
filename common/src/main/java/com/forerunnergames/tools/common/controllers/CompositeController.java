@@ -19,21 +19,6 @@ public final class CompositeController implements Controller
     this.children.addAll (Arrays.asList (children));
   }
 
-  public void add (final Controller child)
-  {
-    Arguments.checkIsNotNull (child, "child");
-
-    children.add (child);
-  }
-
-  public void remove (final Controller child)
-  {
-    Arguments.checkIsNotNull (child, "child");
-    Arguments.checkIsTrue (children.contains (child), "Child [" + child + "] not found.");
-
-    children.remove (child);
-  }
-
   @Override
   public void initialize ()
   {
@@ -70,6 +55,21 @@ public final class CompositeController implements Controller
     {
       controller.shutDown ();
     }
+  }
+
+  public void add (final Controller child)
+  {
+    Arguments.checkIsNotNull (child, "child");
+
+    children.add (child);
+  }
+
+  public void remove (final Controller child)
+  {
+    Arguments.checkIsNotNull (child, "child");
+    Arguments.checkIsTrue (children.contains (child), "Child [" + child + "] not found.");
+
+    children.remove (child);
   }
 
   @Override

@@ -35,7 +35,7 @@ public final class Utils
 
     assert foundKey;
 
-    return boxedKey.intValue ();
+    return boxedKey;
   }
 
   /**

@@ -10,15 +10,15 @@ public final class Arguments
 {
   private enum ArgumentStatus
   {
-    BLANK("is blank"),
-    BLANK_ELEMENTS("has blank elements"),
-    EMPTY("is empty"),
-    EMPTY_ELEMENTS("has empty elements"),
-    NULL("is null"),
-    NULL_ELEMENTS("has null elements"),
-    NULL_KEYS("has null keys"),
-    NULL_VALUES("has null values"),
-    NULL_KEYS_AND_VALUES("has null keys & null values");
+    BLANK ("is blank"),
+    BLANK_ELEMENTS ("has blank elements"),
+    EMPTY ("is empty"),
+    EMPTY_ELEMENTS ("has empty elements"),
+    NULL ("is null"),
+    NULL_ELEMENTS ("has null elements"),
+    NULL_KEYS ("has null keys"),
+    NULL_VALUES ("has null values"),
+    NULL_KEYS_AND_VALUES ("has null keys & null values");
 
     private final String message;
 
@@ -27,7 +27,7 @@ public final class Arguments
       return message;
     }
 
-    private ArgumentStatus (final String message)
+    ArgumentStatus (final String message)
     {
       this.message = message;
     }
@@ -35,10 +35,10 @@ public final class Arguments
 
   private enum BoundType
   {
-    LOWER_EXCLUSIVE("strictly greater than"),
-    UPPER_EXCLUSIVE("strictly less than"),
-    LOWER_INCLUSIVE("greater than or equal to"),
-    UPPER_INCLUSIVE("less than or equal to");
+    LOWER_EXCLUSIVE ("strictly greater than"),
+    UPPER_EXCLUSIVE ("strictly less than"),
+    LOWER_INCLUSIVE ("greater than or equal to"),
+    UPPER_INCLUSIVE ("less than or equal to");
 
     private final String message;
 
@@ -47,7 +47,7 @@ public final class Arguments
       return message;
     }
 
-    private BoundType (final String message)
+    BoundType (final String message)
     {
       this.message = message;
     }
@@ -108,11 +108,6 @@ public final class Arguments
     if (hasNullKeys (map)) illegalArgument (mapName, ArgumentStatus.NULL_KEYS);
   }
 
-  private static boolean hasNullKeys (final Map <?, ?> map)
-  {
-    return map != null && Iterables.contains (map.keySet (), null);
-  }
-
   /**
    * Checks if the specified Map has any null values. The check will pass if the Map itself is null, or if the map has
    * any null keys.
@@ -128,11 +123,6 @@ public final class Arguments
   public static void checkHasNoNullValues (final Map <?, ?> map, final String mapName)
   {
     if (hasNullValues (map)) illegalArgument (mapName, ArgumentStatus.NULL_VALUES);
-  }
-
-  private static boolean hasNullValues (final Map <?, ?> map)
-  {
-    return map != null && Iterables.contains (map.values (), null);
   }
 
   /**
@@ -636,8 +626,7 @@ public final class Arguments
    * @throws IllegalArgumentException
    *           If value is strictly less than lowerInclusiveBound.
    */
-  public static void
-          checkLowerInclusiveBound (final long value, final long lowerInclusiveBound, final String valueName)
+  public static void checkLowerInclusiveBound (final long value, final long lowerInclusiveBound, final String valueName)
   {
     checkLowerInclusiveBound (value, lowerInclusiveBound, valueName, "");
   }
@@ -811,8 +800,7 @@ public final class Arguments
    * @throws IllegalArgumentException
    *           If value is less than or equal to lowerExclusiveBound.
    */
-  public static void
-          checkLowerExclusiveBound (final long value, final long lowerExclusiveBound, final String valueName)
+  public static void checkLowerExclusiveBound (final long value, final long lowerExclusiveBound, final String valueName)
   {
     checkLowerExclusiveBound (value, lowerExclusiveBound, valueName, "");
   }
@@ -986,8 +974,7 @@ public final class Arguments
    * @throws IllegalArgumentException
    *           If value is strictly greater than upperInclusiveBound.
    */
-  public static void
-          checkUpperInclusiveBound (final long value, final long upperInclusiveBound, final String valueName)
+  public static void checkUpperInclusiveBound (final long value, final long upperInclusiveBound, final String valueName)
   {
     checkUpperInclusiveBound (value, upperInclusiveBound, valueName, "");
   }
@@ -1161,8 +1148,7 @@ public final class Arguments
    * @throws IllegalArgumentException
    *           If value is greater than or equal to upperExclusiveBound.
    */
-  public static void
-          checkUpperExclusiveBound (final long value, final long upperExclusiveBound, final String valueName)
+  public static void checkUpperExclusiveBound (final long value, final long upperExclusiveBound, final String valueName)
   {
     checkUpperExclusiveBound (value, upperExclusiveBound, valueName, "");
   }
@@ -1282,6 +1268,16 @@ public final class Arguments
     }
   }
 
+  private static boolean hasNullKeys (final Map <?, ?> map)
+  {
+    return map != null && Iterables.contains (map.keySet (), null);
+  }
+
+  private static boolean hasNullValues (final Map <?, ?> map)
+  {
+    return map != null && Iterables.contains (map.values (), null);
+  }
+
   private static void boundsViolation (final Number value,
                                        final Number bound,
                                        final String valueName,
@@ -1319,9 +1315,9 @@ public final class Arguments
   {
     final int stackLevel = getStackLevelOfFirstClassOutsideThisClass ();
 
-    throw new IllegalArgumentException ("\nLocation: " + Classes.getClassName (stackLevel) + "."
-            + Methods.getMethodName (stackLevel) + "\nReason:   argument '" + argumentName + "' "
-            + argumentStatus.getMessage ());
+    throw new IllegalArgumentException (
+            "\nLocation: " + Classes.getClassName (stackLevel) + "." + Methods.getMethodName (stackLevel)
+                    + "\nReason:   argument '" + argumentName + "' " + argumentStatus.getMessage ());
   }
 
   private Arguments ()

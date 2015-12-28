@@ -20,9 +20,7 @@ public final class IdGenerator
    */
   public static Id generateUniqueId ()
   {
-    final Id id = new Id (UUID.randomUUID ());
-
-    return id;
+    return new Id (UUID.randomUUID ());
   }
 
   private IdGenerator ()

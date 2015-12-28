@@ -27,48 +27,6 @@ public final class StreamParser
   private Reader reader;
   private StreamTokenizer s;
 
-  public enum CommentType
-  {
-    SLASH_SLASH,
-    SLASH_STAR;
-
-    public boolean is (final CommentType type)
-    {
-      Arguments.checkIsNotNull (type, "type");
-
-      return equals (type);
-    }
-  }
-
-  public enum CommentStatus
-  {
-    ENABLED(true),
-    DISABLED(false);
-
-    private boolean isEnabled;
-
-    public boolean isEnabled ()
-    {
-      return isEnabled;
-    }
-
-    private CommentStatus (final boolean isEnabled)
-    {
-      this.isEnabled = isEnabled;
-    }
-  }
-
-  private enum TokenType
-  {
-    DOUBLE,
-    END_OF_FILE,
-    END_OF_LINE,
-    INTEGER,
-    QUOTED_STRING,
-    SINGLE_CHARACTER,
-    UNQUOTED_STRING
-  }
-
   /*
    * Constructs a new StreamParser with the specified file.
    *
@@ -131,6 +89,48 @@ public final class StreamParser
   protected StreamParser ()
   {
     Classes.defaultConstructorNotSupported ();
+  }
+
+  public enum CommentType
+  {
+    SLASH_SLASH,
+    SLASH_STAR;
+
+    public boolean is (final CommentType type)
+    {
+      Arguments.checkIsNotNull (type, "type");
+
+      return equals (type);
+    }
+  }
+
+  public enum CommentStatus
+  {
+    ENABLED (true),
+    DISABLED (false);
+
+    private boolean isEnabled;
+
+    public boolean isEnabled ()
+    {
+      return isEnabled;
+    }
+
+    CommentStatus (final boolean isEnabled)
+    {
+      this.isEnabled = isEnabled;
+    }
+  }
+
+  private enum TokenType
+  {
+    DOUBLE,
+    END_OF_FILE,
+    END_OF_LINE,
+    INTEGER,
+    QUOTED_STRING,
+    SINGLE_CHARACTER,
+    UNQUOTED_STRING
   }
 
   /**
@@ -224,7 +224,7 @@ public final class StreamParser
    * Attempt to discard a single character from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a single character (excluding EOF).
    */
@@ -242,7 +242,7 @@ public final class StreamParser
    *          The character to discard.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a single character (excluding EOF), <br/>
    *           If the content of unquotedString does not equal the content of the parsed token (excluding EOF).
@@ -261,7 +261,7 @@ public final class StreamParser
    *          The number of multiple single characters to discard, must be > 0.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not single characters (excluding EOF).
    */
@@ -283,7 +283,7 @@ public final class StreamParser
    *          null elements.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next characters.size() tokens from the stream, <br/>
    *           If the next characters.size() tokens are not single characters (excluding EOF) <br/>
    *           If the content of characters does not equal the content of the parsed tokens (excluding EOF).
@@ -295,7 +295,7 @@ public final class StreamParser
 
     for (final Character c : characters)
     {
-      discardNextCharacter (c.charValue ());
+      discardNextCharacter (c);
 
       if (isEOF ())
       {
@@ -308,7 +308,7 @@ public final class StreamParser
    * Attempt to discard a double from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a double (excluding EOF).
    */
@@ -326,7 +326,7 @@ public final class StreamParser
    *          The double to discard.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a double (excluding EOF), <br/>
    *           If the content of n does not equal the content of the parsed token (excluding EOF).
@@ -345,7 +345,7 @@ public final class StreamParser
    *          The number of doubles to discard, must be > 0.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not doubles (excluding EOF).
    */
@@ -367,7 +367,7 @@ public final class StreamParser
    *          elements.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next doubles.size() tokens from the stream, <br/>
    *           If the next doubles.size() tokens are not doubles (excluding EOF) <br/>
    *           If the content of doubles does not equal the content of the parsed tokens (excluding EOF).
@@ -379,7 +379,7 @@ public final class StreamParser
 
     for (final Double d : doubles)
     {
-      discardNextDouble (d.doubleValue ());
+      discardNextDouble (d);
 
       if (isEOF ())
       {
@@ -392,7 +392,7 @@ public final class StreamParser
    * Attempt to discard an integer from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not an integer (excluding EOF).
    */
@@ -410,7 +410,7 @@ public final class StreamParser
    *          The integer to discard.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not an integer (excluding EOF), <br/>
    *           If the content of n does not equal the content of the parsed token (excluding EOF).
@@ -429,7 +429,7 @@ public final class StreamParser
    *          The number of integers to discard, must be > 0.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not integers (excluding EOF).
    */
@@ -451,7 +451,7 @@ public final class StreamParser
    *          elements.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next integers.size() tokens from the stream, <br/>
    *           If the next integers.size() tokens are not integers (excluding EOF) <br/>
    *           If the content of integers does not equal the content of the parsed tokens (excluding EOF).
@@ -463,7 +463,7 @@ public final class StreamParser
 
     for (final Integer i : integers)
     {
-      discardNextInteger (i.intValue ());
+      discardNextInteger (i);
 
       if (isEOF ())
       {
@@ -476,7 +476,7 @@ public final class StreamParser
    * Attempt to discard a line from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next line from the stream.
    */
   public void discardNextLine () throws StreamParserException
@@ -499,7 +499,7 @@ public final class StreamParser
    *          The number of lines to discard, must be > 0.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count lines from the stream.
    */
   public void discardNextLines (final int count) throws StreamParserException
@@ -524,7 +524,7 @@ public final class StreamParser
    * Attempt to discard a quoted string from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a quoted String (excluding EOF).
    */
@@ -542,7 +542,7 @@ public final class StreamParser
    *          The quoted string to discard, must not be null, must not be empty, must not be blank (whitespace only).
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a quoted String (excluding EOF), <br/>
    *           If the content of quotedString does not equal the content of the parsed token (excluding EOF).
@@ -563,7 +563,7 @@ public final class StreamParser
    *          The number of quoted strings to discard, must be > 0.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not quoted strings (excluding EOF).
    */
@@ -585,7 +585,7 @@ public final class StreamParser
    *          null elements.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next quotedStrings.size() tokens from the stream, <br/>
    *           If the next quotedStrings.size() tokens are not quoted Strings (excluding EOF), <br/>
    *           If the content of quotedStrings does not equal the content of the parsed tokens (excluding EOF).
@@ -610,7 +610,7 @@ public final class StreamParser
    * Attempt to discard a token from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream.
    */
   public void discardNextToken () throws StreamParserException
@@ -625,7 +625,7 @@ public final class StreamParser
    *          The number of tokens to discard, must be > 0.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream.
    */
   public void discardNextTokens (final int count) throws StreamParserException
@@ -642,7 +642,7 @@ public final class StreamParser
    * Attempt to discard an unquoted string from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not an unquoted string (excluding EOF).
    */
@@ -660,7 +660,7 @@ public final class StreamParser
    *          The unquoted string to discard.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not an unquoted string (excluding EOF), <br/>
    *           If the content of unquotedString does not equal the content of the parsed token (excluding EOF).
@@ -681,7 +681,7 @@ public final class StreamParser
    *          The number of unquoted strings to discard, must be > 0.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not unquoted Strings (excluding EOF).
    */
@@ -703,7 +703,7 @@ public final class StreamParser
    *          null elements.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next unquotedStrings.size() tokens from the stream, <br/>
    *           If the next unquotedStrings.size() tokens are not unquoted Strings (excluding EOF), <br/>
    *           If the content of unquotedStrings does not equal the content of the parsed tokens (excluding EOF).
@@ -732,7 +732,7 @@ public final class StreamParser
    * @return The next single character code in the stream, or -1 on EOF.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a single character (excluding EOF).
    */
@@ -757,7 +757,7 @@ public final class StreamParser
    * @return A collection of single character codes from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not single characters (excluding EOF).
    */
@@ -781,7 +781,7 @@ public final class StreamParser
    * @return A collection of single character codes from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next character from the stream, <br/>
    *           If the next remaining tokens on the current line are not single characters (excluding EOL & EOF).
    */
@@ -814,7 +814,7 @@ public final class StreamParser
    * @return The next double in the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a double (excluding EOF).
    */
@@ -841,7 +841,7 @@ public final class StreamParser
    * @return A collection of doubles from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not doubles (excluding EOF).
    */
@@ -865,7 +865,7 @@ public final class StreamParser
    * @return A collection of doubles from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next double from the stream, <br/>
    *           If the next remaining tokens on the current line are not doubles (excluding EOL & EOF).
    */
@@ -898,7 +898,7 @@ public final class StreamParser
    * @return The next integer in the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not an integer (excluding EOF).
    */
@@ -925,7 +925,7 @@ public final class StreamParser
    * @return A collection of integers from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not integers (excluding EOF).
    */
@@ -949,7 +949,7 @@ public final class StreamParser
    * @return A collection of integers from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next integers from the stream, <br/>
    *           If the next remaining tokens on the current line are not integers (excluding EOL & EOF).
    */
@@ -983,7 +983,7 @@ public final class StreamParser
    * @return The next line in the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next line from the stream (excluding EOF)
    */
   public String getNextLine () throws StreamParserException
@@ -1021,7 +1021,7 @@ public final class StreamParser
    * @return A collection of lines from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream (excluding EOF)
    */
   public Collection <String> getNextLines (final int count) throws StreamParserException
@@ -1046,7 +1046,7 @@ public final class StreamParser
    * @return The next quoted string in the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not a quoted string (excluding EOF).
    */
@@ -1073,7 +1073,7 @@ public final class StreamParser
    * @return An collection of quoted strings from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not quoted strings (excluding EOF).
    */
@@ -1097,7 +1097,7 @@ public final class StreamParser
    * @return A collection of quoted strings from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next quoted strings from the stream, <br/>
    *           If the next remaining tokens on the current line are not quoted strings (excluding EOL & EOF).
    */
@@ -1130,7 +1130,7 @@ public final class StreamParser
    * @return The next token in the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream.
    */
   public String getNextToken () throws StreamParserException
@@ -1152,7 +1152,7 @@ public final class StreamParser
    * @return A collection of tokens from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream.
    */
   public Collection <String> getNextTokens (final int count) throws StreamParserException
@@ -1175,7 +1175,7 @@ public final class StreamParser
    * @return A collection of tokens from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next tokens from the stream, <br/>
    *           If the next remaining tokens on the current line are not tokens (excluding EOL & EOF).
    */
@@ -1208,7 +1208,7 @@ public final class StreamParser
    * @return The next unquoted string in the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not an unquoted string (excluding EOF).
    */
@@ -1235,7 +1235,7 @@ public final class StreamParser
    * @return An collection of unquoted strings from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next count tokens from the stream, <br/>
    *           If the next count tokens are not unquoted strings (excluding EOF).
    */
@@ -1259,7 +1259,7 @@ public final class StreamParser
    * @return A collection of unquoted strings from the stream.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next unquoted strings from the stream, <br/>
    *           If the next remaining tokens on the current line are not unquoted strings (excluding EOL & EOF).
    */
@@ -1298,7 +1298,7 @@ public final class StreamParser
    * Parse the next token and verify that it is EOF.
    *
    * @throws StreamParserException
-   * <br/>
+   *           <br/>
    *           If the StreamParser could not read the next token from the stream, <br/>
    *           If the next token is not the EOF token.
    */
@@ -1380,7 +1380,7 @@ public final class StreamParser
   {
     assert s != null;
 
-    String currentTokenContent = "";
+    String currentTokenContent;
 
     switch (s.ttype)
     {
@@ -1434,7 +1434,7 @@ public final class StreamParser
       }
     }
 
-    assert !currentTokenContent.isEmpty ();
+    assert!currentTokenContent.isEmpty ();
 
     return currentTokenContent;
   }
@@ -1450,7 +1450,7 @@ public final class StreamParser
   {
     assert s != null;
 
-    TokenType currentTokenType = null;
+    TokenType currentTokenType;
 
     switch (s.ttype)
     {
@@ -1506,15 +1506,13 @@ public final class StreamParser
       }
     }
 
-    assert currentTokenType != null;
-
     return currentTokenType;
   }
 
   private void initialize (final String filePath) throws StreamParserException
   {
-    assert !com.google.common.base.Strings.isNullOrEmpty (filePath);
-    assert !Strings.isWhitespace (filePath);
+    assert!com.google.common.base.Strings.isNullOrEmpty (filePath);
+    assert!Strings.isWhitespace (filePath);
 
     initialize (new File (filePath));
   }
@@ -1575,8 +1573,8 @@ public final class StreamParser
     }
     catch (final IOException e)
     {
-      throw new StreamParserException ("Could not read next token.\n\n" + "Last token successfully parsed: "
-              + getCurrentTokenInfo (), e);
+      throw new StreamParserException (
+              "Could not read next token.\n\n" + "Last token successfully parsed: " + getCurrentTokenInfo (), e);
     }
   }
 

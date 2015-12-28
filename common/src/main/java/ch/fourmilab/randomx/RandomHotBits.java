@@ -5,9 +5,9 @@ import java.io.InputStream;
 import java.net.URL;
 
 /**
- * Implementation of a <b>randomX</b>-compliant class which obtains genuine random data from <a
- * href="http://www.fourmilab.ch/">John Walker</a>'s <a href="http://www.fourmilab.ch/hotbits/">HotBits</a> radioactive
- * decay random sequence generator.
+ * Implementation of a <b>randomX</b>-compliant class which obtains genuine random data from
+ * <a href="http://www.fourmilab.ch/">John Walker</a>'s <a href="http://www.fourmilab.ch/hotbits/">HotBits</a>
+ * radioactive decay random sequence generator.
  * <p/>
  * <p/>
  * Designed and implemented in July 1996 by <a href="http://www.fourmilab.ch/">John Walker</a>.
@@ -15,9 +15,9 @@ import java.net.URL;
 
 public class RandomHotBits extends RandomX
 {
+  private final byte[] buffer;
   private int buflen = 0;
   private int nuflen = 256;
-  private byte[] buffer;
   private int bufptr = -1;
 
   // Constructors
@@ -73,4 +73,4 @@ public class RandomHotBits extends RandomX
     s.close ();
     bufptr = 0;
   }
-};
+}

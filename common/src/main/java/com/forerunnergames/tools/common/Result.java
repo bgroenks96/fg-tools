@@ -5,6 +5,12 @@ public class Result <T>
   private final boolean isSuccessful;
   private final T failureReason;
 
+  protected Result (final boolean isSuccessful, final T failureReason)
+  {
+    this.isSuccessful = isSuccessful;
+    this.failureReason = failureReason;
+  }
+
   public static <U> Result <U> success ()
   {
     return new Result <> (true, null);
@@ -80,11 +86,5 @@ public class Result <T>
   public interface ReturnStatus <R>
   {
     Result <R> getResult ();
-  }
-
-  protected Result (final boolean isSuccessful, final T failureReason)
-  {
-    this.isSuccessful = isSuccessful;
-    this.failureReason = failureReason;
   }
 }

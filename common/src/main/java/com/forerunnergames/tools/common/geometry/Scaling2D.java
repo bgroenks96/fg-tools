@@ -65,6 +65,16 @@ public final class Scaling2D
   }
 
   @Override
+  public int hashCode ()
+  {
+    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
+
+    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
+
+    return result;
+  }
+
+  @Override
   public boolean equals (final Object object)
   {
     if (this == object) return true;
@@ -73,16 +83,6 @@ public final class Scaling2D
     final Scaling2D scaling = (Scaling2D) object;
 
     return Float.compare (scaling.getX (), x) == 0 && Float.compare (scaling.getY (), y) == 0;
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
-
-    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
-
-    return result;
   }
 
   @Override

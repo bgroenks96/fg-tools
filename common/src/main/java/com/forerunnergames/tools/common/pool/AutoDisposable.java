@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An automated delegate type for wrapping non-Disposable types. A DiposableCallback can be provided to be to which the
+ * An automated delegate type for wrapping non-Disposable types. A DisposableCallback can be provided to be to which the
  * AutoDisposable will delegate a call to {@link #dispose()}.
  *
  * @see DisposableCallback
@@ -21,6 +21,12 @@ public class AutoDisposable <T> implements Disposable
   private static final Logger log = LoggerFactory.getLogger (AutoDisposable.class);
   private final T objRef;
   private final DisposableCallback <T> disposableCallback;
+
+  @Override
+  public void dispose () throws Exception
+  {
+    disposableCallback.dispose (objRef);
+  }
 
   /**
    * Creates an AutoDisposable with the given object instance and an empty callback task.
@@ -137,12 +143,6 @@ public class AutoDisposable <T> implements Disposable
     return Optional.absent ();
   }
 
-  private AutoDisposable (final T objRef, final DisposableCallback <T> disposableCallback)
-  {
-    this.objRef = objRef;
-    this.disposableCallback = disposableCallback;
-  }
-
   /**
    * @return the object reference; guaranteed to be non-null.
    */
@@ -152,24 +152,23 @@ public class AutoDisposable <T> implements Disposable
   }
 
   @Override
-  public boolean equals (final Object obj)
-  {
-    Arguments.checkIsNotNull (obj, "obj");
-
-    if (!(obj instanceof AutoDisposable)) return false;
-    return objRef.equals (((AutoDisposable <?>) obj).unpack ());
-  }
-
-  @Override
   public int hashCode ()
   {
     return objRef.hashCode ();
   }
 
   @Override
-  public void dispose () throws Exception
+  public boolean equals (final Object obj)
   {
-    disposableCallback.dispose (objRef);
+    Arguments.checkIsNotNull (obj, "obj");
+
+    return obj instanceof AutoDisposable && objRef.equals (((AutoDisposable <?>) obj).unpack ());
+  }
+
+  private AutoDisposable (final T objRef, final DisposableCallback <T> disposableCallback)
+  {
+    this.objRef = objRef;
+    this.disposableCallback = disposableCallback;
   }
 
   public interface DisposableCallback <R>

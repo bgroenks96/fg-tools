@@ -64,6 +64,16 @@ public final class Delta2D
   }
 
   @Override
+  public int hashCode ()
+  {
+    int result = (dx != +0.0f ? Float.floatToIntBits (dx) : 0);
+
+    result = 31 * result + (dy != +0.0f ? Float.floatToIntBits (dy) : 0);
+
+    return result;
+  }
+
+  @Override
   public boolean equals (final Object object)
   {
     if (this == object) return true;
@@ -72,17 +82,6 @@ public final class Delta2D
     final Delta2D delta = (Delta2D) object;
 
     return Float.compare (delta.getDx (), dx) == 0 && Float.compare (delta.getDy (), dy) == 0;
-  }
-
-
-  @Override
-  public int hashCode ()
-  {
-    int result = (dx != +0.0f ? Float.floatToIntBits (dx) : 0);
-
-    result = 31 * result + (dy != +0.0f ? Float.floatToIntBits (dy) : 0);
-
-    return result;
   }
 
   @Override

@@ -74,7 +74,7 @@ public final class Pools
     final Class <AutoDisposable <T>> autoDisposableType = (Class <AutoDisposable <T>>) autoDisposableToken
             .getRawType ();
 
-    return new SoftDisposableObjectPool <AutoDisposable <T>> (factory, autoDisposableType);
+    return new SoftDisposableObjectPool <> (factory, autoDisposableType);
   }
 
   private Pools ()

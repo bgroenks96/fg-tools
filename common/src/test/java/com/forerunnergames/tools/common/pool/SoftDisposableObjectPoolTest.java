@@ -1,7 +1,7 @@
 package com.forerunnergames.tools.common.pool;
 
-import com.forerunnergames.tools.common.pool.SoftDisposableObjectPoolTest.TestPoolWithTypeMyDisposable;
 import com.forerunnergames.tools.common.pool.SoftDisposableObjectPoolTest.TestPoolWithTypeInputStream;
+import com.forerunnergames.tools.common.pool.SoftDisposableObjectPoolTest.TestPoolWithTypeMyDisposable;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

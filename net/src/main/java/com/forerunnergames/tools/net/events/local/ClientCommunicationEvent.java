@@ -2,7 +2,6 @@ package com.forerunnergames.tools.net.events.local;
 
 import com.forerunnergames.tools.common.Event;
 import com.forerunnergames.tools.net.Remote;
-import com.forerunnergames.tools.net.events.local.NetworkCommunicationEvent;
 
 /**
  * The server should use this event to notify all local listeners that communication from a client was received over the

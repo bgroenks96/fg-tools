@@ -14,6 +14,27 @@ public final class DefaultGraphModel <T> extends AbstractGraphModel <T>
     super (adjList, size);
   }
 
+  public static <T> Builder <T> builder ()
+  {
+    return new Builder <> ();
+  }
+
+  public static <T> GraphModel <T> from (final Map <T, Iterable <T>> adjListData)
+  {
+    Arguments.checkIsNotNull (adjListData, "adjListData");
+    Arguments.checkHasNoNullKeysOrValues (adjListData, "adjListData");
+
+    final Builder <T> mapGraphBuilder = builder ();
+    for (final T country : adjListData.keySet ())
+    {
+      for (final T adjCountry : adjListData.get (country))
+      {
+        mapGraphBuilder.setAdjacent (country, adjCountry);
+      }
+    }
+    return mapGraphBuilder.build ();
+  }
+
   public static class Builder <T>
   {
     private final Map <T, Set <T>> adjList = new HashMap <> ();
@@ -59,26 +80,5 @@ public final class DefaultGraphModel <T> extends AbstractGraphModel <T>
     {
       return new DefaultGraphModel <> (adjList, size);
     }
-  }
-
-  public static <T> Builder <T> builder ()
-  {
-    return new Builder <> ();
-  }
-
-  public static <T> GraphModel <T> from (final Map <T, Iterable <T>> adjListData)
-  {
-    Arguments.checkIsNotNull (adjListData, "adjListData");
-    Arguments.checkHasNoNullKeysOrValues (adjListData, "adjListData");
-
-    final Builder <T> mapGraphBuilder = builder ();
-    for (final T country : adjListData.keySet ())
-    {
-      for (final T adjCountry : adjListData.get (country))
-      {
-        mapGraphBuilder.setAdjacent (country, adjCountry);
-      }
-    }
-    return mapGraphBuilder.build ();
   }
 }

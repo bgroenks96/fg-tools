@@ -1,7 +1,6 @@
 package com.forerunnergames.tools.net.events.local;
 
 import com.forerunnergames.tools.net.Remote;
-import com.forerunnergames.tools.net.events.local.NetworkEvent;
 
 /**
  * The server should use this event to notify all local listeners that a client disconnected from it. It contains the

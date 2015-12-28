@@ -7,8 +7,6 @@ import org.junit.Test;
 
 public abstract class ObjectPoolTest <T>
 {
-  protected abstract ObjectPool <T> createObjectPool ();
-
   @Test
   public void testAllocateSingleton ()
   {
@@ -82,4 +80,6 @@ public abstract class ObjectPoolTest <T>
       assertTrue (objPool.size () == N - 1);
     }
   }
+
+  protected abstract ObjectPool <T> createObjectPool ();
 }

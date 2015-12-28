@@ -17,7 +17,7 @@ public interface RecyclableObjectPool <T> extends ObjectPool <T>
    * Listener type for when objects are released back into the object pool. These should be used to perform any
    * necessary cleanup operations to prepare the object for recycled use.
    */
-  public interface RecycleListener <T>
+  interface RecycleListener <T>
   {
     /**
      * Called when a given object 't' is recycled via RecyclableObjectPool.release. Note that this method will be called

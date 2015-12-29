@@ -14,7 +14,7 @@ allprojects {
   targetCompatibility = projectTargetCompatibility
 
   repositories {
-    mavenCentral()
+    mavenCentral ()
   }
 }
 
@@ -61,7 +61,7 @@ project (":net") {
   }
 }
 
-if (JavaVersion.current().isJava8Compatible()) {
+if (JavaVersion.current ().isJava8Compatible ()) {
   allprojects {
     tasks.withType (Javadoc) {
       options.addStringOption ("Xdoclint:none", "-quiet")

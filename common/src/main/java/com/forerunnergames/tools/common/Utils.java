@@ -1,5 +1,6 @@
 package com.forerunnergames.tools.common;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Multimap;
 
 public final class Utils
@@ -78,6 +79,29 @@ public final class Utils
     {
       Thread.currentThread ().interrupt ();
     }
+  }
+
+  /**
+   * Attempts to cast the specified object to the specified type, returning an {@link Optional} to avoid
+   * {@link ClassCastException} & {@link NullPointerException} in cases where the cast is not possible.
+   *
+   * @param object
+   *          The object to cast.
+   * @param objectType
+   *          The class of the type to cast the specified object to.
+   * @param <T>
+   *          The type to cast the specified object to.
+   *
+   * @return An {@link Optional} that will contain the casted object if the specified object was successfully able to be
+   *         cast to the specified type, i.e., {@link Optional#isPresent()} will return true & {@link Optional#get ()}
+   *         will return the cast object, otherwise {@link Optional#isPresent()} will return false &
+   *         {@link Optional#get()} will throw an {@link IllegalStateException}.
+   */
+  public static <T> Optional <T> optionalCast (final Object object, final Class <T> objectType)
+  {
+    Arguments.checkIsNotNull (objectType, "objectType");
+
+    return objectType.isInstance (object) ? Optional.of (objectType.cast (object)) : Optional.<T> absent ();
   }
 
   private Utils ()

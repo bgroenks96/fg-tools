@@ -3,6 +3,8 @@ package com.forerunnergames.tools.common;
 import com.google.common.base.Optional;
 import com.google.common.collect.Multimap;
 
+import javax.annotation.Nullable;
+
 public final class Utils
 {
   /**
@@ -86,9 +88,9 @@ public final class Utils
    * {@link ClassCastException} & {@link NullPointerException} in cases where the cast is not possible.
    *
    * @param object
-   *          The object to cast.
+   *          The object to cast, may be null.
    * @param objectType
-   *          The class of the type to cast the specified object to.
+   *          The class of the type to cast the specified object to, must not be null.
    * @param <T>
    *          The type to cast the specified object to.
    *
@@ -97,7 +99,7 @@ public final class Utils
    *         will return the cast object, otherwise {@link Optional#isPresent()} will return false &
    *         {@link Optional#get()} will throw an {@link IllegalStateException}.
    */
-  public static <T> Optional <T> optionalCast (final Object object, final Class <T> objectType)
+  public static <T> Optional <T> optionalCast (@Nullable final Object object, final Class <T> objectType)
   {
     Arguments.checkIsNotNull (objectType, "objectType");
 

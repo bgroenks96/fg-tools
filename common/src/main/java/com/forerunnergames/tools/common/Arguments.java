@@ -546,6 +546,190 @@ public final class Arguments
   }
 
   /**
+   * Checks if the specified primitive integer array is null or empty.
+   *
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
+   */
+  public static void checkIsNotNullOrEmpty (final int[] array, final String arrayName)
+  {
+    if (array == null)
+    {
+      illegalArgument (arrayName, ArgumentStatus.NULL);
+    }
+    else if (array.length == 0)
+    {
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
+   * Checks if the specified primitive long array is null or empty.
+   *
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
+   */
+  public static void checkIsNotNullOrEmpty (final long[] array, final String arrayName)
+  {
+    if (array == null)
+    {
+      illegalArgument (arrayName, ArgumentStatus.NULL);
+    }
+    else if (array.length == 0)
+    {
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
+   * Checks if the specified primitive float array is null or empty.
+   *
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
+   */
+  public static void checkIsNotNullOrEmpty (final float[] array, final String arrayName)
+  {
+    if (array == null)
+    {
+      illegalArgument (arrayName, ArgumentStatus.NULL);
+    }
+    else if (array.length == 0)
+    {
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
+   * Checks if the specified primitive double array is null or empty.
+   *
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
+   */
+  public static void checkIsNotNullOrEmpty (final double[] array, final String arrayName)
+  {
+    if (array == null)
+    {
+      illegalArgument (arrayName, ArgumentStatus.NULL);
+    }
+    else if (array.length == 0)
+    {
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
+   * Checks if the specified primitive byte array is null or empty.
+   *
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
+   */
+  public static void checkIsNotNullOrEmpty (final byte[] array, final String arrayName)
+  {
+    if (array == null)
+    {
+      illegalArgument (arrayName, ArgumentStatus.NULL);
+    }
+    else if (array.length == 0)
+    {
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
+   * Checks if the specified primitive short array is null or empty.
+   *
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
+   */
+  public static void checkIsNotNullOrEmpty (final short[] array, final String arrayName)
+  {
+    if (array == null)
+    {
+      illegalArgument (arrayName, ArgumentStatus.NULL);
+    }
+    else if (array.length == 0)
+    {
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
+   * Checks if the specified primitive boolean array is null or empty.
+   *
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
+   */
+  public static void checkIsNotNullOrEmpty (final boolean[] array, final String arrayName)
+  {
+    if (array == null)
+    {
+      illegalArgument (arrayName, ArgumentStatus.NULL);
+    }
+    else if (array.length == 0)
+    {
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
+   * Checks if the specified primitive character array is null or empty.
+   *
+   * @param array
+   *          The array to check.
+   * @param arrayName
+   *          The name of the array to check, must not be null.
+   *
+   * @throws IllegalArgumentException
+   *           If array is null or empty.
+   */
+  public static void checkIsNotNullOrEmpty (final char[] array, final String arrayName)
+  {
+    if (array == null)
+    {
+      illegalArgument (arrayName, ArgumentStatus.NULL);
+    }
+    else if (array.length == 0)
+    {
+      illegalArgument (arrayName, ArgumentStatus.EMPTY);
+    }
+  }
+
+  /**
    * Checks if the specified String is null, empty, or blank (whitespace only).
    *
    * @param s

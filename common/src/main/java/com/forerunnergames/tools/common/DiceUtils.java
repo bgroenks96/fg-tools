@@ -12,43 +12,36 @@ public final class DiceUtils
 
   /**
    * Get a preset (fake) dice roll. Useful for testing purposes. It will get a preset (fake) dice roll until the presets
-   * are all used up, and then it will return 6 on each subsequent call.
+   * are all used up, and then it will recycle the test rolls from the beginning, indefinitely.
+   *
+   * Note {@link #setTestRolls(int...)} must be called prior, or an {@link IllegalStateException} will be thrown.
    *
    * @return The roll amount.
    *
-   * @see #setTestRolls (final int... rollAmounts)
+   * @see #setTestRolls(int...)
    */
   public static int getTestRoll ()
   {
-    int rollAmount;
+    Preconditions.checkIsTrue (testRolls != null, "DiceUtils#setTestRolls must be called first.");
 
-    if (DiceUtils.currentTestRoll < DiceUtils.testRolls.size ())
-    {
-      rollAmount = DiceUtils.testRolls.get (DiceUtils.currentTestRoll);
-    }
-    else
-    {
-      rollAmount = 6;
-    }
+    if (currentTestRoll >= testRolls.size ()) currentTestRoll = 0;
 
-    ++DiceUtils.currentTestRoll;
-
-    return rollAmount;
+    return testRolls.get (currentTestRoll++);
   }
 
   /**
    * Create preset (fake) dice rolls. Useful for testing purposes. The rolls are used on a first-in first-out basis.
    *
    * @param rollAmounts
-   *          The list of preset (fake) roll amounts.
+   *          The list of preset (fake) roll amounts, must not be null, must not be empty.
    *
    * @see #getTestRoll()
    */
   public static void setTestRolls (final int... rollAmounts)
   {
-    Arguments.checkIsNotNull (rollAmounts, "rollAmounts");
+    Arguments.checkIsNotNullOrEmpty (rollAmounts, "rollAmounts");
 
-    DiceUtils.testRolls = new ArrayList <> ();
+    testRolls = new ArrayList <> (rollAmounts.length);
 
     for (final int rollAmount : rollAmounts)
     {
@@ -60,7 +53,7 @@ public final class DiceUtils
    * Roll dieCount 6-sided dice and get the resulting roll amounts.
    *
    * @param dieCount
-   *          The number of dice to roll.
+   *          The number of dice to roll, must be > 0.
    *
    * @return A collection of the roll amounts as integers.
    */
@@ -74,7 +67,7 @@ public final class DiceUtils
 
     for (int i = 0; i < dieCount; ++i)
     {
-      rollAmount = Randomness.getRandomIntegerFrom (1, DiceUtils.FACES_PER_DIE);
+      rollAmount = Randomness.getRandomIntegerFrom (1, FACES_PER_DIE);
       rolls.add (rollAmount);
     }
 
@@ -85,7 +78,7 @@ public final class DiceUtils
    * Roll dieCount 6-sided dice and get the resulting roll sum.
    *
    * @param dieCount
-   *          The number of dice to roll.
+   *          The number of dice to roll, must be > 0.
    *
    * @return The sum of the values of the individual dice.
    */

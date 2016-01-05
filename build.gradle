@@ -15,6 +15,7 @@ allprojects {
   targetCompatibility = projectTargetCompatibility
 
   repositories {
+    jcenter ()
     mavenCentral ()
   }
 }

@@ -2,15 +2,16 @@ package com.forerunnergames.tools.common;
 
 import com.google.common.base.Optional;
 
+import javax.annotation.Nullable;
+
 public class Result <T>
 {
   private final boolean isSuccessful;
+  @Nullable
   private final T failureReason;
 
-  protected Result (final boolean isSuccessful, final T failureReason)
+  protected Result (final boolean isSuccessful, @Nullable final T failureReason)
   {
-    Arguments.checkIsNotNull (failureReason, "failureReason");
-
     this.isSuccessful = isSuccessful;
     this.failureReason = failureReason;
   }

@@ -1,6 +1,7 @@
 package com.forerunnergames.tools.common;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 
 public final class MutatorResult <R> extends Result <R>
 {
@@ -28,6 +29,14 @@ public final class MutatorResult <R> extends Result <R>
   }
 
   public static void commitAllSuccessful (final MutatorResult <?>... results)
+  {
+    Arguments.checkIsNotNull (results, "results");
+    Arguments.checkHasNoNullElements (results, "results");
+
+    commitAllSuccessful (ImmutableSet.copyOf (results));
+  }
+
+  public static void commitAllSuccessful (final Iterable <MutatorResult <?>> results)
   {
     Arguments.checkIsNotNull (results, "results");
     Arguments.checkHasNoNullElements (results, "results");

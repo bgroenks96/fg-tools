@@ -1,5 +1,7 @@
 package com.forerunnergames.tools.common;
 
+import com.google.common.base.Optional;
+
 public class Result <T>
 {
   private final boolean isSuccessful;
@@ -7,6 +9,8 @@ public class Result <T>
 
   protected Result (final boolean isSuccessful, final T failureReason)
   {
+    Arguments.checkIsNotNull (failureReason, "failureReason");
+
     this.isSuccessful = isSuccessful;
     this.failureReason = failureReason;
   }
@@ -16,7 +20,6 @@ public class Result <T>
     return new Result <> (true, null);
   }
 
-  @SuppressWarnings ("unchecked")
   public static <V> Result <V> failure (final V failureReason)
   {
     Arguments.checkIsNotNull (failureReason, "failureReason");
@@ -26,16 +29,30 @@ public class Result <T>
 
   public static <V> boolean anyResultsFailed (final Iterable <Result <V>> results)
   {
-    for (final Result <V> result : results)
+    Arguments.checkIsNotNull (results, "results");
+    Arguments.checkHasNoNullElements (results, "results");
+
+    return firstFailedFrom (results).isPresent ();
+  }
+
+  public static <V, R extends Result <V>> Optional <R> firstFailedFrom (final Iterable <R> results)
+  {
+    Arguments.checkIsNotNull (results, "results");
+    Arguments.checkHasNoNullElements (results, "results");
+
+    for (final R result : results)
     {
-      if (result.failed ()) return true;
+      if (result.failed ()) return Optional.of (result);
     }
 
-    return false;
+    return Optional.absent ();
   }
 
   public static <V extends ReturnStatus <?>> boolean anyStatusFailed (final Iterable <V> results)
   {
+    Arguments.checkIsNotNull (results, "results");
+    Arguments.checkHasNoNullElements (results, "results");
+
     for (final V status : results)
     {
       if (status.getResult ().failed ()) return true;
@@ -66,6 +83,8 @@ public class Result <T>
 
   public boolean failedBecauseOf (final T failureReason)
   {
+    Arguments.checkIsNotNull (failureReason, "failureReason");
+
     return isFailure () && failureReasonIs (failureReason);
   }
 

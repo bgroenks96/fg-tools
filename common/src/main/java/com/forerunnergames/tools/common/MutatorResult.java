@@ -47,9 +47,10 @@ public final class MutatorResult <R> extends Result <R>
     }
   }
 
-  public final void commitIfSuccessful ()
+  public final boolean commitIfSuccessful ()
   {
     if (callback.isPresent ()) callback.get ().commitChanges ();
+    return succeeded ();
   }
 
   public interface MutatorCallback

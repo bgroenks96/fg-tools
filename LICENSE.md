@@ -2,6 +2,7 @@ The MIT License (MIT)
 =====================
 
 Copyright © `2011 - 2013` `Aaron Mahan`
+
 Copyright © `2013 - 2016` `Forerunner Games, LLC`
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

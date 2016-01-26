@@ -58,6 +58,7 @@ subprojects {
   uploadArchives {
     repositories.mavenDeployer {
       configuration = configurations.deployerJars
+      // check for snapshot or release
       def repoUrl = ""
       if (project.version.endsWith("-SNAPSHOT")) {
         repoUrl = "http://ci.forerunnergames.com:9090/repository/snapshots/"
@@ -66,7 +67,15 @@ subprojects {
       }
       repository(url: repoUrl) {
         // note: must have 'fgRepoUser' and 'fgRepoPass' loaded as properties
-        authentication(userName: fgRepoUser, password: fgRepoPass)
+        def user = ""
+        def pass = ""
+        if (project.hasProperty("fgRepoUser")) {
+          user = fgRepoUser
+        }
+        if (project.hasProperty("fgRepoPass")) {
+          pass = fgRepoPass
+        }
+        authentication(userName: user, password: pass)
       }
     }
   }

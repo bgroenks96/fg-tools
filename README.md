@@ -1,4 +1,4 @@
-Forerunner Games Utility Library
+Simple Utility Library for Java Game Development
 
 [![Build Status](https://travis-ci.org/forerunnergames/fg-tools.svg?branch=develop)](https://travis-ci.org/forerunnergames/fg-tools)
 [![Coverage Status](https://img.shields.io/codecov/c/github/forerunnergames/fg-tools/develop.svg)](https://codecov.io/github/forerunnergames/fg-tools?branch=develop)

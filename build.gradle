@@ -5,9 +5,6 @@ plugins {
   id "com.github.kt3k.coveralls" version "2.6.0"
 }
 
-// coveralls plugin depends on xml format report
-cobertura.coverageFormats = ['html', 'xml']
-
 task createWrapper (type: Wrapper) {
   gradleVersion = "2.10"
 }
@@ -16,6 +13,7 @@ allprojects {
   apply plugin: "idea"
   apply plugin: "eclipse"
   apply plugin: "java"
+  apply plugin: "cobertura"
 
   group = projectGroup
   version = projectVersion
@@ -27,6 +25,8 @@ allprojects {
     jcenter ()
     mavenCentral ()
   }
+
+  test.finalizedBy (project.tasks.cobertura)
 }
 
 subprojects {
@@ -65,22 +65,22 @@ subprojects {
       configuration = configurations.deployerJars
       // check for snapshot or release
       def repoUrl = ""
-      if (project.version.endsWith("-SNAPSHOT")) {
+      if (project.version.endsWith ("-SNAPSHOT")) {
         repoUrl = "http://ci.forerunnergames.com:9090/repository/snapshots/"
       } else {
         repoUrl = "http://ci.forerunnergames.com:9090/repository/releases/"
       }
-      repository(url: repoUrl) {
+      repository (url: repoUrl) {
         // note: must have 'fgRepoUser' and 'fgRepoPass' loaded as properties
         def user = ""
         def pass = ""
-        if (project.hasProperty("fgRepoUser")) {
+        if (project.hasProperty ("fgRepoUser")) {
           user = fgRepoUser
         }
-        if (project.hasProperty("fgRepoPass")) {
+        if (project.hasProperty ("fgRepoPass")) {
           pass = fgRepoPass
         }
-        authentication(userName: user, password: pass)
+        authentication (userName: user, password: pass)
       }
     }
   }
@@ -102,6 +102,20 @@ project (":common") {
 project (":net") {
   dependencies {
     compile project (":common")
+  }
+}
+
+def files = subprojects.collect {
+  new File (it.projectDir, '/build/cobertura/cobertura.ser')
+}
+
+test.dependsOn (subprojects.test)
+
+cobertura {
+  coverageFormats = ['html', 'xml']
+  coverageMergeDatafiles = files
+  rootProject.subprojects.each {
+    coverageDirs << file ("${it.name}/build/classes/main")
   }
 }
 

@@ -1,5 +1,5 @@
 plugins {
-  id "net.researchgate.release" version "2.3.4"
+  // id "net.researchgate.release" version "2.3.5"
   id "com.github.ben-manes.versions" version "0.11.3"
 }
 
@@ -27,6 +27,14 @@ allprojects {
 subprojects {
   apply plugin: "maven"
 
+  configurations {
+    deployerJars
+  }
+
+  dependencies {
+    deployerJars "org.apache.maven.wagon:wagon-http:2.2"
+  }
+
   tasks.withType (Jar) {
     archivesBaseName = "$rootProject.name-$project.name"
   }
@@ -45,6 +53,22 @@ subprojects {
   artifacts {
     archives sourcesJar
     archives javadocJar
+  }
+
+  uploadArchives {
+    repositories.mavenDeployer {
+      configuration = configurations.deployerJars
+      def repoUrl = ""
+      if (project.version.endsWith("-SNAPSHOT")) {
+        repoUrl = "http://ci.forerunnergames.com:9090/repository/snapshots/"
+      } else {
+        repoUrl = "http://ci.forerunnergames.com:9090/repository/releases/"
+      }
+      repository(url: repoUrl) {
+        // note: must have 'fgRepoUser' and 'fgRepoPass' loaded as properties
+        authentication(userName: fgRepoUser, password: fgRepoPass)
+      }
+    }
   }
 }
 

@@ -41,6 +41,10 @@ allprojects {
       }
       defaults {
         publishConfigs ("published", "archives")
+        publishBuildInfo = true
+        publishArtifacts = true
+        publishPom = true
+        publishIvy = false
       }
     }
     clientConfig.includeEnvVars = true

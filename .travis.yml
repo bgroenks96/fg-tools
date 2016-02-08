@@ -17,8 +17,8 @@ script:
   - ./gradlew clean build
 
 after_success:
-  - "[[ $TRAVIS_REPO_SLUG = "forerunnergames/fg-tools" && $TRAVIS_BRANCH = develop && $TRAVIS_PULL_REQUEST = false ]] && ./gradlew artifactoryPublish"
-  - "[[ $TRAVIS_REPO_SLUG = "forerunnergames/fg-tools" && $TRAVIS_BRANCH = master && $TRAVIS_PULL_REQUEST = false ]] && ./gradlew bintrayUpload"
+  - test $TRAVIS_REPO_SLUG == "forerunnergames/fg-tools" && test $TRAVIS_BRANCH == "develop" && test $TRAVIS_PULL_REQUEST == "false" && ./gradlew artifactoryPublish
+  - test $TRAVIS_REPO_SLUG == "forerunnergames/fg-tools" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_PULL_REQUEST == "false" && ./gradlew bintrayUpload
   - codecov
 
 before_cache:

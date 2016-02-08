@@ -152,11 +152,11 @@ task wrapper (type: Wrapper) {
 }
 
 tasks.artifactoryPublish.doFirst {
-  assert project.status == "integration" : "Only a snapshot version (not ${project.version}) can be published to Artifactory."
+  assert project.status == "integration": "Only a snapshot version (not ${project.version}) can be published to Artifactory."
 }
 
 tasks.bintrayUpload.doFirst {
-  assert project.status == "release" : "Only a release version (not ${project.version}) can be published to Bintray."
+  assert project.status == "release": "Only a release version (not ${project.version}) can be published to Bintray."
 }
 
 createReleaseTag.dependsOn bintrayUpload

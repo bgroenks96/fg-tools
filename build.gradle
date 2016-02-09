@@ -1,13 +1,9 @@
 plugins {
-  id "net.researchgate.release" version "2.3.4"
   id "com.jfrog.artifactory" version "4.0.0"
   id "com.jfrog.bintray" version "1.6"
+  id "net.researchgate.release" version "2.3.4"
   id "com.github.ben-manes.versions" version "0.11.3"
 }
-
-import java.text.SimpleDateFormat
-
-def globalVersion = new Version (projectVersion)
 
 allprojects {
   repositories {
@@ -15,69 +11,35 @@ allprojects {
     mavenCentral ()
   }
 
-  apply plugin: "idea"
-  apply plugin: "eclipse"
   apply plugin: "com.jfrog.artifactory"
   apply plugin: "com.jfrog.bintray"
+  apply plugin: "idea"
+  apply plugin: "eclipse"
   apply plugin: "java"
+  apply plugin: "net.researchgate.release"
 
   sourceCompatibility = projectSourceCompatibility
   targetCompatibility = projectTargetCompatibility
 
   group = projectGroup
-  version = globalVersion
-  status = version.status
-
-  ext.publish = true
-
-  artifactory {
-    contextUrl = "http://oss.jfrog.org/artifactory"
-    publish {
-      repository {
-        repoKey = "oss-snapshot-local"
-        username = hasProperty ("bintrayUser") ? bintrayUser : System.getenv ("BINTRAY_USER")
-        password = hasProperty ("bintrayApiKey") ? bintrayApiKey : System.getenv ("BINTRAY_API_KEY")
-        maven = true
-      }
-      defaults {
-        publishConfigs ("published", "archives")
-        publishBuildInfo = true
-        publishArtifacts = true
-        publishPom = true
-        publishIvy = false
-      }
-    }
-    clientConfig.includeEnvVars = true
-    if (System.getenv ("TRAVIS")) {
-      clientConfig.info.buildNumber = System.getenv ("TRAVIS_BUILD_NUMBER")
-      clientConfig.info.vcsRevision = System.getenv ("TRAVIS_COMMIT")
-    }
-  }
-
-  bintray {
-    user = hasProperty ("bintrayUser") ? bintrayUser : System.getenv ("BINTRAY_USER")
-    key = hasProperty ("bintrayApiKey") ? bintrayApiKey : System.getenv ("BINTRAY_API_KEY")
-    configurations = ["published", "archives"]
-    pkg {
-      repo = "repository"
-      name = "fg-tools"
-      desc = "Simple utility library for Java game development"
-      userOrg = "forerunnergames"
-      websiteUrl = "https://github.com/forerunnergames/fg-tools"
-      issueTrackerUrl = "https://github.com/forerunnergames/fg-tools/issues"
-      vcsUrl = "https://github.com/forerunnergames/fg-tools.git"
-      licenses = ["MIT"]
-      publicDownloadNumbers = true
-    }
-  }
+  version = projectVersion
+  status = projectVersion.endsWith ("-SNAPSHOT") ? "integration" : "release"
 }
 
-artifactoryPublish.skip = true
-bintrayUpload.enabled = false
+rootProject.jar.enabled = false
+rootProject.artifactoryPublish.skip = true
+rootProject.bintrayUpload.enabled = false
 
 subprojects {
   apply plugin: "maven"
-  apply plugin: "net.researchgate.release"
+
+  configurations {
+    published
+  }
+
+  manifest {
+    attributes "provider": "gradle"
+  }
 
   dependencies {
     testCompile "org.hamcrest:hamcrest-all:1.3"
@@ -86,15 +48,11 @@ subprojects {
     testRuntime "ch.qos.logback:logback-classic:1.1.3"
   }
 
-  configurations {
-    published
-  }
-
   tasks.withType (Jar) {
     archivesBaseName = "$rootProject.name-$project.name"
   }
 
-  task sourcesJar (type: Jar, dependsOn: classes) {
+  task sourceJar (type: Jar) {
     classifier = "sources"
     from sourceSets.main.allSource
   }
@@ -106,30 +64,77 @@ subprojects {
   }
 
   artifactoryPublish {
-    dependsOn sourcesJar, javadocJar
+    dependsOn sourceJar, javadocJar
   }
 
   artifacts {
-    published sourcesJar
+    published sourceJar
     published javadocJar
-  }
-
-  release {
-    failOnCommitNeeded = true
-    failOnPublishNeeded = true
-    failOnSnapshotDependencies = true
-    failOnUnversionedFiles = true
-    failOnUpdateNeeded = true
-    revertOnFail = true
-    git {
-      requireBranch = "master"
-      pushToRemote = "origin"
-    }
   }
 }
 
 configurations {
   published
+}
+
+artifactory {
+  contextUrl = "http://oss.jfrog.org/artifactory"
+  publish {
+    repository {
+      repoKey = "oss-snapshot-local"
+      username = hasProperty ("bintrayUser") ? bintrayUser : System.getenv ("BINTRAY_USER")
+      password = hasProperty ("bintrayApiKey") ? bintrayApiKey : System.getenv ("BINTRAY_API_KEY")
+      maven = true
+    }
+    defaults {
+      publishConfigs ("archives", "published")
+      publishPom = true
+      publishIvy = false
+    }
+  }
+  clientConfig.includeEnvVars = true
+  if (System.getenv ("TRAVIS")) {
+    clientConfig.info.buildNumber = System.getenv ("TRAVIS_BUILD_NUMBER")
+    clientConfig.info.vcsRevision = System.getenv ("TRAVIS_COMMIT")
+  }
+  resolve {
+    repository {
+      repoKey = "jcenter"
+      username = hasProperty ("bintrayUser") ? bintrayUser : System.getenv ("BINTRAY_USER")
+      password = hasProperty ("bintrayApiKey") ? bintrayApiKey : System.getenv ("BINTRAY_API_KEY")
+      maven = true
+    }
+  }
+}
+
+bintray {
+  user = hasProperty ("bintrayUser") ? bintrayUser : System.getenv ("BINTRAY_USER")
+  key = hasProperty ("bintrayApiKey") ? bintrayApiKey : System.getenv ("BINTRAY_API_KEY")
+  configurations = ["published", "archives"]
+  pkg {
+    repo = "repository"
+    name = "fg-tools"
+    desc = "Simple utility library for Java game development"
+    userOrg = "forerunnergames"
+    websiteUrl = "https://github.com/forerunnergames/fg-tools"
+    issueTrackerUrl = "https://github.com/forerunnergames/fg-tools/issues"
+    vcsUrl = "https://github.com/forerunnergames/fg-tools.git"
+    licenses = ["MIT"]
+    publicDownloadNumbers = true
+  }
+}
+
+release {
+  failOnCommitNeeded = true
+  failOnPublishNeeded = true
+  failOnSnapshotDependencies = true
+  failOnUnversionedFiles = true
+  failOnUpdateNeeded = true
+  revertOnFail = true
+  git {
+    requireBranch = "master"
+    pushToRemote = "origin"
+  }
 }
 
 project (":common") {
@@ -182,35 +187,4 @@ idea {
 
 tasks.eclipse.doLast {
   delete ".project"
-}
-
-class Version {
-  String originalVersion
-  String thisVersion
-  String status
-  Date buildTime
-
-  Version (String versionValue) {
-    buildTime = new Date ()
-    originalVersion = versionValue
-
-    if (originalVersion.endsWith ("-SNAPSHOT")) {
-      status = "integration"
-      thisVersion = originalVersion.substring (0, originalVersion.length () - "SNAPSHOT".length ()) + getTimestamp ()
-    } else {
-      status = "release"
-      thisVersion = versionValue
-    }
-  }
-
-  String getTimestamp () {
-    // Convert local file timestamp to UTC
-    def format = new SimpleDateFormat ("yyyyMMddHHmmss")
-    format.setCalendar (Calendar.getInstance (TimeZone.getTimeZone ("UTC")));
-    return format.format (buildTime)
-  }
-
-  String toString () {
-    thisVersion
-  }
 }

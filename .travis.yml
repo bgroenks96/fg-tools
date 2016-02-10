@@ -8,7 +8,7 @@ before_script:
   - pip install --user codecov
 
 script:
-  - ./gradlew clean build
+  - ./gradlew clean build install
 
 after_success:
   - test $TRAVIS_REPO_SLUG == "forerunnergames/fg-tools" && test $TRAVIS_BRANCH == "develop" && test $TRAVIS_PULL_REQUEST == "false" && ./gradlew artifactoryPublish

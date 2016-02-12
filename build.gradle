@@ -3,7 +3,10 @@ plugins {
   id "com.jfrog.bintray" version "1.6"
   id "net.researchgate.release" version "2.3.4"
   id "com.github.ben-manes.versions" version "0.11.3"
+  id "com.palantir.jacoco-coverage" version "0.3.0"
 }
+
+apply plugin: "com.palantir.jacoco-full-report"
 
 allprojects {
   repositories {
@@ -70,6 +73,14 @@ subprojects {
   artifacts {
     published sourceJar
     published javadocJar
+  }
+
+  jacocoTestReport {
+    reports {
+      html.enabled = true
+      xml.enabled = true
+      csv.enabled = false
+    }
   }
 }
 

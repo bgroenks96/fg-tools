@@ -1,8 +1,7 @@
 sudo: false
-language: java
-
-jdk: oraclejdk7
 install: true
+language: java
+jdk: oraclejdk7
 
 before_script:
   - pip install --user codecov

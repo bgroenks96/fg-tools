@@ -171,7 +171,6 @@ release {
   failOnUnversionedFiles = true
   failOnUpdateNeeded = true
   revertOnFail = true
-  tagCommitMessage = "[Gradle Release Plugin] - creating tag: "
   git {
     requireBranch = "master"
     pushToRemote = "origin"

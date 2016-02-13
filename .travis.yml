@@ -7,8 +7,8 @@ script:
   - ./gradlew clean build install
 
 after_success:
-  - test $TRAVIS_REPO_SLUG == "forerunnergames/fg-tools" && test $TRAVIS_BRANCH == "develop" && test $TRAVIS_PULL_REQUEST == "false" && ./gradlew artifactoryPublish
-  - test $TRAVIS_REPO_SLUG == "forerunnergames/fg-tools" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_PULL_REQUEST == "false" && ./gradlew bintrayUpload
+  - test "$TRAVIS_TAG" == "" && test "$TRAVIS_REPO_SLUG" == "forerunnergames/fg-tools" && test "$TRAVIS_BRANCH" == "master" && test "$TRAVIS_PULL_REQUEST" == "false" && ./gradlew artifactoryPublish
+  - test "$TRAVIS_TAG" != "" && test "$TRAVIS_REPO_SLUG" == "forerunnergames/fg-tools" && test "$TRAVIS_PULL_REQUEST" == "false" && ./gradlew bintrayUpload
   - ./gradlew jacocoRootReport coveralls
 
 before_cache:
@@ -34,5 +34,5 @@ notifications:
 
 env:
   global:
-    - secure: m4txkYbU8jpWQ+fmsjcFBpu+qlEmkcmxtnpbbMUxgCXfMYovuoFJ6DxmUOovC20RQuciJuXOBWVQckmvUKi2j3zMuEjZTQnSFIRpdm6tyAqc+wjGeme3hA/n98SjAqy95/047EUYlDi0v3bVGYSa8BGSkt518M3X3YyBKpRVowc4ngI62fAUeW6MLzP2ircHn9d1UKRvq0P08MaiIh0zt0HwSO8Cmy03XCjD6+SHlWaxPI/2CD3pCfHwIR8zjfqQzRdnpjQ0dxou08HBMTVKJsjEM8TCR0CpfRC1RkzXmXAp9JUihK/d0kLHMEdrAyWxrTpURZTcK8Uge6twmNqsLR9H7hGeLrShjeJlpr1NJeKs2ElOxIylHQBuF7jxe3bAylVtAE85v51aAX+SEqQamjIvuyi+5vpED+sTjr0uqpKBzX1txQ7I4YjLSKUnSJtThL9B5uarSggLXocP0Q6k83D8WjRIoIYtqByIrtgvu2zMp0CjQBFlp7dgz71EB4mWAchBGZvZPgDd2e9rqxjBLurp44hsv0YQUIMqXx1VqXlQtulwb/UGPgnjHbibiG9AYVz5pHmz5ey95AursiIz0q9LewVwJX+JWjyxhFRiHiG0a5pNoF8uQ5k/kC835Q3SjJCqQetj4mGG4oVEvRgcGgxsM/aBsY3mlGua9LsQBAU=
-    - secure: bnRmwaA5zMasIQU26hE8RcYINF2i+NrsVp3LyK7QAjTQo/34eWC77vMvaPhWO0Ohw4og+/UPjIXif7sdUugzvSDsvXHSdCBzCmrtzWl47Pqsyl3NNXPCPA98c1VIgmM66ahT0Orq3vJO/mhlkzXCBpUgi3Dot5PCm2CYtLKdTVnNS2GvTSCmP6FxEzGRp7Jddjc92Yk8QKDWpHS+wPlICH0Lv9o+klOf0QPp/whD2/R7uMPQw3+9rMQFLsOjuTDwJjfVUensCeiB0PwQ+ywGcLKFb1fkD6Ehu66guWyGD3WgzTO590M1ALNuWCnlotnq88oJZ5xSK4q1Q3rRp10fgLt7QA7fFesDi2DWs/F4dOVxMl993IS0F5XxrL4Gsn+WOCyZTe2vp7nvJ28gO+XblFcMb6ELj55WAKhNFPjp6Zrs7+xWGjqS8/Z2EG94J9ex/h0xtKyj6vhRRzP2SWkoe90HSfcLk75M+pzUJ1EOXSux/Cjuhx7vQP/NU+0GVXenYHhI0FULNFOIaTSJFqsf7wunloM5UQuPNKgckpfz2SAttmsS/7U1Ip6tSkXDfZ+fhQrALDEty+iGhYcn/h1OipOnHtLoy5ELjR2Xu7oAynYtFlnu9BUQLfJ+GhAnadOI3uA6zAWPpL8qp45h1SyqxXDS3XDsNu1emxfzpOysqv8=
+    - secure: RnNUTlm95mH9+jrl1sep70JUb8JJ/IxekNNyvH+MOZX3FctnS3yrGutO4f+uvwxTFTDSHG2QHmly4Zj9SQZO9RjaqWjzJdfdD/xVIZIFm+bGsTGXSoVW3QY1ygRnPffhrGQubEXqBRvRH8vXDbcow19+ARp5CqOFpkIgKVZjzGeQ/Zq8EuaO/joSD6xSH+felZR6mIKJdXuDYk7Sy805+Lv1zOU8/AW5RjKfZDAJVPGzjstr34XjdDXUG1S4uU9he6mMSvEIdLQNLM2HJJGIhgip47y1dTokhy40enDn4ExGmqAoRWN6fr+ICHio7tmfya7hpG/HI1gU7xMqUJQSV9lGTR0W9EUGsfxZJsRHYd/N17zBK6+uk1/q2vS9phWvgEULa9fhs+hKrldniiNvgNUa5DE4QELE7oM25ikPRHvY/eAF0aS84+YyCsMfaotMrnkMvmSrfelebRUmwp68r377FjCeIloRQGIvKpggD1U6/FDZwymg1F6I8vY9yoWw662Hd0cAERAEq0aVbaAlSaoijFsHwflZp2Zpf0Y7HnhCD1QQaYkLxy+SVXQ+u5qtRZ1TMPw9f9ATtlLKkVyKoFNlyP0DKs+cX2q8YRot7SK/fORnHbKG1m8FE+vWqSd5wX0hIb/J4vwcw6wDPkXi5O3PXewuC2B6bP6R7bnYgks=
+    - secure: eyFFpHG53g6LCAxmHFp0eky/54kyZNGNfTCCUcR3gt665pZc3SE9gBqaEYK9yXXF8jxpqJhga/2rM8OGY/pbp36OpxbRt8yLFbF37JI7dtZ2wamfxJsCnkPKwHWny461JFuUTrt+eG0MwE/UaGoqe4RRnHDSGL0QyyWUO35UPxSS5iSNMQFq+dgBY6Yv+500vvZnRiRnteIiQ8hht3iUk9R0Eni1i8Ul+t9WJ6y/UEKCUB7zaJXMcDS7OOnHG5TNcJnmi2GV7Jsudaa8XI9dZHl5wQeTNShovImAoiE9KmVfRjE0EoT9kbfh+0jMyPE8ARfYdLg8hnDLeNtz5YqKFx0jpXar0DQRDFcQDw9RqcDkjDa6gWo12vnMA9ETSaCQwJtHRaxb1My/y86qB+xmwkLNKDbw6y31ocy6ZZi+2kONFtegPEbYHSbWA3aF+OnEjWQ0vz43law0UxBF6K1pYmVkROt0TSdkKyoHD4ZT4szz9CLbbU7MIvNWI5TBY8I/zgIsTKB4xS9hq2+1vQFJ8t71Idy0hbkG92PEnbhJACewfJFWnSAiDniXTixHrSlLoEExs+iKSEh0exiaNZjyj42g6phiw7tB04NUwSYmudGUXZ6tZF0Vts1M0KixKlOYpfOAjECPPZpe59srWkWUTG3/SW9P4/MmqHVOYqlobYo=

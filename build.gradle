@@ -40,7 +40,6 @@ subprojects {
 
   configurations {
     published
-    testArtifacts
   }
 
   manifest {
@@ -66,20 +65,9 @@ subprojects {
     dependsOn sourceJar, javadocJar
   }
 
-  tasks.withType (Test) {
-    rootProject.testReport.reportOn it
-    it.dependsOn ("jar")
-
-    // ensure tasks don't overwrite the default report directories used by the 'test' task
-    reports.html.destination = "${buildDir}/reports/${name}"
-    reports.junitXml.destination = "${buildDir}/reports/${name}/results"
-    binResultsDir = file ("${buildDir}/reports/${name}/results/binary/${name}")
-  }
-
-  task testJar (type: Jar, group: "Build") {
-    description = "Assembles a jar archive containing the test classes."
-    baseName = "${archivesBaseName}-test"
-    from sourceSets.test.output
+  artifacts {
+    published sourceJar
+    published javadocJar
   }
 
   test {
@@ -97,12 +85,6 @@ subprojects {
     }
 
     testLogging.showStandardStreams = true;
-  }
-
-  artifacts {
-    published sourceJar
-    published javadocJar
-    testArtifacts testJar
   }
 }
 

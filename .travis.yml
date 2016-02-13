@@ -3,16 +3,13 @@ install: true
 language: java
 jdk: oraclejdk7
 
-before_script:
-  - pip install --user codecov
-
 script:
   - ./gradlew clean build install
 
 after_success:
   - test $TRAVIS_REPO_SLUG == "forerunnergames/fg-tools" && test $TRAVIS_BRANCH == "develop" && test $TRAVIS_PULL_REQUEST == "false" && ./gradlew artifactoryPublish
   - test $TRAVIS_REPO_SLUG == "forerunnergames/fg-tools" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_PULL_REQUEST == "false" && ./gradlew bintrayUpload
-  - codecov
+  - ./gradlew jacocoRootReport coveralls
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock

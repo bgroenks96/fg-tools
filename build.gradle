@@ -3,10 +3,8 @@ plugins {
   id "com.jfrog.bintray" version "1.6"
   id "net.researchgate.release" version "2.3.4"
   id "com.github.ben-manes.versions" version "0.11.3"
-  id "com.palantir.jacoco-coverage" version "0.3.0"
+  id "com.github.kt3k.coveralls" version "2.6.3"
 }
-
-apply plugin: "com.palantir.jacoco-full-report"
 
 allprojects {
   repositories {
@@ -16,10 +14,14 @@ allprojects {
 
   apply plugin: "com.jfrog.artifactory"
   apply plugin: "com.jfrog.bintray"
+  apply plugin: "net.researchgate.release"
+  apply plugin: "com.github.kt3k.coveralls"
+  apply plugin: "jacoco"
+  apply plugin: "java"
   apply plugin: "idea"
   apply plugin: "eclipse"
-  apply plugin: "java"
-  apply plugin: "net.researchgate.release"
+
+  [compileJava, compileTestJava]*.options*.encoding = "UTF-8"
 
   sourceCompatibility = projectSourceCompatibility
   targetCompatibility = projectTargetCompatibility
@@ -38,17 +40,11 @@ subprojects {
 
   configurations {
     published
+    testArtifacts
   }
 
   manifest {
     attributes "provider": "gradle"
-  }
-
-  dependencies {
-    testCompile "org.hamcrest:hamcrest-all:1.3"
-    testCompile "junit:junit:4.12"
-    testCompile "org.mockito:mockito-core:1.9.5"
-    testRuntime "ch.qos.logback:logback-classic:1.1.3"
   }
 
   tasks.withType (Jar) {
@@ -70,17 +66,43 @@ subprojects {
     dependsOn sourceJar, javadocJar
   }
 
+  tasks.withType (Test) {
+    rootProject.testReport.reportOn it
+    it.dependsOn ("jar")
+
+    // ensure tasks don't overwrite the default report directories used by the 'test' task
+    reports.html.destination = "${buildDir}/reports/${name}"
+    reports.junitXml.destination = "${buildDir}/reports/${name}/results"
+    binResultsDir = file ("${buildDir}/reports/${name}/results/binary/${name}")
+  }
+
+  task testJar (type: Jar, group: "Build") {
+    description = "Assembles a jar archive containing the test classes."
+    baseName = "${archivesBaseName}-test"
+    from sourceSets.test.output
+  }
+
+  test {
+    beforeTest { desc ->
+      logger.quiet ("Running test: " + desc)
+    }
+
+    afterTest { desc, result ->
+      if (result.resultType == TestResult.ResultType.FAILURE) {
+        logger.quiet ("Failed test ${desc.name} [${desc.className}] with exception: ${result.exception}")
+        if (result.exception != null) {
+          result.exception.printStackTrace ()
+        }
+      }
+    }
+
+    testLogging.showStandardStreams = true;
+  }
+
   artifacts {
     published sourceJar
     published javadocJar
-  }
-
-  jacocoTestReport {
-    reports {
-      html.enabled = true
-      xml.enabled = true
-      csv.enabled = false
-    }
+    testArtifacts testJar
   }
 }
 
@@ -154,13 +176,54 @@ project (":common") {
     compile "org.apache.commons:commons-lang3:3.4"
     compile "com.google.code.findbugs:jsr305:3.0.1"
     compile "org.slf4j:slf4j-api:1.7.13"
+
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:1.9.5"
+    testRuntime "ch.qos.logback:logback-classic:1.1.3"
   }
 }
 
 project (":net") {
   dependencies {
     compile project (":common")
+
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:1.9.5"
+    testRuntime "ch.qos.logback:logback-classic:1.1.3"
   }
+}
+
+task jacocoRootReport (type: JacocoReport, group: "Coverage reports") {
+  description = "Generates an aggregate report from all subprojects"
+  dependsOn (subprojects.test)
+
+  additionalSourceDirs = files (subprojects.sourceSets.main.allSource.srcDirs)
+  sourceDirectories = files (subprojects.sourceSets.main.allSource.srcDirs)
+  classDirectories = files (subprojects.sourceSets.main.output)
+  executionData = files (subprojects.jacocoTestReport.executionData)
+
+  reports {
+    html.enabled = true // human readable
+    xml.enabled = true // required by coveralls
+  }
+
+  doFirst {
+    executionData = files (executionData.findAll { it.exists () })
+  }
+}
+
+coveralls {
+  sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten ()
+  jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+}
+
+tasks.coveralls {
+  group = "Coverage reports"
+  description = "Uploads the aggregated coverage report to Coveralls"
+  dependsOn jacocoRootReport
+  onlyIf { System.env."CI" }
 }
 
 task wrapper (type: Wrapper) {

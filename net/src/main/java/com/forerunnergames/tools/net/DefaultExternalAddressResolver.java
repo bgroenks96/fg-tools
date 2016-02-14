@@ -32,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -39,7 +40,8 @@ import org.slf4j.LoggerFactory;
 
 public class DefaultExternalAddressResolver implements ExternalAddressResolver
 {
-  protected final Logger log = LoggerFactory.getLogger (getClass ());
+  private static final Logger log = LoggerFactory.getLogger (DefaultExternalAddressResolver.class);
+  private static final int NET_TIMEOUT_MS = 3000;
   private final ImmutableList <String> urls;
   private boolean alreadyLoggedErrorMessage = false;
 
@@ -102,37 +104,30 @@ public class DefaultExternalAddressResolver implements ExternalAddressResolver
 
   private Optional <String> readIpAddressFrom (final String url)
   {
-    BufferedReader reader = null;
     alreadyLoggedErrorMessage = false;
 
     try
     {
       log.debug ("Attempting to resolve external ip address from URL [{}]...", url);
 
-      reader = new BufferedReader (new InputStreamReader (new URL (url).openStream ()));
+      final URLConnection connection = new URL (url).openConnection ();
+      connection.setConnectTimeout (NET_TIMEOUT_MS);
+      connection.setReadTimeout (NET_TIMEOUT_MS);
 
-      return Optional.fromNullable (reader.readLine ());
+      final Optional <String> result;
+      try (final BufferedReader reader = new BufferedReader (new InputStreamReader (connection.getInputStream ())))
+      {
+        result = Optional.fromNullable (reader.readLine ());
+      }
+      return result;
     }
     catch (final IOException e)
     {
-      log.error ("Could not resolve external IP address using URL [{}]\n\nCause:\n\n{}", url, e);
+      log.error ("Could not resolve external IP address using URL [{}]\nCause:\n{}", url, e);
 
       alreadyLoggedErrorMessage = true;
 
       return Optional.absent ();
-    }
-    finally
-    {
-      if (reader != null)
-      {
-        try
-        {
-          reader.close ();
-        }
-        catch (final IOException ignored)
-        {
-        }
-      }
     }
   }
 

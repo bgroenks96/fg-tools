@@ -22,10 +22,13 @@
  */
 package com.forerunnergames.tools.net;
 
+import com.google.common.base.Optional;
 import com.google.common.net.InetAddresses;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,18 +46,37 @@ public final class DefaultInternalAddressResolver implements InternalAddressReso
   @Override
   public String resolveIp ()
   {
+    Optional <String> ipAddr = Optional.absent ();
+    Enumeration <NetworkInterface> netInterfaces;
     try
     {
-      final String ipAddress = InetAddress.getLocalHost ().getHostAddress ();
-
-      log.debug ("Successfully resolved internal IP address [{}].", ipAddress);
-
-      return ipAddress;
+      netInterfaces = NetworkInterface.getNetworkInterfaces ();
+      while (netInterfaces.hasMoreElements () && !ipAddr.isPresent ())
+      {
+        final NetworkInterface networkInterface = netInterfaces.nextElement ();
+        if (networkInterface.isLoopback ()) continue;
+        final Enumeration <InetAddress> addresses = networkInterface.getInetAddresses ();
+        while (addresses.hasMoreElements () && !ipAddr.isPresent ())
+        {
+          final InetAddress next = addresses.nextElement ();
+          if (next.isSiteLocalAddress ()) ipAddr = Optional.of (next.getHostAddress ());
+        }
+      }
     }
-    catch (final UnknownHostException e)
+    catch (final SocketException e)
     {
-      log.error ("Could not resolve internal IP address.\n\nCause:\n\n{}", e);
-      return "";
+      log.error ("Unable to resolve local IP address: ", e);
     }
+
+    if (!ipAddr.isPresent ()) return "";
+
+    log.debug ("Successfully resolved internal IP address [{}].", ipAddr.get ());
+
+    return ipAddr.get ();
+  }
+
+  public static final void main (final String[] args)
+  {
+    System.out.println (new DefaultInternalAddressResolver ().resolveIp ());
   }
 }

@@ -9,5 +9,3 @@ do
   rsync --archive --prune-empty-dirs $MODULE/build/libs $ROOT_DIR/$MODULE/ >/dev/null 2>&1
   rsync --archive --prune-empty-dirs $MODULE/build/reports $ROOT_DIR/$MODULE/ >/dev/null 2>&1
 done
-
-rsync --archive build/reports $ROOT_DIR/root/ >/dev/null 2>&1

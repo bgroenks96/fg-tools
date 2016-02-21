@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.forerunnergames.tools.net.client;
 
 public final class UnknownClientConfiguration implements ClientConfiguration

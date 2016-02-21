@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.forerunnergames.tools.net.events.local;
 
 import com.forerunnergames.tools.net.Remote;

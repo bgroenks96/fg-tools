@@ -40,7 +40,7 @@ addons:
     branch: master
     bucket: ci.forerunnergames.com
     target_paths: builds/fg-tools/$TRAVIS_BUILD_NUMBER
-    paths: "build/uploaded"
+    paths: "build/collected"
     key:
       secure: NhJDmaau8R5goQbGOShL3M/IWsupUbj0CuQENkYXxg9DWHY6xeqNu6xy3AQlz5xmuak7lbWSzvEJ3qFuvBrMgQvUr3lZ2Tt0UaIg8tw2LLhLU1NnA/Q4dPEWUFEtfp2L5+7fIqqIpoiPkPc/s7+lzOZza6Q8PVVmeDm0i0LsWZSQ3AN2GX6y6FASUQ6ItblRzqFItamy+37TShCprL5mvEqemDwuYsyUW8LL37bK6Zb4lM5ZT2cTP0jME0rJY757Ng4e6TO7+uk4BOAkhr7BAVNBY/kc+DrKG8Xx1JwByxKWyxYWxdP0mqaD1AlOTPx4k7GjTTNwx5U9+qJwEKEP0NOH8c93QphQmilnTquJ5ZIP4Gg2UCgapEaPXUSSzpolaTsc8eXYcZ/0HvL7x6WfMmMcH7Gnjw4y+L4xaEDsC6JLzOJf4Pf7cP8lI+uoa6PHh2wDkOjNes1Mok9XLU/9gXh9vu0TBOhS2O67y6DeiaXRdaoYRtVo4Qr4xXD7/6k4eL4UnrSmh5b32WE7Phc/8Vgn5iaRkhcN8H4V/8CbQOT55xJ52XRwIEfdGl7lf4QyyOottkxjgFbA8ue7e2tfX2HS8KjscoNypRQw4RuV7Kbav59mvJZcO0bqbjAao12X7n8I5xCPz12iQNRTBOc9cRpme4XfOl9E33pBcg5ubsc=
     secret:

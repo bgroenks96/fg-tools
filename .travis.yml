@@ -69,7 +69,13 @@ notifications:
     template:
       - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
     format: html
-
+    notify: true
+  slack:
+    on_start: always
+    on_success: always
+    on_failure: always
+    on_pull_requests: true
+    secure: FFiAuEXMMQJl4bAtM1yUBAgTR58PPbkUtUvSm5n1gSdgmULHIMilJcjo2xvOE+z+YnmngUOb0k1yCQhioLsCLoWZ01KP0SZwOHE9QA3R2SdlreS/LKceBkW4yKOlSqq6ei+qCsH0eixrZdATNCcNW2nJq9MywopzfzpBszp0/I4mRdW1Fq6X0IPYfujp9rzJpibeHuAo9T5ibNCbc7+ybm1PBJEl66HAi2Jh1DeG6cRT0dbrGknij9jFJsvmOwHbXwOiubTF3MKudkdepGmRNhEvC8Y13zSn96xA0CW4HY08JPBo9/C18BTJ/mjdVKomxGI0tg6EaGWlu43xeEkdNVXVKvecaeq9t9wxtpGAFZXp5I7pGzG6GJ+P3MWcjyK6BITrZnoP6QVUCuIRrMd0tzFpG4fOWxQ0e+h1PFzQ5TsdvTCy4FzShFbO7NQpLGv0GGTekjvRoOlta0gmnmfdyOCuu9NYNA7ZwfA1w8+DBowjdaLMsMpdvOWVbS0qOMJ2xovoJY6DL4QU6deq3yHPNjY+1/F6z7JB2Zqb2A0gUDlxGb7AqjigNmhv+C7iclG1jMWyCdMu5WFZCSTVwUzTEZPDw4JXTEKws0u5raSQDUa1PFEdjrOOY5dAwCwb5UF3GtSpCijqekDopCzTMPy91zVMR++DkxCNA4VJgp0oBfw=
 env:
   global:
     - secure: RnNUTlm95mH9+jrl1sep70JUb8JJ/IxekNNyvH+MOZX3FctnS3yrGutO4f+uvwxTFTDSHG2QHmly4Zj9SQZO9RjaqWjzJdfdD/xVIZIFm+bGsTGXSoVW3QY1ygRnPffhrGQubEXqBRvRH8vXDbcow19+ARp5CqOFpkIgKVZjzGeQ/Zq8EuaO/joSD6xSH+felZR6mIKJdXuDYk7Sy805+Lv1zOU8/AW5RjKfZDAJVPGzjstr34XjdDXUG1S4uU9he6mMSvEIdLQNLM2HJJGIhgip47y1dTokhy40enDn4ExGmqAoRWN6fr+ICHio7tmfya7hpG/HI1gU7xMqUJQSV9lGTR0W9EUGsfxZJsRHYd/N17zBK6+uk1/q2vS9phWvgEULa9fhs+hKrldniiNvgNUa5DE4QELE7oM25ikPRHvY/eAF0aS84+YyCsMfaotMrnkMvmSrfelebRUmwp68r377FjCeIloRQGIvKpggD1U6/FDZwymg1F6I8vY9yoWw662Hd0cAERAEq0aVbaAlSaoijFsHwflZp2Zpf0Y7HnhCD1QQaYkLxy+SVXQ+u5qtRZ1TMPw9f9ATtlLKkVyKoFNlyP0DKs+cX2q8YRot7SK/fORnHbKG1m8FE+vWqSd5wX0hIb/J4vwcw6wDPkXi5O3PXewuC2B6bP6R7bnYgks=

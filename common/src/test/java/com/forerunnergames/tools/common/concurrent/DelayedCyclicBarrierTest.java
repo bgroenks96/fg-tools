@@ -21,8 +21,8 @@ public class DelayedCyclicBarrierTest
   public void testDelayedCyclicBarrierReleasesThreadsFIFO ()
   {
     final int threadCount = 10;
-    final int iterationCount = 50;
-    final DelayedCyclicBarrier barrier = new DelayedCyclicBarrier (threadCount, 1, DelayMode.LINEAR);
+    final int iterationCount = 20;
+    final DelayedCyclicBarrier barrier = new DelayedCyclicBarrier (threadCount, 5, DelayMode.LINEAR);
     for (int i = 0; i < iterationCount; i++)
     {
       final ExecutorService threadPool = Executors.newFixedThreadPool (threadCount);

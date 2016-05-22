@@ -77,12 +77,20 @@ public class Result <T>
     Arguments.checkIsNotNull (results, "results");
     Arguments.checkHasNoNullElements (results, "results");
 
-    for (final V status : results)
+    return firstFailedStatusFrom (results).isPresent ();
+  }
+
+  public static <V extends ReturnStatus <?>> Optional <V> firstFailedStatusFrom (final Iterable <V> statuses)
+  {
+    Arguments.checkIsNotNull (statuses, "statuses");
+    Arguments.checkHasNoNullElements (statuses, "statuses");
+
+    for (final V status : statuses)
     {
-      if (status.getResult ().failed ()) return true;
+      if (status.getResult ().failed ()) return Optional.of (status);
     }
 
-    return false;
+    return Optional.absent ();
   }
 
   public boolean isSuccessful ()

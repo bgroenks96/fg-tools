@@ -13,10 +13,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class DelayedCyclicBarrierTest
 {
+  @Ignore
   @Test
   public void testDelayedCyclicBarrierReleasesThreadsFIFO ()
   {

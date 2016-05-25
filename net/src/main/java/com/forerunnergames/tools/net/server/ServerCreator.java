@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.net.server;
 
 import com.forerunnergames.tools.common.Result;
+import com.forerunnergames.tools.net.server.configuration.ServerConfiguration;
 
 public interface ServerCreator
 {

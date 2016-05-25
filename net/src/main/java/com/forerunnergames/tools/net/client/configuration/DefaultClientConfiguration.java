@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.client;
+package com.forerunnergames.tools.net.client.configuration;
 
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;

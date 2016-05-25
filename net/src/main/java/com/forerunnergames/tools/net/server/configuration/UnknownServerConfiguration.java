@@ -21,26 +21,12 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.server;
+package com.forerunnergames.tools.net.server.configuration;
 
-import com.forerunnergames.tools.common.Arguments;
-import com.forerunnergames.tools.net.NetworkConstants;
-import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
-
-public final class DefaultServerConfiguration implements ServerConfiguration
+public final class UnknownServerConfiguration implements ServerConfiguration
 {
-  private final String serverAddress;
-  private final int serverTcpPort;
-
-  public DefaultServerConfiguration (final String serverAddress, final int serverTcpPort)
-  {
-    Arguments.checkIsNotNull (serverAddress, "serverAddress");
-    Arguments.checkIsNotNegative (serverTcpPort, "serverTcpPort");
-    Arguments.checkUpperInclusiveBound (serverTcpPort, NetworkConstants.MAX_PORT, "serverTcpPort");
-
-    this.serverAddress = serverAddress;
-    this.serverTcpPort = serverTcpPort;
-  }
+  private final String serverAddress = "";
+  private final int serverTcpPort = -1;
 
   @Override
   public String getServerAddress ()
@@ -59,12 +45,5 @@ public final class DefaultServerConfiguration implements ServerConfiguration
   {
     return String.format ("%1$s: Server address: %2$s | Server port: %3$s (TCP)", getClass ().getSimpleName (),
                           serverAddress, serverTcpPort);
-  }
-
-  @RequiredForNetworkSerialization
-  private DefaultServerConfiguration ()
-  {
-    serverAddress = null;
-    serverTcpPort = 0;
   }
 }

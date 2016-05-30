@@ -25,9 +25,16 @@ package com.forerunnergames.tools.net.server;
 
 import com.forerunnergames.tools.common.Result;
 
+import java.util.concurrent.Future;
+
 public interface ServerConnector
 {
-  Result <String> connect (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts);
+  Result <String> connectNow (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts);
+
+  Future <Result <String>> connectLater (final String address,
+                                         final int tcpPort,
+                                         final int timeoutMs,
+                                         final int maxAttempts);
 
   boolean isConnected ();
 

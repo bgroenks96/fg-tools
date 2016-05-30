@@ -31,6 +31,8 @@ import com.forerunnergames.tools.net.Remote;
 
 import com.google.common.collect.ImmutableSet;
 
+import java.util.concurrent.Future;
+
 public abstract class AbstractClientController extends ControllerAdapter implements ClientController
 {
   private final Client client;
@@ -64,14 +66,26 @@ public abstract class AbstractClientController extends ControllerAdapter impleme
   }
 
   @Override
-  public Result <String> connect (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts)
+  public Result <String> connectNow (final String address,
+                                     final int tcpPort,
+                                     final int timeoutMs,
+                                     final int maxAttempts)
   {
     Arguments.checkIsNotNull (address, "address");
     Arguments.checkIsNotNegative (tcpPort, "tcpPort");
     Arguments.checkIsNotNegative (timeoutMs, "timeoutMs");
     Arguments.checkIsNotNegative (maxAttempts, "maxAttempts");
 
-    return client.connect (address, tcpPort, timeoutMs, maxAttempts);
+    return client.connectNow (address, tcpPort, timeoutMs, maxAttempts);
+  }
+
+  @Override
+  public Future <Result <String>> connectLater (final String address,
+                                                final int tcpPort,
+                                                final int timeoutMs,
+                                                final int maxAttempts)
+  {
+    return client.connectLater (address, tcpPort, timeoutMs, maxAttempts);
   }
 
   @Override

@@ -69,6 +69,6 @@ public class Classes
 
   private Classes ()
   {
-    Classes.instantiationNotAllowed ();
+    instantiationNotAllowed ();
   }
 }

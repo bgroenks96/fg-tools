@@ -1,6 +1,6 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
- * Copyright © 2013 - 2016 Forerunner Games, LLC
+ * Copyright �� 2011 - 2013 Aaron Mahan
+ * Copyright �� 2013 - 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ allprojects {
   apply plugin: "idea"
   apply plugin: "eclipse"
 
-  [compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+  [compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
 
   sourceCompatibility = projectSourceCompatibility
   targetCompatibility = projectTargetCompatibility

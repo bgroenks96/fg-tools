@@ -30,6 +30,6 @@ package com.forerunnergames.tools.net.events.remote;
  *
  * This event is intended to be sent over the network.
  */
-public interface QuestionEvent extends RemoteEvent
+public interface QuestionEvent extends DirectEvent
 {
 }

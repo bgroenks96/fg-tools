@@ -5,6 +5,6 @@ package com.forerunnergames.tools.net.events.remote.origin.server;
  *
  * This event is intended to be sent over the network.
  */
-public interface BroadcastSuccessEvent
+public interface BroadcastSuccessEvent extends BroadcastEvent, SuccessEvent
 {
 }

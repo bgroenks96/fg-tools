@@ -51,15 +51,61 @@ public class Result <T>
     return new Result <> (false, failureReason);
   }
 
-  public static <V> boolean anyResultsFailed (final Iterable <Result <V>> results)
+  public static boolean anyResultsFailed (final Iterable <Result <?>> results)
   {
     Arguments.checkIsNotNull (results, "results");
     Arguments.checkHasNoNullElements (results, "results");
 
-    return firstFailedFrom (results).isPresent ();
+    for (final Result <?> result : results)
+    {
+      if (result.failed ()) return true;
+    }
+
+    return false;
   }
 
   public static <V, R extends Result <V>> Optional <R> firstFailedFrom (final Iterable <R> results)
+  {
+    Arguments.checkIsNotNull (results, "results");
+    Arguments.checkHasNoNullElements (results, "results");
+
+    for (final R result : results)
+    {
+      if (result.failed ()) return Optional.of (result);
+    }
+
+    return Optional.absent ();
+  }
+
+  @SafeVarargs
+  public static <V, R extends Result <V>> Optional <R> firstFailedFrom (final R... results)
+  {
+    Arguments.checkIsNotNull (results, "results");
+    Arguments.checkHasNoNullElements (results, "results");
+
+    for (final R result : results)
+    {
+      if (result.failed ()) return Optional.of (result);
+    }
+
+    return Optional.absent ();
+  }
+
+  public static <R extends Result <?>> Optional <R> firstGenericFailedFrom (final Iterable <R> results)
+  {
+    Arguments.checkIsNotNull (results, "results");
+    Arguments.checkHasNoNullElements (results, "results");
+
+    for (final R result : results)
+    {
+      if (result.failed ()) return Optional.of (result);
+    }
+
+    return Optional.absent ();
+  }
+
+  @SafeVarargs
+  public static <R extends Result <?>> Optional <R> firstGenericFailedFrom (final R... results)
   {
     Arguments.checkIsNotNull (results, "results");
     Arguments.checkHasNoNullElements (results, "results");

@@ -240,8 +240,10 @@ public final class Strings
    * @return The plurally-agreeing form of the phrase, preceded by the count as a number, with a space between the count
    *         & phrase.
    *
-   * @see #pluralize(int, String, String, String)
+   * @see #pluralizeZeroIsNo(int, String, String)
    * @see #pluralizeS(int, String)
+   * @see #pluralizeSZeroIsNo(int, String)
+   * @see #pluralizeWord(int, String, String, String)
    * @see #pluralizeWord(int, String, String)
    */
   public static String pluralize (final int count, final String singular, final String plural)
@@ -252,31 +254,36 @@ public final class Strings
     return String.valueOf (count) + " " + (count == 1 ? singular : plural);
   }
 
-/**
+  /**
    * Gets the correct plurally-agreeing form of the given phrase depending on whether its preceding clarifying numerical
    * value is equal to 1. <br/>
    * <br/>
-   * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a balance of -1 dollars. <br/>
+   * Note: 0 values are converted to the word "no", e.g. no apples
+   * <br/>
+   * Note: 0 and negative values are always pluralized, e.g. no apples, or a balance of -1 dollars.
    *
    * @param count
-   *          The clarifying numerical value, used to determine if the phrase is singular or plural
+   *          The preceding clarifying numerical value, used to determine if the phrase is singular or plural
    * @param singular
    *          The singular form of the phrase denoting a quantity of exactly one.
    * @param plural
    *          The plural form of the phrase denoting a quantity of greater than one, zero, or a negative quantity.
    *
-   * @return The plurally-agreeing form of the phrase, excluding the count.
+   * @return The plurally-agreeing form of the phrase, preceded by the count as a number (or the word "no" if the count
+   *         is 0), with a space between the count & phrase.
    *
-   * @see #pluralizeS(int, String)
    * @see #pluralize(int, String, String)
-   * @see #pluralize(int, String, String, String)
+   * @see #pluralizeS(int, String)
+   * @see #pluralizeSZeroIsNo(int, String)
+   * @see #pluralizeWord(int, String, String)
+   * @see #pluralizeWord(int, String, String, String)
    */
-  public static String pluralizeWord (final int count, final String singular, final String plural)
+  public static String pluralizeZeroIsNo (final int count, final String singular, final String plural)
   {
     Arguments.checkIsNotNull (singular, "singular");
     Arguments.checkIsNotNull (plural, "plural");
 
-    return count == 1 ? singular : plural;
+    return (count == 0 ? "no" : String.valueOf (count)) + " " + (count == 1 ? singular : plural);
   }
 
   /**
@@ -297,15 +304,79 @@ public final class Strings
    * @return The plurally-agreeing form of the phrase, preceded by the count as a number, with a space between the count
    *         & phrase.
    *
+   * @see #pluralizeSZeroIsNo(int, String)
    * @see #pluralize(int, String, String)
+   * @see #pluralizeZeroIsNo(int, String, String)
    * @see #pluralizeWord(int, String, String)
-   * @see #pluralize(int, String, String, String)
+   * @see #pluralizeWord(int, String, String, String)
    */
   public static String pluralizeS (final int count, final String singular)
   {
     Arguments.checkIsNotNull (singular, "singular");
 
     return String.valueOf (count) + " " + singular + (count == 1 ? "" : "s");
+  }
+
+  /**
+   * Gets the correct plurally-agreeing simple -s (add s) form of the given phrase depending on whether its preceding
+   * clarifying numerical value is equal to 1. <br/>
+   * <br/>
+   * If the phrase needs to be pluralized, a lowercase 's' will be appended to the end of the phrase, otherwise the
+   * singular form of the phrase will be returned. This method is only appropriate for phrases whose correct plural form
+   * only involves adding an 's'. <br/>
+   * <br/>
+   * Note: 0 values are converted to the word "no", e.g. no apples
+   * <br/>
+   * Note: 0 and negative values are always pluralized, e.g. no apples, or a balance of -1 dollars
+   *
+   * @param count
+   *          The preceding clarifying numerical value, used to determine if the phrase is singular or plural.
+   * @param singular
+   *          The singular form of the phrase denoting a quantity of exactly one.
+   *
+   * @return The plurally-agreeing form of the phrase, preceded by the count as a number (or the word "no" if the count
+   *         is 0), with a space between the count & phrase.
+   *
+   * @see #pluralizeS(int, String)
+   * @see #pluralize(int, String, String)
+   * @see #pluralizeZeroIsNo(int, String, String)
+   * @see #pluralizeWord(int, String, String)
+   * @see #pluralizeWord(int, String, String, String)
+   */
+  public static String pluralizeSZeroIsNo (final int count, final String singular)
+  {
+    Arguments.checkIsNotNull (singular, "singular");
+
+    return (count == 0 ? "no" : String.valueOf (count)) + " " + singular + (count == 1 ? "" : "s");
+  }
+
+  /**
+   * Gets the correct plurally-agreeing form of the given phrase depending on whether its preceding clarifying numerical
+   * value is equal to 1. <br/>
+   * <br/>
+   * Note: 0 and negative values are always pluralized, e.g. 0 apples, or a balance of -1 dollars. <br/>
+   *
+   * @param count
+   *          The clarifying numerical value, used to determine if the phrase is singular or plural
+   * @param singular
+   *          The singular form of the phrase denoting a quantity of exactly one.
+   * @param plural
+   *          The plural form of the phrase denoting a quantity of greater than one, zero, or a negative quantity.
+   *
+   * @return The plurally-agreeing form of the phrase, excluding the count.
+   *
+   * @see #pluralizeWord(int, String, String, String)
+   * @see #pluralizeS(int, String)
+   * @see #pluralizeSZeroIsNo(int, String)
+   * @see #pluralize(int, String, String)
+   * @see #pluralizeZeroIsNo(int, String, String)
+   */
+  public static String pluralizeWord (final int count, final String singular, final String plural)
+  {
+    Arguments.checkIsNotNull (singular, "singular");
+    Arguments.checkIsNotNull (plural, "plural");
+
+    return count == 1 ? singular : plural;
   }
 
   /**
@@ -325,11 +396,13 @@ public final class Strings
    *
    * @return The plurally-agreeing form of the phrase, excluding the count.
    *
-   * @see #pluralize(int, String, String)
-   * @see #pluralizeS(int, String)
    * @see #pluralizeWord(int, String, String)
+   * @see #pluralizeS(int, String)
+   * @see #pluralizeSZeroIsNo(int, String)
+   * @see #pluralize(int, String, String)
+   * @see #pluralizeZeroIsNo(int, String, String)
    */
-  public static String pluralize (final int count, final String none, final String singular, final String plural)
+  public static String pluralizeWord (final int count, final String none, final String singular, final String plural)
   {
     Arguments.checkIsNotNull (none, "none");
     Arguments.checkIsNotNull (singular, "singular");

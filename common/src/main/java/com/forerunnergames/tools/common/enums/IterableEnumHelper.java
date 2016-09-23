@@ -136,6 +136,7 @@ public final class IterableEnumHelper
                                                                               final E[] values,
                                                                               final Collection <E> validValues)
   {
+    Arguments.checkIsNotNull (e, "e");
     Arguments.checkIsNotNull (validValues, "validValues");
     Arguments.checkHasNoNullElements (validValues, "validValues");
 
@@ -159,10 +160,14 @@ public final class IterableEnumHelper
                                                                      final E[] values,
                                                                      final Collection <E> validValues)
   {
+    Arguments.checkIsNotNull (e, "e");
+    Arguments.checkIsNotNull (values, "values");
+    Arguments.checkHasNoNullElements (values, "values");
+
     if (!hasNextValid (e, values, validValues))
     {
-      throw new IllegalStateException ("Cannot get next " + e.getClass ().getSimpleName () + " value because "
-              + e.name () + " is the last value.");
+      throw new IllegalStateException ("Cannot get next valid " + e.getClass ().getSimpleName () + " value because "
+              + e.name () + " is the last valid value.");
     }
 
     return next (e, values);

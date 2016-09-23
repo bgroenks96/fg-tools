@@ -30,7 +30,7 @@ import com.forerunnergames.tools.common.Strings;
 import java.util.Collection;
 
 /**
- * This class exists as a workaround to some fundamental {@link java.lang.Enum} limitations.
+ * This class exists as a workaround to some fundamental {@link Enum} limitations.
  * <p/>
  * It replaces an abstract implementation of {@link IterableEnum}, since it is impossible to create an abstract
  * {@code enum}, or more specifically, impossible to provide an abstract base class that implements {@link IterableEnum}
@@ -40,7 +40,7 @@ import java.util.Collection;
  * {@link IterableEnum} because it would require this class to be an enum, and therefore, it could not have generic type
  * parameters, so it would essentially be useless.
  * <p/>
- * The workaround is to provide static utility methods that will act upon an {@link java.lang.Enum}, which a concrete
+ * The workaround is to provide static utility methods that will act upon an {@link Enum}, which a concrete
  * implementation of {@link IterableEnum} can delegate to.
  * <p/>
  * In this way, various implementations of {@link IterableEnum} can re-use common functionality.
@@ -48,7 +48,7 @@ import java.util.Collection;
 public final class IterableEnumHelper
 {
   /**
-   * Gets the total number of values in this {@link java.lang.Enum}.
+   * Gets the total number of values in this {@link Enum}.
    */
   public static <E extends Enum <E> & IterableEnum <E>> int count (final E[] values)
   {
@@ -59,13 +59,12 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets the {@link java.lang.Enum} value at the nth position in declarative order, the first value being at position
-   * 1.
+   * Gets the {@link Enum} value at the nth position in declarative order, the first value being at position 1.
    *
    * @param n
-   *          The {@link java.lang.Enum} position, must be > 0 and <= values.length.
+   *          The {@link Enum} position, must be > 0 and <= values.length.
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    */
   public static <E extends Enum <E> & IterableEnum <E>> E getNthValue (final int n, final E[] values)
   {
@@ -78,12 +77,12 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets whether not the specified {@link java.lang.Enum} value has another value succeeding it in declarative order.
+   * Gets whether not the specified {@link Enum} value has another value succeeding it in declarative order.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    */
   public static <E extends Enum <E> & IterableEnum <E>> boolean hasNext (final E e, final E[] values)
   {
@@ -95,14 +94,14 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets the {@link java.lang.Enum} value succeeding the specified {@link java.lang.Enum} value in declarative order.
+   * Gets the {@link Enum} value succeeding the specified {@link Enum} value in declarative order.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    *
-   * @throws java.lang.IllegalStateException
+   * @throws IllegalStateException
    *           if there exists no succeeding value.
    */
   public static <E extends Enum <E> & IterableEnum <E>> E next (final E e, final E[] values)
@@ -121,16 +120,16 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets whether not the specified {@link java.lang.Enum} value has a valid value succeeding it in declarative order.
+   * Gets whether not the specified {@link Enum} value has a valid value succeeding it in declarative order.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    *
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    *
    * @param validValues
-   *          All of the valid {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the valid {@link Enum} values, must not be null, must not contain any null values.
    */
   public static <E extends Enum <E> & IterableEnum <E>> boolean hasNextValid (final E e,
                                                                               final E[] values,
@@ -144,17 +143,16 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets the valid {@link java.lang.Enum} value succeeding the specified {@link java.lang.Enum} value in declarative
-   * order.
+   * Gets the valid {@link Enum} value succeeding the specified {@link Enum} value in declarative order.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    *
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    *
    * @param validValues
-   *          All of the valid {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the valid {@link Enum} values, must not be null, must not contain any null values.
    */
   public static <E extends Enum <E> & IterableEnum <E>> E nextValid (final E e,
                                                                      final E[] values,
@@ -174,10 +172,10 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets whether not the specified {@link java.lang.Enum} value has another value preceding it in declarative order.
+   * Gets whether not the specified {@link Enum} value has another value preceding it in declarative order.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    */
   public static <E extends Enum <E> & IterableEnum <E>> boolean hasPrevious (final E e)
   {
@@ -187,14 +185,14 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets the {@link java.lang.Enum} value preceding the specified {@link java.lang.Enum} value in declarative order.
+   * Gets the {@link Enum} value preceding the specified {@link Enum} value in declarative order.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    *
-   * @throws java.lang.IllegalStateException
+   * @throws IllegalStateException
    *           if there exists no preceding value.
    */
   public static <E extends Enum <E> & IterableEnum <E>> E previous (final E e, final E[] values)
@@ -213,16 +211,16 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets whether not the specified {@link java.lang.Enum} value has a valid value preceding it in declarative order.
+   * Gets whether not the specified {@link Enum} value has a valid value preceding it in declarative order.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    *
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    *
    * @param validValues
-   *          All of the valid {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the valid {@link Enum} values, must not be null, must not contain any null values.
    */
   public static <E extends Enum <E> & IterableEnum <E>> boolean hasPreviousValid (final E e,
                                                                                   final E[] values,
@@ -236,17 +234,16 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets the valid {@link java.lang.Enum} value preceding the specified {@link java.lang.Enum} value in declarative
-   * order.
+   * Gets the valid {@link Enum} value preceding the specified {@link Enum} value in declarative order.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    *
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    *
    * @param validValues
-   *          All of the valid {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the valid {@link Enum} values, must not be null, must not contain any null values.
    */
   public static <E extends Enum <E> & IterableEnum <E>> E previousValid (final E e,
                                                                          final E[] values,
@@ -266,10 +263,10 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets the {@link java.lang.Enum} value at the first position in declarative order.
+   * Gets the {@link Enum} value at the first position in declarative order.
    *
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    */
   public static <E extends Enum <E> & IterableEnum <E>> E first (final E[] values)
   {
@@ -280,10 +277,10 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets the {@link java.lang.Enum} value at the last position in declarative order.
+   * Gets the {@link Enum} value at the last position in declarative order.
    *
    * @param values
-   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *          All of the {@link Enum} values, must not be null, must not contain any null values.
    */
   public static <E extends Enum <E> & IterableEnum <E>> E last (final E[] values)
   {
@@ -294,12 +291,12 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Compares the two specified {@link java.lang.Enum} values for equality.
+   * Compares the two specified {@link Enum} values for equality.
    *
    * @param e1
-   *          The first specified {@link java.lang.Enum} value, must not be null.
+   *          The first specified {@link Enum} value, must not be null.
    * @param e2
-   *          The second specified {@link java.lang.Enum} value, must not be null.
+   *          The second specified {@link Enum} value, must not be null.
    */
   public static <E extends Enum <E> & IterableEnum <E>> boolean is (final E e1, final E e2)
   {
@@ -310,12 +307,12 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Compares the two specified {@link java.lang.Enum} values for inequality.
+   * Compares the two specified {@link Enum} values for inequality.
    *
    * @param e1
-   *          The first specified {@link java.lang.Enum} value, must not be null.
+   *          The first specified {@link Enum} value, must not be null.
    * @param e2
-   *          The second specified {@link java.lang.Enum} value, must not be null.
+   *          The second specified {@link Enum} value, must not be null.
    */
   public static <E extends Enum <E> & IterableEnum <E>> boolean isNot (final E e1, final E e2)
   {
@@ -323,12 +320,12 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Gets the position of the specified {@link java.lang.Enum} value, the position being defined as an integer > 0 and
-   * <= {@link #count(Enum[])} with respect to declarative order, the first position being 1, the second position being
-   * 2, and so on.
+   * Gets the position of the specified {@link Enum} value, the position being defined as an integer > 0 and <=
+   * {@link #count(Enum[])} with respect to declarative order, the first position being 1, the second position being 2,
+   * and so on.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    */
   public static <E extends Enum <E> & IterableEnum <E>> int getPosition (final E e)
   {
@@ -338,13 +335,12 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Converts the specified {@link java.lang.Enum} value to a {@link java.lang.String} representation of a mixed ordinal
-   * position > 0 and <= {@link #count(Enum[])}, with respect to declarative order, the value at position 1 being
-   * represented by the {@link java.lang.String} "1st", the value at position 2 being represented by the
-   * {@link java.lang.String} "2nd", and so on.
+   * Converts the specified {@link Enum} value to a {@link String} representation of a mixed ordinal position > 0 and <=
+   * {@link #count(Enum[])}, with respect to declarative order, the value at position 1 being represented by the
+   * {@link String} "1st", the value at position 2 being represented by the {@link String} "2nd", and so on.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    *
    * @see #getPosition(Enum) getPosition
    */
@@ -356,10 +352,10 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Converts the specified {@link java.lang.Enum} value to a lowercase {@link java.lang.String} representation.
+   * Converts the specified {@link Enum} value to a lowercase {@link String} representation.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    */
   public static <E extends Enum <E> & IterableEnum <E>> String toLowerCase (final E e)
   {
@@ -369,10 +365,10 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Converts the specified {@link java.lang.Enum} value to an uppercase {@link java.lang.String} representation.
+   * Converts the specified {@link Enum} value to an uppercase {@link String} representation.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    */
   public static <E extends Enum <E> & IterableEnum <E>> String toUpperCase (final E e)
   {
@@ -382,11 +378,11 @@ public final class IterableEnumHelper
   }
 
   /**
-   * Converts the specified {@link java.lang.Enum} value to a proper case {@link java.lang.String} representation, where
-   * the first letter is uppercase, and the rest are lowercase.
+   * Converts the specified {@link Enum} value to a proper case {@link String} representation, where the first letter is
+   * uppercase, and the rest are lowercase.
    *
    * @param e
-   *          The specified {@link java.lang.Enum} value, must not be null.
+   *          The specified {@link Enum} value, must not be null.
    */
   public static <E extends Enum <E> & IterableEnum <E>> String toProperCase (final E e)
   {

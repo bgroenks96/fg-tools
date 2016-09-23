@@ -208,6 +208,59 @@ public final class IterableEnumHelper
   }
 
   /**
+   * Gets whether not the specified {@link java.lang.Enum} value has a valid value preceding it in declarative order.
+   *
+   * @param e
+   *          The specified {@link java.lang.Enum} value, must not be null.
+   *
+   * @param values
+   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *
+   * @param validValues
+   *          All of the valid {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> boolean hasPreviousValid (final E e,
+                                                                                  final E[] values,
+                                                                                  final Collection <E> validValues)
+  {
+    Arguments.checkIsNotNull (e, "e");
+    Arguments.checkIsNotNull (validValues, "validValues");
+    Arguments.checkHasNoNullElements (validValues, "validValues");
+
+    return hasPrevious (e) && validValues.contains (previous (e, values));
+  }
+
+  /**
+   * Gets the valid {@link java.lang.Enum} value preceding the specified {@link java.lang.Enum} value in declarative
+   * order.
+   *
+   * @param e
+   *          The specified {@link java.lang.Enum} value, must not be null.
+   *
+   * @param values
+   *          All of the {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   *
+   * @param validValues
+   *          All of the valid {@link java.lang.Enum} values, must not be null, must not contain any null values.
+   */
+  public static <E extends Enum <E> & IterableEnum <E>> E previousValid (final E e,
+                                                                         final E[] values,
+                                                                         final Collection <E> validValues)
+  {
+    Arguments.checkIsNotNull (e, "e");
+    Arguments.checkIsNotNull (validValues, "validValues");
+    Arguments.checkHasNoNullElements (validValues, "validValues");
+
+    if (!hasPreviousValid (e, values, validValues))
+    {
+      throw new IllegalStateException ("Cannot get previous valid " + e.getClass ().getSimpleName () + " value because "
+              + e.name () + " is the first valid value.");
+    }
+
+    return previous (e, values);
+  }
+
+  /**
    * Gets the {@link java.lang.Enum} value at the first position in declarative order.
    *
    * @param values

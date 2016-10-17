@@ -50,8 +50,7 @@ public final class NetworkConstants
   {
     Arguments.checkIsNotNull (address, "address");
 
-    return address.equals (NetworkConstants.LOCALHOST_ADDRESS)
-            || address.equalsIgnoreCase (NetworkConstants.LOCALHOST_NAME);
+    return address.equals (LOCALHOST_ADDRESS) || address.equalsIgnoreCase (LOCALHOST_NAME);
   }
 
   public static boolean isValidIpAddress (@Nullable final String address)

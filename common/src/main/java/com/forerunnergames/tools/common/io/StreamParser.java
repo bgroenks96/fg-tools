@@ -1512,7 +1512,7 @@ public final class StreamParser
         break;
       }
 
-      case StreamParser.QUOTE_CHARACTER:
+      case QUOTE_CHARACTER:
       {
         currentTokenType = TokenType.QUOTED_STRING;
 

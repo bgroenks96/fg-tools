@@ -25,6 +25,8 @@ package com.forerunnergames.tools.common.controllers;
 
 public interface Controller
 {
+  String getName ();
+
   void initialize ();
 
   void update ();

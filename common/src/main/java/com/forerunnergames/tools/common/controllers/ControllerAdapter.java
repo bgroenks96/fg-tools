@@ -23,8 +23,20 @@
 
 package com.forerunnergames.tools.common.controllers;
 
+import com.forerunnergames.tools.common.Strings;
+
+import java.util.UUID;
+
 public class ControllerAdapter implements Controller
 {
+  private final String name = UUID.randomUUID ().toString ();
+
+  @Override
+  public String getName ()
+  {
+    return name;
+  }
+
   @Override
   public void initialize ()
   {
@@ -44,5 +56,11 @@ public class ControllerAdapter implements Controller
   @Override
   public void shutDown ()
   {
+  }
+
+  @Override
+  public String toString ()
+  {
+    return Strings.format ("{}: Name: [{}]", getClass ().getSimpleName (), name);
   }
 }

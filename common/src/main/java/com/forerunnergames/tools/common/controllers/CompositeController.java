@@ -26,46 +26,55 @@ package com.forerunnergames.tools.common.controllers;
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Strings;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
 
-public final class CompositeController implements Controller
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class CompositeController extends ControllerAdapter
 {
-  private final List <Controller> children = new ArrayList <> ();
+  protected final Logger log = LoggerFactory.getLogger (getClass ());
+  private final Map <String, Controller> childrenNamesToChildren = new HashMap<> ();
 
   public CompositeController (final Controller... children)
   {
     Arguments.checkIsNotNull (children, "children");
     Arguments.checkHasNoNullElements (children, "children");
 
-    this.children.addAll (Arrays.asList (children));
+    for (final Controller child : children)
+    {
+      addInternal (child);
+    }
   }
 
   @Override
   public void initialize ()
   {
-    for (final Controller controller : children)
+    for (final Controller child : getAll ())
     {
-      controller.initialize ();
+      child.initialize ();
     }
   }
 
   @Override
   public void update ()
   {
-    for (final Controller controller : children)
+    for (final Controller child : getAll ())
     {
-      controller.update ();
+      child.update ();
     }
   }
 
   @Override
   public boolean shouldShutDown ()
   {
-    for (final Controller controller : children)
+    for (final Controller child : getAll ())
     {
-      if (controller.shouldShutDown ()) return true;
+      if (child.shouldShutDown ()) return true;
     }
 
     return false;
@@ -74,30 +83,66 @@ public final class CompositeController implements Controller
   @Override
   public void shutDown ()
   {
-    for (final Controller controller : children)
+    for (final Controller child : getAll ())
     {
-      controller.shutDown ();
+      child.shutDown ();
     }
+  }
+
+  @Override
+  public String toString ()
+  {
+    return Strings.format ("{}: Children: {}", getClass ().getSimpleName (),
+                           Strings.toString (childrenNamesToChildren));
   }
 
   public void add (final Controller child)
   {
     Arguments.checkIsNotNull (child, "child");
 
-    children.add (child);
+    addInternal (child);
   }
 
   public void remove (final Controller child)
   {
     Arguments.checkIsNotNull (child, "child");
-    Arguments.checkIsTrue (children.contains (child), "Child [" + child + "] not found.");
 
-    children.remove (child);
+    final Controller removed = childrenNamesToChildren.remove (child.getName ());
+
+    if (removed == null)
+    {
+      log.warn ("Could not remove non-existent child {}: [{}]", child.getClass ().getSimpleName (), child);
+    }
   }
 
-  @Override
-  public String toString ()
+  public Controller get (final String name)
   {
-    return String.format ("%1$s: Children: %2$s", getClass ().getSimpleName (), Strings.toString (children));
+    Arguments.checkIsNotNull (name, "name");
+
+    final Controller controller = childrenNamesToChildren.get (name);
+
+    if (controller == null)
+    {
+      throw new IllegalStateException (Strings.format ("Cannot find controller named \"{}\"", name));
+    }
+
+    return controller;
+  }
+
+  public ImmutableCollection <Controller> getAll ()
+  {
+    return ImmutableList.copyOf (childrenNamesToChildren.values ());
+  }
+
+  private void addInternal (final Controller child)
+  {
+    Arguments.checkIsNotNull (child, "child");
+
+    final Controller previous = childrenNamesToChildren.put (child.getName (), child);
+
+    if (previous != null)
+    {
+      log.warn ("Replaced previous child {}: [{}]", previous.getClass ().getSimpleName (), previous);
+    }
   }
 }

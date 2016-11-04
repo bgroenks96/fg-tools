@@ -115,6 +115,18 @@ public class CompositeController extends ControllerAdapter
     }
   }
 
+  public void remove (final String name)
+  {
+    Arguments.checkIsNotNull (name, "name");
+
+    final Controller removed = childrenNamesToChildren.remove (name);
+
+    if (removed == null)
+    {
+      log.warn ("Could not remove non-existent child {}: [{}]", Controller.class.getSimpleName (), name);
+    }
+  }
+
   public Controller get (final String name)
   {
     Arguments.checkIsNotNull (name, "name");

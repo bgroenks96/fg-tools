@@ -30,6 +30,6 @@ import com.forerunnergames.tools.net.events.remote.AnswerEvent;
  *
  * This event is intended to be sent over the network.
  */
-public interface SuccessEvent extends AnswerEvent
+public interface SuccessEvent extends ServerEvent, AnswerEvent
 {
 }

@@ -167,6 +167,20 @@ public final class Randomness
   }
 
   /**
+   * Gets a random double in the range [0.0, 1.0) using a cryptographically secure pseudo random number generator.
+   */
+  public static double getRandomDouble ()
+  {
+    checkCsprngUsage ();
+
+    final double randomNumber = csprng.nextDouble ();
+
+    updateCsprngUsage (1);
+
+    return randomNumber;
+  }
+
+  /**
    * Obtains a random element from the specified collection using a cryptographically secure pseudo random number
    * generator.
    *

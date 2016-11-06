@@ -32,7 +32,6 @@ import java.security.NoSuchProviderException;
 import java.security.Provider;
 import java.security.SecureRandom;
 import java.security.Security;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,7 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utility class for random-number-related functionality
+ * Utility class for random-number-related functionality.
  */
 public final class Randomness
 {
@@ -152,7 +151,7 @@ public final class Randomness
     final long n = (long) inclusiveUpperBound - inclusiveLowerBound + 1;
 
     assert n > 0;
-    assert n <= (long) Integer.MAX_VALUE;
+    assert n <= Integer.MAX_VALUE;
 
     checkCsprngUsage ();
 
@@ -241,7 +240,7 @@ public final class Randomness
 
     checkCsprngUsage ();
 
-    final ArrayList <T> listCopy = Lists.newArrayList (iterable);
+    final List <T> listCopy = Lists.newArrayList (iterable);
 
     Collections.shuffle (listCopy, csprng);
 

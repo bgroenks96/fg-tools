@@ -29,7 +29,7 @@ import com.forerunnergames.tools.common.Strings;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 public class CompositeController extends ControllerAdapter
 {
   protected final Logger log = LoggerFactory.getLogger (getClass ());
-  private final Map <String, Controller> childrenNamesToChildren = new HashMap<> ();
+  private final Map <String, Controller> childrenNamesToChildren = new LinkedHashMap<> ();
 
   public CompositeController (final Controller... children)
   {

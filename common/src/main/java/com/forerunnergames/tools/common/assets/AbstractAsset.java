@@ -26,7 +26,7 @@ package com.forerunnergames.tools.common.assets;
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.id.Id;
 
-public abstract class AbstractAsset implements Asset, Comparable <Asset>
+public abstract class AbstractAsset implements Asset
 {
   private final String name;
   private final Id id;

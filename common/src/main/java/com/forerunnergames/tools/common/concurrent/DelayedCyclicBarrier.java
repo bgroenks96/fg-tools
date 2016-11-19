@@ -18,6 +18,20 @@ public class DelayedCyclicBarrier extends CyclicBarrier
   protected final long baseDelayMillis;
   protected final DelayMode delayMode;
 
+  public enum DelayMode
+  {
+    /**
+     * Delay mode indicating that all threads that arrived after the first arriver should be delayed by the same amount
+     */
+    UNIFORM,
+    /**
+     * Delay mode indicating that each thread that arrives after the first arriver should be delayed by a linearly
+     * increasing amount equal to that of its party number. i.e. if thread0 is the first party to arrive and the base
+     * delay time is 5ms: thread1 will wait for 5ms, thread2 for 10ms, thread3 for 15ms, etc.
+     */
+    LINEAR
+  }
+
   public DelayedCyclicBarrier (final int parties, final long baseDelayMillis, final DelayMode delayMode)
   {
     this (parties, null, baseDelayMillis, delayMode);
@@ -35,22 +49,6 @@ public class DelayedCyclicBarrier extends CyclicBarrier
   }
 
   @Override
-  public int await (final long timeout, final TimeUnit timeUnit)
-          throws InterruptedException, BrokenBarrierException, TimeoutException
-  {
-    final int arrivalIndex = super.await (timeout, timeUnit);
-
-    // for some reason, CyclicBarrier uses descending order in the indices to indicate arrival time.
-    // so here we invert it for the party number (makes computing the wait time more mathematically intuitive).
-    final int partyNumber = getParties () - arrivalIndex - 1;
-    final long waitTime = getWaitTimeFor (partyNumber);
-
-    Thread.sleep (waitTime);
-
-    return arrivalIndex;
-  }
-
-  @Override
   public int await () throws InterruptedException, BrokenBarrierException
   {
     try
@@ -64,6 +62,22 @@ public class DelayedCyclicBarrier extends CyclicBarrier
     {
       return -1;
     }
+  }
+
+  @Override
+  public int await (final long timeout, final TimeUnit timeUnit)
+          throws InterruptedException, BrokenBarrierException, TimeoutException
+  {
+    final int arrivalIndex = super.await (timeout, timeUnit);
+
+    // for some reason, CyclicBarrier uses descending order in the indices to indicate arrival time.
+    // so here we invert it for the party number (makes computing the wait time more mathematically intuitive).
+    final int partyNumber = getParties () - arrivalIndex - 1;
+    final long waitTime = getWaitTimeFor (partyNumber);
+
+    Thread.sleep (waitTime);
+
+    return arrivalIndex;
   }
 
   /**
@@ -98,19 +112,5 @@ public class DelayedCyclicBarrier extends CyclicBarrier
     }
 
     return delayTimeMillis;
-  }
-
-  public enum DelayMode
-  {
-    /**
-     * Delay mode indicating that all threads that arrived after the first arriver should be delayed by the same amount
-     */
-    UNIFORM,
-    /**
-     * Delay mode indicating that each thread that arrives after the first arriver should be delayed by a linearly
-     * increasing amount equal to that of its party number. i.e. if thread0 is the first party to arrive and the base
-     * delay time is 5ms: thread1 will wait for 5ms, thread2 for 10ms, thread3 for 15ms, etc.
-     */
-    LINEAR
   }
 }

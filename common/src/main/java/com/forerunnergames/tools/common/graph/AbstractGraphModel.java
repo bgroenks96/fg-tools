@@ -114,8 +114,8 @@ public abstract class AbstractGraphModel <T> implements GraphModel <T>
     if (areAdjacent (node0, node1)) return 1;
 
     final Set <T> adj = adjList.get (node0);
-    final Queue <T> visitQueue = new ArrayDeque <> ();
-    final Map <T, Integer> distMap = new HashMap <> ();
+    final Queue <T> visitQueue = new ArrayDeque<> ();
+    final Map <T, Integer> distMap = new HashMap<> ();
     for (final T node : adj)
     {
       visitQueue.offer (node);

@@ -39,7 +39,7 @@ public final class DefaultGraphModel <T> extends AbstractGraphModel <T>
 
   public static <T> Builder <T> builder ()
   {
-    return new Builder <> ();
+    return new Builder<> ();
   }
 
   public static <T> GraphModel <T> from (final Map <T, Iterable <T>> adjListData)
@@ -60,7 +60,7 @@ public final class DefaultGraphModel <T> extends AbstractGraphModel <T>
 
   public static class Builder <T>
   {
-    private final Map <T, Set <T>> adjList = new HashMap <> ();
+    private final Map <T, Set <T>> adjList = new HashMap<> ();
     private int size;
 
     /**
@@ -101,7 +101,7 @@ public final class DefaultGraphModel <T> extends AbstractGraphModel <T>
 
     public DefaultGraphModel <T> build ()
     {
-      return new DefaultGraphModel <> (adjList, size);
+      return new DefaultGraphModel<> (adjList, size);
     }
   }
 }

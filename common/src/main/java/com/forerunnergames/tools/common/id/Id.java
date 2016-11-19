@@ -38,32 +38,6 @@ public final class Id implements Comparable <Id>
     this.value = value;
   }
 
-  public UUID value ()
-  {
-    return value;
-  }
-
-  public boolean is (final Id id)
-  {
-    Arguments.checkIsNotNull (id, "id");
-
-    return equals (id);
-  }
-
-  public boolean isNot (final Id id)
-  {
-    Arguments.checkIsNotNull (id, "id");
-
-    return !is (id);
-  }
-
-  public boolean hasValue (final UUID value)
-  {
-    Arguments.checkIsNotNull (value, "value");
-
-    return this.value.equals (value);
-  }
-
   @Override
   public int compareTo (final Id id)
   {
@@ -94,5 +68,31 @@ public final class Id implements Comparable <Id>
   public String toString ()
   {
     return String.valueOf (value);
+  }
+
+  public UUID value ()
+  {
+    return value;
+  }
+
+  public boolean is (final Id id)
+  {
+    Arguments.checkIsNotNull (id, "id");
+
+    return equals (id);
+  }
+
+  public boolean isNot (final Id id)
+  {
+    Arguments.checkIsNotNull (id, "id");
+
+    return !is (id);
+  }
+
+  public boolean hasValue (final UUID value)
+  {
+    Arguments.checkIsNotNull (value, "value");
+
+    return this.value.equals (value);
   }
 }

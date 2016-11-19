@@ -51,6 +51,20 @@ public class AutoDisposable <T> implements Disposable
     disposableCallback.dispose (objRef);
   }
 
+  @Override
+  public int hashCode ()
+  {
+    return objRef.hashCode ();
+  }
+
+  @Override
+  public boolean equals (final Object obj)
+  {
+    Arguments.checkIsNotNull (obj, "obj");
+
+    return obj instanceof AutoDisposable && objRef.equals (((AutoDisposable <?>) obj).unpack ());
+  }
+
   /**
    * Creates an AutoDisposable with the given object instance and an empty callback task.
    */
@@ -172,20 +186,6 @@ public class AutoDisposable <T> implements Disposable
   public T unpack ()
   {
     return objRef;
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return objRef.hashCode ();
-  }
-
-  @Override
-  public boolean equals (final Object obj)
-  {
-    Arguments.checkIsNotNull (obj, "obj");
-
-    return obj instanceof AutoDisposable && objRef.equals (((AutoDisposable <?>) obj).unpack ());
   }
 
   private AutoDisposable (final T objRef, final DisposableCallback <T> disposableCallback)

@@ -49,7 +49,7 @@ public abstract class AbstractObjectPool <T> implements ObjectPool <T>
 
     try
     {
-      factory = new DynamicPoolFactory <> (type, args);
+      factory = new DynamicPoolFactory<> (type, args);
     }
     catch (final NoSuchMethodException | SecurityException e)
     {

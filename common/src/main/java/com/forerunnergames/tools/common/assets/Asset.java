@@ -27,6 +27,18 @@ import com.forerunnergames.tools.common.id.Id;
 
 public interface Asset extends Comparable <Asset>
 {
+  @Override
+  int compareTo (final Asset asset);
+
+  @Override
+  int hashCode ();
+
+  @Override
+  boolean equals (final Object obj);
+
+  @Override
+  String toString ();
+
   String getName ();
 
   Id getId ();
@@ -42,16 +54,4 @@ public interface Asset extends Comparable <Asset>
   boolean is (final Asset asset);
 
   boolean isNot (final Asset asset);
-
-  @Override
-  int compareTo (final Asset asset);
-
-  @Override
-  int hashCode ();
-
-  @Override
-  boolean equals (final Object obj);
-
-  @Override
-  String toString ();
 }

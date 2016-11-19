@@ -40,14 +40,14 @@ public final class DataResult <V, R> extends Result <R>
   {
     Arguments.checkIsNotNull (returnValue, "returnValue");
 
-    return new DataResult <> (true, returnValue, null);
+    return new DataResult<> (true, returnValue, null);
   }
 
   public static <V, R> DataResult <V, R> failureNoData (final R failureReason)
   {
     Arguments.checkIsNotNull (failureReason, "failureReason");
 
-    return new DataResult <> (false, null, failureReason);
+    return new DataResult<> (false, null, failureReason);
   }
 
   public V getReturnValue ()

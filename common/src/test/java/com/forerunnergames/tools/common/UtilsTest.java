@@ -59,7 +59,7 @@ public class UtilsTest
   @Test
   public void testOptionalCastGenericsTypeErasure ()
   {
-    final List <Integer> list = new ArrayList <> ();
+    final List <Integer> list = new ArrayList<> ();
 
     final Optional <ArrayList <Integer>> expected = Optional.of ((ArrayList <Integer>) list);
     final Optional <ArrayList> actual = Utils.optionalCast (list, ArrayList.class);

@@ -64,7 +64,7 @@ public final class DiceUtils
   {
     Arguments.checkIsNotNullOrEmpty (rollAmounts, "rollAmounts");
 
-    testRolls = new ArrayList <> (rollAmounts.length);
+    testRolls = new ArrayList<> (rollAmounts.length);
 
     for (final int rollAmount : rollAmounts)
     {
@@ -84,7 +84,7 @@ public final class DiceUtils
   {
     Arguments.checkLowerExclusiveBound (dieCount, 0, "dieCount");
 
-    final Collection <Integer> rolls = new ArrayList <> (dieCount);
+    final Collection <Integer> rolls = new ArrayList<> (dieCount);
 
     int rollAmount;
 

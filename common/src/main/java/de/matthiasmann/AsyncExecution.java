@@ -48,7 +48,7 @@ public class AsyncExecution
 
   public AsyncExecution ()
   {
-    this.completionQueue = new LinkedBlockingQueue <> ();
+    this.completionQueue = new LinkedBlockingQueue<> ();
   }
 
   /**
@@ -121,7 +121,7 @@ public class AsyncExecution
     {
       throw new NullPointerException ("listener");
     }
-    executor.submit ((Callable <V>) new AC <> (asyncJob, null, listener));
+    executor.submit ((Callable <V>) new AC<> (asyncJob, null, listener));
   }
 
   /**
@@ -152,7 +152,7 @@ public class AsyncExecution
     {
       throw new NullPointerException ("listener");
     }
-    executor.submit ((Callable <Void>) new AC <> (null, asyncJob, listener));
+    executor.submit ((Callable <Void>) new AC<> (null, asyncJob, listener));
   }
 
   class AC <V> implements Callable <V>, Runnable

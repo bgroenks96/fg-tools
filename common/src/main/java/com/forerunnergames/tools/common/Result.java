@@ -41,14 +41,14 @@ public class Result <T>
 
   public static <U> Result <U> success ()
   {
-    return new Result <> (true, null);
+    return new Result<> (true, null);
   }
 
   public static <V> Result <V> failure (final V failureReason)
   {
     Arguments.checkIsNotNull (failureReason, "failureReason");
 
-    return new Result <> (false, failureReason);
+    return new Result<> (false, failureReason);
   }
 
   public static boolean anyResultsFailed (final Iterable <Result <?>> results)

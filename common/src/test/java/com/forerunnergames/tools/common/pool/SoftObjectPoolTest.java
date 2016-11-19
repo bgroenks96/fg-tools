@@ -62,12 +62,13 @@ public class SoftObjectPoolTest
           assertEquals (value, s);
         }
       }
-    }    @Override
+    }
+
+    @Override
     protected ObjectPool <String> createObjectPool ()
     {
       return Pools.createSoftPoolWithArgs (String.class, value);
     }
-
 
   }
 
@@ -87,7 +88,9 @@ public class SoftObjectPoolTest
           assertEquals (value, i);
         }
       }
-    }    @Override
+    }
+
+    @Override
     protected ObjectPool <Integer> createObjectPool ()
     {
       return Pools.createSoftPool (Integer.class, new PoolFactory <Integer> ()
@@ -99,7 +102,6 @@ public class SoftObjectPoolTest
         }
       });
     }
-
 
   }
 }

@@ -27,6 +27,15 @@ import java.net.InetSocketAddress;
 
 public interface Remote
 {
+  @Override
+  int hashCode ();
+
+  @Override
+  boolean equals (final Object o);
+
+  @Override
+  String toString ();
+
   int getConnectionId ();
 
   boolean hasConnectionId (final int connectionId);
@@ -48,13 +57,4 @@ public interface Remote
   String getAddress ();
 
   int getPort ();
-
-  @Override
-  int hashCode ();
-
-  @Override
-  boolean equals (final Object o);
-
-  @Override
-  String toString ();
 }

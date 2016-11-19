@@ -40,7 +40,7 @@ public class IdGeneratorTest
   @Test
   public void testIdGenValuesUnique ()
   {
-    final Set <Id> idSet = new HashSet <> ();
+    final Set <Id> idSet = new HashSet<> ();
     final int N = 1000000;
     for (int i = 0; i < N; i++)
     {

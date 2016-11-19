@@ -31,7 +31,7 @@ public class DelayedCyclicBarrierTest
 
       // set atomic integer to match await index ordering
       final AtomicInteger releaseCounter = new AtomicInteger (threadCount - 1);
-      final Queue <Throwable> errorQueue = new ConcurrentLinkedQueue <> ();
+      final Queue <Throwable> errorQueue = new ConcurrentLinkedQueue<> ();
       for (int ii = 0; ii < threadCount; ii++)
       {
         threadPool.execute (new Runnable ()

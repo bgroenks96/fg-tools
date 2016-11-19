@@ -53,6 +53,14 @@ public abstract class AbstractAsset implements Asset
   }
 
   @Override
+  public int compareTo (final Asset asset)
+  {
+    Arguments.checkIsNotNull (asset, "asset");
+
+    return getId ().compareTo (asset.getId ());
+  }
+
+  @Override
   public String getName ()
   {
     return name;
@@ -104,14 +112,6 @@ public abstract class AbstractAsset implements Asset
   public boolean isNot (final Asset asset)
   {
     return !is (asset);
-  }
-
-  @Override
-  public int compareTo (final Asset asset)
-  {
-    Arguments.checkIsNotNull (asset, "asset");
-
-    return getId ().compareTo (asset.getId ());
   }
 
   @Override

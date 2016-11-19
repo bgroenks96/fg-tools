@@ -1489,7 +1489,8 @@ public final class Arguments
                                        final Number bound,
                                        final String valueName,
                                        final String boundName,
-                                       final BoundType boundType) throws IllegalArgumentException
+                                       final BoundType boundType)
+          throws IllegalArgumentException
   {
     final int stackLevel = getStackLevelOfFirstClassOutsideThisClass ();
 

@@ -50,6 +50,48 @@ public final class StreamParser
   private Reader reader;
   private StreamTokenizer s;
 
+  public enum CommentType
+  {
+    SLASH_SLASH,
+    SLASH_STAR;
+
+    public boolean is (final CommentType type)
+    {
+      Arguments.checkIsNotNull (type, "type");
+
+      return equals (type);
+    }
+  }
+
+  public enum CommentStatus
+  {
+    ENABLED (true),
+    DISABLED (false);
+
+    private boolean isEnabled;
+
+    public boolean isEnabled ()
+    {
+      return isEnabled;
+    }
+
+    CommentStatus (final boolean isEnabled)
+    {
+      this.isEnabled = isEnabled;
+    }
+  }
+
+  private enum TokenType
+  {
+    DOUBLE,
+    END_OF_FILE,
+    END_OF_LINE,
+    INTEGER,
+    QUOTED_STRING,
+    SINGLE_CHARACTER,
+    UNQUOTED_STRING
+  }
+
   /*
    * Constructs a new StreamParser with the specified file.
    *
@@ -112,48 +154,6 @@ public final class StreamParser
   protected StreamParser ()
   {
     Classes.defaultConstructorNotSupported ();
-  }
-
-  public enum CommentType
-  {
-    SLASH_SLASH,
-    SLASH_STAR;
-
-    public boolean is (final CommentType type)
-    {
-      Arguments.checkIsNotNull (type, "type");
-
-      return equals (type);
-    }
-  }
-
-  public enum CommentStatus
-  {
-    ENABLED (true),
-    DISABLED (false);
-
-    private boolean isEnabled;
-
-    public boolean isEnabled ()
-    {
-      return isEnabled;
-    }
-
-    CommentStatus (final boolean isEnabled)
-    {
-      this.isEnabled = isEnabled;
-    }
-  }
-
-  private enum TokenType
-  {
-    DOUBLE,
-    END_OF_FILE,
-    END_OF_LINE,
-    INTEGER,
-    QUOTED_STRING,
-    SINGLE_CHARACTER,
-    UNQUOTED_STRING
   }
 
   /**
@@ -788,7 +788,7 @@ public final class StreamParser
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    final Collection <Integer> characterCodes = new ArrayList <> (count);
+    final Collection <Integer> characterCodes = new ArrayList<> (count);
 
     for (int i = 0; i < count && !isEOF (); ++i)
     {
@@ -812,7 +812,7 @@ public final class StreamParser
   {
     assert s != null;
 
-    final Collection <Integer> characterCodes = new ArrayList <> ();
+    final Collection <Integer> characterCodes = new ArrayList<> ();
 
     enableEndOfLineTokens ();
 
@@ -872,7 +872,7 @@ public final class StreamParser
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    final Collection <Double> doubles = new ArrayList <> (count);
+    final Collection <Double> doubles = new ArrayList<> (count);
 
     for (int i = 0; i < count && !isEOF (); ++i)
     {
@@ -896,7 +896,7 @@ public final class StreamParser
   {
     assert s != null;
 
-    final Collection <Double> doubles = new ArrayList <> ();
+    final Collection <Double> doubles = new ArrayList<> ();
 
     enableEndOfLineTokens ();
 
@@ -956,7 +956,7 @@ public final class StreamParser
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    final Collection <Integer> integers = new ArrayList <> (count);
+    final Collection <Integer> integers = new ArrayList<> (count);
 
     for (int i = 0; i < count && !isEOF (); ++i)
     {
@@ -980,7 +980,7 @@ public final class StreamParser
   {
     assert s != null;
 
-    final Collection <Integer> integers = new ArrayList <> ();
+    final Collection <Integer> integers = new ArrayList<> ();
 
     enableEndOfLineTokens ();
 
@@ -1051,7 +1051,7 @@ public final class StreamParser
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    final Collection <String> lines = new ArrayList <> (count);
+    final Collection <String> lines = new ArrayList<> (count);
 
     for (int i = 0; i < count && !isEOF (); ++i)
     {
@@ -1104,7 +1104,7 @@ public final class StreamParser
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    final Collection <String> quotedStrings = new ArrayList <> (count);
+    final Collection <String> quotedStrings = new ArrayList<> (count);
 
     for (int i = 0; i < count && !isEOF (); ++i)
     {
@@ -1128,7 +1128,7 @@ public final class StreamParser
   {
     assert s != null;
 
-    final Collection <String> quotedStrings = new ArrayList <> ();
+    final Collection <String> quotedStrings = new ArrayList<> ();
 
     enableEndOfLineTokens ();
 
@@ -1182,7 +1182,7 @@ public final class StreamParser
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    final Collection <String> tokens = new ArrayList <> (count);
+    final Collection <String> tokens = new ArrayList<> (count);
 
     for (int i = 0; i < count && !isEOF (); ++i)
     {
@@ -1206,7 +1206,7 @@ public final class StreamParser
   {
     assert s != null;
 
-    final Collection <String> tokens = new ArrayList <> ();
+    final Collection <String> tokens = new ArrayList<> ();
 
     enableEndOfLineTokens ();
 
@@ -1266,7 +1266,7 @@ public final class StreamParser
   {
     Arguments.checkLowerExclusiveBound (count, 0, "count");
 
-    final Collection <String> unquotedStrings = new ArrayList <> (count);
+    final Collection <String> unquotedStrings = new ArrayList<> (count);
 
     for (int i = 0; i < count && !isEOF (); ++i)
     {
@@ -1290,7 +1290,7 @@ public final class StreamParser
   {
     assert s != null;
 
-    final Collection <String> unquotedStrings = new ArrayList <> ();
+    final Collection <String> unquotedStrings = new ArrayList<> ();
 
     enableEndOfLineTokens ();
 
@@ -1457,7 +1457,7 @@ public final class StreamParser
       }
     }
 
-    assert!currentTokenContent.isEmpty ();
+    assert !currentTokenContent.isEmpty ();
 
     return currentTokenContent;
   }
@@ -1534,8 +1534,8 @@ public final class StreamParser
 
   private void initialize (final String filePath) throws StreamParserException
   {
-    assert!com.google.common.base.Strings.isNullOrEmpty (filePath);
-    assert!Strings.isWhitespace (filePath);
+    assert !com.google.common.base.Strings.isNullOrEmpty (filePath);
+    assert !Strings.isWhitespace (filePath);
 
     initialize (new File (filePath));
   }

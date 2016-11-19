@@ -24,8 +24,8 @@
 package com.forerunnergames.tools.net.events.local;
 
 import com.forerunnergames.tools.common.Arguments;
-import com.forerunnergames.tools.common.Event;
 import com.forerunnergames.tools.net.Remote;
+import com.forerunnergames.tools.net.events.remote.RemoteEvent;
 
 /**
  * Clients & servers should use this event to notify all local listeners that communication was received over the
@@ -36,9 +36,9 @@ import com.forerunnergames.tools.net.Remote;
  */
 public abstract class NetworkCommunicationEvent extends NetworkEvent
 {
-  private final Event message;
+  private final RemoteEvent message;
 
-  public NetworkCommunicationEvent (final Event message, final Remote sender)
+  public NetworkCommunicationEvent (final RemoteEvent message, final Remote sender)
   {
     super (sender);
 
@@ -47,7 +47,7 @@ public abstract class NetworkCommunicationEvent extends NetworkEvent
     this.message = message;
   }
 
-  public final Event getMessage ()
+  public final RemoteEvent getMessage ()
   {
     return message;
   }

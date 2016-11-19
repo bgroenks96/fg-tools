@@ -34,7 +34,7 @@ public final class Preconditions
    *          The error message to include in the exception.
    *
    * @throws IllegalArgumentException
-   *           If condition evaluates to false;
+   *           If condition evaluates to false.
    */
   public static void checkIsTrue (final boolean condition, final String errorMessage)
   {
@@ -53,7 +53,7 @@ public final class Preconditions
    *          {@link Strings#format(String, Object...)}.
    *
    * @throws IllegalArgumentException
-   *           If condition evaluates to false, errorMessage is null, errorMessageArgs is null;
+   *           If condition evaluates to false, errorMessage is null, errorMessageArgs is null.
    */
   public static void checkIsTrue (final boolean condition, final String errorMessage, final Object... errorMessageArgs)
   {
@@ -72,7 +72,7 @@ public final class Preconditions
    *          The error message to include in the exception.
    *
    * @throws IllegalArgumentException
-   *           If condition evaluates to true;
+   *           If condition evaluates to true.
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage)
   {
@@ -91,7 +91,7 @@ public final class Preconditions
    *          {@link Strings#format(String, Object...)}.
    *
    * @throws IllegalArgumentException
-   *           If condition evaluates to true, errorMessage is null, errorMessageArgs is null;
+   *           If condition evaluates to true, errorMessage is null, errorMessageArgs is null.
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage, final Object... errorMessageArgs)
   {

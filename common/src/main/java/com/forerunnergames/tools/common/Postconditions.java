@@ -34,11 +34,33 @@ public class Postconditions
    *          The error message to include in the exception.
    *
    * @throws IllegalArgumentException
-   *           If condition evaluates to false;
+   *           If condition evaluates to false.
    */
   public static void checkIsTrue (final boolean condition, final String errorMessage)
   {
     if (!condition) throw new IllegalStateException (errorMessage);
+  }
+
+  /**
+   * Checks if the specified boolean condition evaluates to true.
+   *
+   * @param condition
+   *          The boolean condition to check.
+   * @param errorMessage
+   *          The error message to include in the exception, must not be null.
+   * @param errorMessageArgs
+   *          The arguments to include in the error message, must not be null, may contain null elements. See
+   *          {@link Strings#format(String, Object...)}.
+   *
+   * @throws IllegalArgumentException
+   *           If condition evaluates to false, errorMessage is null, errorMessageArgs is null.
+   */
+  public static void checkIsTrue (final boolean condition, final String errorMessage, final Object... errorMessageArgs)
+  {
+    Arguments.checkIsNotNull (errorMessage, "errorMessage");
+    Arguments.checkIsNotNull (errorMessageArgs, "errorMessageArgs");
+
+    if (!condition) throw new IllegalStateException (Strings.format (errorMessage, errorMessageArgs));
   }
 
   /**
@@ -50,11 +72,33 @@ public class Postconditions
    *          The error message to include in the exception.
    *
    * @throws IllegalArgumentException
-   *           If condition evaluates to true;
+   *           If condition evaluates to true.
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage)
   {
     if (condition) throw new IllegalStateException (errorMessage);
+  }
+
+  /**
+   * Checks if the specified boolean condition evaluates to false.
+   *
+   * @param condition
+   *          The boolean condition to check.
+   * @param errorMessage
+   *          The error message to include in the exception, must not be null.
+   * @param errorMessageArgs
+   *          The arguments to include in the error message, must not be null, may contain null elements. See
+   *          {@link Strings#format(String, Object...)}.
+   *
+   * @throws IllegalArgumentException
+   *           If condition evaluates to true, errorMessage is null, errorMessageArgs is null.
+   */
+  public static void checkIsFalse (final boolean condition, final String errorMessage, final Object... errorMessageArgs)
+  {
+    Arguments.checkIsNotNull (errorMessage, "errorMessage");
+    Arguments.checkIsNotNull (errorMessageArgs, "errorMessageArgs");
+
+    if (condition) throw new IllegalStateException (Strings.format (errorMessage, errorMessageArgs));
   }
 
   private Postconditions ()

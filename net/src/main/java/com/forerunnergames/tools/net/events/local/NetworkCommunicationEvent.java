@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.net.events.local;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.net.Remote;
 import com.forerunnergames.tools.net.events.remote.RemoteEvent;
 
@@ -60,7 +61,6 @@ public abstract class NetworkCommunicationEvent extends NetworkEvent
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Message: %2$s | Sender: %3$s", getClass ().getSimpleName (), getMessage (),
-                          getSender ());
+    return Strings.format ("{}: Message: {} | Sender: {}", getClass ().getSimpleName (), getMessage (), getSender ());
   }
 }

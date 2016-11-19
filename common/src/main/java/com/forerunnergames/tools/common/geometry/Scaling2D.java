@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.common.geometry;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 
 public final class Scaling2D
 {
@@ -43,6 +44,33 @@ public final class Scaling2D
 
     x = scaling.getX ();
     y = scaling.getY ();
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
+
+    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
+
+    return result;
+  }
+
+  @Override
+  public boolean equals (final Object object)
+  {
+    if (this == object) return true;
+    if (object == null || getClass () != object.getClass ()) return false;
+
+    final Scaling2D scaling = (Scaling2D) object;
+
+    return Float.compare (scaling.getX (), x) == 0 && Float.compare (scaling.getY (), y) == 0;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return Strings.format ("{}: x: {} | y: {}", getClass ().getSimpleName (), x, y);
   }
 
   public float getX ()
@@ -85,32 +113,5 @@ public final class Scaling2D
   public boolean isNot (final float x, final float y)
   {
     return !is (x, y);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
-
-    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
-
-    return result;
-  }
-
-  @Override
-  public boolean equals (final Object object)
-  {
-    if (this == object) return true;
-    if (object == null || getClass () != object.getClass ()) return false;
-
-    final Scaling2D scaling = (Scaling2D) object;
-
-    return Float.compare (scaling.getX (), x) == 0 && Float.compare (scaling.getY (), y) == 0;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return String.format ("%1$s: x: %2$s | y: %3$s", getClass ().getSimpleName (), x, y);
   }
 }

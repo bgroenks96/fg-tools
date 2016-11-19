@@ -23,6 +23,7 @@
 
 package com.forerunnergames.tools.net.events.local;
 
+import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.net.Remote;
 import com.forerunnergames.tools.net.events.remote.origin.client.ClientEvent;
 
@@ -48,6 +49,7 @@ public final class ClientCommunicationEvent extends NetworkCommunicationEvent
   @Override
   public String toString ()
   {
-    return String.format ("%1$s | Client: %2$s", super.toString (), getClient ());
+    return Strings.format ("{}: Message: {} | Sender (Client): {}", getClass ().getSimpleName (), getMessage (),
+                           getClient ());
   }
 }

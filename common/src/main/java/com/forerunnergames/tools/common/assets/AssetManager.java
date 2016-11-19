@@ -63,7 +63,7 @@ public final class AssetManager <T extends Asset>
     Arguments.checkIsNotNull (ids, "ids");
     Arguments.checkHasNoNullElements (ids, "ids");
 
-    final ImmutableCollection.Builder <T> matchingAssetsBuilder = new ImmutableList.Builder <> ();
+    final ImmutableCollection.Builder <T> matchingAssetsBuilder = new ImmutableList.Builder<> ();
 
     for (final Id assetId : ids)
     {
@@ -138,7 +138,7 @@ public final class AssetManager <T extends Asset>
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Asset Count: %2$s | Assets: %3$s", getClass ().getSimpleName (), assets.size (),
-                          Strings.toString (assets));
+    return Strings.format ("{}: Asset Count: {} | Assets: {}", getClass ().getSimpleName (), assets.size (),
+                           Strings.toString (assets));
   }
 }

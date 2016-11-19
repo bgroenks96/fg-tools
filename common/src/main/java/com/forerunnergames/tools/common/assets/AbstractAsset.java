@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.common.assets;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.common.id.Id;
 
 public abstract class AbstractAsset implements Asset
@@ -133,6 +134,6 @@ public abstract class AbstractAsset implements Asset
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Name: %2$s | Id: %3$s", getClass ().getSimpleName (), name, id);
+    return Strings.format ("{}: Name: {} | Id: {}", getClass ().getSimpleName (), name, id);
   }
 }

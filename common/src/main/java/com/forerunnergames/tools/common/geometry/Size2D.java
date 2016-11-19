@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.common.geometry;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 
 public final class Size2D
 {
@@ -50,6 +51,33 @@ public final class Size2D
 
     width = size.getWidth ();
     height = size.getHeight ();
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (height != +0.0f ? Float.floatToIntBits (height) : 0);
+
+    result = 31 * result + (width != +0.0f ? Float.floatToIntBits (width) : 0);
+
+    return result;
+  }
+
+  @Override
+  public boolean equals (final Object object)
+  {
+    if (this == object) return true;
+    if (object == null || getClass () != object.getClass ()) return false;
+
+    final Size2D size = (Size2D) object;
+
+    return Float.compare (size.getWidth (), width) == 0 && Float.compare (size.getHeight (), height) == 0;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return Strings.format ("{}: width: {} | height: {}", getClass ().getSimpleName (), width, height);
   }
 
   public float getWidth ()
@@ -102,32 +130,5 @@ public final class Size2D
   public boolean isNot (final float width, final float height)
   {
     return !is (width, height);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    int result = (height != +0.0f ? Float.floatToIntBits (height) : 0);
-
-    result = 31 * result + (width != +0.0f ? Float.floatToIntBits (width) : 0);
-
-    return result;
-  }
-
-  @Override
-  public boolean equals (final Object object)
-  {
-    if (this == object) return true;
-    if (object == null || getClass () != object.getClass ()) return false;
-
-    final Size2D size = (Size2D) object;
-
-    return Float.compare (size.getWidth (), width) == 0 && Float.compare (size.getHeight (), height) == 0;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return String.format ("%1$s: width: %2$s | height: %3$s", getClass ().getSimpleName (), width, height);
   }
 }

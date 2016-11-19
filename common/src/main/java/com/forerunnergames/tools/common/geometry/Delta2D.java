@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.common.geometry;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 
 public final class Delta2D
 {
@@ -42,6 +43,33 @@ public final class Delta2D
 
     dx = delta.getDx ();
     dy = delta.getDy ();
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (dx != +0.0f ? Float.floatToIntBits (dx) : 0);
+
+    result = 31 * result + (dy != +0.0f ? Float.floatToIntBits (dy) : 0);
+
+    return result;
+  }
+
+  @Override
+  public boolean equals (final Object object)
+  {
+    if (this == object) return true;
+    if (object == null || getClass () != object.getClass ()) return false;
+
+    final Delta2D delta = (Delta2D) object;
+
+    return Float.compare (delta.getDx (), dx) == 0 && Float.compare (delta.getDy (), dy) == 0;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return Strings.format ("{}: dx: {} | dy: {}", getClass ().getSimpleName (), dx, dy);
   }
 
   public float getDx ()
@@ -84,32 +112,5 @@ public final class Delta2D
   public boolean isNot (final float dx, final float dy)
   {
     return !is (dx, dy);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    int result = (dx != +0.0f ? Float.floatToIntBits (dx) : 0);
-
-    result = 31 * result + (dy != +0.0f ? Float.floatToIntBits (dy) : 0);
-
-    return result;
-  }
-
-  @Override
-  public boolean equals (final Object object)
-  {
-    if (this == object) return true;
-    if (object == null || getClass () != object.getClass ()) return false;
-
-    final Delta2D delta = (Delta2D) object;
-
-    return Float.compare (delta.getDx (), dx) == 0 && Float.compare (delta.getDy (), dy) == 0;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return String.format ("%1$s: dx: %2$s | dy: %3$s", getClass ().getSimpleName (), dx, dy);
   }
 }

@@ -23,6 +23,7 @@
 
 package com.forerunnergames.tools.net.events.local;
 
+import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.net.Remote;
 import com.forerunnergames.tools.net.events.remote.origin.server.ServerEvent;
 
@@ -48,6 +49,7 @@ public final class ServerCommunicationEvent extends NetworkCommunicationEvent
   @Override
   public String toString ()
   {
-    return String.format ("%1$s | Server: %2$s", super.toString (), getServer ());
+    return Strings.format ("{}: Message: {} | Sender (Server): {}", getClass ().getSimpleName (), getMessage (),
+                           getServer ());
   }
 }

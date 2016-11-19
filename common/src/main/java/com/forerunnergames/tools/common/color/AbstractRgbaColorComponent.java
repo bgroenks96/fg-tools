@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.common.color;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 
 public abstract class AbstractRgbaColorComponent implements RgbaColorComponent
 {
@@ -63,6 +64,6 @@ public abstract class AbstractRgbaColorComponent implements RgbaColorComponent
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Value: %2$s", getClass ().getSimpleName (), value);
+    return Strings.format ("{}: Value: {}", getClass ().getSimpleName (), value);
   }
 }

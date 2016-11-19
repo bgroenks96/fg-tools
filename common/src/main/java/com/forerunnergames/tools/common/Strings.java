@@ -258,8 +258,7 @@ public final class Strings
    * Gets the correct plurally-agreeing form of the given phrase depending on whether its preceding clarifying numerical
    * value is equal to 1. <br/>
    * <br/>
-   * Note: 0 values are converted to the word "no", e.g. no apples
-   * <br/>
+   * Note: 0 values are converted to the word "no", e.g. no apples <br/>
    * Note: 0 and negative values are always pluralized, e.g. no apples, or a balance of -1 dollars.
    *
    * @param count
@@ -325,8 +324,7 @@ public final class Strings
    * singular form of the phrase will be returned. This method is only appropriate for phrases whose correct plural form
    * only involves adding an 's'. <br/>
    * <br/>
-   * Note: 0 values are converted to the word "no", e.g. no apples
-   * <br/>
+   * Note: 0 values are converted to the word "no", e.g. no apples <br/>
    * Note: 0 and negative values are always pluralized, e.g. no apples, or a balance of -1 dollars
    *
    * @param count
@@ -428,7 +426,7 @@ public final class Strings
     Arguments.checkIsNotNull (word, "word");
 
     final String[] rawSplitWords = word.split ("(?=\\p{Lu})");
-    final ArrayList <String> nonEmptySplitWords = new ArrayList <> ();
+    final ArrayList <String> nonEmptySplitWords = new ArrayList<> ();
 
     for (final String splitWord : rawSplitWords)
     {
@@ -714,7 +712,7 @@ public final class Strings
     {
       ++elementCounter;
 
-      stringBuilder.append (String.format ("%1$s: %2$s\n", elementCounter, element));
+      stringBuilder.append (format ("{}: {}\n", elementCounter, element));
     }
 
     return stringBuilder.toString ();
@@ -747,7 +745,7 @@ public final class Strings
       final T entryKey = entry.getKey ();
       final U entryValue = entry.getValue ();
 
-      stringBuilder.append (String.format ("Entry %1$s:[%2$s, %3$s]\n", entryCounter, entryKey, entryValue));
+      stringBuilder.append (format ("Entry {}:[{}, {}]\n", entryCounter, entryKey, entryValue));
     }
 
     return stringBuilder.toString ();
@@ -780,7 +778,7 @@ public final class Strings
       final T entryKey = entry.getKey ();
       final U entryValue = entry.getValue ();
 
-      stringBuilder.append (String.format ("Entry %1$s:[%2$s, %3$s]\n", entryCounter, entryKey, entryValue));
+      stringBuilder.append (format ("Entry {}:[{}, {}]\n", entryCounter, entryKey, entryValue));
     }
 
     return stringBuilder.toString ();

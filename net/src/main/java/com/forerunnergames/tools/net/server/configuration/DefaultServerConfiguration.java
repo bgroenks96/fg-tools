@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.net.server.configuration;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.net.NetworkConstants;
 import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
 
@@ -57,8 +58,8 @@ public final class DefaultServerConfiguration implements ServerConfiguration
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Server address: %2$s | Server port: %3$s (TCP)", getClass ().getSimpleName (),
-                          serverAddress, serverTcpPort);
+    return Strings.format ("{}: Server address: {} | Server port: {} (TCP)", getClass ().getSimpleName (),
+                           serverAddress, serverTcpPort);
   }
 
   @RequiredForNetworkSerialization

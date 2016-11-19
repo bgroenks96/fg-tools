@@ -48,6 +48,6 @@ public final class DefaultMessage implements Message
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Text: %2$s", getClass ().getSimpleName (), text);
+    return Strings.format ("{}: Text: {}", getClass ().getSimpleName (), text);
   }
 }

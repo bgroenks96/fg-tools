@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.common.geometry;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 
 public final class Translation2D
 {
@@ -43,6 +44,33 @@ public final class Translation2D
 
     x = translation.getX ();
     y = translation.getY ();
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
+
+    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
+
+    return result;
+  }
+
+  @Override
+  public boolean equals (final Object object)
+  {
+    if (this == object) return true;
+    if (object == null || getClass () != object.getClass ()) return false;
+
+    final Translation2D translation = (Translation2D) object;
+
+    return Float.compare (translation.getX (), x) == 0 && Float.compare (translation.getY (), y) == 0;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return Strings.format ("{}: x: {} | y: {}", getClass ().getSimpleName (), x, y);
   }
 
   public float getX ()
@@ -85,32 +113,5 @@ public final class Translation2D
   public boolean isNot (final float x, final float y)
   {
     return !is (x, y);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    int result = (x != +0.0f ? Float.floatToIntBits (x) : 0);
-
-    result = 31 * result + (y != +0.0f ? Float.floatToIntBits (y) : 0);
-
-    return result;
-  }
-
-  @Override
-  public boolean equals (final Object object)
-  {
-    if (this == object) return true;
-    if (object == null || getClass () != object.getClass ()) return false;
-
-    final Translation2D translation = (Translation2D) object;
-
-    return Float.compare (translation.getX (), x) == 0 && Float.compare (translation.getY (), y) == 0;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return String.format ("%1$s: x: %2$s | y: %3$s", getClass ().getSimpleName (), x, y);
   }
 }

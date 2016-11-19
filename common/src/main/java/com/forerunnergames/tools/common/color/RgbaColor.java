@@ -23,6 +23,8 @@
 
 package com.forerunnergames.tools.common.color;
 
+import com.forerunnergames.tools.common.Strings;
+
 public final class RgbaColor
 {
   private final int color;
@@ -39,6 +41,30 @@ public final class RgbaColor
     green = new GreenRgbaColorComponent ((color >> 16) & 0xFF);
     blue = new BlueRgbaColorComponent ((color >> 8) & 0xFF);
     alpha = new AlphaRgbaColorComponent (color & 0xFF);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return color;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (this == o) return true;
+    if (o == null || getClass () != o.getClass ()) return false;
+
+    final RgbaColor rgbaColor = (RgbaColor) o;
+
+    return color == rgbaColor.color;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return Strings.format ("{}: Color: {} | Red: {} | Green: {} | Blue: {} | Alpha: {}", getClass ().getSimpleName (),
+                           color, red, green, blue, alpha);
   }
 
   public int getValue ()
@@ -64,29 +90,5 @@ public final class RgbaColor
   public AlphaRgbaColorComponent getAlpha ()
   {
     return alpha;
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return color;
-  }
-
-  @Override
-  public boolean equals (final Object o)
-  {
-    if (this == o) return true;
-    if (o == null || getClass () != o.getClass ()) return false;
-
-    final RgbaColor rgbaColor = (RgbaColor) o;
-
-    return color == rgbaColor.color;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return String.format ("%1$s: Color: %2$s | Red: %3$s | Green: %4$s | Blue: %5$s | Alpha: %6$s",
-                          getClass ().getSimpleName (), color, red, green, blue, alpha);
   }
 }

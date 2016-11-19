@@ -23,6 +23,8 @@
 
 package com.forerunnergames.tools.net.server.configuration;
 
+import com.forerunnergames.tools.common.Strings;
+
 public final class UnknownServerConfiguration implements ServerConfiguration
 {
   private final String serverAddress = "";
@@ -43,7 +45,7 @@ public final class UnknownServerConfiguration implements ServerConfiguration
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Server address: %2$s | Server port: %3$s (TCP)", getClass ().getSimpleName (),
-                          serverAddress, serverTcpPort);
+    return Strings.format ("{}: Server address: {} | Server port: {} (TCP)", getClass ().getSimpleName (),
+                           serverAddress, serverTcpPort);
   }
 }

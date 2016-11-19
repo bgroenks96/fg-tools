@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.net.client.configuration;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
 
 public final class DefaultClientConfiguration implements ClientConfiguration
@@ -55,8 +56,8 @@ public final class DefaultClientConfiguration implements ClientConfiguration
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Client address: %2$s | Client port: %3$s (TCP)", getClass ().getSimpleName (),
-                          clientAddress, clientTcpPort);
+    return Strings.format ("{}: Client address: {} | Client port: {} (TCP)", getClass ().getSimpleName (),
+                           clientAddress, clientTcpPort);
   }
 
   @RequiredForNetworkSerialization

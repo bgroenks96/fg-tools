@@ -24,6 +24,7 @@
 package com.forerunnergames.tools.net.events.local;
 
 import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
 import com.forerunnergames.tools.net.Remote;
 
 /**
@@ -51,6 +52,6 @@ public abstract class NetworkEvent implements LocalEvent
   @Override
   public String toString ()
   {
-    return String.format ("%1$s: Remote : %2$s", getClass ().getSimpleName (), remote);
+    return Strings.format ("{}: Remote : {}", getClass ().getSimpleName (), remote);
   }
 }

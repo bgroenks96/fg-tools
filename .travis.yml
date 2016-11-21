@@ -41,7 +41,7 @@ after_failure:
 addons:
   artifacts:
     branch: master # FIXME: This is being ignored
-    bucket: ci.forerunnergames.com
+    bucket: ci.forerunner.games
     target_paths: builds/fg-tools/$TRAVIS_BRANCH/$TRAVIS_BUILD_NUMBER
     paths: "build/collected"
     key:
@@ -60,7 +60,7 @@ cache:
 notifications:
   email:
     recipients:
-      - developers@forerunnergames.com
+      - developers@forerunner.games
     on_success: change
     on_failure: always
   hipchat:

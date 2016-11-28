@@ -1,6 +1,5 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
- * Copyright © 2013 - 2016 Forerunner Games, LLC
+ * Copyright © 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,22 +20,47 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.server;
+package com.forerunnergames.tools.net;
 
-import com.forerunnergames.tools.common.Result;
+import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Strings;
+import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
 
-import java.util.concurrent.Future;
-
-public interface ServerConnector
+public abstract class AbstractRemoteConfiguration implements RemoteConfiguration
 {
-  Result <String> connectNow (final String address, final int tcpPort, final int timeoutMs, final int maxAttempts);
+  private final String address;
+  private final int port;
 
-  Future <Result <String>> connectLater (final String address,
-                                         final int tcpPort,
-                                         final int timeoutMs,
-                                         final int maxAttempts);
+  protected AbstractRemoteConfiguration (final String address, final int port)
+  {
+    Arguments.checkIsNotNull (address, "address");
+    Arguments.checkIsNotNegative (port, "port");
 
-  boolean isConnected ();
+    this.address = address;
+    this.port = port;
+  }
 
-  void disconnect ();
+  @RequiredForNetworkSerialization
+  protected AbstractRemoteConfiguration ()
+  {
+    address = null;
+    port = 0;
+  }
+
+  @Override
+  public String getAddress ()
+  {
+    return address;
+  }
+
+  public int getPort ()
+  {
+    return port;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return Strings.format ("{}: Address: [{}] | Port: [{}]", getClass ().getSimpleName (), address, port);
+  }
 }

@@ -26,8 +26,9 @@ package com.forerunnergames.tools.net.client;
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Result;
 import com.forerunnergames.tools.common.controllers.ControllerAdapter;
-import com.forerunnergames.tools.net.NetworkListener;
-import com.forerunnergames.tools.net.Remote;
+import com.forerunnergames.tools.net.client.remote.RemoteServer;
+import com.forerunnergames.tools.net.client.remote.RemoteServerListener;
+import com.forerunnergames.tools.net.server.configuration.ServerConfiguration;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -66,26 +67,25 @@ public abstract class AbstractClientController extends ControllerAdapter impleme
   }
 
   @Override
-  public Result <String> connectNow (final String address,
-                                     final int tcpPort,
-                                     final int timeoutMs,
-                                     final int maxAttempts)
+  public Result <String> connectNow (final ServerConfiguration config, final int timeoutMs, final int maxAttempts)
   {
-    Arguments.checkIsNotNull (address, "address");
-    Arguments.checkIsNotNegative (tcpPort, "tcpPort");
+    Arguments.checkIsNotNull (config, "config");
     Arguments.checkIsNotNegative (timeoutMs, "timeoutMs");
     Arguments.checkIsNotNegative (maxAttempts, "maxAttempts");
 
-    return client.connectNow (address, tcpPort, timeoutMs, maxAttempts);
+    return client.connectNow (config, timeoutMs, maxAttempts);
   }
 
   @Override
-  public Future <Result <String>> connectLater (final String address,
-                                                final int tcpPort,
+  public Future <Result <String>> connectLater (final ServerConfiguration config,
                                                 final int timeoutMs,
                                                 final int maxAttempts)
   {
-    return client.connectLater (address, tcpPort, timeoutMs, maxAttempts);
+    Arguments.checkIsNotNull (config, "config");
+    Arguments.checkIsNotNegative (timeoutMs, "timeoutMs");
+    Arguments.checkIsNotNegative (maxAttempts, "maxAttempts");
+
+    return client.connectLater (config, timeoutMs, maxAttempts);
   }
 
   @Override
@@ -108,11 +108,11 @@ public abstract class AbstractClientController extends ControllerAdapter impleme
     client.send (object);
   }
 
-  protected abstract void onConnectionTo (final Remote server);
+  protected abstract void onConnectionTo (final RemoteServer server);
 
-  protected abstract void onDisconnectionFrom (final Remote server);
+  protected abstract void onDisconnectionFrom (final RemoteServer server);
 
-  protected abstract void onCommunication (final Object object, final Remote server);
+  protected abstract void onCommunication (final RemoteServer server, final Object object);
 
   private void registerClasses ()
   {
@@ -124,31 +124,31 @@ public abstract class AbstractClientController extends ControllerAdapter impleme
 
   private void addListener ()
   {
-    client.add (new NetworkListener ()
+    client.add (new RemoteServerListener ()
     {
       @Override
-      public void connected (final Remote server)
+      public void connected (final RemoteServer remote)
       {
-        Arguments.checkIsNotNull (server, "server");
+        Arguments.checkIsNotNull (remote, "server");
 
-        onConnectionTo (server);
+        onConnectionTo (remote);
       }
 
       @Override
-      public void disconnected (final Remote server)
+      public void disconnected (final RemoteServer remote)
       {
-        Arguments.checkIsNotNull (server, "server");
+        Arguments.checkIsNotNull (remote, "server");
 
-        onDisconnectionFrom (server);
+        onDisconnectionFrom (remote);
       }
 
       @Override
-      public void received (final Object object, final Remote server)
+      public void received (final RemoteServer sender, final Object object)
       {
+        Arguments.checkIsNotNull (sender, "server");
         Arguments.checkIsNotNull (object, "object");
-        Arguments.checkIsNotNull (server, "server");
 
-        onCommunication (object, server);
+        onCommunication (sender, object);
       }
     });
   }

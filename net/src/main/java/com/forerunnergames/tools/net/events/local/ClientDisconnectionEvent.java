@@ -23,7 +23,7 @@
 
 package com.forerunnergames.tools.net.events.local;
 
-import com.forerunnergames.tools.net.Remote;
+import com.forerunnergames.tools.net.server.remote.RemoteClient;
 
 /**
  * The server should use this event to notify all local listeners that a client disconnected from it. It contains the
@@ -31,15 +31,10 @@ import com.forerunnergames.tools.net.Remote;
  *
  * This event is not intended to be sent over the network.
  */
-public final class ClientDisconnectionEvent extends NetworkEvent
+public final class ClientDisconnectionEvent extends NetworkEvent <RemoteClient>
 {
-  public ClientDisconnectionEvent (final Remote client)
+  public ClientDisconnectionEvent (final RemoteClient client)
   {
     super (client);
-  }
-
-  public Remote getClient ()
-  {
-    return getRemote ();
   }
 }

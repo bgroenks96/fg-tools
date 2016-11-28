@@ -23,8 +23,7 @@
 
 package com.forerunnergames.tools.net.events.local;
 
-import com.forerunnergames.tools.common.Strings;
-import com.forerunnergames.tools.net.Remote;
+import com.forerunnergames.tools.net.client.remote.RemoteServer;
 import com.forerunnergames.tools.net.events.remote.origin.server.ServerEvent;
 
 /**
@@ -34,22 +33,10 @@ import com.forerunnergames.tools.net.events.remote.origin.server.ServerEvent;
  * This event is not intended to be sent over the network. Rather, it wraps an event (message) that was already sent
  * over the network from the server.
  */
-public final class ServerCommunicationEvent extends NetworkCommunicationEvent
+public final class ServerCommunicationEvent extends NetworkCommunicationEvent <RemoteServer, ServerEvent>
 {
-  public ServerCommunicationEvent (final ServerEvent message, final Remote server)
+  public ServerCommunicationEvent (final RemoteServer server, final ServerEvent message)
   {
-    super (message, server);
-  }
-
-  public Remote getServer ()
-  {
-    return getSender ();
-  }
-
-  @Override
-  public String toString ()
-  {
-    return Strings.format ("{}: Message: {} | Sender (Server): {}", getClass ().getSimpleName (), getMessage (),
-                           getServer ());
+    super (server, message);
   }
 }

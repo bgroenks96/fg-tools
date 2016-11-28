@@ -33,18 +33,18 @@ import com.forerunnergames.tools.net.Remote;
  *
  * This event is not intended to be sent over the network.
  */
-public abstract class NetworkEvent implements LocalEvent
+public abstract class NetworkEvent <T extends Remote> implements LocalEvent
 {
-  private final Remote remote;
+  private final T remote;
 
-  public NetworkEvent (final Remote remote)
+  public NetworkEvent (final T remote)
   {
     Arguments.checkIsNotNull (remote, "remote");
 
     this.remote = remote;
   }
 
-  public Remote getRemote ()
+  public T getRemote ()
   {
     return remote;
   }

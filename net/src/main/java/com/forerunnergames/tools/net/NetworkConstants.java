@@ -23,16 +23,9 @@
 
 package com.forerunnergames.tools.net;
 
-import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Classes;
 
-import com.google.common.net.HostSpecifier;
-import com.google.common.net.InetAddresses;
-import com.google.common.net.InternetDomainName;
-
 import java.util.regex.Pattern;
-
-import javax.annotation.Nullable;
 
 public final class NetworkConstants
 {
@@ -45,28 +38,6 @@ public final class NetworkConstants
   public static final int MAX_SERVER_ADDRESS_STRING_LENGTH = 255;
   public static final int MIN_SERVER_PORT_STRING_LENGTH = 1;
   public static final int MAX_SERVER_PORT_STRING_LENGTH = 5;
-
-  public static boolean isLocalhostAddress (final String address)
-  {
-    Arguments.checkIsNotNull (address, "address");
-
-    return address.equals (LOCALHOST_ADDRESS) || address.equalsIgnoreCase (LOCALHOST_NAME);
-  }
-
-  public static boolean isValidIpAddress (@Nullable final String address)
-  {
-    return address != null && InetAddresses.isInetAddress (address);
-  }
-
-  public static boolean isValidAddress (@Nullable final String address)
-  {
-    return address != null && HostSpecifier.isValid (address);
-  }
-
-  public static boolean isValidDomainName (@Nullable final String address)
-  {
-    return address != null && InternetDomainName.isValid (address);
-  }
 
   private NetworkConstants ()
   {

@@ -23,9 +23,8 @@
 
 package com.forerunnergames.tools.net.server.configuration;
 
-public interface ServerConfiguration
-{
-  String getServerAddress ();
+import com.forerunnergames.tools.net.RemoteConfiguration;
 
-  int getServerTcpPort ();
+public interface ServerConfiguration extends RemoteConfiguration
+{
 }

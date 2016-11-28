@@ -1,6 +1,5 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
- * Copyright © 2013 - 2016 Forerunner Games, LLC
+ * Copyright © 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +20,13 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net;
+package com.forerunnergames.tools.net.server.remote;
 
-public interface NetworkListener
+public interface RemoteClientCommunicator
 {
-  void connected (final Remote remote);
+  void sendTo (final RemoteClient client, final Object object);
 
-  void disconnected (final Remote remote);
+  void sendToAll (final Object object);
 
-  void received (final Object object, final Remote sender);
+  void sendToAllExcept (final RemoteClient client, final Object object);
 }

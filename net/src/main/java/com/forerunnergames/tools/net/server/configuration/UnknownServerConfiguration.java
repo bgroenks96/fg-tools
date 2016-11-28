@@ -23,29 +23,14 @@
 
 package com.forerunnergames.tools.net.server.configuration;
 
-import com.forerunnergames.tools.common.Strings;
+import com.forerunnergames.tools.net.AbstractRemoteConfiguration;
+import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
 
-public final class UnknownServerConfiguration implements ServerConfiguration
+public final class UnknownServerConfiguration extends AbstractRemoteConfiguration implements ServerConfiguration
 {
-  private final String serverAddress = "";
-  private final int serverTcpPort = -1;
-
-  @Override
-  public String getServerAddress ()
+  @RequiredForNetworkSerialization
+  public UnknownServerConfiguration ()
   {
-    return serverAddress;
-  }
-
-  @Override
-  public int getServerTcpPort ()
-  {
-    return serverTcpPort;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return Strings.format ("{}: Server address: {} | Server port: {} (TCP)", getClass ().getSimpleName (),
-                           serverAddress, serverTcpPort);
+    super ("", -1);
   }
 }

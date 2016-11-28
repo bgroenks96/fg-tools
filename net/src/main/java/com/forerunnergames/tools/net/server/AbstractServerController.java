@@ -25,29 +25,29 @@ package com.forerunnergames.tools.net.server;
 
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.controllers.ControllerAdapter;
-import com.forerunnergames.tools.net.NetworkListener;
-import com.forerunnergames.tools.net.Remote;
+import com.forerunnergames.tools.net.server.remote.RemoteClient;
+import com.forerunnergames.tools.net.server.remote.RemoteClientListener;
 
 import com.google.common.collect.ImmutableSet;
 
 public abstract class AbstractServerController extends ControllerAdapter implements ServerController
 {
   private final Server server;
-  private final int tcpPort;
+  private final int port;
   private final ImmutableSet <Class <?>> classesToRegisterForNetworkSerialization;
 
   protected AbstractServerController (final Server server,
-                                      final int tcpPort,
+                                      final int port,
                                       final ImmutableSet <Class <?>> classesToRegisterForNetworkSerialization)
   {
     Arguments.checkIsNotNull (server, "server");
     Arguments.checkIsNotNull (classesToRegisterForNetworkSerialization, "classesToRegisterForNetworkSerialization");
-    Arguments.checkIsNotNegative (tcpPort, "tcpPort");
+    Arguments.checkIsNotNegative (port, "port");
     Arguments.checkHasNoNullElements (classesToRegisterForNetworkSerialization,
                                       "classesToRegisterForNetworkSerialization");
 
     this.server = server;
-    this.tcpPort = tcpPort;
+    this.port = port;
     this.classesToRegisterForNetworkSerialization = classesToRegisterForNetworkSerialization;
   }
 
@@ -66,7 +66,7 @@ public abstract class AbstractServerController extends ControllerAdapter impleme
   }
 
   @Override
-  public boolean isConnected (final Remote client)
+  public boolean isConnected (final RemoteClient client)
   {
     Arguments.checkIsNotNull (client, "client");
 
@@ -74,7 +74,7 @@ public abstract class AbstractServerController extends ControllerAdapter impleme
   }
 
   @Override
-  public void disconnect (final Remote client)
+  public void disconnect (final RemoteClient client)
   {
     Arguments.checkIsNotNull (client, "client");
 
@@ -88,7 +88,7 @@ public abstract class AbstractServerController extends ControllerAdapter impleme
   }
 
   @Override
-  public void sendTo (final Remote client, final Object object)
+  public void sendTo (final RemoteClient client, final Object object)
   {
     Arguments.checkIsNotNull (client, "client");
     Arguments.checkIsNotNull (object, "object");
@@ -105,7 +105,7 @@ public abstract class AbstractServerController extends ControllerAdapter impleme
   }
 
   @Override
-  public void sendToAllExcept (final Remote client, final Object object)
+  public void sendToAllExcept (final RemoteClient client, final Object object)
   {
     Arguments.checkIsNotNull (client, "client");
     Arguments.checkIsNotNull (object, "object");
@@ -113,11 +113,11 @@ public abstract class AbstractServerController extends ControllerAdapter impleme
     server.sendToAllExcept (client, object);
   }
 
-  protected abstract void onConnection (final Remote client);
+  protected abstract void onConnection (final RemoteClient client);
 
-  protected abstract void onDisconnection (final Remote client);
+  protected abstract void onDisconnection (final RemoteClient client);
 
-  protected abstract void onCommunication (final Object object, final Remote client);
+  protected abstract void onCommunication (final RemoteClient client, final Object object);
 
   private void registerClasses ()
   {
@@ -129,37 +129,37 @@ public abstract class AbstractServerController extends ControllerAdapter impleme
 
   private void addListener ()
   {
-    server.add (new NetworkListener ()
+    server.add (new RemoteClientListener ()
     {
       @Override
-      public void connected (final Remote client)
+      public void connected (final RemoteClient remote)
       {
-        Arguments.checkIsNotNull (client, "client");
+        Arguments.checkIsNotNull (remote, "client");
 
-        onConnection (client);
+        onConnection (remote);
       }
 
       @Override
-      public void disconnected (final Remote client)
+      public void disconnected (final RemoteClient remote)
       {
-        Arguments.checkIsNotNull (client, "client");
+        Arguments.checkIsNotNull (remote, "client");
 
-        onDisconnection (client);
+        onDisconnection (remote);
       }
 
       @Override
-      public void received (final Object object, final Remote client)
+      public void received (final RemoteClient sender, final Object object)
       {
+        Arguments.checkIsNotNull (sender, "client");
         Arguments.checkIsNotNull (object, "object");
-        Arguments.checkIsNotNull (client, "client");
 
-        onCommunication (object, client);
+        onCommunication (sender, object);
       }
     });
   }
 
   private void startServer ()
   {
-    server.start (tcpPort);
+    server.start (port);
   }
 }

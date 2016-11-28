@@ -23,49 +23,18 @@
 
 package com.forerunnergames.tools.net.server.configuration;
 
-import com.forerunnergames.tools.common.Arguments;
-import com.forerunnergames.tools.common.Strings;
-import com.forerunnergames.tools.net.NetworkConstants;
+import com.forerunnergames.tools.net.AbstractRemoteConfiguration;
 import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
 
-public final class DefaultServerConfiguration implements ServerConfiguration
+public final class DefaultServerConfiguration extends AbstractRemoteConfiguration implements ServerConfiguration
 {
-  private final String serverAddress;
-  private final int serverTcpPort;
-
-  public DefaultServerConfiguration (final String serverAddress, final int serverTcpPort)
+  public DefaultServerConfiguration (final String serverAddress, final int serverPort)
   {
-    Arguments.checkIsNotNull (serverAddress, "serverAddress");
-    Arguments.checkIsNotNegative (serverTcpPort, "serverTcpPort");
-    Arguments.checkUpperInclusiveBound (serverTcpPort, NetworkConstants.MAX_PORT, "serverTcpPort");
-
-    this.serverAddress = serverAddress;
-    this.serverTcpPort = serverTcpPort;
-  }
-
-  @Override
-  public String getServerAddress ()
-  {
-    return serverAddress;
-  }
-
-  @Override
-  public int getServerTcpPort ()
-  {
-    return serverTcpPort;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return Strings.format ("{}: Server address: {} | Server port: {} (TCP)", getClass ().getSimpleName (),
-                           serverAddress, serverTcpPort);
+    super (serverAddress, serverPort);
   }
 
   @RequiredForNetworkSerialization
   private DefaultServerConfiguration ()
   {
-    serverAddress = null;
-    serverTcpPort = 0;
   }
 }

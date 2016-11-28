@@ -23,16 +23,19 @@
 
 package com.forerunnergames.tools.net.client;
 
-import com.forerunnergames.tools.net.NetworkListener;
-import com.forerunnergames.tools.net.server.ServerCommunicator;
-import com.forerunnergames.tools.net.server.ServerConnector;
+import com.forerunnergames.tools.net.client.remote.RemoteServerCommunicator;
+import com.forerunnergames.tools.net.client.remote.RemoteServerConnector;
+import com.forerunnergames.tools.net.client.remote.RemoteServerListener;
 
-public interface Client extends ServerConnector, ServerCommunicator
+public interface Client extends RemoteServerConnector, RemoteServerCommunicator
 {
-  void add (final NetworkListener networkListener);
+  void add (final RemoteServerListener listener);
 
-  void remove (final NetworkListener networkListener);
+  void remove (final RemoteServerListener listener);
 
+  /**
+   * Registers a class for network serialization. Every class to be sent over the network should be registered.
+   */
   void register (final Class <?> type);
 
   void start ();

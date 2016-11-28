@@ -1,6 +1,5 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
- * Copyright © 2013 - 2016 Forerunner Games, LLC
+ * Copyright © 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +20,10 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.client.configuration;
+package com.forerunnergames.tools.net.server.remote;
 
-import com.forerunnergames.tools.net.AbstractRemoteConfiguration;
-import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
+import com.forerunnergames.tools.net.RemoteListener;
 
-public final class DefaultClientConfiguration extends AbstractRemoteConfiguration implements ClientConfiguration
+public interface RemoteClientListener extends RemoteListener <RemoteClient>
 {
-  public DefaultClientConfiguration (final String clientAddress, final int clientPort)
-  {
-    super (clientAddress, clientPort);
-  }
-
-  @RequiredForNetworkSerialization
-  private DefaultClientConfiguration ()
-  {
-  }
 }

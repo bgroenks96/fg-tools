@@ -21,9 +21,9 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.server;
+package com.forerunnergames.tools.net.client.remote;
 
-public interface ServerCommunicator
+public interface RemoteServerCommunicator
 {
   void send (final Object object);
 }

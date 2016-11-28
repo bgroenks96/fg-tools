@@ -35,11 +35,11 @@ import com.forerunnergames.tools.net.events.remote.RemoteEvent;
  * This event is not intended to be sent over the network. Rather, it wraps an event (message) that was already sent
  * over the network.
  */
-public abstract class NetworkCommunicationEvent extends NetworkEvent
+public abstract class NetworkCommunicationEvent <T extends Remote, U extends RemoteEvent> extends NetworkEvent <T>
 {
-  private final RemoteEvent message;
+  private final U message;
 
-  public NetworkCommunicationEvent (final RemoteEvent message, final Remote sender)
+  public NetworkCommunicationEvent (final T sender, final U message)
   {
     super (sender);
 
@@ -48,19 +48,19 @@ public abstract class NetworkCommunicationEvent extends NetworkEvent
     this.message = message;
   }
 
-  public final RemoteEvent getMessage ()
-  {
-    return message;
-  }
-
-  protected final Remote getSender ()
+  public final T getSender ()
   {
     return getRemote ();
+  }
+
+  public final U getMessage ()
+  {
+    return message;
   }
 
   @Override
   public String toString ()
   {
-    return Strings.format ("{}: Message: {} | Sender: {}", getClass ().getSimpleName (), getMessage (), getSender ());
+    return Strings.format ("{}: Sender: [{}] | Message: [{}]", getClass ().getSimpleName (), getSender (), message);
   }
 }

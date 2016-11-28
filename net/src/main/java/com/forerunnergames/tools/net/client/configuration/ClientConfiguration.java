@@ -23,9 +23,8 @@
 
 package com.forerunnergames.tools.net.client.configuration;
 
-public interface ClientConfiguration
-{
-  String getClientAddress ();
+import com.forerunnergames.tools.net.RemoteConfiguration;
 
-  int getClientTcpPort ();
+public interface ClientConfiguration extends RemoteConfiguration
+{
 }

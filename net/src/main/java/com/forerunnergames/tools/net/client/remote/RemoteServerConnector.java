@@ -21,20 +21,20 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.client.configuration;
+package com.forerunnergames.tools.net.client.remote;
 
-import com.forerunnergames.tools.net.AbstractRemoteConfiguration;
-import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
+import com.forerunnergames.tools.common.Result;
+import com.forerunnergames.tools.net.server.configuration.ServerConfiguration;
 
-public final class DefaultClientConfiguration extends AbstractRemoteConfiguration implements ClientConfiguration
+import java.util.concurrent.Future;
+
+public interface RemoteServerConnector
 {
-  public DefaultClientConfiguration (final String clientAddress, final int clientPort)
-  {
-    super (clientAddress, clientPort);
-  }
+  Result <String> connectNow (final ServerConfiguration config, final int timeoutMs, final int maxAttempts);
 
-  @RequiredForNetworkSerialization
-  private DefaultClientConfiguration ()
-  {
-  }
+  Future <Result <String>> connectLater (final ServerConfiguration config, final int timeoutMs, final int maxAttempts);
+
+  boolean isConnected ();
+
+  void disconnect ();
 }

@@ -1,6 +1,5 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
- * Copyright © 2013 - 2016 Forerunner Games, LLC
+ * Copyright © 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +20,12 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.client;
+package com.forerunnergames.tools.net.server.remote;
 
 import com.forerunnergames.tools.net.Remote;
+import com.forerunnergames.tools.net.client.configuration.ClientConfiguration;
 
-public interface ClientCommunicator
+public interface RemoteClient extends Remote
 {
-  void sendTo (final Remote client, final Object object);
-
-  void sendToAll (final Object object);
-
-  void sendToAllExcept (final Remote client, final Object object);
+  ClientConfiguration getConfiguration ();
 }

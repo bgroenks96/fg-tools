@@ -23,7 +23,7 @@
 
 package com.forerunnergames.tools.net.events.local;
 
-import com.forerunnergames.tools.net.Remote;
+import com.forerunnergames.tools.net.client.remote.RemoteServer;
 
 /**
  * A client should use this event to notify all local listeners that it connected to the server. It contains the
@@ -31,15 +31,10 @@ import com.forerunnergames.tools.net.Remote;
  *
  * This event is not intended to be sent over the network.
  */
-public final class ServerConnectionEvent extends NetworkEvent
+public final class ServerConnectionEvent extends NetworkEvent <RemoteServer>
 {
-  public ServerConnectionEvent (final Remote server)
+  public ServerConnectionEvent (final RemoteServer server)
   {
     super (server);
-  }
-
-  public Remote getServer ()
-  {
-    return getRemote ();
   }
 }

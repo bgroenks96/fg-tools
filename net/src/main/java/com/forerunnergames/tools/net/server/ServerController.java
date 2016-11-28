@@ -24,9 +24,9 @@
 package com.forerunnergames.tools.net.server;
 
 import com.forerunnergames.tools.common.controllers.Controller;
-import com.forerunnergames.tools.net.client.ClientCommunicator;
-import com.forerunnergames.tools.net.client.ClientConnector;
+import com.forerunnergames.tools.net.server.remote.RemoteClientCommunicator;
+import com.forerunnergames.tools.net.server.remote.RemoteClientConnector;
 
-public interface ServerController extends Controller, ClientConnector, ClientCommunicator
+public interface ServerController extends Controller, RemoteClientConnector, RemoteClientCommunicator
 {
 }

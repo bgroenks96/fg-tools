@@ -21,20 +21,44 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.client.configuration;
+package com.forerunnergames.tools.net;
 
-import com.forerunnergames.tools.net.AbstractRemoteConfiguration;
-import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
+import com.forerunnergames.tools.common.Arguments;
+import com.forerunnergames.tools.common.Classes;
 
-public final class DefaultClientConfiguration extends AbstractRemoteConfiguration implements ClientConfiguration
+import com.google.common.net.HostSpecifier;
+import com.google.common.net.InetAddresses;
+import com.google.common.net.InternetDomainName;
+
+import javax.annotation.Nullable;
+
+public final class NetworkTools
 {
-  public DefaultClientConfiguration (final String clientAddress, final int clientPort)
+  public static boolean isLocalhostAddress (final String address)
   {
-    super (clientAddress, clientPort);
+    Arguments.checkIsNotNull (address, "address");
+
+    return address.equals (NetworkConstants.LOCALHOST_ADDRESS)
+            || address.equalsIgnoreCase (NetworkConstants.LOCALHOST_NAME);
   }
 
-  @RequiredForNetworkSerialization
-  private DefaultClientConfiguration ()
+  public static boolean isValidIpAddress (@Nullable final String address)
   {
+    return address != null && InetAddresses.isInetAddress (address);
+  }
+
+  public static boolean isValidAddress (@Nullable final String address)
+  {
+    return address != null && HostSpecifier.isValid (address);
+  }
+
+  public static boolean isValidDomainName (@Nullable final String address)
+  {
+    return address != null && InternetDomainName.isValid (address);
+  }
+
+  private NetworkTools ()
+  {
+    Classes.instantiationNotAllowed ();
   }
 }

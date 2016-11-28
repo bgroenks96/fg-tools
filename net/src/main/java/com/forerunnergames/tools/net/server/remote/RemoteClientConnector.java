@@ -21,15 +21,13 @@
  * SOFTWARE.
  */
 
-package com.forerunnergames.tools.net.client;
+package com.forerunnergames.tools.net.server.remote;
 
-import com.forerunnergames.tools.net.Remote;
-
-public interface ClientConnector
+public interface RemoteClientConnector
 {
-  boolean isConnected (final Remote client);
+  boolean isConnected (final RemoteClient client);
 
-  void disconnect (final Remote client);
+  void disconnect (final RemoteClient client);
 
   void disconnectAll ();
 }

@@ -24,17 +24,18 @@ package com.forerunnergames.tools.net;
 
 import com.forerunnergames.tools.common.Arguments;
 import com.forerunnergames.tools.common.Strings;
+import com.forerunnergames.tools.common.annotations.AllowNegative;
 import com.forerunnergames.tools.net.annotations.RequiredForNetworkSerialization;
 
 public abstract class AbstractRemoteConfiguration implements RemoteConfiguration
 {
   private final String address;
+  @AllowNegative
   private final int port;
 
-  protected AbstractRemoteConfiguration (final String address, final int port)
+  protected AbstractRemoteConfiguration (final String address, @AllowNegative final int port)
   {
     Arguments.checkIsNotNull (address, "address");
-    Arguments.checkIsNotNegative (port, "port");
 
     this.address = address;
     this.port = port;
@@ -44,7 +45,7 @@ public abstract class AbstractRemoteConfiguration implements RemoteConfiguration
   protected AbstractRemoteConfiguration ()
   {
     address = null;
-    port = 0;
+    port = -1;
   }
 
   @Override

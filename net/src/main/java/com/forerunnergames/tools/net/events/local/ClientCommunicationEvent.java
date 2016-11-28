@@ -35,7 +35,7 @@ import com.forerunnergames.tools.net.server.remote.RemoteClient;
  */
 public final class ClientCommunicationEvent extends NetworkCommunicationEvent <RemoteClient, ClientEvent>
 {
-  public ClientCommunicationEvent (final ClientEvent message, final RemoteClient client)
+  public ClientCommunicationEvent (final RemoteClient client, final ClientEvent message)
   {
     super (client, message);
   }

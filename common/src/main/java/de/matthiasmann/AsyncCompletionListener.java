@@ -29,31 +29,29 @@
  */
 package de.matthiasmann;
 
+import javax.annotation.Nullable;
+
 /**
- * A completion listener for async jobs. It is invoked via {@link AsyncExecution#invokeLater(java.lang.Runnable) }
+ * A completion listener for asynchronous jobs. It is invoked via {@link AsyncExecution#invokeLater(Runnable)}
  *
  * @param <V>
- *          the result type of the async job
- *
- * @author Matthias Mann
+ *          The result type of the asynchronous job.
  */
 public interface AsyncCompletionListener <V>
 {
-
   /**
-   * The job has completed normally
+   * The job has completed normally.
    *
    * @param result
-   *          the result of the async job or {@code null} if it was a {@code Runnable}
+   *          The result of the asynchronous job or {@code null} if it was a {@code Runnable}.
    */
-  void completed (V result);
+  void completed (@Nullable final V result);
 
   /**
-   * The job has failed with an exception
+   * The job has failed with an exception.
    *
    * @param ex
-   *          the exception thrown by the async job
+   *          The exception thrown by the asynchronous job, must not be null.
    */
-  void failed (Exception ex);
-
+  void failed (final Exception ex);
 }

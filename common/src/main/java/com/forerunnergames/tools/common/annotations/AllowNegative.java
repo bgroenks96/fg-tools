@@ -28,8 +28,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention (value = RetentionPolicy.SOURCE)
-@Target (value = { ElementType.PARAMETER, ElementType.FIELD })
+@Retention (RetentionPolicy.SOURCE)
+@Target ({ ElementType.PARAMETER, ElementType.FIELD })
 public @interface AllowNegative
 {
 }

@@ -14,7 +14,6 @@ package ch.fourmilab.randomx;
  *
  * @see java.util.Random
  */
-
 public abstract class RandomX
 {
   private int nbits = 0;
@@ -46,7 +45,6 @@ public abstract class RandomX
    * which will hide the setSeed method from its users and cause a compile-time error if a program attempts to specify a
    * seed.
    */
-
   public void setSeed ()
   {
     nbits = 0;
@@ -54,43 +52,38 @@ public abstract class RandomX
   }
 
   /**
-   * @return the next [pseudo]random byte from low level generator. All generators derived from this class must
+   * @return The next [pseudo]random byte from low level generator. All generators derived from this class must
    *         implement <tt>nextByte()</tt>.
    */
-
   public abstract byte nextByte ();
 
   /**
-   * @return the next random, uniformly distributed, <tt>int</tt> value.
+   * @return The next random, uniformly distributed, <tt>int</tt> value.
    */
-
   public int nextInt ()
   {
     return (((int) nextShort ()) << 16) | (((int) nextShort ()) & 0xFFFF);
   }
 
   /**
-   * @return the next random, uniformly distributed, <tt>long</tt> value.
+   * @return The next random, uniformly distributed, <tt>long</tt> value.
    */
-
   public long nextLong ()
   {
     return (((long) nextInt ()) << 32) | (((long) nextInt ()) & 0xFFFFFFFFL);
   }
 
   /**
-   * @return the next random, uniformly distributed, <tt>float</tt> value, greater than or equal to 0 and less than 1.
+   * @return The next random, uniformly distributed, <tt>float</tt> value, greater than or equal to 0 and less than 1.
    */
-
   public float nextFloat ()
   {
     return (float) ((nextInt () & 0x7FFFFFFF) / (0x7FFFFFFF * 1.0));
   }
 
   /**
-   * @return the next random, uniformly distributed, <tt>double</tt> value, greater than or equal to 0 and less than 1.
+   * @return The next random, uniformly distributed, <tt>double</tt> value, greater than or equal to 0 and less than 1.
    */
-
   public double nextDouble ()
   {
     return (nextLong () & 0x7FFFFFFFFFFFFFFFL) / (0x7FFFFFFFFFFFFFFFL * 1.0);
@@ -99,42 +92,41 @@ public abstract class RandomX
   // Extended generator access methods with default implementations
 
   /**
-   * @return the next Gaussian (normal, or bell-curve) distributed random value, with mean of 0.0 and standard deviation
+   * @return The next Gaussian (normal, or bell-curve) distributed random value, with mean of 0.0 and standard deviation
    *         1.0.
    */
-
   public double nextGaussian ()
   {
-    double fac, rsq, v1, v2;
+    final double fac;
+    double rsq;
+    double v1;
+    double v2;
 
-    if (!iset)
-    {
-      do
-      {
-        v1 = 2 * nextDouble () - 1;
-        v2 = 2 * nextDouble () - 1;
-        rsq = v1 * v1 + v2 * v2;
-      }
-      while (rsq > 1.0 || rsq == 0.0);
-      fac = Math.sqrt (-2.0 * Math.log (rsq) / rsq);
-      gset = v1 * fac;
-      iset = true;
-      return v2 * fac;
-    }
-    else
+    if (iset)
     {
       iset = false;
       return gset;
     }
+
+    do
+    {
+      v1 = 2 * nextDouble () - 1;
+      v2 = 2 * nextDouble () - 1;
+      rsq = v1 * v1 + v2 * v2;
+    }
+    while (rsq > 1.0 || rsq == 0.0);
+    fac = Math.sqrt (-2.0 * Math.log (rsq) / rsq);
+    gset = v1 * fac;
+    iset = true;
+    return v2 * fac;
   }
 
   /**
    * @return the next random bit, as a <tt>boolean</tt>.
    */
-
   public boolean nextBit ()
   {
-    boolean bit;
+    final boolean bit;
 
     if (nbits <= 0)
     {
@@ -148,15 +140,14 @@ public abstract class RandomX
   }
 
   /**
-   * Fill a portion of an array of bytes with random data.
+   * Fills a portion of an array of bytes with random data.
    *
    * @param buf
-   *          array of <tt>byte</tt> to fill.
+   *          An array of <tt>byte</tt> to fill.
    * @param buflen
-   *          number of bytes to store.
+   *          The number of bytes to store.
    */
-
-  public void nextByte (byte buf[], int buflen)
+  public void nextByte (final byte[] buf, int buflen)
   {
     int i = 0;
 
@@ -167,19 +158,18 @@ public abstract class RandomX
   }
 
   /**
-   * Fill an array of bytes with random data.
+   * Fills an array of bytes with random data.
    *
    * @param buf
-   *          array of <tt>byte</tt>s to fill.
+   *          An array of <tt>byte</tt>s to fill.
    */
-
-  public void nextByte (byte buf[])
+  public void nextByte (final byte[] buf)
   {
     nextByte (buf, buf.length);
   }
 
   /**
-   * @return the next random, uniformly distributed, <tt>short</tt> value.
+   * @return The next random, uniformly distributed, <tt>short</tt> value.
    */
 
   public short nextShort ()

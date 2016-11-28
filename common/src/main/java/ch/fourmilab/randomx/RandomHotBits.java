@@ -12,33 +12,26 @@ import java.net.URL;
  * <p/>
  * Designed and implemented in July 1996 by <a href="http://www.fourmilab.ch/">John Walker</a>.
  */
-
 public class RandomHotBits extends RandomX
 {
   private final byte[] buffer;
   private int buflen = 0;
-  private int nuflen = 256;
   private int bufptr = -1;
-
-  // Constructors
 
   /**
    * Creates a new random sequence generator.
    */
-
   public RandomHotBits ()
   {
-    buffer = new byte [nuflen];
+    buffer = new byte [256];
   }
 
-  /* Private method to fill buffer from HotBits server. */
-
   /**
-   * Get next byte from generator.
+   * Gets the next byte from the random number sequence generator.
    *
-   * @return the next byte from the generator.
+   * @throws RuntimeException
+   *           If the next byte could not be obtained for any reason from the HotBits server.
    */
-
   @Override
   public byte nextByte ()
   {
@@ -53,19 +46,20 @@ public class RandomHotBits extends RandomX
         return buffer [bufptr++];
       }
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
-      throw new RuntimeException ("Cannot obtain HotBits", e);
+      throw new RuntimeException ("Cannot obtain HotBits.", e);
     }
   }
 
-  private void fillBuffer () throws java.io.IOException
+  /* Private method to fill buffer from HotBits server. */
+  private void fillBuffer () throws IOException
   {
-    URL u = new URL ("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=128&fmt=bin");
-    InputStream s = u.openStream ();
-    int l;
+    final URL u = new URL ("http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=128&fmt=bin");
+    final InputStream s = u.openStream ();
 
     buflen = 0;
+    int l;
     while ((l = s.read ()) != -1)
     {
       buffer [buflen++] = (byte) l;

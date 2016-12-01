@@ -30,9 +30,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public final class DefaultGraphModel <T> extends AbstractGraphModel <T>
+public final class DefaultGraph <T> extends AbstractGraph <T>
 {
-  protected DefaultGraphModel (final Map <T, Set <T>> adjList, final int size)
+  public DefaultGraph (final Map <T, Set <T>> adjList, final int size)
   {
     super (adjList, size);
   }
@@ -42,7 +42,7 @@ public final class DefaultGraphModel <T> extends AbstractGraphModel <T>
     return new Builder<> ();
   }
 
-  public static <T> GraphModel <T> from (final Map <T, Iterable <T>> adjListData)
+  public static <T> Graph <T> from (final Map <T, Iterable <T>> adjListData)
   {
     Arguments.checkIsNotNull (adjListData, "adjListData");
     Arguments.checkHasNoNullKeysOrValues (adjListData, "adjListData");
@@ -99,9 +99,9 @@ public final class DefaultGraphModel <T> extends AbstractGraphModel <T>
       return this;
     }
 
-    public DefaultGraphModel <T> build ()
+    public DefaultGraph <T> build ()
     {
-      return new DefaultGraphModel<> (adjList, size);
+      return new DefaultGraph<> (adjList, size);
     }
   }
 }

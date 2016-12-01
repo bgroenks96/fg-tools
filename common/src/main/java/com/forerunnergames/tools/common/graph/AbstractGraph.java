@@ -37,12 +37,12 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public abstract class AbstractGraphModel <T> implements GraphModel <T>
+public abstract class AbstractGraph <T> implements Graph<T>
 {
   private final Map <T, Set <T>> adjList;
   private final int size;
 
-  protected AbstractGraphModel (final Map <T, Set <T>> adjList, final int size)
+  protected AbstractGraph (final Map <T, Set <T>> adjList, final int size)
   {
     Arguments.checkIsNotNull (adjList, "adjList");
     Arguments.checkHasNoNullKeysOrValues (adjList, "adjList");

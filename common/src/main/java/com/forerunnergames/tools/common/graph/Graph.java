@@ -25,7 +25,7 @@ package com.forerunnergames.tools.common.graph;
 
 import com.google.common.collect.ImmutableSet;
 
-public interface GraphModel <T> extends Iterable <T>
+public interface Graph <T> extends Iterable <T>
 {
   int size ();
 

@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.forerunnergames.tools.common.graph.DefaultGraphModel.Builder;
+import com.forerunnergames.tools.common.graph.DefaultGraph.Builder;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -35,11 +35,11 @@ import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GraphModelTest
+public class GraphTest
 {
   private static final int MAX_OBJECT_COUNT = 10;
   private ImmutableList <Object> testObjects;
-  private GraphModel <Object> mapGraph;
+  private Graph<Object> mapGraph;
 
   @Before
   public void genTestObjects ()
@@ -56,7 +56,7 @@ public class GraphModelTest
   public void testGetAdjacentNodesOnOneNodeGraphIsEmpty ()
   {
     final Object obj = new Object ();
-    mapGraph = DefaultGraphModel.builder ().addNode (obj).build ();
+    mapGraph = DefaultGraph.builder ().addNode (obj).build ();
     assertTrue (mapGraph.getAdjacentNodes (obj).isEmpty ());
   }
 
@@ -185,12 +185,12 @@ public class GraphModelTest
   }
 
   // adjListStr uses indices to indicate which elements in the list should be adjacent to each other
-  private static GraphModel <Object> parseGraphFrom (final String adjListStr, final ImmutableList <Object> nodes)
+  private static Graph<Object> parseGraphFrom (final String adjListStr, final ImmutableList <Object> nodes)
   {
     assert adjListStr != null;
     assert nodes != null;
 
-    final Builder <Object> mapGraphBuilder = DefaultGraphModel.builder ();
+    final Builder <Object> mapGraphBuilder = DefaultGraph.builder ();
     for (final Object Object : nodes)
     {
       mapGraphBuilder.addNode (Object);

@@ -52,7 +52,7 @@ public final class Preconditions
    *          The arguments to include in the error message, must not be null, may contain null elements. See
    *          {@link Strings#format(String, Object...)}.
    *
-   * @throws IllegalArgumentException
+   * @throws IllegalStateException
    *           If condition evaluates to false, errorMessage is null, errorMessageArgs is null.
    */
   public static void checkIsTrue (final boolean condition, final String errorMessage, final Object... errorMessageArgs)
@@ -71,7 +71,7 @@ public final class Preconditions
    * @param errorMessage
    *          The error message to include in the exception.
    *
-   * @throws IllegalArgumentException
+   * @throws IllegalStateException
    *           If condition evaluates to true.
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage)
@@ -90,7 +90,7 @@ public final class Preconditions
    *          The arguments to include in the error message, must not be null, may contain null elements. See
    *          {@link Strings#format(String, Object...)}.
    *
-   * @throws IllegalArgumentException
+   * @throws IllegalStateException
    *           If condition evaluates to true, errorMessage is null, errorMessageArgs is null.
    */
   public static void checkIsFalse (final boolean condition, final String errorMessage, final Object... errorMessageArgs)

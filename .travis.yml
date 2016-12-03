@@ -64,11 +64,11 @@ notifications:
     on_success: change
     on_failure: always
   slack:
-    on_start: always
     on_success: always
     on_failure: always
     on_pull_requests: true
     secure: sTSPaCT8k1KHonGHGk1MdkJVlxCIY8JNQO/m0DhNHkKLzvbzgB8NPFp2AmaJHBZnzicabTDsTyT3XjkPQY28JWmQ8arFKk8XTLbOlm0hxV9eSIvbk1vxagg28MdzqCyf6058k+CY3KADSl2wiZHFAatgfvDxtTUUnITlYc45Sz3eEiIFol+6lBICMCfGGSTgf1E0mZ/e9Sv5XZUI+MtX4AVA/9c/5yxX/CykCJZcmDDjcreB8HpcVI7mEREBJZCyRjVS39yG9ykDDg9y8XnRcpKdyPVSEesxia4wWhS19LhNFsfUrdrIikcYMK+tPsGvwVE/js5CUlVmxfRzVWjJ+EPjaNhjaD86FrPv85FTf/1ZiUIG77oQPWQcrZUo60IGUZEsDybi9feZn4jbwWy/EVbo/3eVnawStPs+aijPlesRFoGZSRqHw4RMOmuVlUBH0JEoN7eBM9gyHtLUPrkRk9myuRHa36DYI4C4j9Tk+ZLwQ4OGYeNTykrkGrrNmmDSqPOuL76PDeo1DOOC9kjxhGOt8EbXNwR1rnRt8WjlF8mzozmlDrqP8IVoF3BrCceqJqBwdSMT7LaJYoIrFfLui6tKTYTJQgx4tjuIi/YqAQguKVPLgggBL5dOZUaD4lX6FqKjwqwl3UXBVirENjkW3hBK3Z53W3SIzXSW2DODnVM=
+
 env:
   global:
     # Bintray credentials

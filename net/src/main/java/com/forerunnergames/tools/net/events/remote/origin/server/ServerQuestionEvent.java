@@ -15,13 +15,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.forerunnergames.tools.net.events.remote;
+package com.forerunnergames.tools.net.events.remote.origin.server;
 
-/**
- * An event that has only one recipient.
- *
- * This event is intended to be sent over the network.
- */
-public interface DirectEvent extends RemoteEvent
+import com.forerunnergames.tools.net.events.remote.QuestionEvent;
+
+public interface ServerQuestionEvent extends ServerEvent, QuestionEvent
 {
+
 }

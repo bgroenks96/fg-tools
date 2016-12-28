@@ -30,6 +30,6 @@ import com.forerunnergames.tools.net.events.remote.RequestEvent;
  *
  * This event is intended to be sent over the network.
  */
-public interface ServerRequestEvent extends ServerEvent, RequestEvent
+public interface ServerRequestEvent extends ServerQuestionEvent, RequestEvent
 {
 }

@@ -17,15 +17,16 @@
 
 package com.forerunnergames.tools.net.events.remote.origin.client;
 
+import com.forerunnergames.tools.net.events.remote.origin.server.DeniedEvent;
 import com.forerunnergames.tools.net.events.remote.origin.server.InformEvent;
+import com.forerunnergames.tools.net.events.remote.origin.server.SuccessEvent;
 
 /**
  * Represents request events sent by a client to the server after successfully joining the game as a player, that are
- * answers to {@link PlayerInformEvent}. They are also questions that should be answered by the server with a
- * {@link com.forerunnergames.peril.common.net.events.server.interfaces.PlayerSuccessEvent} or
- * {@link com.forerunnergames.peril.common.net.events.server.interfaces.PlayerDeniedEvent}
+ * answers to {@link InformEvent}. They are also questions that should be answered by the server with a
+ * {@link SuccessEvent} or {@link DeniedEvent}.
  *
- * @see PlayerInformEvent for a more detailed explanation.
+ * @see {@link com.forerunnergames.tools.net.events.remote.origin.server.InformEvent} for a more detailed explanation.
  */
 public interface InformRequestEvent <T extends InformEvent> extends ClientRequestEvent, ClientAnswerEvent
 {

@@ -29,7 +29,7 @@ import com.forerunnergames.tools.net.events.remote.origin.server.ServerRequestEv
  * A client is responding to a request from the server, while simultaneously requesting a confirmation of said response
  * from the server.
  */
-public interface ResponseRequestEvent <T extends ServerRequestEvent> extends ClientResponseEvent
+public interface ResponseRequestEvent <T extends ServerRequestEvent> extends ClientResponseEvent, ClientRequestEvent
 {
   Class <T> getRequestType ();
 }

@@ -19,6 +19,11 @@ package com.forerunnergames.tools.net.events.remote.origin.server;
 
 import com.forerunnergames.tools.net.events.remote.QuestionEvent;
 
+/**
+ * Represents any generic {@link QuestionEvent} sent by a server.
+ *
+ * This event is intended to be sent over the network.
+ */
 public interface ServerQuestionEvent extends ServerEvent, QuestionEvent
 {
 

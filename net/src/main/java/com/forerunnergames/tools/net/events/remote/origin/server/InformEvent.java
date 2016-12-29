@@ -17,6 +17,20 @@
 
 package com.forerunnergames.tools.net.events.remote.origin.server;
 
+import com.forerunnergames.tools.net.events.remote.origin.client.InformRequestEvent;
+
+/**
+ * Represents pseudo-request events sent by the server to a client which may contain information that the client must
+ * respond to, but has the freedom to respond with various types of client requests, instead of just a single type.
+ * Should be answered by an {@link InformRequestEvent}, which the server should then answer with a {@link SuccessEvent}
+ * or {@link DeniedEvent}, but NOT a {@link ResponseSuccessEvent} NOR a {@link ResponseDeniedEvent}.
+ *
+ * Note:
+ *
+ * To simplify understanding, imagine the server is telling a client, "I'm going to inform you of what's going on, and
+ * you can decide what kind of request (out of several valid options) you'd like to make based on that information. I'll
+ * then answer your request with either success or denial."
+ */
 public interface InformEvent extends ServerQuestionEvent
 {
 }

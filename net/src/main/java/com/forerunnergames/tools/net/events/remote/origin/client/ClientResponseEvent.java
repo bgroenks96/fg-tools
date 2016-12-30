@@ -18,7 +18,8 @@
 package com.forerunnergames.tools.net.events.remote.origin.client;
 
 import com.forerunnergames.tools.net.events.remote.ResponseEvent;
+import com.forerunnergames.tools.net.events.remote.origin.server.ServerRequestEvent;
 
-public interface ClientResponseEvent extends ClientAnswerEvent, ResponseEvent
+public interface ClientResponseEvent <T extends ServerRequestEvent> extends ClientAnswerEvent <T>, ResponseEvent
 {
 }

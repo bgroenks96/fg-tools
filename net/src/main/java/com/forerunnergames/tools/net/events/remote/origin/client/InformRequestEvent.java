@@ -28,7 +28,6 @@ import com.forerunnergames.tools.net.events.remote.origin.server.SuccessEvent;
  *
  * @see {@link com.forerunnergames.tools.net.events.remote.origin.server.InformEvent} for a more detailed explanation.
  */
-public interface InformRequestEvent <T extends InformEvent> extends ClientRequestEvent, ClientAnswerEvent
+public interface InformRequestEvent <T extends InformEvent> extends ClientRequestEvent, ClientAnswerEvent <T>
 {
-  Class <T> getInformType ();
 }

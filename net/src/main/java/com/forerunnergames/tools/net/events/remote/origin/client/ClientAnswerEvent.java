@@ -18,12 +18,14 @@
 package com.forerunnergames.tools.net.events.remote.origin.client;
 
 import com.forerunnergames.tools.net.events.remote.AnswerEvent;
+import com.forerunnergames.tools.net.events.remote.origin.server.ServerQuestionEvent;
 
 /**
  * Represents any generic {@link AnswerEvent} sent by a client.
  *
  * This event is intended to be sent over the network.
  */
-public interface ClientAnswerEvent extends ClientEvent, AnswerEvent
+public interface ClientAnswerEvent <T extends ServerQuestionEvent> extends ClientEvent, AnswerEvent
 {
+  Class <T> getQuestionType ();
 }

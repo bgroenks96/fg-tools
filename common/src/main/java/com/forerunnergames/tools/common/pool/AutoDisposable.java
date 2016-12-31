@@ -1,5 +1,4 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
  * Copyright © 2013 - 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -72,7 +71,7 @@ public class AutoDisposable <T> implements Disposable
   {
     Arguments.checkIsNotNull (objRef, "objRef");
 
-    return new AutoDisposable <T> (objRef, new DisposableCallback <T> ()
+    return new AutoDisposable <> (objRef, new DisposableCallback <T> ()
     {
       @Override
       public void dispose (final T objRef)
@@ -104,7 +103,7 @@ public class AutoDisposable <T> implements Disposable
   {
     Arguments.checkIsNotNull (objRef, "objRef");
 
-    return new AutoDisposable <T> (objRef, new DisposableCallback <T> ()
+    return new AutoDisposable <> (objRef, new DisposableCallback <T> ()
     {
       @Override
       public void dispose (final T objRef)
@@ -148,7 +147,7 @@ public class AutoDisposable <T> implements Disposable
     Arguments.checkIsNotNull (objRef, "objRef");
     Arguments.checkIsNotNull (disposableCallback, "disposableCallback");
 
-    return new AutoDisposable <T> (objRef, disposableCallback);
+    return new AutoDisposable <> (objRef, disposableCallback);
   }
 
   public static <T> PoolFactory <AutoDisposable <T>> forObjectWith (final PoolFactory <T> factory,

@@ -1,5 +1,4 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
  * Copyright © 2013 - 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,7 +38,7 @@ public final class DefaultGraph <T> extends AbstractGraph <T>
 
   public static <T> Builder <T> builder ()
   {
-    return new Builder<> ();
+    return new Builder <> ();
   }
 
   public static <T> Graph <T> from (final Map <T, Iterable <T>> adjListData)
@@ -60,7 +59,7 @@ public final class DefaultGraph <T> extends AbstractGraph <T>
 
   public static class Builder <T>
   {
-    private final Map <T, Set <T>> adjList = new HashMap<> ();
+    private final Map <T, Set <T>> adjList = new HashMap <> ();
     private int size;
 
     /**
@@ -101,7 +100,7 @@ public final class DefaultGraph <T> extends AbstractGraph <T>
 
     public DefaultGraph <T> build ()
     {
-      return new DefaultGraph<> (adjList, size);
+      return new DefaultGraph <> (adjList, size);
     }
   }
 }

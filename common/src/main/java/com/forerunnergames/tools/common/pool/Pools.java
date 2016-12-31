@@ -1,5 +1,4 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
  * Copyright © 2013 - 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -35,7 +34,7 @@ public final class Pools
     Arguments.checkIsNotNull (type, "type");
     Arguments.checkIsNotNull (factory, "factory");
 
-    return new SoftObjectPool<> (factory, type);
+    return new SoftObjectPool <> (factory, type);
   }
 
   public static <T> ObjectPool <T> createSoftPoolWithArgs (final Class <T> type, final Object... args)
@@ -43,7 +42,7 @@ public final class Pools
     Arguments.checkIsNotNull (type, "type");
     Arguments.checkIsNotNull (args, "args");
 
-    return new SoftObjectPool<> (type, args);
+    return new SoftObjectPool <> (type, args);
   }
 
   public static <T> RecyclableObjectPool <T> createSoftRecyclablePool (final Class <T> type,
@@ -52,7 +51,7 @@ public final class Pools
     Arguments.checkIsNotNull (type, "type");
     Arguments.checkIsNotNull (factory, "factory");
 
-    return new SoftRecyclableObjectPool<> (factory, type);
+    return new SoftRecyclableObjectPool <> (factory, type);
   }
 
   public static <T> RecyclableObjectPool <T> createSoftRecyclablePoolWithArgs (final Class <T> type,
@@ -61,7 +60,7 @@ public final class Pools
     Arguments.checkIsNotNull (type, "type");
     Arguments.checkIsNotNull (args, "args");
 
-    return new SoftRecyclableObjectPool<> (type, args);
+    return new SoftRecyclableObjectPool <> (type, args);
   }
 
   public static <T extends Disposable> DisposableObjectPool <T> createSoftDisposablePool (final Class <T> type,
@@ -70,7 +69,7 @@ public final class Pools
     Arguments.checkIsNotNull (type, "type");
     Arguments.checkIsNotNull (factory, "factory");
 
-    return new SoftDisposableObjectPool<> (factory, type);
+    return new SoftDisposableObjectPool <> (factory, type);
   }
 
   public static <T extends Disposable> DisposableObjectPool <T> createSoftDisposablePoolWithArgs (final Class <T> type,
@@ -79,7 +78,7 @@ public final class Pools
     Arguments.checkIsNotNull (type, "type");
     Arguments.checkIsNotNull (args, "args");
 
-    return new SoftDisposableObjectPool<> (type, args);
+    return new SoftDisposableObjectPool <> (type, args);
   }
 
   public static <T> DisposableObjectPool <AutoDisposable <T>> createSoftAutoDisposablePool (final Class <T> type,
@@ -97,7 +96,7 @@ public final class Pools
     final Class <AutoDisposable <T>> autoDisposableType = (Class <AutoDisposable <T>>) autoDisposableToken
             .getRawType ();
 
-    return new SoftDisposableObjectPool<> (factory, autoDisposableType);
+    return new SoftDisposableObjectPool <> (factory, autoDisposableType);
   }
 
   private Pools ()

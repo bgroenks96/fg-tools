@@ -1,5 +1,4 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
  * Copyright © 2013 - 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -37,7 +36,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public abstract class AbstractGraph <T> implements Graph<T>
+public abstract class AbstractGraph <T> implements Graph <T>
 {
   private final Map <T, Set <T>> adjList;
   private final int size;
@@ -114,8 +113,8 @@ public abstract class AbstractGraph <T> implements Graph<T>
     if (areAdjacent (node0, node1)) return 1;
 
     final Set <T> adj = adjList.get (node0);
-    final Queue <T> visitQueue = new ArrayDeque<> ();
-    final Map <T, Integer> distMap = new HashMap<> ();
+    final Queue <T> visitQueue = new ArrayDeque <> ();
+    final Map <T, Integer> distMap = new HashMap <> ();
     for (final T node : adj)
     {
       visitQueue.offer (node);

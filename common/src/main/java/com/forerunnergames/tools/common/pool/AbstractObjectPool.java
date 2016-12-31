@@ -1,5 +1,4 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
  * Copyright © 2013 - 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -49,7 +48,7 @@ public abstract class AbstractObjectPool <T> implements ObjectPool <T>
 
     try
     {
-      factory = new DynamicPoolFactory<> (type, args);
+      factory = new DynamicPoolFactory <> (type, args);
     }
     catch (final NoSuchMethodException | SecurityException e)
     {

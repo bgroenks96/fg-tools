@@ -49,6 +49,7 @@ tmp/
 ## Gradle
 .gradle/
 build/
+local.properties
 
 ## Linux
 .directory

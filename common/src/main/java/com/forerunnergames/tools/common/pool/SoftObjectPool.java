@@ -1,5 +1,4 @@
 /*
- * Copyright © 2011 - 2013 Aaron Mahan
  * Copyright © 2013 - 2016 Forerunner Games, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -54,9 +53,9 @@ import org.slf4j.LoggerFactory;
 public class SoftObjectPool <T> extends AbstractObjectPool <T>
 {
   private static final Logger log = LoggerFactory.getLogger (SoftObjectPool.class);
-  protected final ConcurrentLinkedQueue <T> pool = new ConcurrentLinkedQueue<> ();
+  protected final ConcurrentLinkedQueue <T> pool = new ConcurrentLinkedQueue <> ();
   protected final Set <SoftReference <T>> checkout = Sets.newConcurrentHashSet ();
-  private final ReferenceQueue <T> refQueue = new ReferenceQueue<> ();
+  private final ReferenceQueue <T> refQueue = new ReferenceQueue <> ();
   private final AtomicBoolean isClosed = new AtomicBoolean ();
 
   protected SoftObjectPool (final PoolFactory <T> factory, final Class <T> type)
@@ -109,7 +108,7 @@ public class SoftObjectPool <T> extends AbstractObjectPool <T>
 
     if (!canAcquire ()) return Optional.absent ();
     final T obj = pool.poll ();
-    checkout.add (new SoftReference<> (obj, refQueue));
+    checkout.add (new SoftReference <> (obj, refQueue));
     log.trace ("Object taken from pool. type: {} | current checkout count: {}", getType (), checkout.size ());
     return Optional.of (obj);
   }

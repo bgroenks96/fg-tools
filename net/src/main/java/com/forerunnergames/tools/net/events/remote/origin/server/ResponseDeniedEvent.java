@@ -24,12 +24,13 @@
 package com.forerunnergames.tools.net.events.remote.origin.server;
 
 import com.forerunnergames.tools.net.events.remote.ResponseEvent;
+import com.forerunnergames.tools.net.events.remote.origin.client.ClientRequestEvent;
 
 /**
  * The server is sending a negative confirmation of the client's response to the server's original request.
  *
  * This event is intended to be sent over the network.
  */
-public interface ResponseDeniedEvent <T> extends ResponseEvent, DeniedEvent <T>
+public interface ResponseDeniedEvent <T extends ClientRequestEvent, R> extends ResponseEvent, DeniedEvent <T, R>
 {
 }
